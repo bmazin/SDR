@@ -44,12 +44,10 @@ from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as Naviga
 from matplotlib.figure import Figure
 import ephem
 #import my functions
-from rad2altaz import rad2altaz
-from make_image_v2 import make_image as make_image_import
-from HeaderGen_seth import HeaderGen
-from arcons_basic_gui import Ui_arcons
-
-import ql_realtime
+from lib.rad2altaz import rad2altaz
+from lib.make_image_v2 import make_image as make_image_import
+from lib.HeaderGen_seth import HeaderGen
+from lib.arcons_basic_gui import Ui_arcons
 
 c = 3.0E17 #[nm/s]
 h = 4.13567E-15 #[ev*s]

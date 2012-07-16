@@ -38,7 +38,7 @@ echo " done"
 echo -n "Copying latest $BOF to roaches "
 for i in ${ROACHES[*]}
 do
-	scp -q ~/Casper/boffiles/$BOF root@10.0.0.1$i:/boffiles/
+	scp -q ~/SDR/Firmware/boffiles/$BOF root@10.0.0.1$i:/boffiles/
 	check_status
 	echo -n " ."
 done
@@ -47,7 +47,7 @@ echo " done"
 echo -n "Setting clock rates to $CLK MHz "
 for i in ${ROACHES[*]}
 do
-	python clock_pll_setup_$CLK.py 10.0.0.1$i > /dev/null
+	python lib/clock_pll_setup_$CLK.py 10.0.0.1$i > /dev/null
 	check_status
 	echo -n " ."
 done
@@ -57,7 +57,7 @@ echo " done"
 echo -n "Programing firmware on roaches "
 for i in ${ROACHES[*]}
 do
-	python program_fpga.py 10.0.0.1$i $BOF > /dev/null
+	python lib/program_fpga.py 10.0.0.1$i $BOF > /dev/null
 	check_status
 	echo -n " ."
 done

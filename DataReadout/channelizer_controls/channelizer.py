@@ -9,7 +9,7 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
 from matplotlib.figure import Figure
 from tables import *
-import iqsweep
+from lib import iqsweep
 
 class AppForm(QMainWindow):
     def __init__(self, parent=None):

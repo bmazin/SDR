@@ -22,8 +22,8 @@ from PyQt4.QtCore import *
 from tables import *
 #import my functions
 #from make_image_v2 import make_image as make_image_import
-from iqsweep import *
-from PSFit_GUI import Ui_MainWindow
+from lib.iqsweep import *
+from lib.PSFit_GUI import Ui_MainWindow
 
 class StartQt4(QMainWindow):
 	def __init__(self,parent=None):
