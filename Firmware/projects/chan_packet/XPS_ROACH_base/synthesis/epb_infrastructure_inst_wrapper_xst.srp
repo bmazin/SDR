@@ -1,0 +1,375 @@
+Release 11.4 - xst L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+--> 
+PMSPEC -- Overriding Xilinx file </opt/Xilinx/11.1/EDK/virtex5/data/virtex5.acd> with local file </opt/Xilinx/11.1/ISE/virtex5/data/virtex5.acd>
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input Format                       : MIXED
+Input File Name                    : "epb_infrastructure_inst_wrapper_xst.prj"
+Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+
+---- Target Parameters
+Target Device                      : xc5vsx95tff1136-1
+Output File Name                   : "../implementation/epb_infrastructure_inst_wrapper.ngc"
+
+---- Source Options
+Top Module Name                    : epb_infrastructure_inst_wrapper
+
+---- Target Options
+Add IO Buffers                     : NO
+
+---- General Options
+Optimization Goal                  : speed
+Netlist Hierarchy                  : as_optimized
+Optimization Effort                : 1
+Hierarchy Separator                : /
+
+---- Other Options
+Cores Search Directories           : {../implementation/epb_infrastructure_inst_wrapper}
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/epb_infrastructure_v1_00_a/hdl/verilog/epb_infrastructure.v" in library epb_infrastructure_v1_00_a
+Module <epb_infrastructure> compiled
+Compiling verilog file "../hdl/epb_infrastructure_inst_wrapper.v" in library work
+Module <epb_infrastructure_inst_wrapper> compiled
+No errors in compilation
+Analysis of file <"epb_infrastructure_inst_wrapper_xst.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <epb_infrastructure_inst_wrapper> in library <work>.
+
+Analyzing hierarchy for module <epb_infrastructure> in library <epb_infrastructure_v1_00_a>.
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <epb_infrastructure_inst_wrapper>.
+Module <epb_infrastructure_inst_wrapper> is correct for synthesis.
+ 
+Analyzing module <epb_infrastructure> in library <epb_infrastructure_v1_00_a>.
+Module <epb_infrastructure> is correct for synthesis.
+ 
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_epb_rdy> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_epb_rdy> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_epb_rdy> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_epb_rdy> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_epb_rdy> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_epb_rdy> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_epb_rdy> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[15]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[15]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[15]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[15]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[15]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[15]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[15]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[14]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[14]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[14]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[14]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[14]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[14]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[14]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[13]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[13]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[13]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[13]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[13]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[13]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[13]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[12]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[12]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[12]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[12]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[12]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[12]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[12]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[11]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[11]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[11]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[11]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[11]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[11]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[11]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[10]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[10]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[10]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[10]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[10]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[10]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[10]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[9]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[9]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[9]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[9]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[9]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[9]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[9]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[8]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[8]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[8]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[8]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[8]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[8]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[8]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[7]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[7]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[7]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[7]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[7]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[7]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[7]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[6]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[6]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[6]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[6]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[6]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[6]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[6]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[5]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[5]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[5]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[5]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[5]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[5]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[5]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[4]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[4]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[4]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[4]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[4]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[4]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[4]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[3]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[3]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[3]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[3]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[3]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[3]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[3]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[2]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[2]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[2]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[2]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[2]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[2]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[2]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[1]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[1]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[1]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[1]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[1]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[1]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[1]> in unit <epb_infrastructure>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <iob_data[0]> in unit <epb_infrastructure>.
+    Set user-defined property "DRIVE =  12" for instance <iob_data[0]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <iob_data[0]> in unit <epb_infrastructure>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <iob_data[0]> in unit <epb_infrastructure>.
+    Set user-defined property "IFD_DELAY_VALUE =  AUTO" for instance <iob_data[0]> in unit <epb_infrastructure>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <iob_data[0]> in unit <epb_infrastructure>.
+    Set user-defined property "SLEW =  SLOW" for instance <iob_data[0]> in unit <epb_infrastructure>.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <epb_infrastructure>.
+    Related source file is "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/epb_infrastructure_v1_00_a/hdl/verilog/epb_infrastructure.v".
+Unit <epb_infrastructure> synthesized.
+
+
+Synthesizing Unit <epb_infrastructure_inst_wrapper>.
+    Related source file is "../hdl/epb_infrastructure_inst_wrapper.v".
+Unit <epb_infrastructure_inst_wrapper> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <epb_infrastructure_inst_wrapper> ...
+
+Optimizing unit <epb_infrastructure> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+Top Level Output File Name         : ../implementation/epb_infrastructure_inst_wrapper.ngc
+Output Format                      : ngc
+Optimization Goal                  : speed
+Keep Hierarchy                     : no
+
+Design Statistics
+# IOs                              : 120
+
+Cell Usage :
+# BELS                             : 1
+#      INV                         : 1
+# IO Buffers                       : 17
+#      IOBUF                       : 17
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 5vsx95tff1136-1 
+
+
+Slice Logic Utilization: 
+ Number of Slice LUTs:                    1  out of  58880     0%  
+    Number used as Logic:                 1  out of  58880     0%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:      1
+   Number with an unused Flip Flop:       1  out of      1   100%  
+   Number with an unused LUT:             0  out of      1     0%  
+   Number of fully used LUT-FF pairs:     0  out of      1     0%  
+   Number of unique control sets:         0
+
+IO Utilization: 
+ Number of IOs:                         120
+ Number of bonded IOBs:                  50  out of    640     7%  
+
+Specific Feature Utilization:
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+No clock signals found in this design
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: No path found
+   Maximum combinational path delay: 3.026ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 84 / 67
+-------------------------------------------------------------------------
+Delay:               3.026ns (Levels of Logic = 2)
+  Source:            epb_rdy_oe (PAD)
+  Destination:       epb_rdy_buf (PAD)
+
+  Data Path: epb_rdy_oe to epb_rdy_buf
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     INV:I->O              1   0.238   0.336  epb_infrastructure_inst/iob_epb_rdy_not00001_INV_0 (epb_infrastructure_inst/iob_epb_rdy_not0000)
+     IOBUF:T->IO               2.452          epb_infrastructure_inst/iob_epb_rdy (epb_rdy_buf)
+    ----------------------------------------
+    Total                      3.026ns (2.690ns logic, 0.336ns route)
+                                       (88.9% logic, 11.1% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.70 secs
+ 
+--> 
+
+
+Total memory usage is 441168 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

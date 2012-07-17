@@ -1,0 +1,2 @@
+VHDL chan_packet_pulses_bram1_ramblk_elaborate_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/hdl/elaborate/chan_packet_pulses_bram1_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_packet_pulses_bram1_ramblk_elaborate.vhd
+vhdl work ../hdl/chan_packet_pulses_bram1_ramblk_wrapper.vhd

@@ -1,0 +1,586 @@
+--------------------------------------------------------------------------------
+Release 11.4 Trace  (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+
+/opt/Xilinx/11.1/ISE/bin/lin64/unwrapped/trce -ise ../__xps/ise/system.ise -e
+200 -xml system.twx system.ncd system.pcf
+
+Design file:              system.ncd
+Physical constraint file: system.pcf
+Device,package,speed:     xc5vsx95t,ff1136,-1 (PRODUCTION 1.66 2009-11-16, STEPPING level 0)
+Report level:             error report, limited to 200 items per constraint
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+WARNING:Timing:3223 - Timing constraint TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY 
+   FROM TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO        TIMEGRP "RAMS" 10 ns; ignored 
+   during timing analysis.
+INFO:Timing:3386 - Intersecting Constraints found and resolved.  For more 
+   information, see the TSI report.  Please consult the Xilinx Command Line 
+   Tools User Guide for information on generating a TSI report.
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+
+================================================================================
+Timing constraint: NET "epb_cs_n_IBUF" MAXDELAY = 4 ns;
+
+ 1 net analyzed, 0 failing nets detected.
+ 0 timing errors detected.
+ Maximum net delay is   2.032ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: NET "chan_packet_adc_mkid/chan_packet_adc_mkid/drdy_clk" 
+PERIOD = 3.6364 ns         HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: NET "chan_packet_adc_mkid/chan_packet_adc_mkid/drdy_clk" 
+PERIOD = 3.6364 ns         HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: PERIOD analysis for net 
+"chan_packet_adc_mkid/chan_packet_adc_mkid/dcm_clk" derived from  NET 
+"chan_packet_adc_mkid/chan_packet_adc_mkid/drdy_clk" PERIOD = 3.6364 ns        
+HIGH 50%;  duty cycle corrected to 3.636 nS  HIGH 1.818 nS  
+
+ 147353 paths analyzed, 92784 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   3.611ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_dly_clk_n = PERIOD TIMEGRP "dly_clk_n" 200 MHz HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.600ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88 MHz HIGH 50%;
+
+ 382709 paths analyzed, 10701 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is  11.317ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP "TNM_RD_DATA_SEL" 
+TO TIMEGRP "FFS"         10 ns;
+
+ 432 paths analyzed, 432 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   6.581ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGRP 
+"TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"         10 ns;
+
+ 144 paths analyzed, 144 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   4.357ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM TIMEGRP 
+"TNM_PHY_INIT_DATA_SEL" TO         TIMEGRP "FFS" 10 ns;
+
+ 311 paths analyzed, 311 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   9.226ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FROM TIMEGRP 
+"TNM_PHY_INIT_DATA_SEL" TO         TIMEGRP "RAMS" 10 ns;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "TNM_GATE_DLY" TO 
+TIMEGRP "FFS" 10 ns;
+
+ 45 paths analyzed, 45 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   3.368ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "TNM_RDEN_DLY" TO 
+TIMEGRP "FFS" 10 ns;
+
+ 5 paths analyzed, 5 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   3.287ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGRP 
+"TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"         10 ns;
+
+ 5 paths analyzed, 5 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   3.156ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_adcmkid1_DRDY_I_p = PERIOD TIMEGRP "adcmkid1_DRDY_I_p" 
+3.636 ns HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_adcmkid1_DRDY_I_n = PERIOD TIMEGRP "adcmkid1_DRDY_I_n" 
+3.636 ns HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk 
+= PERIOD TIMEGRP         
+"dram_infrastructure_inst_dram_infrastructure_inst_mem_clk"         
+TS_dly_clk_n * 1.5 HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   2.221ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_chan_packet_adc_mkid_chan_packet_adc_mkid_dcm_clk = 
+PERIOD TIMEGRP         "chan_packet_adc_mkid_chan_packet_adc_mkid_dcm_clk"      
+   TS_adcmkid1_DRDY_I_p HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   2.222ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_chan_packet_adc_mkid_chan_packet_adc_mkid_dcm_clk_0 = 
+PERIOD TIMEGRP         "chan_packet_adc_mkid_chan_packet_adc_mkid_dcm_clk_0"    
+     TS_adcmkid1_DRDY_I_n HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   2.222ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: 
+TS_dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_0_int = PERIOD    
+     TIMEGRP         
+"dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_0_int"         
+TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk HIGH 50%;
+
+ 10851 paths analyzed, 5525 endpoints analyzed, 3 failing endpoints
+ 3 timing errors detected. (3 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   4.630ns.
+--------------------------------------------------------------------------------
+Slack:                  -1.297ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_rst_n_r (FF)
+  Destination:          dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/u_oddr_dqs/N2 (FF)
+  Requirement:          3.333ns
+  Data Path Delay:      4.731ns (Levels of Logic = 0)
+  Clock Path Skew:      0.164ns (1.843 - 1.679)
+  Source Clock:         dram_sys_dram_clk_0 falling at 1.666ns
+  Destination Clock:    dram_sys_dram_clk_0 falling at 4.999ns
+  Clock Uncertainty:    0.063ns
+
+  Clock Uncertainty:          0.063ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Discrete Jitter (DJ):       0.103ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path: dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_rst_n_r to dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/u_oddr_dqs/N2
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X79Y38.BQ      Tcko                  0.445   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[5].u_iob_dqs/dqs_rst_n_r
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_rst_n_r
+    OLOGIC_X0Y22.D1      net (fanout=2)        3.852   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_rst_n_r
+    OLOGIC_X0Y22.CLK     Todck                 0.434   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/u_oddr_dqs/N2
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/u_oddr_dqs/N2
+    -------------------------------------------------  ---------------------------
+    Total                                      4.731ns (0.879ns logic, 3.852ns route)
+                                                       (18.6% logic, 81.4% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -1.297ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_rst_n_r (FF)
+  Destination:          dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/u_oddr_dqs (FF)
+  Requirement:          3.333ns
+  Data Path Delay:      4.731ns (Levels of Logic = 0)
+  Clock Path Skew:      0.164ns (1.843 - 1.679)
+  Source Clock:         dram_sys_dram_clk_0 falling at 1.666ns
+  Destination Clock:    dram_sys_dram_clk_0 falling at 4.999ns
+  Clock Uncertainty:    0.063ns
+
+  Clock Uncertainty:          0.063ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Discrete Jitter (DJ):       0.103ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path: dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_rst_n_r to dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/u_oddr_dqs
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X79Y38.BQ      Tcko                  0.445   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[5].u_iob_dqs/dqs_rst_n_r
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_rst_n_r
+    OLOGIC_X0Y23.D1      net (fanout=2)        3.852   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_rst_n_r
+    OLOGIC_X0Y23.CLK     Todck                 0.434   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/dqs_out
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dqs[1].u_iob_dqs/u_oddr_dqs
+    -------------------------------------------------  ---------------------------
+    Total                                      4.731ns (0.879ns logic, 3.852ns route)
+                                                       (18.6% logic, 81.4% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -0.271ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_init/phy_init_done (FF)
+  Destination:          opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.mem_opb_attach_inst/opb_wr_data_reg_0 (FF)
+  Requirement:          3.333ns
+  Data Path Delay:      3.142ns (Levels of Logic = 4)
+  Clock Path Skew:      -0.273ns (3.309 - 3.582)
+  Source Clock:         dram_sys_dram_clk_div rising at 0.000ns
+  Destination Clock:    dram_sys_dram_clk_0 rising at 3.333ns
+  Clock Uncertainty:    0.189ns
+
+  Clock Uncertainty:          0.189ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Discrete Jitter (DJ):       0.118ns
+    Phase Error (PE):           0.120ns
+
+  Maximum Data Path: dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_init/phy_init_done to opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.mem_opb_attach_inst/opb_wr_data_reg_0
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X42Y70.AQ      Tcko                  0.471   chan_packet_DRAM_LUT_dram_phy_ready
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_init/phy_init_done
+    SLICE_X43Y70.A4      net (fanout=2)        0.510   chan_packet_DRAM_LUT_dram_phy_ready
+    SLICE_X43Y70.A       Tilo                  0.094   chan_packet_XSG_core_config/chan_packet_XSG_core_config/chan_packet_x0/conv_phase_9a50af56d6/lpf_fir_i_3bfd658297/mult14_p_net(19)
+                                                       opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.ctrl_opb_attach_inst/Sl_DBus_reg<31>2
+    SLICE_X43Y70.D6      net (fanout=1)        0.294   opb0_Sl_DBus<95>
+    SLICE_X43Y70.D       Tilo                  0.094   chan_packet_XSG_core_config/chan_packet_XSG_core_config/chan_packet_x0/conv_phase_9a50af56d6/lpf_fir_i_3bfd658297/mult14_p_net(19)
+                                                       opb0/opb0/ARBITER_HAS_NO_PROC_INTF.OPB_rdDBus_I/Y_31_or000029
+    SLICE_X43Y69.D6      net (fanout=1)        0.271   opb0/opb0/ARBITER_HAS_NO_PROC_INTF.OPB_rdDBus_I/Y_31_or000029
+    SLICE_X43Y69.D       Tilo                  0.094   chan_packet_XSG_core_config/chan_packet_XSG_core_config/chan_packet_x0/fir_41e9dfa48e/addsub22_s_net(16)
+                                                       opb0/opb0/ARBITER_HAS_NO_PROC_INTF.OPB_rdDBus_I/Y_31_or0000104
+    SLICE_X45Y67.B6      net (fanout=1)        0.671   opb0/OPB_rdDBus<31>
+    SLICE_X45Y67.B       Tilo                  0.094   epb_opb_bridge_inst/epb_opb_bridge_inst/epb_data_o_reg<1>
+                                                       opb0/opb0/OPB_DBus_I/Y_31_or00001
+    SLICE_X47Y62.AX      net (fanout=33)       0.557   chan_packet_avgIQ_bram_ramblk_portb_BRAM_Dout<31>
+    SLICE_X47Y62.CLK     Tdick                -0.008   opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.mem_opb_attach_inst/opb_wr_data_reg<3>
+                                                       opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.mem_opb_attach_inst/opb_wr_data_reg_0
+    -------------------------------------------------  ---------------------------
+    Total                                      3.142ns (0.839ns logic, 2.303ns route)
+                                                       (26.7% logic, 73.3% route)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: 
+TS_dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_90_int = PERIOD   
+      TIMEGRP         
+"dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_90_int"         
+TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk PHASE         
+0.833 ns HIGH 50%;
+
+ 729 paths analyzed, 708 endpoints analyzed, 4 failing endpoints
+ 4 timing errors detected. (4 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   5.430ns.
+--------------------------------------------------------------------------------
+Slack:                  -1.681ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r_3 (FF)
+  Destination:          dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[3].u_iob_dm/u_oddr_dm (FF)
+  Requirement:          3.333ns
+  Data Path Delay:      4.543ns (Levels of Logic = 0)
+  Clock Path Skew:      -0.408ns (1.523 - 1.931)
+  Source Clock:         dram_sys_dram_clk_90 rising at 0.833ns
+  Destination Clock:    dram_sys_dram_clk_90 rising at 4.166ns
+  Clock Uncertainty:    0.063ns
+
+  Clock Uncertainty:          0.063ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Discrete Jitter (DJ):       0.103ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path: dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r_3 to dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[3].u_iob_dm/u_oddr_dm
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X5Y16.DQ       Tcko                  0.450   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r<3>
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r_3
+    OLOGIC_X2Y80.D1      net (fanout=1)        3.659   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r<3>
+    OLOGIC_X2Y80.CLK     Todck                 0.434   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[3].u_iob_dm/dm_out
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[3].u_iob_dm/u_oddr_dm
+    -------------------------------------------------  ---------------------------
+    Total                                      4.543ns (0.884ns logic, 3.659ns route)
+                                                       (19.5% logic, 80.5% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -1.049ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[6].u_iob_dm/u_dm_ce (FF)
+  Destination:          dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[6].u_iob_dm/u_oddr_dm (FF)
+  Requirement:          1.667ns
+  Data Path Delay:      2.703ns (Levels of Logic = 0)
+  Clock Path Skew:      0.050ns (1.594 - 1.544)
+  Source Clock:         dram_sys_dram_clk_90 falling at 2.499ns
+  Destination Clock:    dram_sys_dram_clk_90 rising at 4.166ns
+  Clock Uncertainty:    0.063ns
+
+  Clock Uncertainty:          0.063ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Discrete Jitter (DJ):       0.103ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path: dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[6].u_iob_dm/u_dm_ce to dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[6].u_iob_dm/u_oddr_dm
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X45Y18.AQ      Tcko                  0.445   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/dm_ce_r
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[6].u_iob_dm/u_dm_ce
+    OLOGIC_X2Y41.OCE     net (fanout=1)        2.035   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[6].u_iob_dm/dm_ce_r
+    OLOGIC_X2Y41.CLK     Tooceck               0.223   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[6].u_iob_dm/dm_out
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[6].u_iob_dm/u_oddr_dm
+    -------------------------------------------------  ---------------------------
+    Total                                      2.703ns (0.668ns logic, 2.035ns route)
+                                                       (24.7% logic, 75.3% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -0.936ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/u_dm_ce (FF)
+  Destination:          dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/u_oddr_dm (FF)
+  Requirement:          1.667ns
+  Data Path Delay:      2.919ns (Levels of Logic = 0)
+  Clock Path Skew:      0.379ns (0.940 - 0.561)
+  Source Clock:         dram_sys_dram_clk_90 falling at 2.499ns
+  Destination Clock:    dram_sys_dram_clk_90 rising at 4.166ns
+  Clock Uncertainty:    0.063ns
+
+  Clock Uncertainty:          0.063ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Discrete Jitter (DJ):       0.103ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path: dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/u_dm_ce to dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/u_oddr_dm
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X45Y18.BQ      Tcko                  0.445   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/dm_ce_r
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/u_dm_ce
+    OLOGIC_X0Y34.OCE     net (fanout=1)        2.251   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/dm_ce_r
+    OLOGIC_X0Y34.CLK     Tooceck               0.223   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/dm_out
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[0].u_iob_dm/u_oddr_dm
+    -------------------------------------------------  ---------------------------
+    Total                                      2.919ns (0.668ns logic, 2.251ns route)
+                                                       (22.9% logic, 77.1% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -0.205ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r_2 (FF)
+  Destination:          dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[2].u_iob_dm/u_oddr_dm (FF)
+  Requirement:          3.333ns
+  Data Path Delay:      3.018ns (Levels of Logic = 0)
+  Clock Path Skew:      -0.457ns (0.491 - 0.948)
+  Source Clock:         dram_sys_dram_clk_90 rising at 0.833ns
+  Destination Clock:    dram_sys_dram_clk_90 rising at 4.166ns
+  Clock Uncertainty:    0.063ns
+
+  Clock Uncertainty:          0.063ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Discrete Jitter (DJ):       0.103ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path: dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r_2 to dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[2].u_iob_dm/u_oddr_dm
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X5Y16.CQ       Tcko                  0.450   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r<3>
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r_2
+    OLOGIC_X1Y27.D1      net (fanout=1)        2.134   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_write/wdf_mask_r<2>
+    OLOGIC_X1Y27.CLK     Todck                 0.434   dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[2].u_iob_dm/dm_out
+                                                       dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dm_inst.gen_dm[2].u_iob_dm/u_oddr_dm
+    -------------------------------------------------  ---------------------------
+    Total                                      3.018ns (0.884ns logic, 2.134ns route)
+                                                       (29.3% logic, 70.7% route)
+
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: 
+TS_dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_div_int = PERIOD  
+       TIMEGRP         
+"dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_div_int"         
+TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk * 0.5         HIGH 
+50%;
+
+ 13513 paths analyzed, 4252 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   6.636ns.
+--------------------------------------------------------------------------------
+
+
+Derived Constraint Report
+Derived Constraints for chan_packet_adc_mkid/chan_packet_adc_mkid/drdy_clk
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|chan_packet_adc_mkid/chan_packe|      3.636ns|      3.000ns|      3.611ns|            0|            0|            0|       147353|
+|t_adc_mkid/drdy_clk            |             |             |             |             |             |             |             |
+| chan_packet_adc_mkid/chan_pack|      3.636ns|      3.611ns|          N/A|            0|            0|       147353|            0|
+| et_adc_mkid/dcm_clk           |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_dly_clk_n
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_dly_clk_n                   |      5.000ns|      3.600ns|      8.145ns|            0|            7|            0|        25093|
+| TS_dram_infrastructure_inst_dr|      3.333ns|      2.221ns|      5.430ns|            0|            7|            0|        25093|
+| am_infrastructure_inst_mem_clk|             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      3.333ns|      4.630ns|          N/A|            3|            0|        10851|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_0_int                    |             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      3.333ns|      5.430ns|          N/A|            4|            0|          729|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_90_int                   |             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      6.667ns|      6.636ns|          N/A|            0|            0|        13513|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_div_int                  |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_adcmkid1_DRDY_I_p
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_adcmkid1_DRDY_I_p           |      3.636ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
+| TS_chan_packet_adc_mkid_chan_p|      3.636ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| acket_adc_mkid_dcm_clk        |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_adcmkid1_DRDY_I_n
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_adcmkid1_DRDY_I_n           |      3.636ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
+| TS_chan_packet_adc_mkid_chan_p|      3.636ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| acket_adc_mkid_dcm_clk_0      |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+2 constraints not met.
+WARNING:Timing - DCM chan_packet_adc_mkid/chan_packet_adc_mkid/CLK_DCM does not 
+   have a CLKIN_PERIOD attribute (the period of the DCM input clock).DCM jitter 
+   will not be included in timing analysis when this attribute is not defined. 
+   For more information, please refer to the appropriate architectural handbook
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Clock to Setup on destination clock adcmkid1_DRDY_I_n
+-----------------+---------+---------+---------+---------+
+                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-----------------+---------+---------+---------+---------+
+adcmkid1_DRDY_I_n|    3.611|         |         |         |
+adcmkid1_DRDY_I_p|    3.611|         |         |         |
+-----------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock adcmkid1_DRDY_I_p
+-----------------+---------+---------+---------+---------+
+                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-----------------+---------+---------+---------+---------+
+adcmkid1_DRDY_I_n|    3.611|         |         |         |
+adcmkid1_DRDY_I_p|    3.611|         |         |         |
+-----------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock dly_clk_n
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+dly_clk_n      |    9.226|    2.716|    2.384|    4.630|
+dly_clk_p      |    9.226|    2.716|    2.384|    4.630|
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock dly_clk_p
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+dly_clk_n      |    9.226|    2.716|    2.384|    4.630|
+dly_clk_p      |    9.226|    2.716|    2.384|    4.630|
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock epb_clk_in
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+epb_clk_in     |   11.317|         |    3.850|         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 7  Score: 6736  (Setup/Max: 6736, Hold: 0)
+
+Constraints cover 556097 paths, 1 nets, and 129545 connections
+
+Design statistics:
+   Minimum period:  11.317ns   (Maximum frequency:  88.363MHz)
+   Maximum path delay from/to any node:   9.226ns
+   Maximum net delay:   2.032ns
+
+
+Analysis completed Mon Jul 16 17:20:26 2012 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 1798 MB
+
+Total REAL time to Trace completion: 2 mins 5 secs 
+Total CPU time to Trace completion: 2 mins 5 secs 
+
+
+

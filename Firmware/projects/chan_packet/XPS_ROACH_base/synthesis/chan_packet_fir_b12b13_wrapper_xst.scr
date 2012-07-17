@@ -1,0 +1,13 @@
+run
+-opt_mode speed
+-netlist_hierarchy as_optimized
+-opt_level 1
+-p xc5vsx95tff1136-1
+-top chan_packet_fir_b12b13_wrapper
+-ifmt MIXED
+-ifn chan_packet_fir_b12b13_wrapper_xst.prj
+-ofn ../implementation/chan_packet_fir_b12b13_wrapper.ngc
+-hierarchy_separator /
+-iobuf NO
+-sd {../implementation/chan_packet_fir_b12b13_wrapper}
+-vlgincdir {"/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }

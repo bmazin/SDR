@@ -1,0 +1,40 @@
+Saved contents of this file to system_log.11.3 during revup to EDK 11.4.
+
+=====================
+Opened log file
+=====================
+=====================
+Opened log file
+=====================
+Xilinx Platform Studio (XPS)
+Xilinx EDK 11.4 Build EDK_LS4.68
+
+Xilinx EDK 11.4 Build EDK_LS4.68
+
+WARNING:EDK - IPNAME:opb_v20 INSTANCE:opb0 -
+   /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/system.mhs line 93 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK - IPNAME:opb_bram_if_cntlr INSTANCE:chan_packet_avgIQ_bram -
+   /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/system.mhs line 634 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK - IPNAME:opb_bram_if_cntlr INSTANCE:chan_packet_pulses_bram0 -
+   /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/system.mhs line 917 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK - IPNAME:opb_bram_if_cntlr INSTANCE:chan_packet_pulses_bram1 -
+   /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/system.mhs line 948 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK - IPNAME:opb_bram_if_cntlr INSTANCE:chan_packet_snapPhase_bram -
+   /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/system.mhs line 1015 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK - IPNAME:opb_v20 INSTANCE:opb1 -
+   /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/system.mhs line 1111 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK - IPNAME:opb_opb_lite INSTANCE:opb2opb_bridge_opb1 -
+   /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/system.mhs line 1119 -
+   deprecated core for architecture 'virtex5sx'!
+
+XPS% Evaluating file run_xps.tcl
+ERROR:EDK - Error while running "gmake -f system.make bits".
+   Return code = 2 
+No changes to be saved in MSS file
+Saved project XMP file

@@ -1,0 +1,2 @@
+VHDL dac_mkid_interface_v1_01_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dac_mkid_interface_v1_01_a/hdl/vhdl/dac_mkid_interface.vhd
+vhdl work ../hdl/chan_packet_dac_mkid_wrapper.vhd

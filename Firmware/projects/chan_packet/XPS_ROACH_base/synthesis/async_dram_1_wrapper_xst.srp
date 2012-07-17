@@ -1,0 +1,539 @@
+Release 11.4 - xst L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+--> 
+PMSPEC -- Overriding Xilinx file </opt/Xilinx/11.1/EDK/virtex5/data/virtex5.acd> with local file </opt/Xilinx/11.1/ISE/virtex5/data/virtex5.acd>
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input Format                       : MIXED
+Input File Name                    : "async_dram_1_wrapper_xst.prj"
+Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+
+---- Target Parameters
+Target Device                      : xc5vsx95tff1136-1
+Output File Name                   : "../implementation/async_dram_1_wrapper.ngc"
+
+---- Source Options
+Top Module Name                    : async_dram_1_wrapper
+
+---- Target Options
+Add IO Buffers                     : NO
+
+---- General Options
+Optimization Goal                  : speed
+Netlist Hierarchy                  : as_optimized
+Optimization Effort                : 1
+Hierarchy Separator                : /
+
+---- Other Options
+Cores Search Directories           : {../implementation/async_dram_1_wrapper}
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/async_dram.v" in library async_dram_v1_00_a
+Compiling verilog file "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/rd_fifo_bram.v" in library async_dram_v1_00_a
+Module <async_dram> compiled
+Compiling verilog file "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/rd_fifo_dist.v" in library async_dram_v1_00_a
+Module <rd_fifo_bram> compiled
+Compiling verilog file "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/data_fifo_dist.v" in library async_dram_v1_00_a
+Module <rd_fifo_dist> compiled
+Compiling verilog file "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/transaction_fifo_dist.v" in library async_dram_v1_00_a
+Module <data_fifo_dist> compiled
+Module <transaction_fifo_dist> compiled
+Compiling verilog file "../hdl/async_dram_1_wrapper.v" in library work
+Module <async_dram_1_wrapper> compiled
+No errors in compilation
+Analysis of file <"async_dram_1_wrapper_xst.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <async_dram_1_wrapper> in library <work>.
+
+Analyzing hierarchy for module <async_dram> in library <async_dram_v1_00_a> with parameters.
+	BRAM_FIFOS = "00000000000000000000000000000001"
+	C_HALF_BURST = "00000000000000000000000000000000"
+	C_WIDE_DATA = "00000000000000000000000000000000"
+	TAG_BUFFER_EN = "00000000000000000000000000000000"
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <async_dram_1_wrapper>.
+Module <async_dram_1_wrapper> is correct for synthesis.
+ 
+Analyzing module <async_dram> in library <async_dram_v1_00_a>.
+	BRAM_FIFOS = 32'sb00000000000000000000000000000001
+	C_HALF_BURST = 32'sb00000000000000000000000000000000
+	C_WIDE_DATA = 32'sb00000000000000000000000000000000
+	TAG_BUFFER_EN = 32'sb00000000000000000000000000000000
+WARNING:Xst:2211 - "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/data_fifo_dist.v" line 262: Instantiating black box module <data_fifo_dist>.
+WARNING:Xst:2211 - "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/transaction_fifo_dist.v" line 277: Instantiating black box module <transaction_fifo_dist>.
+WARNING:Xst:2211 - "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/rd_fifo_bram.v" line 245: Instantiating black box module <rd_fifo_bram>.
+Module <async_dram> is correct for synthesis.
+ 
+    Set property "MAX_FANOUT = 20" for signal <Mem_Cmd_Ack> in unit <async_dram>.
+    Set property "MAX_FANOUT = 20" for signal <Mem_Rd_Ack> in unit <async_dram>.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <async_dram>.
+    Related source file is "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/async_dram.v".
+WARNING:Xst:646 - Signal <txn_fifo_underflow> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <txn_fifo_overflow> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <rd_data_fifo_underflow> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <rd_data_fifo_overflow> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <rd_data_fifo_full> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <rd_data_fifo_almost_full> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <dat_fifo_underflow> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <dat_fifo_overflow> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <dat_fifo_empty> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Found 1-bit register for signal <dram_reset>.
+    Found 1-bit register for signal <cycle_wait>.
+    Found 162-bit register for signal <dat_fifo_input_reg>.
+    Found 1-bit register for signal <dat_fifo_we_reg>.
+    Found 4-bit register for signal <dram_reset_extend>.
+    Found 1-bit register for signal <dram_reset_reg>.
+    Found 144-bit register for signal <rd_data_fifo_input_reg>.
+    Found 1-bit register for signal <rd_data_fifo_we_reg>.
+    Found 1-bit register for signal <second_cycle>.
+    Found 1-bit register for signal <second_df_write>.
+    Found 33-bit register for signal <txn_fifo_input_reg>.
+    Found 1-bit register for signal <txn_fifo_we_reg>.
+    Summary:
+	inferred 351 D-type flip-flop(s).
+Unit <async_dram> synthesized.
+
+
+Synthesizing Unit <async_dram_1_wrapper>.
+    Related source file is "../hdl/async_dram_1_wrapper.v".
+Unit <async_dram_1_wrapper> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 14
+ 1-bit register                                        : 11
+ 144-bit register                                      : 1
+ 162-bit register                                      : 1
+ 33-bit register                                       : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Reading core <../implementation/async_dram_1_wrapper/data_fifo_dist.ngc>.
+Reading core <../implementation/async_dram_1_wrapper/transaction_fifo_dist.ngc>.
+Reading core <../implementation/async_dram_1_wrapper/rd_fifo_bram.ngc>.
+Loading core <data_fifo_dist> for timing and area information for instance <dat_fifo>.
+Loading core <transaction_fifo_dist> for timing and area information for instance <txn_fifo>.
+Loading core <rd_fifo_bram> for timing and area information for instance <deep_fifos.rd_data_fifo0>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 350
+ Flip-Flops                                            : 350
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <async_dram_1_wrapper> ...
+
+Optimizing unit <async_dram> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/wr_rst_reg_1> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/rstblk/wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/rd_rst_reg_2> in Unit <BU2> is equivalent to the following 2 FFs/Latches : <U0/grf.rf/rstblk/rd_rst_reg_1> <U0/grf.rf/rstblk/rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_fb> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_i> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/wr_rst_reg_1> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/rstblk/wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/rd_rst_reg_2> in Unit <BU2> is equivalent to the following 2 FFs/Latches : <U0/grf.rf/rstblk/rd_rst_reg_1> <U0/grf.rf/rstblk/rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_fb> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_i> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/wr_rst_reg_1> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/rstblk/wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/rd_rst_reg_2> in Unit <BU2> is equivalent to the following 2 FFs/Latches : <U0/grf.rf/rstblk/rd_rst_reg_1> <U0/grf.rf/rstblk/rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_fb> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_i> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/wr_rst_reg_1> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/rstblk/wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/rd_rst_reg_2> in Unit <BU2> is equivalent to the following 2 FFs/Latches : <U0/grf.rf/rstblk/rd_rst_reg_1> <U0/grf.rf/rstblk/rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_fb> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_i> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/wr_rst_reg_1> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/rstblk/wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/rd_rst_reg_2> in Unit <BU2> is equivalent to the following 2 FFs/Latches : <U0/grf.rf/rstblk/rd_rst_reg_1> <U0/grf.rf/rstblk/rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_fb> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_i> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/wr_rst_reg_1> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/rstblk/wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/rstblk/rd_rst_reg_2> in Unit <BU2> is equivalent to the following 2 FFs/Latches : <U0/grf.rf/rstblk/rd_rst_reg_1> <U0/grf.rf/rstblk/rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_fb> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.rd/gr1.rfwft/empty_fwft_i> 
+INFO:Xst:2260 - The FF/Latch <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_i> in Unit <BU2> is equivalent to the following FF/Latch : <U0/grf.rf/gl0.wr/gwas.wsts/ram_full_fb_i> 
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 350
+ Flip-Flops                                            : 350
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+Top Level Output File Name         : ../implementation/async_dram_1_wrapper.ngc
+Output Format                      : ngc
+Optimization Goal                  : speed
+Keep Hierarchy                     : no
+
+Design Statistics
+# IOs                              : 753
+
+Cell Usage :
+# BELS                             : 298
+#      GND                         : 4
+#      INV                         : 7
+#      LUT1                        : 20
+#      LUT2                        : 77
+#      LUT3                        : 19
+#      LUT4                        : 50
+#      LUT5                        : 14
+#      LUT6                        : 28
+#      MUXCY                       : 48
+#      VCC                         : 2
+#      XORCY                       : 29
+# FlipFlops/Latches                : 1213
+#      FD                          : 361
+#      FDC                         : 174
+#      FDCE                        : 620
+#      FDE                         : 3
+#      FDP                         : 33
+#      FDPE                        : 18
+#      FDR                         : 2
+#      FDS                         : 2
+# RAMS                             : 39
+#      RAM32M                      : 32
+#      RAM32X1D                    : 3
+#      RAMB36_EXP                  : 4
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 5vsx95tff1136-1 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:            1213  out of  58880     2%  
+ Number of Slice LUTs:                  349  out of  58880     0%  
+    Number used as Logic:               215  out of  58880     0%  
+    Number used as Memory:              134  out of  24320     0%  
+       Number used as RAM:              134
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:   1418
+   Number with an unused Flip Flop:     205  out of   1418    14%  
+   Number with an unused LUT:          1069  out of   1418    75%  
+   Number of fully used LUT-FF pairs:   144  out of   1418    10%  
+   Number of unique control sets:        51
+
+IO Utilization: 
+ Number of IOs:                         753
+ Number of bonded IOBs:                   0  out of    640     0%  
+
+Specific Feature Utilization:
+ Number of Block RAM/FIFO:                4  out of    244     1%  
+    Number using Block RAM only:          4
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+---------------------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)                 | Load  |
+-----------------------------------+---------------------------------------+-------+
+Mem_Clk                            | NONE(async_dram_1/dram_reset_extend_3)| 547   |
+dram_clk                           | NONE(async_dram_1/dram_reset)         | 709   |
+-----------------------------------+---------------------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+Control Signal                                                                                                                                     | Buffer(FF name)                                                                                                                                                         | Load  |
+---------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)                                | NONE(async_dram_1/dat_fifo/BU2/U0/grf.rf/mem/dout_i_0)                                                                                                                  | 324   |
+async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)| NONE(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/dout_i_0)                                                                                                  | 144   |
+async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)                                | NONE(async_dram_1/txn_fifo/BU2/U0/grf.rf/mem/dout_i_0)                                                                                                                  | 66    |
+async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)| NONE(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_10)                                                                         | 43    |
+async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)| NONE(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                                                         | 40    |
+async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)| NONE(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                                                        | 40    |
+async_dram_1/deep_fifos.rd_data_fifo0/BU2/dbiterr(async_dram_1/deep_fifos.rd_data_fifo0/BU2/XST_GND:G)                                             | NONE(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP)| 32    |
+async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)| NONE(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                                                            | 25    |
+async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)                                | NONE(async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_1)                                                                                          | 24    |
+async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)                                | NONE(async_dram_1/dat_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                                                                         | 20    |
+async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)                                | NONE(async_dram_1/dat_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                                                                        | 20    |
+async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)                                | NONE(async_dram_1/txn_fifo/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_3)                                                                                          | 18    |
+async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)                                | NONE(async_dram_1/txn_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                                                                         | 16    |
+async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)                                | NONE(async_dram_1/txn_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                                                                        | 16    |
+async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)                                | NONE(async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                                                                            | 15    |
+async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)                                | NONE(async_dram_1/txn_fifo/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                                                                            | 13    |
+async_dram_1/dram_reset(async_dram_1/dram_reset:Q)                                                                                                 | NONE(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_asreg)                                                                                                           | 6     |
+async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)                                  | NONE(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                                                                           | 3     |
+async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)  | NONE(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                                                           | 3     |
+async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)                                  | NONE(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                                                                           | 3     |
+async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)                                  | NONE(async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                                                                           | 2     |
+async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)  | NONE(async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                                                           | 2     |
+async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)                                  | NONE(async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                                                                           | 2     |
+---------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: 3.142ns (Maximum Frequency: 318.226MHz)
+   Minimum input arrival time before clock: 2.414ns
+   Maximum output required time after clock: 1.291ns
+   Maximum combinational path delay: 0.238ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'Mem_Clk'
+  Clock period: 2.739ns (frequency: 365.097MHz)
+  Total number of paths / destination ports: 1565 / 963
+-------------------------------------------------------------------------
+Delay:               2.739ns (Levels of Logic = 7)
+  Source:            async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.rd/rpntr/count_1 (FF)
+  Destination:       async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i (FF)
+  Source Clock:      Mem_Clk rising
+  Destination Clock: Mem_Clk rising
+
+  Data Path: async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.rd/rpntr/count_1 to async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             3   0.471   0.800  U0/grf.rf/gl0.rd/rpntr/count_1 (U0/grf.rf/gl0.rd/rpntr/count<1>)
+     LUT4:I0->O            1   0.094   0.000  U0/grf.rf/gl0.rd/gras.rsts/c1/v1_0_and00001 (U0/grf.rf/gl0.rd/gras.rsts/c1/v1<0>)
+     MUXCY:S->O            1   0.372   0.000  U0/grf.rf/gl0.rd/gras.rsts/c1/gmux.gm[0].gm1.m1 (U0/grf.rf/gl0.rd/gras.rsts/c1/carrynet<0>)
+     MUXCY:CI->O           1   0.026   0.000  U0/grf.rf/gl0.rd/gras.rsts/c1/gmux.gm[1].gms.ms (U0/grf.rf/gl0.rd/gras.rsts/c1/carrynet<1>)
+     MUXCY:CI->O           1   0.026   0.000  U0/grf.rf/gl0.rd/gras.rsts/c1/gmux.gm[2].gms.ms (U0/grf.rf/gl0.rd/gras.rsts/c1/carrynet<2>)
+     MUXCY:CI->O           1   0.026   0.000  U0/grf.rf/gl0.rd/gras.rsts/c1/gmux.gm[3].gms.ms (U0/grf.rf/gl0.rd/gras.rsts/c1/carrynet<3>)
+     MUXCY:CI->O           1   0.254   0.576  U0/grf.rf/gl0.rd/gras.rsts/c1/gmux.gm[4].gms.ms (U0/grf.rf/gl0.rd/gras.rsts/comp1)
+     LUT6:I4->O            1   0.094   0.000  U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i_or00001 (U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i_or0000)
+     FDP:D                    -0.018          U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i
+    ----------------------------------------
+    Total                      2.739ns (1.363ns logic, 1.376ns route)
+                                       (49.8% logic, 50.2% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'dram_clk'
+  Clock period: 3.142ns (frequency: 318.226MHz)
+  Total number of paths / destination ports: 4204 / 1226
+-------------------------------------------------------------------------
+Delay:               3.142ns (Levels of Logic = 5)
+  Source:            async_dram_1/txn_fifo/BU2/U0/grf.rf/mem/dout_i_32 (FF)
+  Destination:       async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i (FF)
+  Source Clock:      dram_clk rising
+  Destination Clock: dram_clk rising
+
+  Data Path: async_dram_1/txn_fifo/BU2/U0/grf.rf/mem/dout_i_32 to async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q             1   0.471   0.710  U0/grf.rf/mem/dout_i_32 (dout(32))
+     end scope: 'BU2'
+     end scope: 'async_dram_1/txn_fifo'
+     LUT4:I1->O            6   0.094   0.816  async_dram_1/dat_fifo_re1 (async_dram_1/dat_fifo_re)
+     begin scope: 'async_dram_1/dat_fifo'
+     begin scope: 'BU2'
+     LUT4:I0->O          173   0.094   0.863  U0/grf.rf/gl0.rd/gr1.rfwft/RAM_RD_EN_FWFT1 (U0/grf.rf/gl0.rd/rpntr/count_not0001)
+     LUT5:I2->O            1   0.094   0.000  U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i_or0000192 (U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i_or0000)
+     FDP:D                    -0.018          U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i
+    ----------------------------------------
+    Total                      3.142ns (0.753ns logic, 2.389ns route)
+                                       (24.0% logic, 76.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'Mem_Clk'
+  Total number of paths / destination ports: 384 / 380
+-------------------------------------------------------------------------
+Offset:              1.519ns (Levels of Logic = 2)
+  Source:            Mem_Rd_Ack (PAD)
+  Destination:       async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP (RAM)
+  Destination Clock: Mem_Clk rising
+
+  Data Path: Mem_Rd_Ack to async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     begin scope: 'async_dram_1/deep_fifos.rd_data_fifo0'
+     begin scope: 'BU2'
+     LUT5:I0->O            8   0.094   0.374  U0/grf.rf/mem/tmp_ram_rd_en1 (U0/grf.rf/mem/tmp_ram_rd_en)
+     RAMB36_EXP:ENBU           0.414          U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP
+    ----------------------------------------
+    Total                      1.519ns (1.145ns logic, 0.374ns route)
+                                       (75.4% logic, 24.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'dram_clk'
+  Total number of paths / destination ports: 486 / 486
+-------------------------------------------------------------------------
+Offset:              2.414ns (Levels of Logic = 4)
+  Source:            dram_ready (PAD)
+  Destination:       async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i (FF)
+  Destination Clock: dram_clk rising
+
+  Data Path: dram_ready to async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LUT4:I0->O            6   0.094   0.816  async_dram_1/dat_fifo_re1 (async_dram_1/dat_fifo_re)
+     begin scope: 'async_dram_1/dat_fifo'
+     begin scope: 'BU2'
+     LUT4:I0->O          173   0.094   0.863  U0/grf.rf/gl0.rd/gr1.rfwft/RAM_RD_EN_FWFT1 (U0/grf.rf/gl0.rd/rpntr/count_not0001)
+     LUT5:I2->O            1   0.094   0.000  U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i_or0000192 (U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i_or0000)
+     FDP:D                    -0.018          U0/grf.rf/gl0.rd/gras.rsts/ram_empty_fb_i
+    ----------------------------------------
+    Total                      2.414ns (0.735ns logic, 1.679ns route)
+                                       (30.4% logic, 69.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'Mem_Clk'
+  Total number of paths / destination ports: 147 / 146
+-------------------------------------------------------------------------
+Offset:              1.157ns (Levels of Logic = 2)
+  Source:            async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/prog_full_i (FF)
+  Destination:       Mem_Cmd_Ack (PAD)
+  Source Clock:      Mem_Clk rising
+
+  Data Path: async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/prog_full_i to Mem_Cmd_Ack
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDPE:C->Q             4   0.471   0.592  U0/grf.rf/gl0.wr/gwas.gpf.wrpf/prog_full_i (prog_full)
+     end scope: 'BU2'
+     end scope: 'async_dram_1/dat_fifo'
+     LUT2:I0->O            0   0.094   0.000  async_dram_1/Mem_Cmd_Ack1 (Mem_Cmd_Ack)
+    ----------------------------------------
+    Total                      1.157ns (0.565ns logic, 0.592ns route)
+                                       (48.8% logic, 51.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'dram_clk'
+  Total number of paths / destination ports: 198 / 197
+-------------------------------------------------------------------------
+Offset:              1.291ns (Levels of Logic = 1)
+  Source:            async_dram_1/cycle_wait (FF)
+  Destination:       dram_cmd_en (PAD)
+  Source Clock:      dram_clk rising
+
+  Data Path: async_dram_1/cycle_wait to dram_cmd_en
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              4   0.471   0.726  async_dram_1/cycle_wait (async_dram_1/cycle_wait)
+     LUT3:I0->O            0   0.094   0.000  async_dram_1/dram_cmd_en1 (dram_cmd_en)
+    ----------------------------------------
+    Total                      1.291ns (0.565ns logic, 0.726ns route)
+                                       (43.8% logic, 56.2% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 33 / 33
+-------------------------------------------------------------------------
+Delay:               0.238ns (Levels of Logic = 1)
+  Source:            dram_ready (PAD)
+  Destination:       dram_cmd_en (PAD)
+
+  Data Path: dram_ready to dram_cmd_en
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LUT3:I2->O            0   0.094   0.000  async_dram_1/dram_cmd_en1 (dram_cmd_en)
+    ----------------------------------------
+    Total                      0.238ns (0.238ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 10.00 secs
+Total CPU time to Xst completion: 9.51 secs
+ 
+--> 
+
+
+Total memory usage is 449600 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   12 (   0 filtered)
+Number of infos    :   25 (   0 filtered)
+

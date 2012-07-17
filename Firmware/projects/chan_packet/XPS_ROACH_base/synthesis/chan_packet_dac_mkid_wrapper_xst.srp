@@ -1,0 +1,510 @@
+Release 11.4 - xst L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+--> 
+PMSPEC -- Overriding Xilinx file </opt/Xilinx/11.1/EDK/virtex5/data/virtex5.acd> with local file </opt/Xilinx/11.1/ISE/virtex5/data/virtex5.acd>
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input Format                       : MIXED
+Input File Name                    : "chan_packet_dac_mkid_wrapper_xst.prj"
+Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+
+---- Target Parameters
+Target Device                      : xc5vsx95tff1136-1
+Output File Name                   : "../implementation/chan_packet_dac_mkid_wrapper.ngc"
+
+---- Source Options
+Top Module Name                    : chan_packet_dac_mkid_wrapper
+
+---- Target Options
+Add IO Buffers                     : NO
+
+---- General Options
+Optimization Goal                  : speed
+Netlist Hierarchy                  : as_optimized
+Optimization Effort                : 1
+Hierarchy Separator                : /
+
+---- Other Options
+Cores Search Directories           : {../implementation/chan_packet_dac_mkid_wrapper}
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dac_mkid_interface_v1_01_a/hdl/vhdl/dac_mkid_interface.vhd" in Library dac_mkid_interface_v1_01_a.
+Entity <dac_mkid_interface> compiled.
+Entity <dac_mkid_interface> (Architecture <Structural>) compiled.
+Compiling vhdl file "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/hdl/chan_packet_dac_mkid_wrapper.vhd" in Library work.
+Entity <chan_packet_dac_mkid_wrapper> compiled.
+Entity <chan_packet_dac_mkid_wrapper> (Architecture <STRUCTURE>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <chan_packet_dac_mkid_wrapper> in library <work> (architecture <STRUCTURE>).
+
+Analyzing hierarchy for entity <dac_mkid_interface> in library <dac_mkid_interface_v1_01_a> (architecture <Structural>) with generics.
+	CTRL_CLK_PHASE = 0
+	OUTPUT_CLK = 0
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <chan_packet_dac_mkid_wrapper> in library <work> (Architecture <STRUCTURE>).
+Entity <chan_packet_dac_mkid_wrapper> analyzed. Unit <chan_packet_dac_mkid_wrapper> generated.
+
+Analyzing generic Entity <dac_mkid_interface> in library <dac_mkid_interface_v1_01_a> (Architecture <Structural>).
+	CTRL_CLK_PHASE = 0
+	OUTPUT_CLK = 0
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUF_inst_not_sdenb_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DRIVE =  12" for instance <OBUF_inst_not_sdenb_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <OBUF_inst_not_sdenb_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SLEW =  SLOW" for instance <OBUF_inst_not_sdenb_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUF_inst_not_sdenb_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DRIVE =  12" for instance <OBUF_inst_not_sdenb_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <OBUF_inst_not_sdenb_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SLEW =  SLOW" for instance <OBUF_inst_not_sdenb_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUF_inst_sclk> in unit <dac_mkid_interface>.
+    Set user-defined property "DRIVE =  12" for instance <OBUF_inst_sclk> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <OBUF_inst_sclk> in unit <dac_mkid_interface>.
+    Set user-defined property "SLEW =  SLOW" for instance <OBUF_inst_sclk> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUF_inst_sdi> in unit <dac_mkid_interface>.
+    Set user-defined property "DRIVE =  12" for instance <OBUF_inst_sdi> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <OBUF_inst_sdi> in unit <dac_mkid_interface>.
+    Set user-defined property "SLEW =  SLOW" for instance <OBUF_inst_sdi> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUF_inst_not_reset> in unit <dac_mkid_interface>.
+    Set user-defined property "DRIVE =  12" for instance <OBUF_inst_not_reset> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <OBUF_inst_not_reset> in unit <dac_mkid_interface>.
+    Set user-defined property "SLEW =  SLOW" for instance <OBUF_inst_not_reset> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_smpl_clk_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_smpl_clk_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_smpl_clk_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_smpl_clk_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_dac_sync_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_dac_sync_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_dac_sync_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_dac_sync_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[0].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[0].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[0].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[1].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[1].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[1].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[2].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[2].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[2].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[3].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[3].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[3].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[4].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[4].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[4].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[5].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[5].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[5].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[6].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[6].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[6].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[7].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[7].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[7].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[8].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[8].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[8].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[9].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[9].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[9].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[10].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[10].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[10].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[11].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[11].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[11].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[12].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[12].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[12].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[13].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[13].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[13].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[14].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[14].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[14].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_i[15].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_i[15].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_i[15].ODDR_inst_data_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[0].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[0].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[1].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[1].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[2].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[2].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[3].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[3].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[4].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[4].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[5].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[5].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[6].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[6].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[7].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[7].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[8].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[8].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[9].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[9].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[10].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[10].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[11].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[11].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[12].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[12].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[13].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[13].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[14].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[14].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data_i[15].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data_i[15].OBUFDS_inst_data1_i> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[0].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[0].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[0].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[1].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[1].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[1].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[2].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[2].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[2].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[3].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[3].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[3].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[4].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[4].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[4].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[5].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[5].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[5].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[6].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[6].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[6].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[7].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[7].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[7].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[8].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[8].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[8].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[9].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[9].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[9].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[10].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[10].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[10].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[11].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[11].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[11].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[12].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[12].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[12].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[13].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[13].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[13].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[14].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[14].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[14].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "DDR_CLK_EDGE =  SAME_EDGE" for instance <ODDR_inst_generate_data_q[15].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "INIT =  0" for instance <ODDR_inst_generate_data_q[15].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "SRTYPE =  SYNC" for instance <ODDR_inst_generate_data_q[15].ODDR_inst_data_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[0].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[0].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[1].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[1].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[2].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[2].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[3].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[3].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[4].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[4].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[5].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[5].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[6].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[6].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[7].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[7].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[8].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[8].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[9].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[9].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[10].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[10].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[11].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[11].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[12].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[12].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[13].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[13].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[14].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[14].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <OBUFDS_inst_generate_data1_q[15].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+    Set user-defined property "IOSTANDARD =  LVDS_25" for instance <OBUFDS_inst_generate_data1_q[15].OBUFDS_inst_data1_q> in unit <dac_mkid_interface>.
+Entity <dac_mkid_interface> analyzed. Unit <dac_mkid_interface> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <dac_mkid_interface>.
+    Related source file is "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dac_mkid_interface_v1_01_a/hdl/vhdl/dac_mkid_interface.vhd".
+WARNING:Xst:1305 - Output <dac_clk180_out> is never assigned. Tied to value 0.
+WARNING:Xst:1305 - Output <dac_clk90_out> is never assigned. Tied to value 0.
+WARNING:Xst:647 - Input <dac_clk_n> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <dac_clk_p> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:1305 - Output <dac_clk_out> is never assigned. Tied to value 0.
+WARNING:Xst:1305 - Output <dac_clk270_out> is never assigned. Tied to value 0.
+WARNING:Xst:1305 - Output <dac_dcm_locked> is never assigned. Tied to value 0.
+WARNING:Xst:1780 - Signal <dcm_clk90> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <dcm_clk270> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <dcm_clk180> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <dcm_clk> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <dac_clk_in> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <dac_clk> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <clk90> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <clk270> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <clk180> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <clk> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+Unit <dac_mkid_interface> synthesized.
+
+
+Synthesizing Unit <chan_packet_dac_mkid_wrapper>.
+    Related source file is "/home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/hdl/chan_packet_dac_mkid_wrapper.vhd".
+Unit <chan_packet_dac_mkid_wrapper> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <chan_packet_dac_mkid_wrapper> ...
+
+Optimizing unit <dac_mkid_interface> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+Top Level Output File Name         : ../implementation/chan_packet_dac_mkid_wrapper.ngc
+Output Format                      : ngc
+Optimization Goal                  : speed
+Keep Hierarchy                     : no
+
+Design Statistics
+# IOs                              : 156
+
+Cell Usage :
+# BELS                             : 2
+#      GND                         : 1
+#      VCC                         : 1
+# FlipFlops/Latches                : 32
+#      ODDR                        : 32
+# Clock Buffers                    : 1
+#      BUFG                        : 1
+# IO Buffers                       : 41
+#      OBUF                        : 5
+#      OBUFDS                      : 36
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 5vsx95tff1136-1 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:              32  out of  58880     0%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:     32
+   Number with an unused Flip Flop:       0  out of     32     0%  
+   Number with an unused LUT:            32  out of     32   100%  
+   Number of fully used LUT-FF pairs:     0  out of     32     0%  
+   Number of unique control sets:         0
+
+IO Utilization: 
+ Number of IOs:                         156
+ Number of bonded IOBs:                  84  out of    640    13%  
+
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                1  out of     32     3%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+dac_smpl_clk                       | BUFG                   | 32    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: 0.434ns
+   Maximum output required time after clock: 3.395ns
+   Maximum combinational path delay: 2.452ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'dac_smpl_clk'
+  Total number of paths / destination ports: 64 / 64
+-------------------------------------------------------------------------
+Offset:              0.434ns (Levels of Logic = 0)
+  Source:            dac_data_q0<15> (PAD)
+  Destination:       chan_packet_dac_mkid/ODDR_inst_generate_data_q[15].ODDR_inst_data_q (FF)
+  Destination Clock: dac_smpl_clk rising
+
+  Data Path: dac_data_q0<15> to chan_packet_dac_mkid/ODDR_inst_generate_data_q[15].ODDR_inst_data_q
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     ODDR:D1                   0.434          chan_packet_dac_mkid/ODDR_inst_generate_data_q[15].ODDR_inst_data_q
+    ----------------------------------------
+    Total                      0.434ns (0.434ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'dac_smpl_clk'
+  Total number of paths / destination ports: 64 / 64
+-------------------------------------------------------------------------
+Offset:              3.395ns (Levels of Logic = 1)
+  Source:            chan_packet_dac_mkid/ODDR_inst_generate_data_i[15].ODDR_inst_data_i (FF)
+  Destination:       dac_data_i_n<15> (PAD)
+  Source Clock:      dac_smpl_clk rising
+
+  Data Path: chan_packet_dac_mkid/ODDR_inst_generate_data_i[15].ODDR_inst_data_i to dac_data_i_n<15>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     ODDR:C->Q             1   0.607   0.336  chan_packet_dac_mkid/ODDR_inst_generate_data_i[15].ODDR_inst_data_i (chan_packet_dac_mkid/data_i<15>)
+     OBUFDS:I->O               2.452          chan_packet_dac_mkid/OBUFDS_inst_generate_data_i[15].OBUFDS_inst_data1_i (dac_data_i_p<15>)
+    ----------------------------------------
+    Total                      3.395ns (3.059ns logic, 0.336ns route)
+                                       (90.1% logic, 9.9% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 9 / 9
+-------------------------------------------------------------------------
+Delay:               2.452ns (Levels of Logic = 1)
+  Source:            not_sdenb_i (PAD)
+  Destination:       dac_not_sdenb_i (PAD)
+
+  Data Path: not_sdenb_i to dac_not_sdenb_i
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     OBUF:I->O                 2.452          chan_packet_dac_mkid/OBUF_inst_not_sdenb_i (dac_not_sdenb_i)
+    ----------------------------------------
+    Total                      2.452ns (2.452ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.84 secs
+ 
+--> 
+
+
+Total memory usage is 451636 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   17 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

@@ -1,0 +1,17 @@
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_mem_if_top.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_calib.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_ctl_io.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dm_iob.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dq_iob.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_io.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_top.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_write.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_addr_fifo.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_rd.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_top.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_wr.v
+verilog dram_controller_v1_00_a /home/sean/Casper/ddc256/chan_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/dram_controller.v
+verilog work ../hdl/dram_controller_inst_wrapper.v
