@@ -26,7 +26,7 @@ echo " done"
 echo -n "Copying over lastest PulseServer code "
 for i in ${ROACHES[*]}
 do
-	scp -q PulseServer.c root@10.0.0.1$i:~/PulseServer/
+	scp -q lib/PulseServer.c root@10.0.0.1$i:~/PulseServer/
 	check_status
 	echo -n " ."
 done

@@ -123,6 +123,7 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
 {
     int time_to_stop = 0;
     uint32_t data_writing_ptr = -1;
+	uint32_t data_writing_ptr_last = -1;
     uint32_t start_ptr = -1;
     uint32_t end_ptr = -1;
     int require_wrap = 0;
@@ -156,6 +157,7 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
     {
         end_ptr = start_ptr;
     }
+	data_writing_ptr_last = start_ptr;
     while (time_to_stop == 0)
     {
         usleep(100);
@@ -167,9 +169,11 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
         if (fread(&data_writing_ptr,sizeof(uint32_t),1,ptrfile) < 0)
 			error("ERROR reading ptrfile");
         fclose(ptrfile);
-		if (DEBUG == 1)
+		if (DEBUG == 1 && data_writing_ptr-data_writing_ptr_last > 10)
 		{
-			printf("%d %d\n",data_writing_ptr,require_wrap);
+			data_writing_ptr_last = data_writing_ptr;
+			printf("Accumulating file %d/8500\n",data_writing_ptr);
+			fflush(stdout);
 		}
         if (data_writing_ptr > end_ptr)
         {
