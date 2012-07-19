@@ -31,9 +31,10 @@ class AppForm(QMainWindow):
         #self.iq_centers = numpy.array([0.+0j]*256)
         
     def openClient(self):
+        self.status_text.setText('connecting...')
         self.roach = corr.katcp_wrapper.FpgaClient(self.textbox_roachIP.text(),7147)
         time.sleep(2)
-        self.status_text.setText('connection established')
+        self.status_text.setText('connecting...done')
         self.button_openClient.setDisabled(True)
 
     def programRFswitches(self, regStr = '10110'):
@@ -213,8 +214,6 @@ class AppForm(QMainWindow):
             self.roach.write_int('start', 0)
             self.roach.write_int('LO_SLE', 0)
 
-        self.status_text.setText('LO programmed. ')
-
     def define_LUTs(self):
         self.iq_centers = numpy.array([0.+0j]*256)
         self.define_DAC_LUT()
@@ -276,7 +275,7 @@ class AppForm(QMainWindow):
         print "minimum attenuation: ", self.minimumAttenuation
         amplitudes = [10**(+(atten_min-a)/20.) for a in self.attens]
         self.I_dac, self.Q_dac = self.freqCombLUT('yes', self.freqs_dac, self.sampleRate, self.freqRes, amplitudes)
-        self.status_text.setText('done defining DAC freqs. ')
+        print 'done defining DAC freqs.'
         
     def define_DDS_LUT(self, phase = [0.]*256):
         fft_len=2**9
@@ -321,7 +320,6 @@ class AppForm(QMainWindow):
             self.roach.write_int('load_bins', (i<<1) + (1<<0))
             self.roach.write_int('load_bins', (i<<1) + (0<<0))
             i = i + 1
-        self.status_text.setText('done writing LUTs. ')
         return residuals
     
     def write_LUTs(self):
@@ -515,7 +513,7 @@ class AppForm(QMainWindow):
 
     def toggleDAC(self):
         if self.dacStatus == 'off':
-            print "Starting LUT...",
+            print "Starting DAC...",
             self.roach.write_int('startDAC', 1)
             time.sleep(1)
             while self.roach.read_int('DRAM_LUT_rd_valid') != 0:
@@ -526,14 +524,16 @@ class AppForm(QMainWindow):
                 print ".",
             f_base = float(self.textbox_loFreq.text())
             self.programLO(f_base,1)
-            print "done."
             self.button_startDAC.setText('Stop DAC')
             self.dacStatus = 'on'
             self.status_text.setText('DAC turned on. ')       
+            print "done"
         else:
+			print "Stopping DAC..."
             self.roach.write_int('startDAC', 0)
             self.button_startDAC.setText('Start DAC')
             self.dacStatus = 'off'
+			print "done"
             self.status_text.setText('DAC turned off. ')       
    
     def loadFreqsAttens(self):

@@ -1,0 +1,11 @@
+#############################################################################
+##
+## IP Name  : chan_512_packet
+## Desc     : Automatically generated IP core wrapping a
+##            Simulink Xilinx System Generator netlist.
+##            Please do not modify by hand, this file will be erased
+##
+#############################################################################
+
+Files
+chan_512_packet.ngc

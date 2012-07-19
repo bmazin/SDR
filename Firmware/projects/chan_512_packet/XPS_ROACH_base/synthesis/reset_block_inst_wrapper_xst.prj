@@ -1,0 +1,2 @@
+verilog reset_block_v1_00_a /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/reset_block_v1_00_a/hdl/verilog/reset_block.v
+verilog work ../hdl/reset_block_inst_wrapper.v

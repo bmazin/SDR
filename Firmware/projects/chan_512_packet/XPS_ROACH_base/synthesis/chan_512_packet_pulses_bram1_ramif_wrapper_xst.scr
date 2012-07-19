@@ -1,0 +1,13 @@
+run
+-opt_mode speed
+-netlist_hierarchy as_optimized
+-opt_level 1
+-p xc5vsx95tff1136-1
+-top chan_512_packet_pulses_bram1_ramif_wrapper
+-ifmt MIXED
+-ifn chan_512_packet_pulses_bram1_ramif_wrapper_xst.prj
+-ofn ../implementation/chan_512_packet_pulses_bram1_ramif_wrapper.ngc
+-hierarchy_separator /
+-iobuf NO
+-sd {../implementation/chan_512_packet_pulses_bram1_ramif_wrapper}
+-vlgincdir {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }

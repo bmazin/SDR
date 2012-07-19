@@ -1,0 +1,796 @@
+Release 11.4 - platgen Xilinx EDK 11.4 Build EDK_LS4.68
+ (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+
+Command Line: platgen -p xc5vsx95tff1136-1 -lang vhdl -msg
+__xps/ise/xmsgprops.lst system.mhs 
+
+WARNING:EDK - INFO:Security:51 - The XILINXD_LICENSE_FILE environment variable
+   is not set.
+   INFO:Security:53 - The LM_LICENSE_FILE environment variable is not set.
+   WARNING:Security:43 - No license file was found in the standard Xilinx
+   license directory.
+   WARNING:Security:44 - No license file was found.
+          Please run the Xilinx License Configuration Manager
+          (xlcm or "Manage Xilinx Licenses")
+          to assist in obtaining a license.
+   WARNING:Security:42 - Your software subscription period has lapsed. Your
+   current version of Xilinx tools will continue to function, but you no longer
+   qualify for Xilinx software updates or new releases.
+
+
+Parse /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs ...
+
+Read MPD definitions ...
+WARNING:EDK:1582 - IPNAME:opb_v20 INSTANCE:opb0 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 93 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_bram_if_cntlr INSTANCE:chan_512_packet_avgIQ_bram
+   - /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 634
+   - deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_bram_if_cntlr
+   INSTANCE:chan_512_packet_pulses_bram0 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 917 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_bram_if_cntlr
+   INSTANCE:chan_512_packet_pulses_bram1 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 948 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_bram_if_cntlr
+   INSTANCE:chan_512_packet_snapPhase_bram -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1015
+   - deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_v20 INSTANCE:opb1 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1111
+   - deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_opb_lite INSTANCE:opb2opb_bridge_opb1 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1119
+   - deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_v20 INSTANCE:opb0 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 93 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_bram_if_cntlr INSTANCE:chan_512_packet_avgIQ_bram
+   - /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 634
+   - deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_bram_if_cntlr
+   INSTANCE:chan_512_packet_pulses_bram0 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 917 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_bram_if_cntlr
+   INSTANCE:chan_512_packet_pulses_bram1 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 948 -
+   deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_bram_if_cntlr
+   INSTANCE:chan_512_packet_snapPhase_bram -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1015
+   - deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_v20 INSTANCE:opb1 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1111
+   - deprecated core for architecture 'virtex5sx'!
+WARNING:EDK:1582 - IPNAME:opb_opb_lite INSTANCE:opb2opb_bridge_opb1 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1119
+   - deprecated core for architecture 'virtex5sx'!
+
+Overriding IP level properties ...
+
+Performing IP level DRCs on properties...
+
+Running DRC Tcl procedures for OPTION IPLEVEL_DRC_PROC...
+Address Map for Processor epb_opb_bridge_inst
+  (0000000000-0x0000ffff) sys_block_inst	opb0
+  (0x00050000-0x0005ffff) opb_dram_sniffer_inst	opb0
+  (0x01000000-0x010000ff) chan_512_packet_DRAM_LUT_rd_valid	opb0
+  (0x01000100-0x010001ff) chan_512_packet_FIR_b0b1	opb0
+  (0x01000200-0x010002ff) chan_512_packet_FIR_b10b11	opb0
+  (0x01000300-0x010003ff) chan_512_packet_FIR_b12b13	opb0
+  (0x01000400-0x010004ff) chan_512_packet_FIR_b14b15	opb0
+  (0x01000500-0x010005ff) chan_512_packet_FIR_b16b17	opb0
+  (0x01000600-0x010006ff) chan_512_packet_FIR_b18b19	opb0
+  (0x01000700-0x010007ff) chan_512_packet_FIR_b20b21	opb0
+  (0x01000800-0x010008ff) chan_512_packet_FIR_b22b23	opb0
+  (0x01000900-0x010009ff) chan_512_packet_FIR_b24b25	opb0
+  (0x01000a00-0x01000aff) chan_512_packet_FIR_b2b3	opb0
+  (0x01000b00-0x01000bff) chan_512_packet_FIR_b4b5	opb0
+  (0x01000c00-0x01000cff) chan_512_packet_FIR_b6b7	opb0
+  (0x01000d00-0x01000dff) chan_512_packet_FIR_b8b9	opb0
+  (0x01000e00-0x01000eff) chan_512_packet_FIR_load_coeff	opb0
+  (0x01000f00-0x01000fff) chan_512_packet_LO_SLE	opb0
+  (0x01001000-0x010010ff) chan_512_packet_SER_DI	opb0
+  (0x01001100-0x010011ff) chan_512_packet_SWAT_LE	opb0
+  (0x01001200-0x010012ff) chan_512_packet_avgIQ_addr	opb0
+  (0x01002000-0x01002fff) chan_512_packet_avgIQ_bram	opb0
+  (0x01003000-0x010030ff) chan_512_packet_avgIQ_ctrl	opb0
+  (0x01003100-0x010031ff) chan_512_packet_bins	opb0
+  (0x01003200-0x010032ff) chan_512_packet_capture_load_thresh	opb0
+  (0x01003300-0x010033ff) chan_512_packet_capture_threshold	opb0
+  (0x01003400-0x010034ff) chan_512_packet_ch_we	opb0
+  (0x01003500-0x010035ff) chan_512_packet_conv_phase_centers	opb0
+  (0x01003600-0x010036ff) chan_512_packet_conv_phase_load_centers	opb0
+  (0x01003700-0x010037ff) chan_512_packet_if_switch	opb0
+  (0x01003800-0x010038ff) chan_512_packet_load_bins	opb0
+  (0x01080000-0x010800ff)
+chan_512_packet_pulses_addr	opb0->opb2opb_bridge_opb1->opb1
+  (0x01090000-0x0109ffff)
+chan_512_packet_pulses_bram0	opb0->opb2opb_bridge_opb1->opb1
+  (0x010a0000-0x010affff)
+chan_512_packet_pulses_bram1	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b0000-0x010b00ff) chan_512_packet_regs	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b0100-0x010b01ff)
+chan_512_packet_seconds	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b0200-0x010b02ff)
+chan_512_packet_snapPhase_addr	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b1000-0x010b1fff)
+chan_512_packet_snapPhase_bram	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b2000-0x010b20ff)
+chan_512_packet_snapPhase_ctrl	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b2100-0x010b21ff) chan_512_packet_start	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b2200-0x010b22ff)
+chan_512_packet_startAccumulator	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b2300-0x010b23ff)
+chan_512_packet_startBuffer	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b2400-0x010b24ff)
+chan_512_packet_startDAC	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b2500-0x010b25ff)
+chan_512_packet_startSnap	opb0->opb2opb_bridge_opb1->opb1
+  (0x010b2600-0x010b26ff) chan_512_packet_stb_en	opb0->opb2opb_bridge_opb1->opb1
+  (0x04000000-0x07ffffff) opb_dram_sniffer_inst	opb0
+
+Computing clock values...
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   chan_512_packet_adc_mkid:adc_clk_out. Clock DRCs will not be performed on
+   this core and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   chan_512_packet_adc_mkid:adc_clk_out. Clock DRCs will not be performed on
+   this core and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   chan_512_packet_avgIQ_bram_ramif:bram_clk. Clock DRCs will not be performed
+   on this core and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   chan_512_packet_pulses_bram0_ramif:bram_clk. Clock DRCs will not be performed
+   on this core and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   chan_512_packet_pulses_bram1_ramif:bram_clk. Clock DRCs will not be performed
+   on this core and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   chan_512_packet_snapPhase_bram_ramif:bram_clk. Clock DRCs will not be
+   performed on this core and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:740 - Cannot determine the input clock associated with port :
+   infrastructure_inst:epb_clk. Clock DRCs will not be performed on this core
+   and cores connected to it. 
+INFO:EDK:1039 - Did not update the value for parameter:
+   chan_512_packet_avgIQ_bram:c_opb_clk_period_ps. Top-level frequency could not
+   be propagated to this IP. Please make sure that you have specified the
+   frequency of the top-level clock port, and that the clocks are properly
+   connected.
+INFO:EDK:1039 - Did not update the value for parameter:
+   chan_512_packet_pulses_bram0:c_opb_clk_period_ps. Top-level frequency could
+   not be propagated to this IP. Please make sure that you have specified the
+   frequency of the top-level clock port, and that the clocks are properly
+   connected.
+INFO:EDK:1039 - Did not update the value for parameter:
+   chan_512_packet_pulses_bram1:c_opb_clk_period_ps. Top-level frequency could
+   not be propagated to this IP. Please make sure that you have specified the
+   frequency of the top-level clock port, and that the clocks are properly
+   connected.
+INFO:EDK:1039 - Did not update the value for parameter:
+   chan_512_packet_snapPhase_bram:c_opb_clk_period_ps. Top-level frequency could
+   not be propagated to this IP. Please make sure that you have specified the
+   frequency of the top-level clock port, and that the clocks are properly
+   connected.
+INFO:EDK:1560 - IPNAME:opb_v20 INSTANCE:opb0 -
+   /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/opb_v20_v1_10_c/data/opb_
+   v20_v2_1_0.mpd line 74 - tool is overriding PARAMETER C_NUM_MASTERS value to
+   1
+INFO:EDK:1560 - IPNAME:opb_v20 INSTANCE:opb0 -
+   /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/opb_v20_v1_10_c/data/opb_
+   v20_v2_1_0.mpd line 75 - tool is overriding PARAMETER C_NUM_SLAVES value to
+   33
+INFO:EDK:1560 - IPNAME:bram_block INSTANCE:chan_512_packet_avgIQ_bram_ramblk -
+   /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/bram_block_v1_00_a/data/b
+   ram_block_v2_1_0.mpd line 69 - tool is overriding PARAMETER C_MEMSIZE value
+   to 0x1000
+INFO:EDK:1560 - IPNAME:bram_block INSTANCE:chan_512_packet_pulses_bram0_ramblk -
+   /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/bram_block_v1_00_a/data/b
+   ram_block_v2_1_0.mpd line 69 - tool is overriding PARAMETER C_MEMSIZE value
+   to 0x10000
+INFO:EDK:1560 - IPNAME:bram_block INSTANCE:chan_512_packet_pulses_bram1_ramblk -
+   /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/bram_block_v1_00_a/data/b
+   ram_block_v2_1_0.mpd line 69 - tool is overriding PARAMETER C_MEMSIZE value
+   to 0x10000
+INFO:EDK:1560 - IPNAME:bram_block INSTANCE:chan_512_packet_snapPhase_bram_ramblk
+   -
+   /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/bram_block_v1_00_a/data/b
+   ram_block_v2_1_0.mpd line 69 - tool is overriding PARAMETER C_MEMSIZE value
+   to 0x1000
+INFO:EDK:1560 - IPNAME:opb_v20 INSTANCE:opb1 -
+   /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/opb_v20_v1_10_c/data/opb_
+   v20_v2_1_0.mpd line 74 - tool is overriding PARAMETER C_NUM_MASTERS value to
+   1
+INFO:EDK:1560 - IPNAME:opb_v20 INSTANCE:opb1 -
+   /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/opb_v20_v1_10_c/data/opb_
+   v20_v2_1_0.mpd line 75 - tool is overriding PARAMETER C_NUM_SLAVES value to
+   14
+
+Checking platform address map ...
+
+Checking platform configuration ...
+IPNAME:opb_v20 INSTANCE:opb0 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 93 - 1
+master(s) : 33 slave(s)
+IPNAME:opb_v20 INSTANCE:opb1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1111 - 1
+master(s) : 14 slave(s)
+
+Checking port drivers...
+WARNING:EDK:2099 - PORT:sys_clk CONNECTOR:sys_clk -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 55 -
+   floating connection!
+WARNING:EDK:2099 - PORT:sys_clk90 CONNECTOR:sys_clk90 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 56 -
+   floating connection!
+WARNING:EDK:2099 - PORT:sys_clk180 CONNECTOR:sys_clk180 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 57 -
+   floating connection!
+WARNING:EDK:2099 - PORT:sys_clk270 CONNECTOR:sys_clk270 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 58 -
+   floating connection!
+WARNING:EDK:2099 - PORT:sys_clk_lock CONNECTOR:sys_clk_lock -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 59 -
+   floating connection!
+WARNING:EDK:2099 - PORT:sys_clk2x CONNECTOR:sys_clk2x -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 60 -
+   floating connection!
+WARNING:EDK:2099 - PORT:sys_clk2x90 CONNECTOR:sys_clk2x90 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 61 -
+   floating connection!
+WARNING:EDK:2099 - PORT:sys_clk2x180 CONNECTOR:sys_clk2x180 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 62 -
+   floating connection!
+WARNING:EDK:2099 - PORT:sys_clk2x270 CONNECTOR:sys_clk2x270 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 63 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux0_clk CONNECTOR:aux0_clk -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 65 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux0_clk90 CONNECTOR:aux0_clk90 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 66 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux0_clk180 CONNECTOR:aux0_clk180 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 67 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux0_clk270 CONNECTOR:aux0_clk270 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 68 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux1_clk CONNECTOR:aux1_clk -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 69 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux1_clk90 CONNECTOR:aux1_clk90 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 70 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux1_clk180 CONNECTOR:aux1_clk180 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 71 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux1_clk270 CONNECTOR:aux1_clk270 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 72 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux0_clk2x CONNECTOR:aux0_clk2x -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 73 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux0_clk2x90 CONNECTOR:aux0_clk2x90 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 74 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux0_clk2x180 CONNECTOR:aux0_clk2x180 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 75 -
+   floating connection!
+WARNING:EDK:2099 - PORT:aux0_clk2x270 CONNECTOR:aux0_clk2x270 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 76 -
+   floating connection!
+WARNING:EDK:2099 - PORT:idelay_rdy CONNECTOR:idelay_rdy -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 79 -
+   floating connection!
+WARNING:EDK:2099 - PORT:soft_reset CONNECTOR:soft_reset -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 161 -
+   floating connection!
+WARNING:EDK:2099 - PORT:adc_clk180_out CONNECTOR:adc1_clk180 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 587 -
+   floating connection!
+WARNING:EDK:2099 - PORT:adc_clk270_out CONNECTOR:adc1_clk270 -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 588 -
+   floating connection!
+WARNING:EDK:2099 - PORT:adc_dcm_locked CONNECTOR:adc1_dcm_locked -
+   /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 589 -
+   floating connection!
+
+Performing Clock DRCs...
+INFO:EDK:1038 - Did not implement clock DRCs for parameter:
+   chan_512_packet_avgIQ_bram:c_opb_clk_period_ps. Top-level frequency could not
+   be propagated to this IP. Please make sure that you have specified the
+   frequency of the top-level clock port, and that the clocks are properly
+   connected.
+INFO:EDK:1038 - Did not implement clock DRCs for parameter:
+   chan_512_packet_pulses_bram0:c_opb_clk_period_ps. Top-level frequency could
+   not be propagated to this IP. Please make sure that you have specified the
+   frequency of the top-level clock port, and that the clocks are properly
+   connected.
+INFO:EDK:1038 - Did not implement clock DRCs for parameter:
+   chan_512_packet_pulses_bram1:c_opb_clk_period_ps. Top-level frequency could
+   not be propagated to this IP. Please make sure that you have specified the
+   frequency of the top-level clock port, and that the clocks are properly
+   connected.
+INFO:EDK:1038 - Did not implement clock DRCs for parameter:
+   chan_512_packet_snapPhase_bram:c_opb_clk_period_ps. Top-level frequency could
+   not be propagated to this IP. Please make sure that you have specified the
+   frequency of the top-level clock port, and that the clocks are properly
+   connected.
+
+Performing Reset DRCs...
+
+Overriding system level properties...
+
+Running system level update procedures...
+
+Running UPDATE Tcl procedures for OPTION SYSLEVEL_UPDATE_PROC...
+
+Running system level DRCs...
+
+Performing System level DRCs on properties...
+
+Running DRC Tcl procedures for OPTION SYSLEVEL_DRC_PROC...
+
+Running UPDATE Tcl procedures for OPTION PLATGEN_SYSLEVEL_UPDATE_PROC...
+
+Modify defaults ...
+
+Creating stub ...
+
+Processing licensed instances ...
+Completion time: 0.00 seconds
+
+Creating hardware output directories ...
+
+Managing hardware (BBD-specified) netlist files ...
+IPNAME:chan_512_packet INSTANCE:chan_512_packet_xsg_core_config -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 172 -
+Copying (BBD-specified) netlist files.
+IPNAME:opb_dram_sniffer INSTANCE:opb_dram_sniffer_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 315 -
+Copying (BBD-specified) netlist files.
+IPNAME:async_dram INSTANCE:async_dram_1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 332 -
+Copying (BBD-specified) netlist files.
+IPNAME:adc_mkid_interface INSTANCE:chan_512_packet_adc_mkid -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 565 -
+Copying (BBD-specified) netlist files.
+
+Managing cache ...
+
+Elaborating instances ...
+IPNAME:bram_block INSTANCE:chan_512_packet_avgIQ_bram_ramblk -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 627 -
+elaborating IP
+IPNAME:bram_block INSTANCE:chan_512_packet_pulses_bram0_ramblk -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 910 -
+elaborating IP
+IPNAME:bram_block INSTANCE:chan_512_packet_pulses_bram1_ramblk -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 941 -
+elaborating IP
+IPNAME:bram_block INSTANCE:chan_512_packet_snapPhase_bram_ramblk -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1008 -
+elaborating IP
+
+Writing HDL for elaborated instances ...
+
+Inserting wrapper level ...
+Completion time: 0.00 seconds
+
+Constructing platform-level connectivity ...
+Completion time: 1.00 seconds
+
+Writing (top-level) BMM ...
+
+Writing (top-level and wrappers) HDL ...
+
+Generating synthesis project file ...
+
+Running XST synthesis ...
+
+INFO:EDK:2502 - The following instances are synthesized with XST. The MPD option
+   IMP_NETLIST=TRUE indicates that a NGC file is to be produced using XST
+   synthesis. IMP_NETLIST=FALSE (default) instances are not synthesized. 
+INSTANCE:infrastructure_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 42 -
+Running XST synthesis
+INSTANCE:reset_block_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 82 -
+Running XST synthesis
+INSTANCE:opb0 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 93 -
+Running XST synthesis
+INSTANCE:epb_opb_bridge_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 102 -
+Running XST synthesis
+INSTANCE:epb_infrastructure_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 121 -
+Running XST synthesis
+INSTANCE:sys_block_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 146 -
+Running XST synthesis
+INSTANCE:chan_512_packet_xsg_core_config -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 172 -
+Running XST synthesis
+INSTANCE:dram_infrastructure_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 265 -
+Running XST synthesis
+INSTANCE:dram_controller_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 276 -
+Running XST synthesis
+INSTANCE:opb_dram_sniffer_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 315 -
+Running XST synthesis
+INSTANCE:async_dram_1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 332 -
+Running XST synthesis
+INSTANCE:chan_512_packet_dram_lut_rd_valid -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 349 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b0b1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 361 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b10b11 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 373 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b12b13 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 385 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b14b15 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 397 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b16b17 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 409 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b18b19 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 421 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b20b21 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 433 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b22b23 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 445 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b24b25 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 457 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b2b3 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 469 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b4b5 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 481 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b6b7 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 493 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_b8b9 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 505 -
+Running XST synthesis
+INSTANCE:chan_512_packet_fir_load_coeff -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 517 -
+Running XST synthesis
+INSTANCE:chan_512_packet_lo_sle -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 529 -
+Running XST synthesis
+INSTANCE:chan_512_packet_ser_di -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 541 -
+Running XST synthesis
+INSTANCE:chan_512_packet_swat_le -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 553 -
+Running XST synthesis
+INSTANCE:chan_512_packet_adc_mkid -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 565 -
+Running XST synthesis
+INSTANCE:chan_512_packet_avgiq_addr -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 603 -
+Running XST synthesis
+INSTANCE:chan_512_packet_avgiq_bram_ramif -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 615 -
+Running XST synthesis
+INSTANCE:chan_512_packet_avgiq_bram_ramblk -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 627 -
+Running XST synthesis
+INSTANCE:chan_512_packet_avgiq_bram -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 634 -
+Running XST synthesis
+INSTANCE:chan_512_packet_avgiq_ctrl -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 646 -
+Running XST synthesis
+INSTANCE:chan_512_packet_bins -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 658 -
+Running XST synthesis
+INSTANCE:chan_512_packet_capture_load_thresh -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 670 -
+Running XST synthesis
+INSTANCE:chan_512_packet_capture_threshold -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 682 -
+Running XST synthesis
+INSTANCE:chan_512_packet_ch_we -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 694 -
+Running XST synthesis
+INSTANCE:chan_512_packet_conv_phase_centers -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 706 -
+Running XST synthesis
+INSTANCE:chan_512_packet_conv_phase_load_centers -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 718 -
+Running XST synthesis
+INSTANCE:chan_512_packet_dac_mkid -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 730 -
+Running XST synthesis
+INSTANCE:chan_512_packet_gpio_a0 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 787 -
+Running XST synthesis
+INSTANCE:chan_512_packet_gpio_a1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 802 -
+Running XST synthesis
+INSTANCE:chan_512_packet_gpio_a2 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 817 -
+Running XST synthesis
+INSTANCE:chan_512_packet_gpio_a3 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 832 -
+Running XST synthesis
+INSTANCE:chan_512_packet_gpio_a5 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 847 -
+Running XST synthesis
+INSTANCE:chan_512_packet_if_switch -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 862 -
+Running XST synthesis
+INSTANCE:chan_512_packet_load_bins -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 874 -
+Running XST synthesis
+INSTANCE:chan_512_packet_pulses_addr -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 886 -
+Running XST synthesis
+INSTANCE:chan_512_packet_pulses_bram0_ramif -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 898 -
+Running XST synthesis
+INSTANCE:chan_512_packet_pulses_bram0_ramblk -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 910 -
+Running XST synthesis
+INSTANCE:chan_512_packet_pulses_bram0 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 917 -
+Running XST synthesis
+INSTANCE:chan_512_packet_pulses_bram1_ramif -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 929 -
+Running XST synthesis
+INSTANCE:chan_512_packet_pulses_bram1_ramblk -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 941 -
+Running XST synthesis
+INSTANCE:chan_512_packet_pulses_bram1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 948 -
+Running XST synthesis
+INSTANCE:chan_512_packet_regs -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 960 -
+Running XST synthesis
+INSTANCE:chan_512_packet_seconds -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 972 -
+Running XST synthesis
+INSTANCE:chan_512_packet_snapphase_addr -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 984 -
+Running XST synthesis
+INSTANCE:chan_512_packet_snapphase_bram_ramif -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 996 -
+Running XST synthesis
+INSTANCE:chan_512_packet_snapphase_bram_ramblk -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1008 -
+Running XST synthesis
+INSTANCE:chan_512_packet_snapphase_bram -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1015 -
+Running XST synthesis
+INSTANCE:chan_512_packet_snapphase_ctrl -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1027 -
+Running XST synthesis
+INSTANCE:chan_512_packet_start -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1039 -
+Running XST synthesis
+INSTANCE:chan_512_packet_startaccumulator -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1051 -
+Running XST synthesis
+INSTANCE:chan_512_packet_startbuffer -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1063 -
+Running XST synthesis
+INSTANCE:chan_512_packet_startdac -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1075 -
+Running XST synthesis
+INSTANCE:chan_512_packet_startsnap -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1087 -
+Running XST synthesis
+INSTANCE:chan_512_packet_stb_en -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1099 -
+Running XST synthesis
+INSTANCE:opb1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1111 -
+Running XST synthesis
+INSTANCE:opb2opb_bridge_opb1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1119 -
+Running XST synthesis
+
+Running NGCBUILD ...
+IPNAME:chan_512_packet_xsg_core_config_wrapper
+INSTANCE:chan_512_packet_xsg_core_config -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 172 -
+Running NGCBUILD
+IPNAME:opb_dram_sniffer_inst_wrapper INSTANCE:opb_dram_sniffer_inst -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 315 -
+Running NGCBUILD
+IPNAME:async_dram_1_wrapper INSTANCE:async_dram_1 -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 332 -
+Running NGCBUILD
+IPNAME:chan_512_packet_adc_mkid_wrapper INSTANCE:chan_512_packet_adc_mkid -
+/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 565 -
+Running NGCBUILD
+
+Rebuilding cache ...
+
+Total run time: 581.00 seconds
