@@ -1,0 +1,144 @@
+Release 11.4 - Bitgen L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+PMSPEC -- Overriding Xilinx file </opt/Xilinx/11.1/EDK/virtex5/data/virtex5.acd>
+with local file </opt/Xilinx/11.1/ISE/virtex5/data/virtex5.acd>
+Loading device for application Rf_Device from file '5vsx95t.nph' in environment
+/opt/Xilinx/11.1/ISE:/opt/Xilinx/11.1/EDK.
+   "system" is an NCD, version 3.2, device xc5vsx95t, package ff1136, speed -1
+Opened constraints file system.pcf.
+
+Thu Jul 19 16:37:22 2012
+
+/opt/Xilinx/11.1/ISE/bin/lin64/unwrapped/bitgen -w -g TdoPin:PULLNONE -g DriveDone:No -g StartUpClk:CCLK -g DONE_cycle:4 -g GTS_cycle:2 -g TckPin:PULLUP -g TdiPin:PULLUP -g TmsPin:PULLUP -g DonePipe:No -g GWE_cycle:6 -g LCK_cycle:NoWait -g Security:NONE -g Persist:No -g binary:Yes system.ncd 
+
+Summary of Bitgen Options:
++----------------------+----------------------+
+| Option Name          | Current Setting      |
++----------------------+----------------------+
+| Compress             | (Not Specified)*     |
++----------------------+----------------------+
+| Readback             | (Not Specified)*     |
++----------------------+----------------------+
+| CRC                  | Enable*              |
++----------------------+----------------------+
+| DebugBitstream       | No*                  |
++----------------------+----------------------+
+| ConfigRate           | 2*                   |
++----------------------+----------------------+
+| StartupClk           | Cclk**               |
++----------------------+----------------------+
+| CclkPin              | Pullup*              |
++----------------------+----------------------+
+| DonePin              | Pullup*              |
++----------------------+----------------------+
+| HswapenPin           | Pullup*              |
++----------------------+----------------------+
+| M0Pin                | Pullup*              |
++----------------------+----------------------+
+| M1Pin                | Pullup*              |
++----------------------+----------------------+
+| M2Pin                | Pullup*              |
++----------------------+----------------------+
+| ProgPin              | Pullup*              |
++----------------------+----------------------+
+| InitPin              | Pullup*              |
++----------------------+----------------------+
+| CsPin                | Pullup*              |
++----------------------+----------------------+
+| DinPin               | Pullup*              |
++----------------------+----------------------+
+| BusyPin              | Pullup*              |
++----------------------+----------------------+
+| RdWrPin              | Pullup*              |
++----------------------+----------------------+
+| TckPin               | Pullup**             |
++----------------------+----------------------+
+| TdiPin               | Pullup**             |
++----------------------+----------------------+
+| TdoPin               | Pullnone             |
++----------------------+----------------------+
+| TmsPin               | Pullup**             |
++----------------------+----------------------+
+| UnusedPin            | Pulldown*            |
++----------------------+----------------------+
+| GWE_cycle            | 6**                  |
++----------------------+----------------------+
+| GTS_cycle            | 2                    |
++----------------------+----------------------+
+| OverTempPowerDown    | Disable*             |
++----------------------+----------------------+
+| LCK_cycle            | NoWait**             |
++----------------------+----------------------+
+| Match_cycle          | NoWait               |
++----------------------+----------------------+
+| DONE_cycle           | 4**                  |
++----------------------+----------------------+
+| Persist              | No**                 |
++----------------------+----------------------+
+| DriveDone            | No**                 |
++----------------------+----------------------+
+| DonePipe             | No**                 |
++----------------------+----------------------+
+| Security             | None**               |
++----------------------+----------------------+
+| UserID               | 0xFFFFFFFF*          |
++----------------------+----------------------+
+| ActiveReconfig       | No*                  |
++----------------------+----------------------+
+| Partial              | (Not Specified)*     |
++----------------------+----------------------+
+| Encrypt              | No*                  |
++----------------------+----------------------+
+| Key0                 | pick*                |
++----------------------+----------------------+
+| StartCBC             | pick*                |
++----------------------+----------------------+
+| KeyFile              | (Not Specified)*     |
++----------------------+----------------------+
+| DCIUpdateMode        | AsRequired*          |
++----------------------+----------------------+
+| ConfigFallback       | Enable*              |
++----------------------+----------------------+
+| SelectMAPAbort       | Enable*              |
++----------------------+----------------------+
+| BPI_page_size        | 1*                   |
++----------------------+----------------------+
+| BPI_1st_read_cycle   | 1*                   |
++----------------------+----------------------+
+| JTAG_SysMon          | Enable*              |
++----------------------+----------------------+
+| IEEE1532             | No*                  |
++----------------------+----------------------+
+| Binary               | Yes                  |
++----------------------+----------------------+
+ *  Default setting.
+ ** The specified setting matches the default setting.
+
+Running DRC.
+WARNING:PhysDesignRules:367 - The signal <infrastructure_inst/dly_clk> is
+   incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal <sys_reset> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:1438 - Unexpected DCM_ADV configuration. The DCM_ADV
+   comp timestamper_adc_mkid/timestamper_adc_mkid/CLK_DCM has a non-zero
+   PHASE_SHIFT value but CLKOUT_PHASE_SHIFT is set to NONE so no phase shifting
+   will occur.
+DRC detected 0 errors and 3 warnings.  Please see the previously displayed
+individual error or warning messages for more details.
+INFO:Security:51 - The XILINXD_LICENSE_FILE environment variable is not set.
+INFO:Security:53 - The LM_LICENSE_FILE environment variable is not set.
+INFO:Security:56 - Part 'xc5vsx95t' is not a WebPack part.
+WARNING:Security:43 - No license file was found in the standard Xilinx license
+directory.
+WARNING:Security:44 - No license file was found.
+       Please run the Xilinx License Configuration Manager
+       (xlcm or "Manage Xilinx Licenses")
+       to assist in obtaining a license.
+WARNING:Security:42 - Your software subscription period has lapsed. Your current
+version of Xilinx tools will continue to function, but you no longer qualify for
+Xilinx software updates or new releases.
+
+Creating bit map...
+Saving bit stream in "system.bit".
+Saving bit stream in "system.bin".
+Bitstream generation is complete.

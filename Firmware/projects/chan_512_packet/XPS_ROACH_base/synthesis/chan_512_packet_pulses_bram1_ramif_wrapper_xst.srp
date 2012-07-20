@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "chan_512_packet_pulses_bram1_ramif_wrapper_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -53,10 +53,10 @@ Cores Search Directories           : {../implementation/chan_512_packet_pulses_b
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling vhdl file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/bram_if_v1_00_a/hdl/vhdl/bram_if.vhd" in Library bram_if_v1_00_a.
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/bram_if_v1_00_a/hdl/vhdl/bram_if.vhd" in Library bram_if_v1_00_a.
 Entity <bram_if> compiled.
 Entity <bram_if> (Architecture <Behavioral>) compiled.
-Compiling vhdl file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_pulses_bram1_ramif_wrapper.vhd" in Library work.
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_pulses_bram1_ramif_wrapper.vhd" in Library work.
 Entity <chan_512_packet_pulses_bram1_ramif_wrapper> compiled.
 Entity <chan_512_packet_pulses_bram1_ramif_wrapper> (Architecture <STRUCTURE>) compiled.
 
@@ -87,12 +87,12 @@ Entity <bram_if> analyzed. Unit <bram_if> generated.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <bram_if>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/bram_if_v1_00_a/hdl/vhdl/bram_if.vhd".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/bram_if_v1_00_a/hdl/vhdl/bram_if.vhd".
 Unit <bram_if> synthesized.
 
 
 Synthesizing Unit <chan_512_packet_pulses_bram1_ramif_wrapper>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_pulses_bram1_ramif_wrapper.vhd".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_pulses_bram1_ramif_wrapper.vhd".
 Unit <chan_512_packet_pulses_bram1_ramif_wrapper> synthesized.
 
 
@@ -236,7 +236,7 @@ Delay:               0.000ns (Levels of Logic = 0)
 
 
 Total REAL time to Xst completion: 3.00 secs
-Total CPU time to Xst completion: 3.23 secs
+Total CPU time to Xst completion: 3.11 secs
  
 --> 
 

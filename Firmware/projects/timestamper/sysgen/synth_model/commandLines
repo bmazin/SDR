@@ -1,0 +1,1 @@
+/opt/Xilinx/11.1/DSP_Tools/lin64/sysgen/bin/saferun -- /opt/Xilinx/11.1/ISE/bin/lin64/ngcbuild -p xc5vsx95t-1ff1136 timestamper_cw timestamper_cw_complete.ngc

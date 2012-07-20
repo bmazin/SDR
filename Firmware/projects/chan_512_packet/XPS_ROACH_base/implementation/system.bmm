@@ -1,4 +1,4 @@
-// File: /home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/implementation/system.bmm
+// File: /home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/implementation/system.bmm
 
 ADDRESS_MAP epb_opb_bridge_inst  100
 	ADDRESS_SPACE chan_512_packet_avgiq_bram_ramblk_combined COMBINED [0x01002000:0x01002fff]

@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "chan_512_packet_pulses_bram0_wrapper_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -91,7 +91,7 @@ Entity <bram_if> (Architecture <implementation>) compiled.
 Compiling vhdl file "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/opb_bram_if_cntlr_v1_00_a/hdl/vhdl/opb_bram_if_cntlr.vhd" in Library opb_bram_if_cntlr_v1_00_a.
 Entity <opb_bram_if_cntlr> compiled.
 Entity <opb_bram_if_cntlr> (Architecture <implementation>) compiled.
-Compiling vhdl file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_pulses_bram0_wrapper.vhd" in Library work.
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_pulses_bram0_wrapper.vhd" in Library work.
 Entity <chan_512_packet_pulses_bram0_wrapper> compiled.
 Entity <chan_512_packet_pulses_bram0_wrapper> (Architecture <STRUCTURE>) compiled.
 
@@ -384,7 +384,7 @@ Unit <opb_bram_if_cntlr> synthesized.
 
 
 Synthesizing Unit <chan_512_packet_pulses_bram0_wrapper>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_pulses_bram0_wrapper.vhd".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_pulses_bram0_wrapper.vhd".
 Unit <chan_512_packet_pulses_bram0_wrapper> synthesized.
 
 
@@ -639,13 +639,13 @@ Delay:               1.939ns (Levels of Logic = 6)
 =========================================================================
 
 
-Total REAL time to Xst completion: 4.00 secs
+Total REAL time to Xst completion: 3.00 secs
 Total CPU time to Xst completion: 3.62 secs
  
 --> 
 
 
-Total memory usage is 426088 kilobytes
+Total memory usage is 426216 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   79 (   0 filtered)

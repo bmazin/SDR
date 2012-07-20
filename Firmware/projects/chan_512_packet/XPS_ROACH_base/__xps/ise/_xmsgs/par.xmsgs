@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="ConstraintSystem" num="65" delta="new" >Constraint <arg fmt="%s" index="1">&lt;NET &quot;chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk&quot; PERIOD =         3.9062 ns HIGH 50%;&gt; [system.pcf(280590)]</arg> overrides constraint <arg fmt="%s" index="2">&lt;NET &quot;chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk&quot; PERIOD =         3.9062 ns HIGH 50%;&gt; [system.pcf(280588)]</arg>.
+<msg type="warning" file="ConstraintSystem" num="65" delta="new" >Constraint <arg fmt="%s" index="1">&lt;NET &quot;chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk&quot; PERIOD =         3.9062 ns HIGH 50%;&gt; [system.pcf(282634)]</arg> overrides constraint <arg fmt="%s" index="2">&lt;NET &quot;chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk&quot; PERIOD =         3.9062 ns HIGH 50%;&gt; [system.pcf(282632)]</arg>.
 </msg>
 
 <msg type="warning" file="Timing" num="3223" delta="new" >Timing constraint <arg fmt="%s" index="1">TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FROM TIMEGRP &quot;TNM_PHY_INIT_DATA_SEL&quot; TO        TIMEGRP &quot;RAMS&quot; 10 ns;</arg> ignored during timing analysis.</msg>

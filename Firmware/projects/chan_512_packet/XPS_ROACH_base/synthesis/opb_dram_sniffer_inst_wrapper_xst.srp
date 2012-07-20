@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "opb_dram_sniffer_inst_wrapper_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -53,14 +53,14 @@ Cores Search Directories           : {../implementation/opb_dram_sniffer_inst_wr
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/opb_dram_sniffer.v" in library opb_dram_sniffer_v1_00_a
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/ctrl_opb_attach.v" in library opb_dram_sniffer_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/opb_dram_sniffer.v" in library opb_dram_sniffer_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/ctrl_opb_attach.v" in library opb_dram_sniffer_v1_00_a
 Module <opb_dram_sniffer> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/mem_opb_attach.v" in library opb_dram_sniffer_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/mem_opb_attach.v" in library opb_dram_sniffer_v1_00_a
 Module <ctrl_opb_attach> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/read_history_fifo.v" in library opb_dram_sniffer_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/read_history_fifo.v" in library opb_dram_sniffer_v1_00_a
 Module <mem_opb_attach> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/dram_arbiter.v" in library opb_dram_sniffer_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/dram_arbiter.v" in library opb_dram_sniffer_v1_00_a
 Module <read_history_fifo> compiled
 Module <dram_arbiter> compiled
 Compiling verilog file "../hdl/opb_dram_sniffer_inst_wrapper.v" in library work
@@ -149,7 +149,7 @@ Analyzing module <dram_arbiter> in library <opb_dram_sniffer_v1_00_a>.
 	STATE_ARB0 = 3'b001
 	STATE_ARB1 = 3'b010
 	STATE_WAIT = 3'b100
-WARNING:Xst:2211 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/read_history_fifo.v" line 145: Instantiating black box module <read_history_fifo>.
+WARNING:Xst:2211 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/read_history_fifo.v" line 145: Instantiating black box module <read_history_fifo>.
 Module <dram_arbiter> is correct for synthesis.
  
     Set property "fsm_extract = no" for signal <arb_state>.
@@ -161,7 +161,7 @@ Module <dram_arbiter> is correct for synthesis.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <ctrl_opb_attach>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/ctrl_opb_attach.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/ctrl_opb_attach.v".
 WARNING:Xst:647 - Input <OPB_BE<0:1>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <OPB_DBus<0:15>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <OPB_seqAddr> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
@@ -181,7 +181,7 @@ Unit <ctrl_opb_attach> synthesized.
 
 
 Synthesizing Unit <mem_opb_attach>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/mem_opb_attach.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/mem_opb_attach.v".
 WARNING:Xst:647 - Input <dram_rd_data<143:136>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <dram_rd_data<71:64>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <OPB_seqAddr> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
@@ -237,7 +237,7 @@ Unit <mem_opb_attach> synthesized.
 
 
 Synthesizing Unit <dram_arbiter>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/dram_arbiter.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/dram_arbiter.v".
     Found 1-bit register for signal <arb_ready>.
     Found 3-bit register for signal <arb_state>.
     Found 144-bit register for signal <master_rd_data_z>.
@@ -254,7 +254,7 @@ Unit <dram_arbiter> synthesized.
 
 
 Synthesizing Unit <opb_dram_sniffer>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/opb_dram_sniffer.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/opb_dram_sniffer.v".
 WARNING:Xst:647 - Input <app_cmd_addr<31:30>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:646 - Signal <sniffer_enabled.software_address_bits<15:9>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <sniffer_enabled.sniff_address<31:21>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
@@ -732,13 +732,13 @@ Delay:               0.238ns (Levels of Logic = 1)
 =========================================================================
 
 
-Total REAL time to Xst completion: 8.00 secs
-Total CPU time to Xst completion: 8.13 secs
+Total REAL time to Xst completion: 9.00 secs
+Total CPU time to Xst completion: 8.66 secs
  
 --> 
 
 
-Total memory usage is 452028 kilobytes
+Total memory usage is 452024 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   15 (   0 filtered)

@@ -1,0 +1,210 @@
+--------------------------------------------------------------------------------
+Release 11.4 Trace  (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+
+/opt/Xilinx/11.1/ISE/bin/lin64/unwrapped/trce -ise ../__xps/ise/system.ise -e
+200 -xml system.twx system.ncd system.pcf
+
+Design file:              system.ncd
+Physical constraint file: system.pcf
+Device,package,speed:     xc5vsx95t,ff1136,-1 (PRODUCTION 1.66 2009-11-16, STEPPING level 0)
+Report level:             error report, limited to 200 items per constraint
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:3386 - Intersecting Constraints found and resolved.  For more 
+   information, see the TSI report.  Please consult the Xilinx Command Line 
+   Tools User Guide for information on generating a TSI report.
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+
+================================================================================
+Timing constraint: NET "epb_cs_n_IBUF" MAXDELAY = 4 ns;
+
+ 1 net analyzed, 0 failing nets detected.
+ 0 timing errors detected.
+ Maximum net delay is   1.660ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: NET "timestamper_adc_mkid/timestamper_adc_mkid/drdy_clk" 
+PERIOD = 3.9062 ns         HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: NET "timestamper_adc_mkid/timestamper_adc_mkid/drdy_clk" 
+PERIOD = 3.9062 ns         HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: PERIOD analysis for net 
+"timestamper_adc_mkid/timestamper_adc_mkid/dcm_clk" derived from  NET 
+"timestamper_adc_mkid/timestamper_adc_mkid/drdy_clk" PERIOD = 3.9062 ns        
+HIGH 50%;  duty cycle corrected to 3.906 nS  HIGH 1.953 nS  
+
+ 5448 paths analyzed, 2523 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   3.666ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88 MHz HIGH 50%;
+
+ 58051 paths analyzed, 2682 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is  10.459ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_adcmkid1_DRDY_I_p = PERIOD TIMEGRP "adcmkid1_DRDY_I_p" 
+3.906 ns HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_adcmkid1_DRDY_I_n = PERIOD TIMEGRP "adcmkid1_DRDY_I_n" 
+3.906 ns HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk = 
+PERIOD TIMEGRP         "timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk"      
+   TS_adcmkid1_DRDY_I_p HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   2.222ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk_0 = 
+PERIOD TIMEGRP         "timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk_0"    
+     TS_adcmkid1_DRDY_I_n HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   2.222ns.
+--------------------------------------------------------------------------------
+
+
+Derived Constraint Report
+Derived Constraints for timestamper_adc_mkid/timestamper_adc_mkid/drdy_clk
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|timestamper_adc_mkid/timestampe|      3.906ns|      3.000ns|      3.666ns|            0|            0|            0|         5448|
+|r_adc_mkid/drdy_clk            |             |             |             |             |             |             |             |
+| timestamper_adc_mkid/timestamp|      3.906ns|      3.666ns|          N/A|            0|            0|         5448|            0|
+| er_adc_mkid/dcm_clk           |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_adcmkid1_DRDY_I_p
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_adcmkid1_DRDY_I_p           |      3.906ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
+| TS_timestamper_adc_mkid_timest|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| amper_adc_mkid_dcm_clk        |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_adcmkid1_DRDY_I_n
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_adcmkid1_DRDY_I_n           |      3.906ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
+| TS_timestamper_adc_mkid_timest|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| amper_adc_mkid_dcm_clk_0      |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+All constraints were met.
+WARNING:Timing - DCM timestamper_adc_mkid/timestamper_adc_mkid/CLK_DCM does not 
+   have a CLKIN_PERIOD attribute (the period of the DCM input clock).DCM jitter 
+   will not be included in timing analysis when this attribute is not defined. 
+   For more information, please refer to the appropriate architectural handbook
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Clock to Setup on destination clock adcmkid1_DRDY_I_n
+-----------------+---------+---------+---------+---------+
+                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-----------------+---------+---------+---------+---------+
+adcmkid1_DRDY_I_n|    3.666|         |         |         |
+adcmkid1_DRDY_I_p|    3.666|         |         |         |
+-----------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock adcmkid1_DRDY_I_p
+-----------------+---------+---------+---------+---------+
+                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-----------------+---------+---------+---------+---------+
+adcmkid1_DRDY_I_n|    3.666|         |         |         |
+adcmkid1_DRDY_I_p|    3.666|         |         |         |
+-----------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock epb_clk_in
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+epb_clk_in     |   10.459|         |    2.508|         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
+
+Constraints cover 63499 paths, 1 nets, and 6534 connections
+
+Design statistics:
+   Minimum period:  10.459ns   (Maximum frequency:  95.611MHz)
+   Maximum net delay:   1.660ns
+
+
+Analysis completed Thu Jul 19 16:37:17 2012 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 525 MB
+
+Total REAL time to Trace completion: 9 secs 
+Total CPU time to Trace completion: 9 secs 
+
+
+

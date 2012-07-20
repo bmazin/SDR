@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1704"
+    ComputedModelVersion    "1.1706"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -24,9 +24,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "sean"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jan 26 14:23:41 2012"
+  LastModifiedDate	  "Thu Jul 19 16:38:36 2012"
   RTWModifiedTimeStamp	  0
-  ModelVersionFormat	  "1.%<AutoIncrement:1704>"
+  ModelVersionFormat	  "1.%<AutoIncrement:1706>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -639,7 +639,7 @@ Model {
     Open		    on
     ModelBrowserVisibility  on
     ModelBrowserWidth	    200
-    ScreenColor		    "white"
+    ScreenColor		    "gray"
     PaperOrientation	    "landscape"
     PaperPositionMode	    "auto"
     PaperType		    "usletter"

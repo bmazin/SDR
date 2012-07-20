@@ -6,8 +6,8 @@ xc5vsx95tff1136-1 -intstyle silent -sd .. chan_512_packet_adc_mkid_wrapper.ngc
 ../chan_512_packet_adc_mkid_wrapper.ngc
 
 Reading NGO file
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/implementation/chan_512
-_packet_adc_mkid_wrapper/chan_512_packet_adc_mkid_wrapper.ngc" ...
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/implementation/
+chan_512_packet_adc_mkid_wrapper/chan_512_packet_adc_mkid_wrapper.ngc" ...
 
 Partition Implementation Status
 -------------------------------
@@ -20,10 +20,10 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 294376 kilobytes
+Total memory usage is 294360 kilobytes
 
 Writing NGC file "../chan_512_packet_adc_mkid_wrapper.ngc" ...
-Total REAL time to NGCBUILD completion:  0 sec
+Total REAL time to NGCBUILD completion:  1 sec
 Total CPU time to NGCBUILD completion:   0 sec
 
 Writing NGCBUILD log file "../chan_512_packet_adc_mkid_wrapper.blc"...

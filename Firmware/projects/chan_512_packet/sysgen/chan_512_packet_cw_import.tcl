@@ -1,5 +1,5 @@
 #
-# Created by System Generator     Thu Jul 19 10:22:46 2012
+# Created by System Generator     Thu Jul 19 16:47:04 2012
 #
 # Note: This file is produced automatically, and will be overwritten the next
 # time you press "Generate" in System Generator.
@@ -65,7 +65,7 @@ namespace eval ::xilinx::dsptool::iseproject::param {
         {{bmg_33_103575db1cb8906d.mif}}
         {{bmg_33_7f9bb833f81c2e5a.mif}}
         {{bmg_33_e1dc07e48a247c2a.mif}}
-        {{/home/sean/Casper/ddc256/chan_512_packet.mdl}}
+        {{/home/sean/SDR/Firmware/projects/chan_512_packet.mdl}}
     }
     set TopLevelModule {chan_512_packet_cw}
     set SynthesisConstraintsFile {chan_512_packet_cw.xcf}

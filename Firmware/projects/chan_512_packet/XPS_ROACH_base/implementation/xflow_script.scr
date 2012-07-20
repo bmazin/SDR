@@ -6,7 +6,7 @@
 #
 # Command line for ngdbuild
 #
-ngdbuild -ise ../__xps/ise/system.ise -p xc5vsx95tff1136-1 -nt timestamp -sd ../pcores -uc system.ucf "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/implementation/system.ngc" system.ngd 
+ngdbuild -ise ../__xps/ise/system.ise -p xc5vsx95tff1136-1 -nt timestamp -sd ../pcores -uc system.ucf "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/implementation/system.ngc" system.ngd 
 
 #
 # Command line for map

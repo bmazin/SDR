@@ -6,8 +6,8 @@ Command Line: /opt/Xilinx/11.1/ISE/bin/lin64/unwrapped/ngcbuild ./system.ngc
 ../__xps/ise/system.ise
 
 Reading NGO file
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/synthesis/system.ngc"
-...
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/synthesis/syste
+m.ngc" ...
 Loading design module "../implementation/infrastructure_inst_wrapper.ngc"...
 Loading design module "../implementation/reset_block_inst_wrapper.ngc"...
 Loading design module "../implementation/opb0_wrapper.ngc"...
@@ -137,7 +137,7 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 671136 kilobytes
+Total memory usage is 672844 kilobytes
 
 Writing NGC file "../implementation/system.ngc" ...
 Total REAL time to NGCBUILD completion:  9 sec

@@ -1,0 +1,43 @@
+Release 11.4 ngcbuild L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+
+Command Line: /opt/Xilinx/11.1/ISE/bin/lin64/unwrapped/ngcbuild -p
+xc5vsx95t-1ff1136 timestamper_cw timestamper_cw_complete.ngc
+
+Reading NGO file
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/synth_model/timestamper_cw.
+ngc" ...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/synth_model/xlpersistentdff
+.ngc"...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/synth_model/cntr_11_0_82b9f
+d0243bf8494.ngc"...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/synth_model/cntr_11_0_b40c4
+2d5e24bb86a.ngc"...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/synth_model/cntr_11_0_18bbe
+b067aa07bfe.ngc"...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/synth_model/cntr_11_0_f5233
+8cfe462aa75.ngc"...
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGCBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 296504 kilobytes
+
+Writing NGC file "timestamper_cw_complete.ngc" ...
+Total REAL time to NGCBUILD completion:  0 sec
+Total CPU time to NGCBUILD completion:   0 sec
+
+Writing NGCBUILD log file "timestamper_cw_complete.blc"...

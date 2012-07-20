@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<document OS="lin64" product="ISE" version="11.4">
+
+  <!--The data in this file is primarily intended for consumption by Xilinx tools.
+    The structure and the elements are likely to change over the next few releases.
+    This means code written to parse this file will need to be revisited each subsequent release.-->
+
+  <application stringID="Xst" timeStamp="Thu Jul 19 16:35:07 2012">
+    <section stringID="User_Env">
+      <table stringID="User_EnvVar">
+        <column stringID="variable"/>
+        <column stringID="value"/>
+        <row stringID="row" value="0">
+          <item stringID="variable" value="XILINX_DSP"/>
+          <item stringID="value" value="/opt/Xilinx/11.1/DSP_Tools/lin64"/>
+        </row>
+        <row stringID="row" value="1">
+          <item stringID="variable" value="XILINX_EDK"/>
+          <item stringID="value" value="/opt/Xilinx/11.1/EDK"/>
+        </row>
+        <row stringID="row" value="2">
+          <item stringID="variable" value="XILINX"/>
+          <item stringID="value" value="/opt/Xilinx/11.1/ISE:/opt/Xilinx/11.1/EDK"/>
+        </row>
+      </table>
+      <item stringID="User_EnvOs" value="OS Information">
+        <item stringID="User_EnvOsname" value="ScientificSL"/>
+        <item stringID="User_EnvOsrelease" value="Scientific Linux SL release 5.5 (Boron)"/>
+      </item>
+      <item stringID="User_EnvHost" value="arcons"/>
+      <table stringID="User_EnvCpu">
+        <column stringID="arch"/>
+        <column stringID="speed"/>
+        <row stringID="row" value="0">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="1">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="2">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="3">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="4">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="5">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="6">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="7">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="8">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="9">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="10">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="11">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+      </table>
+    </section>
+    <section stringID="XST_ADVANCED_HDL_SYNTHESIS_REPORTFOUND_NO_MACRO"/>
+    <section stringID="XST_FINAL_REGISTER_REPORTFOUND_NO_MACRO"/>
+    <section stringID="XST_PARTITION_REPORT">
+      <section stringID="XST_PARTITION_IMPLEMENTATION_STATUS">
+        <section stringID="XST_NO_PARTITIONS_WERE_FOUND_IN_THIS_DESIGN"/>
+      </section>
+    </section>
+    <section stringID="XST_FINAL_REPORT">
+      <section stringID="XST_FINAL_RESULTS">
+        <item stringID="XST_TOP_LEVEL_OUTPUT_FILE_NAME" value="../implementation/system.ngc"/>
+        <item stringID="XST_OUTPUT_FORMAT" value="ngc"/>
+        <item stringID="XST_OPTIMIZATION_GOAL" value="speed"/>
+        <item stringID="XST_KEEP_HIERARCHY" value="no"/>
+      </section>
+      <section stringID="XST_DESIGN_STATISTICS">
+        <item stringID="XST_IOS" value="115"/>
+      </section>
+      <section stringID="XST_CELL_USAGE">
+        <item dataType="int" stringID="XST_BELS" value="1547">
+          <item dataType="int" stringID="XST_GND" value="22"/>
+          <item dataType="int" stringID="XST_INV" value="34"/>
+          <item dataType="int" stringID="XST_LUT1" value="189"/>
+          <item dataType="int" stringID="XST_LUT2" value="309"/>
+          <item dataType="int" stringID="XST_LUT3" value="17"/>
+          <item dataType="int" stringID="XST_LUT4" value="185"/>
+          <item dataType="int" stringID="XST_LUT5" value="126"/>
+          <item dataType="int" stringID="XST_LUT6" value="173"/>
+          <item dataType="int" stringID="XST_MUXCY" value="258"/>
+          <item dataType="int" stringID="XST_MUXF7" value="2"/>
+          <item dataType="int" stringID="XST_VCC" value="19"/>
+          <item dataType="int" stringID="XST_XORCY" value="213"/>
+        </item>
+        <item dataType="int" stringID="XST_FLIPFLOPSLATCHES" value="1093">
+          <item dataType="int" stringID="XST_FD" value="390"/>
+          <item dataType="int" stringID="XST_FD1" value="17"/>
+          <item dataType="int" stringID="XST_FDC" value="1"/>
+          <item dataType="int" stringID="XST_FDCE" value="64"/>
+          <item dataType="int" stringID="XST_FDE" value="210"/>
+          <item dataType="int" stringID="XST_FDR" value="41"/>
+          <item dataType="int" stringID="XST_FDRE" value="330"/>
+          <item dataType="int" stringID="XST_FDRS" value="2"/>
+          <item dataType="int" stringID="XST_FDS" value="14"/>
+        </item>
+        <item dataType="int" stringID="XST_RAMS" value="32"></item>
+        <item dataType="int" stringID="XST_SHIFT_REGISTERS" value="41">
+          <item dataType="int" stringID="XST_SRL16" value="1"/>
+          <item dataType="int" stringID="XST_SRLC16E" value="40"/>
+        </item>
+        <item dataType="int" stringID="XST_CLOCK_BUFFERS" value="19">
+          <item dataType="int" stringID="XST_BUFG" value="19"/>
+        </item>
+        <item dataType="int" stringID="XST_IO_BUFFERS" value="85">
+          <item dataType="int" stringID="XST_IBUF" value="36"/>
+          <item dataType="int" stringID="XST_IBUFG" value="1"/>
+          <item dataType="int" stringID="XST_OBUF" value="1"/>
+        </item>
+      </section>
+    </section>
+    <section stringID="XST_DEVICE_UTILIZATION_SUMMARY">
+      <item stringID="XST_SELECTED_DEVICE" value="5vsx95tff1136-1"/>
+      <item AVAILABLE="58880" dataType="int" label="Number of Slice Registers" stringID="XST_NUMBER_OF_SLICE_REGISTERS" value="1027"/>
+      <item AVAILABLE="58880" dataType="int" label="Number of Slice LUTs" stringID="XST_NUMBER_OF_SLICE_LUTS" value="1074"/>
+      <item AVAILABLE="58880" dataType="int" label="Number used as Logic" stringID="XST_NUMBER_USED_AS_LOGIC" value="1033"/>
+      <item AVAILABLE="24320" dataType="int" stringID="XST_NUMBER_USED_AS_MEMORY" value="41"/>
+      <item dataType="int" stringID="XST_NUMBER_USED_AS_SRL" value="41"/>
+      <item dataType="int" label="Number of LUT Flip Flop pairs used" stringID="XST_NUMBER_OF_LUT_FLIP_FLOP_PAIRS_USED" value="1521"/>
+      <item AVAILABLE="1521" dataType="int" label="Number with an unused Flip Flop" stringID="XST_NUMBER_WITH_AN_UNUSED_FLIP_FLOP" value="494"/>
+      <item AVAILABLE="1521" dataType="int" label="Number with an unused LUT" stringID="XST_NUMBER_WITH_AN_UNUSED_LUT" value="447"/>
+      <item AVAILABLE="1521" dataType="int" label="Number of fully used LUT-FF pairs" stringID="XST_NUMBER_OF_FULLY_USED_LUTFF_PAIRS" value="580"/>
+      <item dataType="int" label="Number of unique control sets" stringID="XST_NUMBER_OF_UNIQUE_CONTROL_SETS" value="51"/>
+      <item dataType="int" label="Number of IOs" stringID="XST_NUMBER_OF_IOS" value="115"/>
+      <item AVAILABLE="640" dataType="int" label="Number of bonded IOBs" stringID="XST_NUMBER_OF_BONDED_IOBS" value="54"/>
+      <item dataType="int" label="IOB Flip Flops/Latches" stringID="XST_IOB_FLIP_FLOPSLATCHES" value="66"/>
+      <item AVAILABLE="244" dataType="int" label="Number of Block RAM/FIFO" stringID="XST_NUMBER_OF_BLOCK_RAMFIFO" value="32"/>
+      <item dataType="int" label="Number using Block RAM only" stringID="XST_NUMBER_USING_BLOCK_RAM_ONLY" value="32"/>
+      <item AVAILABLE="32" dataType="int" label="Number of BUFG/BUFGCTRLs" stringID="XST_NUMBER_OF_BUFGBUFGCTRLS" value="19"/>
+      <item AVAILABLE="12" dataType="int" label="Number of DCM_ADVs" stringID="XST_NUMBER_OF_DCMADVS" value="7"/>
+    </section>
+    <section stringID="XST_PARTITION_RESOURCE_SUMMARY">
+      <section stringID="XST_NO_PARTITIONS_WERE_FOUND_IN_THIS_DESIGN"/>
+    </section>
+    <section stringID="XST_ERRORS_STATISTICS">
+      <item dataType="int" filtered="0" stringID="XST_NUMBER_OF_ERRORS" value="0"/>
+      <item dataType="int" filtered="0" stringID="XST_NUMBER_OF_WARNINGS" value="42"/>
+      <item dataType="int" filtered="0" stringID="XST_NUMBER_OF_INFOS" value="36"/>
+    </section>
+  </application>
+
+</document>

@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "dram_controller_inst_wrapper_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -53,36 +53,36 @@ Cores Search Directories           : {../implementation/dram_controller_inst_wra
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v" in library dram_controller_v1_00_a
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_mem_if_top.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_mem_if_top.v" in library dram_controller_v1_00_a
 Module <ddr2_ctrl> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_calib.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_calib.v" in library dram_controller_v1_00_a
 Module <ddr2_mem_if_top> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_ctl_io.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_ctl_io.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_calib> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dm_iob.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dm_iob.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_ctl_io> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dq_iob.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dq_iob.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_dm_iob> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_dq_iob> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_dqs_iob> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_io.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_io.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_init> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_top.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_top.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_io> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_write.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_write.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_top> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_addr_fifo.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_addr_fifo.v" in library dram_controller_v1_00_a
 Module <ddr2_phy_write> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_rd.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_rd.v" in library dram_controller_v1_00_a
 Module <ddr2_usr_addr_fifo> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_top.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_top.v" in library dram_controller_v1_00_a
 Module <ddr2_usr_rd> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_wr.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_wr.v" in library dram_controller_v1_00_a
 Module <ddr2_usr_top> compiled
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/dram_controller.v" in library dram_controller_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/dram_controller.v" in library dram_controller_v1_00_a
 Module <ddr2_usr_wr> compiled
 Module <dram_controller> compiled
 Compiling verilog file "../hdl/dram_controller_inst_wrapper.v" in library work
@@ -769,7 +769,7 @@ Analyzing module <ddr2_phy_calib> in library <dram_controller_v1_00_a>.
 	RDEN_BASE_DELAY = 32'sb00000000000000000000000000000110
 	REG_ENABLE = 32'sb00000000000000000000000000000001
 	SIM_ONLY = 32'sb00000000000000000000000000000000
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_calib.v" line 541: Found FullParallel Case directive in module <ddr2_phy_calib>.
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_calib.v" line 541: Found FullParallel Case directive in module <ddr2_phy_calib>.
 INFO:Xst:1433 - Contents of array <calib_rden_dly> may be accessed with an index that exceeds the array size. This could cause simulation mismatch.
 INFO:Xst:1433 - Contents of array <calib_rden_dly> may be accessed with an index that exceeds the array size. This could cause simulation mismatch.
 INFO:Xst:1433 - Contents of array <calib_rden_dly> may be accessed with an index that exceeds the array size. This could cause simulation mismatch.
@@ -1075,8 +1075,8 @@ Analyzing module <ddr2_phy_dqs_iob> in library <dram_controller_v1_00_a>.
 	DDR_TYPE = 32'sb00000000000000000000000000000001
 	DQS_NET_DELAY = 0.800000
 	HIGH_PERFORMANCE_MODE = "TRUE"
-WARNING:Xst:916 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v" line 149: Delay is ignored for synthesis.
-WARNING:Xst:916 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v" line 150: Delay is ignored for synthesis.
+WARNING:Xst:916 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v" line 149: Delay is ignored for synthesis.
+WARNING:Xst:916 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v" line 150: Delay is ignored for synthesis.
 Module <ddr2_phy_dqs_iob> is correct for synthesis.
  
     Set user-defined property "DELAY_SRC =  I" for instance <u_idelay_dqs> in unit <ddr2_phy_dqs_iob>.
@@ -1462,8 +1462,8 @@ Analyzing module <ddr2_phy_init> in library <dram_controller_v1_00_a>.
 	TWO_T_TIME_EN = 32'sb00000000000000000000000000000000
 	TWR = 32'sb00000000000000000011101010011000
 	WR_RECOVERY = 4
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v" line 820: Found Parallel Case directive in module <ddr2_phy_init>.
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v" line 817: Found FullParallel Case directive in module <ddr2_phy_init>.
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v" line 820: Found Parallel Case directive in module <ddr2_phy_init>.
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v" line 817: Found FullParallel Case directive in module <ddr2_phy_init>.
 Module <ddr2_phy_init> is correct for synthesis.
  
     Set user-defined property "INIT =  0" for instance <u_ff_phy_init_data_sel> in unit <ddr2_phy_init>.
@@ -1633,8 +1633,8 @@ Analyzing module <ddr2_ctrl> in library <dram_controller_v1_00_a>.
 	TWTR_CYC = 9
 	TWTR_TMP_MIN = 3
 	WR_LAT = 4
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v" line 877: Found FullParallel Case directive in module <ddr2_ctrl>.
-WARNING:Xst:905 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v" line 875: One or more signals are missing in the sensitivity list of always block. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v" line 877: Found FullParallel Case directive in module <ddr2_ctrl>.
+WARNING:Xst:905 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v" line 875: One or more signals are missing in the sensitivity list of always block. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
    <wrburst_ok_r>, <rdburst_ok_r>
 Module <ddr2_ctrl> is correct for synthesis.
  
@@ -1654,7 +1654,7 @@ INFO:Xst:2679 - Register <calib_err<0>> in unit <ddr2_phy_calib> has a constant 
 INFO:Xst:2679 - Register <calib_err<1>> in unit <ddr2_phy_calib> has a constant value of 0 during circuit operation. The register is replaced by logic.
 
 Synthesizing Unit <ddr2_ctrl>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_ctrl.v".
 WARNING:Xst:646 - Signal <two_t_enable_r1<0>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <sb_open_add_r> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <bank_hit_r1<3>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
@@ -1765,7 +1765,7 @@ Unit <ddr2_ctrl> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_write>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_write.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_write.v".
 WARNING:Xst:646 - Signal <wr_stages<10>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <wdf_mask_r1> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <wdf_ecc_mask> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
@@ -1801,7 +1801,7 @@ Unit <ddr2_phy_write> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_ctl_io>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_ctl_io.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_ctl_io.v".
 WARNING:Xst:647 - Input <clk90> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <rst90> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 13-bit register for signal <addr_mux>.
@@ -1816,7 +1816,7 @@ Unit <ddr2_phy_ctl_io> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_init>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_init.v".
 WARNING:Xst:1780 - Signal <load_mode_reg3<15:13>> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:653 - Signal <load_mode_reg3<12:0>> is used but never assigned. This sourceless signal will be automatically connected to value 0000000000000.
 WARNING:Xst:1780 - Signal <load_mode_reg2> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
@@ -1913,7 +1913,7 @@ Unit <ddr2_phy_init> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_calib>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_calib.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_calib.v".
 WARNING:Xst:647 - Input <dbg_idel_down_dq> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <dbg_idel_down_all> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <dbg_sel_all_idel_dqs> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
@@ -2172,12 +2172,12 @@ Unit <ddr2_phy_calib> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_dm_iob>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dm_iob.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dm_iob.v".
 Unit <ddr2_phy_dm_iob> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_dqs_iob>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dqs_iob.v".
     Found 1-bit register for signal <dqs_rst_n_r>.
     Summary:
 	inferred   1 D-type flip-flop(s).
@@ -2185,7 +2185,7 @@ Unit <ddr2_phy_dqs_iob> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_dq_iob_1>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dq_iob.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dq_iob.v".
 WARNING:Xst:1780 - Signal <stg1_out_rise_2s> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <stg1_out_rise_2m> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <stg1_out_rise_1s> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
@@ -2200,7 +2200,7 @@ Unit <ddr2_phy_dq_iob_1> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_dq_iob_2>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dq_iob.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_dq_iob.v".
 WARNING:Xst:1780 - Signal <stg1_out_rise_2s> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <stg1_out_rise_2m> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <stg1_out_rise_1s> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
@@ -2215,7 +2215,7 @@ Unit <ddr2_phy_dq_iob_2> synthesized.
 
 
 Synthesizing Unit <ddr2_usr_rd>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_rd.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_rd.v".
 WARNING:Xst:1305 - Output <rd_ecc_error> is never assigned. Tied to value 00.
 WARNING:Xst:1780 - Signal <sb_ecc_error> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <rst_r> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
@@ -2245,7 +2245,7 @@ Unit <ddr2_usr_rd> synthesized.
 
 
 Synthesizing Unit <ddr2_usr_addr_fifo>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_addr_fifo.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_addr_fifo.v".
 WARNING:Xst:646 - Signal <fifo_data_out<35:34>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit register for signal <rst_r>.
     Summary:
@@ -2254,7 +2254,7 @@ Unit <ddr2_usr_addr_fifo> synthesized.
 
 
 Synthesizing Unit <ddr2_usr_wr>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_wr.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_wr.v".
 WARNING:Xst:1780 - Signal <mask_data_in_ecc_wire> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <mask_data_in_ecc> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:1780 - Signal <i_wdf_mask_data_out_ecc_wire> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
@@ -2272,27 +2272,27 @@ Unit <ddr2_usr_wr> synthesized.
 
 
 Synthesizing Unit <ddr2_usr_top>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_top.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_usr_top.v".
 Unit <ddr2_usr_top> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_io>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_io.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_io.v".
 Unit <ddr2_phy_io> synthesized.
 
 
 Synthesizing Unit <ddr2_phy_top>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_top.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_phy_top.v".
 Unit <ddr2_phy_top> synthesized.
 
 
 Synthesizing Unit <ddr2_mem_if_top>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_mem_if_top.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/ddr2_mem_if_top.v".
 Unit <ddr2_mem_if_top> synthesized.
 
 
 Synthesizing Unit <dram_controller>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/dram_controller.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/dram_controller_v1_00_a/hdl/verilog/dram_controller.v".
 WARNING:Xst:1305 - Output <dram_odt<1>> is never assigned. Tied to value 0.
 WARNING:Xst:1305 - Output <dram_a<15:13>> is never assigned. Tied to value 000.
 WARNING:Xst:647 - Input <app_cmd_addr<31>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
@@ -4290,13 +4290,13 @@ WARNING:Xst:616 - Invalid property "SYN_USEIOFF 1": Did not attach to dram_contr
 WARNING:Xst:616 - Invalid property "SYN_USEIOFF 1": Did not attach to dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_ctl_io/gen_ba[1].u_ff_ba.
 
 
-Total REAL time to Xst completion: 48.00 secs
-Total CPU time to Xst completion: 47.70 secs
+Total REAL time to Xst completion: 50.00 secs
+Total CPU time to Xst completion: 49.83 secs
  
 --> 
 
 
-Total memory usage is 553280 kilobytes
+Total memory usage is 552544 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 1366 (   0 filtered)

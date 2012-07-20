@@ -1,0 +1,1 @@
+run -ifn xst_timestamper.prj -ifmt mixed -ofn timestamper_cw.ngc -ofmt NGC -p xc5vsx95t-1ff1136 -ent timestamper_cw -keep_hierarchy NO -iobuf NO -bus_delimiter () -top timestamper_cw -hierarchy_separator / -report_timing_constraint_problems warning -register_balancing no -iob Auto

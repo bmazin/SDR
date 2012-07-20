@@ -5,7 +5,7 @@
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="NgdBuild" timeStamp="Thu Jul 19 12:17:02 2012">
+  <application stringID="NgdBuild" timeStamp="Thu Jul 19 18:40:29 2012">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
@@ -85,7 +85,7 @@
       <section stringID="NGDBUILD_DESIGN_SUMMARY">
         <item dataType="int" stringID="NGDBUILD_NUM_ERRORS" value="0"/>
         <item dataType="int" stringID="NGDBUILD_FILTERED_WARNINGS" value="0"/>
-        <item dataType="int" stringID="NGDBUILD_NUM_WARNINGS" value="2756"/>
+        <item dataType="int" stringID="NGDBUILD_NUM_WARNINGS" value="2772"/>
         <item dataType="int" stringID="NGDBUILD_FILTERED_INFOS" value="0"/>
         <item dataType="int" stringID="NGDBUILD_NUM_INFOS" value="8"/>
       </section>
@@ -331,7 +331,7 @@
             </scope>
             <scope stringID="NGDBUILD_CORE_INSTANCE" value="chan_512_packet">
               <item stringID="NGDBUILD_CORE_INFO" type="sysgen_core_11_4" value="chan_512_packet"/>
-              <item modelsim_hdl_co_simulation_interface_block="1" stringID="NGDBUILD_CORE_PARAMETERS" total_blocks="8576" value="chan_512_packet" xilinx_adder_subtracter_block="129" xilinx_arithmetic_relational_operator_block="90" xilinx_assert_block="8" xilinx_bit_slice_extractor_block="840" xilinx_black_box_block="1" xilinx_bus_concatenator_block="182" xilinx_bus_multiplexer_block="231" xilinx_constant_block_block="412" xilinx_cordic_4_0_block="1" xilinx_counter_block="139" xilinx_delay_block="614" xilinx_disregard_subsystem_for_generation_block="7" xilinx_divider_generator_3_0_block="1" xilinx_dsp48e_block="36" xilinx_fifo_block_block="3" xilinx_gateway_in_block="60" xilinx_gateway_out_block="45" xilinx_input_scaler_block="80" xilinx_inverter_block="304" xilinx_logical_block_block="339" xilinx_multiplier_block="162" xilinx_negate_block_block="4" xilinx_register_block="108" xilinx_simulation_multiplexer_block="4" xilinx_single_port_random_access_memory_block="65" xilinx_single_port_read_only_memory_block="62" xilinx_system_generator_block="1" xilinx_type_converter_block="405" xilinx_type_reinterpreter_block="768"/>
+              <item modelsim_hdl_co_simulation_interface_block="1" stringID="NGDBUILD_CORE_PARAMETERS" total_blocks="8580" value="chan_512_packet" xilinx_adder_subtracter_block="129" xilinx_arithmetic_relational_operator_block="90" xilinx_assert_block="8" xilinx_bit_slice_extractor_block="840" xilinx_black_box_block="1" xilinx_bus_concatenator_block="182" xilinx_bus_multiplexer_block="231" xilinx_constant_block_block="412" xilinx_cordic_4_0_block="1" xilinx_counter_block="139" xilinx_delay_block="618" xilinx_disregard_subsystem_for_generation_block="7" xilinx_divider_generator_3_0_block="1" xilinx_dsp48e_block="36" xilinx_fifo_block_block="3" xilinx_gateway_in_block="60" xilinx_gateway_out_block="45" xilinx_input_scaler_block="80" xilinx_inverter_block="304" xilinx_logical_block_block="339" xilinx_multiplier_block="162" xilinx_negate_block_block="4" xilinx_register_block="108" xilinx_simulation_multiplexer_block="4" xilinx_single_port_random_access_memory_block="65" xilinx_single_port_read_only_memory_block="62" xilinx_system_generator_block="1" xilinx_type_converter_block="405" xilinx_type_reinterpreter_block="768"/>
             </scope>
             <scope stringID="NGDBUILD_CORE_INSTANCE" value="cntr_11_0_18bbeb067aa07bfe">
               <item stringID="NGDBUILD_CORE_INFO" type="c_counter_binary_v11_0" value="cntr_11_0_18bbeb067aa07bfe"/>

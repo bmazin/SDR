@@ -10,4 +10,4 @@ run
 -hierarchy_separator /
 -iobuf NO
 -sd {../implementation/chan_512_packet_dram_lut_rd_valid_wrapper}
--vlgincdir {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+-vlgincdir {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }

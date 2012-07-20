@@ -1,0 +1,168 @@
+Release 11.4 ngdbuild L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+
+Command Line: /opt/Xilinx/11.1/ISE/bin/lin64/unwrapped/ngdbuild -ise
+../__xps/ise/system.ise -p xc5vsx95tff1136-1 -nt timestamp -sd ../pcores -uc
+system.ucf
+/home/sean/SDR/Firmware/projects/timestamper/XPS_ROACH_base/implementation/syste
+m.ngc system.ngd
+
+Reading NGO file
+"/home/sean/SDR/Firmware/projects/timestamper/XPS_ROACH_base/implementation/syst
+em.ngc" ...
+Gathering constraint information from source properties...
+Done.
+
+Annotating constraints to design from ucf file "system.ucf" ...
+Resolving constraint associations...
+Checking Constraint Associations...
+WARNING:ConstraintSystem:137 - Constraint <Net dly_clk_n TNM_NET = dly_clk_n;>
+   [system.ucf(7)]: No appropriate instances for the TNM constraint are driven
+   by "dly_clk_n".
+
+WARNING:ConstraintSystem:56 - Constraint <TIMESPEC TS_dly_clk_n = PERIOD
+   dly_clk_n 200 MHz;> [system.ucf(8)]: Unable to find an active 'TNM' or
+   'TimeGrp' constraint named 'dly_clk_n'.
+
+WARNING:ConstraintSystem:137 - Constraint <NET adcmkid1_DRDY_Q_p       TNM_NET =
+   adcmkid1_DRDY_Q_p;> [system.ucf(122)]: No appropriate instances for the TNM
+   constraint are driven by "adcmkid1_DRDY_Q_p".
+
+WARNING:ConstraintSystem:56 - Constraint <TIMESPEC TS_adcmkid1_DRDY_Q_p = PERIOD
+   adcmkid1_DRDY_Q_p 3.906 ns;> [system.ucf(123)]: Unable to find an active
+   'TNM' or 'TimeGrp' constraint named 'adcmkid1_DRDY_Q_p'.
+
+WARNING:ConstraintSystem:137 - Constraint <NET adcmkid1_DRDY_Q_n       TNM_NET =
+   adcmkid1_DRDY_Q_n;> [system.ucf(124)]: No appropriate instances for the TNM
+   constraint are driven by "adcmkid1_DRDY_Q_n".
+
+WARNING:ConstraintSystem:56 - Constraint <TIMESPEC TS_adcmkid1_DRDY_Q_n = PERIOD
+   adcmkid1_DRDY_Q_n 3.906 ns;> [system.ucf(125)]: Unable to find an active
+   'TNM' or 'TimeGrp' constraint named 'adcmkid1_DRDY_Q_n'.
+
+INFO:ConstraintSystem:178 - TNM 'sys_clk_n', used in period specification
+   'TS_sys_clk_n', was traced into DCM_ADV instance
+   infrastructure_inst/SYS_CLK_DCM. The following new TNM groups and period
+   specifications were generated at the DCM_ADV output(s): 
+   CLK2X: <TIMESPEC TS_infrastructure_inst_infrastructure_inst_sys_clk2x_int =
+   PERIOD "infrastructure_inst_infrastructure_inst_sys_clk2x_int" TS_sys_clk_n *
+   2 HIGH 50%>
+
+WARNING:ConstraintSystem:191 - The TNM 'dly_clk_n', does not directly or
+   indirectly drive any flip-flops, latches and/or RAMS and cannot be actively
+   used by the referencing Period constraint 'TS_dly_clk_n'. If clock manager
+   blocks are directly or indirectly driven, a new TNM constraint will not be
+   derived even though the referencing constraint is a PERIOD constraint unless
+   an output of the clock manager drives flip-flops, latches or RAMs. This TNM
+   is used in the following user PERIOD specification:
+   <TIMESPEC TS_dly_clk_n = PERIOD dly_clk_n 200 MHz;> [system.ucf(8)]
+
+WARNING:ConstraintSystem:197 - The following specification is invalid because
+   the referenced TNM constraint was removed:
+   <TIMESPEC TS_dly_clk_n = PERIOD dly_clk_n 200 MHz;> [system.ucf(8)]
+
+INFO:ConstraintSystem:178 - TNM 'adcmkid1_DRDY_I_p', used in period
+   specification 'TS_adcmkid1_DRDY_I_p', was traced into DCM_ADV instance
+   timestamper_adc_mkid/CLK_DCM. The following new TNM groups and period
+   specifications were generated at the DCM_ADV output(s): 
+   CLK0: <TIMESPEC TS_timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk = PERIOD
+   "timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk" TS_adcmkid1_DRDY_I_p HIGH
+   50%>
+
+INFO:ConstraintSystem:178 - TNM 'adcmkid1_DRDY_I_n', used in period
+   specification 'TS_adcmkid1_DRDY_I_n', was traced into DCM_ADV instance
+   timestamper_adc_mkid/CLK_DCM. The following new TNM groups and period
+   specifications were generated at the DCM_ADV output(s): 
+   CLK0: <TIMESPEC TS_timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk_0 =
+   PERIOD "timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk_0"
+   TS_adcmkid1_DRDY_I_n HIGH 50%>
+
+WARNING:ConstraintSystem:191 - The TNM 'adcmkid1_DRDY_Q_p', does not directly or
+   indirectly drive any flip-flops, latches and/or RAMS and cannot be actively
+   used by the referencing Period constraint 'TS_adcmkid1_DRDY_Q_p'. If clock
+   manager blocks are directly or indirectly driven, a new TNM constraint will
+   not be derived even though the referencing constraint is a PERIOD constraint
+   unless an output of the clock manager drives flip-flops, latches or RAMs.
+   This TNM is used in the following user PERIOD specification:
+   <TIMESPEC TS_adcmkid1_DRDY_Q_p = PERIOD adcmkid1_DRDY_Q_p 3.906 ns;>
+   [system.ucf(123)]
+
+WARNING:ConstraintSystem:197 - The following specification is invalid because
+   the referenced TNM constraint was removed:
+   <TIMESPEC TS_adcmkid1_DRDY_Q_p = PERIOD adcmkid1_DRDY_Q_p 3.906 ns;>
+   [system.ucf(123)]
+
+WARNING:ConstraintSystem:191 - The TNM 'adcmkid1_DRDY_Q_n', does not directly or
+   indirectly drive any flip-flops, latches and/or RAMS and cannot be actively
+   used by the referencing Period constraint 'TS_adcmkid1_DRDY_Q_n'. If clock
+   manager blocks are directly or indirectly driven, a new TNM constraint will
+   not be derived even though the referencing constraint is a PERIOD constraint
+   unless an output of the clock manager drives flip-flops, latches or RAMs.
+   This TNM is used in the following user PERIOD specification:
+   <TIMESPEC TS_adcmkid1_DRDY_Q_n = PERIOD adcmkid1_DRDY_Q_n 3.906 ns;>
+   [system.ucf(125)]
+
+WARNING:ConstraintSystem:197 - The following specification is invalid because
+   the referenced TNM constraint was removed:
+   <TIMESPEC TS_adcmkid1_DRDY_Q_n = PERIOD adcmkid1_DRDY_Q_n 3.906 ns;>
+   [system.ucf(125)]
+
+Done...
+Checking Partitions ...
+
+INFO:NgdBuild:1222 - Setting CLKIN_PERIOD attribute associated with DCM instance
+   infrastructure_inst/SYS_CLK_DCM to 10.000000 ns based on the period
+   specification (<TIMESPEC TS_sys_clk_n = PERIOD sys_clk_n 100 MHz;>
+   [system.ucf(5)]).
+WARNING:NgdBuild:1212 - User specified non-default attribute value
+   (0.0000000000000000) was detected for the CLKIN_PERIOD attribute on DCM
+   "timestamper_adc_mkid/CLK_DCM".  This does not match the PERIOD constraint
+   value (3.906 ns.).  The uncertainty calculation will use the non-default
+   attribute value.  This could result in incorrect uncertainty calculated for
+   DCM output clocks.
+WARNING:NgdBuild:1212 - User specified non-default attribute value
+   (0.0000000000000000) was detected for the CLKIN_PERIOD attribute on DCM
+   "timestamper_adc_mkid/CLK_DCM".  This does not match the PERIOD constraint
+   value (3.906 ns.).  The uncertainty calculation will use the non-default
+   attribute value.  This could result in incorrect uncertainty calculated for
+   DCM output clocks.
+Checking expanded design ...
+WARNING:NgdBuild:443 - SFF primitive
+   'timestamper_XSG_core_config/timestamper_XSG_core_config/default_clock_driver
+   _x0/xlclockdriver_1/clr_reg/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0
+   ].bit_is_0.fdre_comp' has unconnected output pin
+WARNING:NgdBuild:452 - logical net 'N18' has no driver
+WARNING:NgdBuild:452 - logical net 'N19' has no driver
+WARNING:NgdBuild:452 - logical net 'N20' has no driver
+WARNING:NgdBuild:452 - logical net 'N21' has no driver
+WARNING:NgdBuild:452 - logical net 'N22' has no driver
+WARNING:NgdBuild:452 - logical net 'N23' has no driver
+WARNING:NgdBuild:452 - logical net 'N24' has no driver
+WARNING:NgdBuild:452 - logical net 'N25' has no driver
+WARNING:NgdBuild:452 - logical net 'N26' has no driver
+WARNING:NgdBuild:452 - logical net 'N27' has no driver
+WARNING:NgdBuild:452 - logical net 'N28' has no driver
+WARNING:NgdBuild:452 - logical net 'N29' has no driver
+WARNING:NgdBuild:452 - logical net 'N30' has no driver
+WARNING:NgdBuild:452 - logical net 'N31' has no driver
+WARNING:NgdBuild:452 - logical net 'N32' has no driver
+WARNING:NgdBuild:452 - logical net 'N33' has no driver
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:  31
+
+Total memory usage is 325344 kilobytes
+
+Writing NGD file "system.ngd" ...
+Total REAL time to NGDBUILD completion:  5 sec
+Total CPU time to NGDBUILD completion:   5 sec
+
+Writing NGDBUILD log file "system.bld"...

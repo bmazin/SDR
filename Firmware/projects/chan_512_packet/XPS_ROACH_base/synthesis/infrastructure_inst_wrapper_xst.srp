@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "infrastructure_inst_wrapper_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -53,7 +53,7 @@ Cores Search Directories           : {../implementation/infrastructure_inst_wrap
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/roach_infrastructure_v1_00_a/hdl/verilog/roach_infrastructure.v" in library roach_infrastructure_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/roach_infrastructure_v1_00_a/hdl/verilog/roach_infrastructure.v" in library roach_infrastructure_v1_00_a
 Module <roach_infrastructure> compiled
 Compiling verilog file "../hdl/infrastructure_inst_wrapper.v" in library work
 Module <infrastructure_inst_wrapper> compiled
@@ -209,7 +209,7 @@ Module <roach_infrastructure> is correct for synthesis.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <roach_infrastructure>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/roach_infrastructure_v1_00_a/hdl/verilog/roach_infrastructure.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/roach_infrastructure_v1_00_a/hdl/verilog/roach_infrastructure.v".
 WARNING:Xst:646 - Signal <sys_clk2x_dcm_locked> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <aux1_clk_dcm_locked> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 Unit <roach_infrastructure> synthesized.
@@ -367,12 +367,12 @@ All values displayed in nanoseconds (ns)
 
 
 Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 3.90 secs
+Total CPU time to Xst completion: 3.83 secs
  
 --> 
 
 
-Total memory usage is 441724 kilobytes
+Total memory usage is 441688 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    3 (   0 filtered)

@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "epb_infrastructure_inst_wrapper_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -53,7 +53,7 @@ Cores Search Directories           : {../implementation/epb_infrastructure_inst_
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/epb_infrastructure_v1_00_a/hdl/verilog/epb_infrastructure.v" in library epb_infrastructure_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/epb_infrastructure_v1_00_a/hdl/verilog/epb_infrastructure.v" in library epb_infrastructure_v1_00_a
 Module <epb_infrastructure> compiled
 Compiling verilog file "../hdl/epb_infrastructure_inst_wrapper.v" in library work
 Module <epb_infrastructure_inst_wrapper> compiled
@@ -205,7 +205,7 @@ Module <epb_infrastructure> is correct for synthesis.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <epb_infrastructure>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/epb_infrastructure_v1_00_a/hdl/verilog/epb_infrastructure.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/epb_infrastructure_v1_00_a/hdl/verilog/epb_infrastructure.v".
 Unit <epb_infrastructure> synthesized.
 
 
@@ -362,12 +362,12 @@ Delay:               3.026ns (Levels of Logic = 2)
 
 
 Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 3.76 secs
+Total CPU time to Xst completion: 3.86 secs
  
 --> 
 
 
-Total memory usage is 441140 kilobytes
+Total memory usage is 440552 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

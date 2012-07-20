@@ -6,11 +6,11 @@ xc5vsx95tff1136-1 -intstyle silent -sd .. opb_dram_sniffer_inst_wrapper.ngc
 ../opb_dram_sniffer_inst_wrapper.ngc
 
 Reading NGO file
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/implementation/opb_dram
-_sniffer_inst_wrapper/opb_dram_sniffer_inst_wrapper.ngc" ...
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/implementation/
+opb_dram_sniffer_inst_wrapper/opb_dram_sniffer_inst_wrapper.ngc" ...
 Loading design module
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/implementation/opb_dram
-_sniffer_inst_wrapper/read_history_fifo.ngc"...
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/implementation/
+opb_dram_sniffer_inst_wrapper/read_history_fifo.ngc"...
 
 Partition Implementation Status
 -------------------------------

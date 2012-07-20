@@ -17,46 +17,46 @@ WARNING:Security:42 - Your software subscription period has lapsed. Your current
 </arg>
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb0</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 93</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb0</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 93</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_avgIQ_bram</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 634</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_avgIQ_bram</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 634</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_pulses_bram0</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 917</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_pulses_bram0</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 917</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_pulses_bram1</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 948</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_pulses_bram1</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 948</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_snapPhase_bram</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1015</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_snapPhase_bram</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 1015</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb1</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1111</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb1</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 1111</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_opb_lite</arg> INSTANCE:<arg fmt="%s" index="2">opb2opb_bridge_opb1</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1119</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_opb_lite</arg> INSTANCE:<arg fmt="%s" index="2">opb2opb_bridge_opb1</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 1119</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb0</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 93</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb0</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 93</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_avgIQ_bram</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 634</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_avgIQ_bram</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 634</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_pulses_bram0</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 917</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_pulses_bram0</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 917</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_pulses_bram1</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 948</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_pulses_bram1</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 948</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_snapPhase_bram</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1015</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_bram_if_cntlr</arg> INSTANCE:<arg fmt="%s" index="2">chan_512_packet_snapPhase_bram</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 1015</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb1</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1111</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb1</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 1111</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
-<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_opb_lite</arg> INSTANCE:<arg fmt="%s" index="2">opb2opb_bridge_opb1</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 1119</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
+<msg type="warning" file="EDK" num="1582" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_opb_lite</arg> INSTANCE:<arg fmt="%s" index="2">opb2opb_bridge_opb1</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 1119</arg> - deprecated core for architecture &apos;<arg fmt="%s" index="4">virtex5sx</arg>&apos;!
 </msg>
 
 <msg type="info" file="EDK" num="740" delta="new" >Cannot determine the input clock associated with port : <arg fmt="%s" index="1">infrastructure_inst</arg>:<arg fmt="%s" index="2">epb_clk</arg>. Clock DRCs will not be performed on this core and cores connected to it. 
@@ -281,82 +281,82 @@ WARNING:Security:42 - Your software subscription period has lapsed. Your current
 <msg type="info" file="EDK" num="1560" delta="new" >IPNAME:<arg fmt="%s" index="1">opb_v20</arg> INSTANCE:<arg fmt="%s" index="2">opb1</arg> - <arg fmt="%s" index="3">/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/opb_v20_v1_10_c/data/opb_v20_v2_1_0.mpd line 75</arg> - <arg fmt="%s" index="4">tool</arg> is overriding <arg fmt="%s" index="5">PARAMETER</arg> <arg fmt="%s" index="6">C_NUM_SLAVES</arg> value to <arg fmt="%s" index="7">14</arg>
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 55</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 55</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk90</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk90</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 56</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk90</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk90</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 56</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk180</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk180</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 57</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk180</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk180</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 57</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk270</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk270</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 58</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk270</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk270</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 58</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk_lock</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk_lock</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 59</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk_lock</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk_lock</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 59</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk2x</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk2x</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 60</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk2x</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk2x</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 60</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk2x90</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk2x90</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 61</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk2x90</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk2x90</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 61</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk2x180</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk2x180</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 62</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk2x180</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk2x180</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 62</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk2x270</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk2x270</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 63</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">sys_clk2x270</arg> CONNECTOR:<arg fmt="%s" index="2">sys_clk2x270</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 63</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 65</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 65</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk90</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk90</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 66</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk90</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk90</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 66</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk180</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk180</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 67</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk180</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk180</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 67</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk270</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk270</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 68</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk270</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk270</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 68</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux1_clk</arg> CONNECTOR:<arg fmt="%s" index="2">aux1_clk</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 69</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux1_clk</arg> CONNECTOR:<arg fmt="%s" index="2">aux1_clk</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 69</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux1_clk90</arg> CONNECTOR:<arg fmt="%s" index="2">aux1_clk90</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 70</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux1_clk90</arg> CONNECTOR:<arg fmt="%s" index="2">aux1_clk90</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 70</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux1_clk180</arg> CONNECTOR:<arg fmt="%s" index="2">aux1_clk180</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 71</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux1_clk180</arg> CONNECTOR:<arg fmt="%s" index="2">aux1_clk180</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 71</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux1_clk270</arg> CONNECTOR:<arg fmt="%s" index="2">aux1_clk270</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 72</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux1_clk270</arg> CONNECTOR:<arg fmt="%s" index="2">aux1_clk270</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 72</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk2x</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk2x</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 73</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk2x</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk2x</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 73</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk2x90</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk2x90</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 74</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk2x90</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk2x90</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 74</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk2x180</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk2x180</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 75</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk2x180</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk2x180</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 75</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk2x270</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk2x270</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 76</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">aux0_clk2x270</arg> CONNECTOR:<arg fmt="%s" index="2">aux0_clk2x270</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 76</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">idelay_rdy</arg> CONNECTOR:<arg fmt="%s" index="2">idelay_rdy</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 79</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">idelay_rdy</arg> CONNECTOR:<arg fmt="%s" index="2">idelay_rdy</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 79</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">soft_reset</arg> CONNECTOR:<arg fmt="%s" index="2">soft_reset</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 161</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">soft_reset</arg> CONNECTOR:<arg fmt="%s" index="2">soft_reset</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 161</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">adc_clk180_out</arg> CONNECTOR:<arg fmt="%s" index="2">adc1_clk180</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 587</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">adc_clk180_out</arg> CONNECTOR:<arg fmt="%s" index="2">adc1_clk180</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 587</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">adc_clk270_out</arg> CONNECTOR:<arg fmt="%s" index="2">adc1_clk270</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 588</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">adc_clk270_out</arg> CONNECTOR:<arg fmt="%s" index="2">adc1_clk270</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 588</arg> - floating connection!
 </msg>
 
-<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">adc_dcm_locked</arg> CONNECTOR:<arg fmt="%s" index="2">adc1_dcm_locked</arg> - <arg fmt="%s" index="3">/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/system.mhs line 589</arg> - floating connection!
+<msg type="warning" file="EDK" num="2099" delta="new" >PORT:<arg fmt="%s" index="1">adc_dcm_locked</arg> CONNECTOR:<arg fmt="%s" index="2">adc1_dcm_locked</arg> - <arg fmt="%s" index="3">/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/system.mhs line 589</arg> - floating connection!
 </msg>
 
 <msg type="info" file="EDK" num="1038" delta="new" >Did not implement clock DRCs for parameter: <arg fmt="%s" index="1">chan_512_packet_avgIQ_bram</arg>:<arg fmt="%s" index="2">c_opb_clk_period_ps</arg>. Top-level frequency could not be propagated to this IP. Please make sure that you have specified the frequency of the top-level clock port, and that the clocks are properly connected.

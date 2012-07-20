@@ -7,11 +7,12 @@ chan_512_packet_xsg_core_config_wrapper.ngc
 ../chan_512_packet_xsg_core_config_wrapper.ngc
 
 Reading NGO file
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/implementation/chan_512
-_packet_xsg_core_config_wrapper/chan_512_packet_xsg_core_config_wrapper.ngc" ...
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/implementation/
+chan_512_packet_xsg_core_config_wrapper/chan_512_packet_xsg_core_config_wrapper.
+ngc" ...
 Loading design module
-"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/implementation/chan_512
-_packet_xsg_core_config_wrapper/chan_512_packet.ngc"...
+"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/implementation/
+chan_512_packet_xsg_core_config_wrapper/chan_512_packet.ngc"...
 
 Partition Implementation Status
 -------------------------------
@@ -24,10 +25,10 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 594328 kilobytes
+Total memory usage is 595908 kilobytes
 
 Writing NGC file "../chan_512_packet_xsg_core_config_wrapper.ngc" ...
-Total REAL time to NGCBUILD completion:  7 sec
-Total CPU time to NGCBUILD completion:   7 sec
+Total REAL time to NGCBUILD completion:  8 sec
+Total CPU time to NGCBUILD completion:   8 sec
 
 Writing NGCBUILD log file "../chan_512_packet_xsg_core_config_wrapper.blc"...

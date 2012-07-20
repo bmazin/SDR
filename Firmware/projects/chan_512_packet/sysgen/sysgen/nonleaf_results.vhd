@@ -1076,7 +1076,11 @@ architecture structural of dram_lut_entity_4fca5cbbf0 is
   signal counter2_op_net: std_logic_vector(13 downto 0);
   signal counter5_op_net: std_logic;
   signal delay1_q_net_x0: std_logic;
+  signal delay2_q_net: std_logic_vector(143 downto 0);
+  signal delay3_q_net: std_logic_vector(143 downto 0);
   signal delay4_q_net: std_logic;
+  signal delay5_q_net: std_logic;
+  signal delay6_q_net: std_logic;
   signal force_data_in_output_port_net_x1: std_logic_vector(143 downto 0);
   signal force_rd_dout_output_port_net_x0: std_logic_vector(143 downto 0);
   signal inverter1_op_net: std_logic;
@@ -1243,6 +1247,34 @@ begin
       q(0) => delay1_q_net_x0
     );
 
+  delay2: entity work.xldelay
+    generic map (
+      latency => 2,
+      reg_retiming => 0,
+      width => 144
+    )
+    port map (
+      ce => ce_1_sg_x3,
+      clk => clk_1_sg_x3,
+      d => force_rd_dout_output_port_net_x0,
+      en => '1',
+      q => delay2_q_net
+    );
+
+  delay3: entity work.xldelay
+    generic map (
+      latency => 2,
+      reg_retiming => 0,
+      width => 144
+    )
+    port map (
+      ce => ce_1_sg_x3,
+      clk => clk_1_sg_x3,
+      d => delay2_q_net,
+      en => '1',
+      q => delay3_q_net
+    );
+
   delay4: entity work.xldelay
     generic map (
       latency => 2,
@@ -1255,6 +1287,34 @@ begin
       d(0) => slice5_y_net,
       en => '1',
       q(0) => delay4_q_net
+    );
+
+  delay5: entity work.xldelay
+    generic map (
+      latency => 2,
+      reg_retiming => 0,
+      width => 1
+    )
+    port map (
+      ce => ce_1_sg_x3,
+      clk => clk_1_sg_x3,
+      d(0) => simulation_multiplexer3_dout_net_x0,
+      en => '1',
+      q(0) => delay5_q_net
+    );
+
+  delay6: entity work.xldelay
+    generic map (
+      latency => 2,
+      reg_retiming => 0,
+      width => 1
+    )
+    port map (
+      ce => ce_1_sg_x3,
+      clk => clk_1_sg_x3,
+      d(0) => delay5_q_net,
+      en => '1',
+      q(0) => delay6_q_net
     );
 
   dram_f5718fec94: entity work.dram_entity_f5718fec94
@@ -1285,7 +1345,7 @@ begin
       ce => ce_1_sg_x3,
       clk => clk_1_sg_x3,
       clr => '0',
-      ip(0) => simulation_multiplexer3_dout_net_x0,
+      ip(0) => delay6_q_net,
       op(0) => inverter_op_net
     );
 
@@ -1439,7 +1499,7 @@ begin
       y_width => 64
     )
     port map (
-      x => force_rd_dout_output_port_net_x0,
+      x => delay3_q_net,
       y => slice2_y_net
     );
 
@@ -1451,7 +1511,7 @@ begin
       y_width => 64
     )
     port map (
-      x => force_rd_dout_output_port_net_x0,
+      x => delay3_q_net,
       y => slice3_y_net
     );
 
@@ -17059,6 +17119,661 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use work.conv_pkg.all;
 
+-- Generated from Simulink block "chan_512_packet/PFB/fft1/fft_biplex0/biplex_core/fft_stage_3/butterfly_direct"
+
+entity butterfly_direct_entity_60ddf1fbe5 is
+  port (
+    a: in std_logic_vector(35 downto 0); 
+    b: in std_logic_vector(35 downto 0); 
+    ce_1: in std_logic; 
+    clk_1: in std_logic; 
+    shift: in std_logic; 
+    sync: in std_logic; 
+    a_bw: out std_logic_vector(35 downto 0); 
+    a_bw_x0: out std_logic_vector(35 downto 0); 
+    sync_out: out std_logic
+  );
+end butterfly_direct_entity_60ddf1fbe5;
+
+architecture structural of butterfly_direct_entity_60ddf1fbe5 is
+  signal cast_c_im_dout_net_x0: std_logic_vector(22 downto 0);
+  signal cast_c_im_dout_net_x1: std_logic_vector(22 downto 0);
+  signal cast_c_re_dout_net_x0: std_logic_vector(22 downto 0);
+  signal cast_c_re_dout_net_x1: std_logic_vector(22 downto 0);
+  signal ce_1_sg_x162: std_logic;
+  signal clk_1_sg_x162: std_logic;
+  signal concat_y_net_x2: std_logic_vector(35 downto 0);
+  signal concat_y_net_x3: std_logic_vector(35 downto 0);
+  signal convert0_dout_net_x2: std_logic_vector(21 downto 0);
+  signal convert1_dout_net_x2: std_logic_vector(21 downto 0);
+  signal convert_dout_net_x2: std_logic_vector(17 downto 0);
+  signal convert_dout_net_x3: std_logic_vector(17 downto 0);
+  signal convert_dout_net_x4: std_logic_vector(17 downto 0);
+  signal convert_dout_net_x5: std_logic_vector(17 downto 0);
+  signal delay2_q_net_x0: std_logic;
+  signal force_im_output_port_net_x3: std_logic_vector(17 downto 0);
+  signal force_re_output_port_net_x3: std_logic_vector(17 downto 0);
+  signal mux0_y_net_x0: std_logic_vector(23 downto 0);
+  signal mux1_y_net_x0: std_logic_vector(23 downto 0);
+  signal mux2_y_net_x0: std_logic_vector(23 downto 0);
+  signal mux3_y_net_x0: std_logic_vector(23 downto 0);
+  signal mux_y_net_x3: std_logic_vector(35 downto 0);
+  signal mux_y_net_x4: std_logic;
+  signal scale0_op_net: std_logic_vector(22 downto 0);
+  signal scale1_op_net: std_logic_vector(22 downto 0);
+  signal scale2_op_net: std_logic_vector(22 downto 0);
+  signal scale3_op_net: std_logic_vector(22 downto 0);
+  signal shift_delay_q_net: std_logic;
+  signal single_port_ram_data_out_net_x1: std_logic_vector(35 downto 0);
+  signal slice_y_net_x0: std_logic;
+  signal sync_delay_q_net_x0: std_logic;
+
+begin
+  single_port_ram_data_out_net_x1 <= a;
+  mux_y_net_x3 <= b;
+  ce_1_sg_x162 <= ce_1;
+  clk_1_sg_x162 <= clk_1;
+  slice_y_net_x0 <= shift;
+  mux_y_net_x4 <= sync;
+  a_bw <= concat_y_net_x2;
+  a_bw_x0 <= concat_y_net_x3;
+  sync_out <= sync_delay_q_net_x0;
+
+  cadd_381a1eefa3: entity work.cadd_entity_6957d74cd4
+    port map (
+      a_im => force_im_output_port_net_x3,
+      a_re => force_re_output_port_net_x3,
+      b_im => convert1_dout_net_x2,
+      b_re => convert0_dout_net_x2,
+      ce_1 => ce_1_sg_x162,
+      clk_1 => clk_1_sg_x162,
+      c_im => cast_c_im_dout_net_x0,
+      c_re => cast_c_re_dout_net_x0
+    );
+
+  convert_of0_57436def30: entity work.convert_of0_entity_e72f07e454
+    port map (
+      ce_1 => ce_1_sg_x162,
+      clk_1 => clk_1_sg_x162,
+      din => mux0_y_net_x0,
+      dout => convert_dout_net_x2
+    );
+
+  convert_of1_abd6dfbd9c: entity work.convert_of0_entity_e72f07e454
+    port map (
+      ce_1 => ce_1_sg_x162,
+      clk_1 => clk_1_sg_x162,
+      din => mux1_y_net_x0,
+      dout => convert_dout_net_x3
+    );
+
+  convert_of2_e88f37845b: entity work.convert_of0_entity_e72f07e454
+    port map (
+      ce_1 => ce_1_sg_x162,
+      clk_1 => clk_1_sg_x162,
+      din => mux2_y_net_x0,
+      dout => convert_dout_net_x4
+    );
+
+  convert_of3_417837eee8: entity work.convert_of0_entity_e72f07e454
+    port map (
+      ce_1 => ce_1_sg_x162,
+      clk_1 => clk_1_sg_x162,
+      din => mux3_y_net_x0,
+      dout => convert_dout_net_x5
+    );
+
+  csub_78bd1283e4: entity work.csub_entity_0a9ce09527
+    port map (
+      a_im => force_im_output_port_net_x3,
+      a_re => force_re_output_port_net_x3,
+      b_im => convert1_dout_net_x2,
+      b_re => convert0_dout_net_x2,
+      ce_1 => ce_1_sg_x162,
+      clk_1 => clk_1_sg_x162,
+      c_im => cast_c_im_dout_net_x1,
+      c_re => cast_c_re_dout_net_x1
+    );
+
+  mux0: entity work.mux_0c5c160d49
+    port map (
+      ce => ce_1_sg_x162,
+      clk => clk_1_sg_x162,
+      clr => '0',
+      d0 => cast_c_re_dout_net_x0,
+      d1 => scale0_op_net,
+      sel(0) => shift_delay_q_net,
+      y => mux0_y_net_x0
+    );
+
+  mux1: entity work.mux_0c5c160d49
+    port map (
+      ce => ce_1_sg_x162,
+      clk => clk_1_sg_x162,
+      clr => '0',
+      d0 => cast_c_im_dout_net_x0,
+      d1 => scale1_op_net,
+      sel(0) => shift_delay_q_net,
+      y => mux1_y_net_x0
+    );
+
+  mux2: entity work.mux_0c5c160d49
+    port map (
+      ce => ce_1_sg_x162,
+      clk => clk_1_sg_x162,
+      clr => '0',
+      d0 => cast_c_re_dout_net_x1,
+      d1 => scale2_op_net,
+      sel(0) => shift_delay_q_net,
+      y => mux2_y_net_x0
+    );
+
+  mux3: entity work.mux_0c5c160d49
+    port map (
+      ce => ce_1_sg_x162,
+      clk => clk_1_sg_x162,
+      clr => '0',
+      d0 => cast_c_im_dout_net_x1,
+      d1 => scale3_op_net,
+      sel(0) => shift_delay_q_net,
+      y => mux3_y_net_x0
+    );
+
+  ri_to_c01_7b0912f612: entity work.ri_to_c01_entity_89b51b1084
+    port map (
+      im => convert_dout_net_x3,
+      re => convert_dout_net_x2,
+      c => concat_y_net_x2
+    );
+
+  ri_to_c23_b3402e084f: entity work.ri_to_c01_entity_89b51b1084
+    port map (
+      im => convert_dout_net_x5,
+      re => convert_dout_net_x4,
+      c => concat_y_net_x3
+    );
+
+  scale0: entity work.scale_e5d0b4a1ec
+    port map (
+      ce => '0',
+      clk => '0',
+      clr => '0',
+      ip => cast_c_re_dout_net_x0,
+      op => scale0_op_net
+    );
+
+  scale1: entity work.scale_e5d0b4a1ec
+    port map (
+      ce => '0',
+      clk => '0',
+      clr => '0',
+      ip => cast_c_im_dout_net_x0,
+      op => scale1_op_net
+    );
+
+  scale2: entity work.scale_e5d0b4a1ec
+    port map (
+      ce => '0',
+      clk => '0',
+      clr => '0',
+      ip => cast_c_re_dout_net_x1,
+      op => scale2_op_net
+    );
+
+  scale3: entity work.scale_e5d0b4a1ec
+    port map (
+      ce => '0',
+      clk => '0',
+      clr => '0',
+      ip => cast_c_im_dout_net_x1,
+      op => scale3_op_net
+    );
+
+  shift_delay: entity work.xldelay
+    generic map (
+      latency => 2,
+      reg_retiming => 0,
+      width => 1
+    )
+    port map (
+      ce => ce_1_sg_x162,
+      clk => clk_1_sg_x162,
+      d(0) => slice_y_net_x0,
+      en => '1',
+      q(0) => shift_delay_q_net
+    );
+
+  sync_delay: entity work.delay_a14e3dd1bd
+    port map (
+      ce => ce_1_sg_x162,
+      clk => clk_1_sg_x162,
+      clr => '0',
+      d(0) => delay2_q_net_x0,
+      q(0) => sync_delay_q_net_x0
+    );
+
+  twiddle_general_4mult_f46d046120: entity work.twiddle_general_4mult_entity_e291e3c2ad
+    port map (
+      a => single_port_ram_data_out_net_x1,
+      b => mux_y_net_x3,
+      ce_1 => ce_1_sg_x162,
+      clk_1 => clk_1_sg_x162,
+      sync => mux_y_net_x4,
+      a_im => force_im_output_port_net_x3,
+      a_re => force_re_output_port_net_x3,
+      bw_im => convert1_dout_net_x2,
+      bw_re => convert0_dout_net_x2,
+      sync_out => delay2_q_net_x0
+    );
+
+end structural;
+library IEEE;
+use IEEE.std_logic_1164.all;
+use work.conv_pkg.all;
+
+-- Generated from Simulink block "chan_512_packet/PFB/fft1/fft_biplex0/biplex_core/fft_stage_3"
+
+entity fft_stage_3_entity_60a9684e86 is
+  port (
+    ce_1: in std_logic; 
+    clk_1: in std_logic; 
+    in1: in std_logic_vector(35 downto 0); 
+    in2: in std_logic_vector(35 downto 0); 
+    shift: in std_logic_vector(31 downto 0); 
+    sync: in std_logic; 
+    out1: out std_logic_vector(35 downto 0); 
+    out2: out std_logic_vector(35 downto 0); 
+    sync_out: out std_logic
+  );
+end fft_stage_3_entity_60a9684e86;
+
+architecture structural of fft_stage_3_entity_60a9684e86 is
+  signal ce_1_sg_x166: std_logic;
+  signal clk_1_sg_x166: std_logic;
+  signal concat_y_net_x11: std_logic_vector(35 downto 0);
+  signal concat_y_net_x12: std_logic_vector(35 downto 0);
+  signal concat_y_net_x13: std_logic_vector(35 downto 0);
+  signal concat_y_net_x9: std_logic_vector(35 downto 0);
+  signal constant2_op_net_x2: std_logic_vector(31 downto 0);
+  signal counter_op_net: std_logic_vector(5 downto 0);
+  signal delay_q_net_x0: std_logic;
+  signal mux1_y_net_x0: std_logic_vector(35 downto 0);
+  signal mux_y_net_x3: std_logic_vector(35 downto 0);
+  signal mux_y_net_x5: std_logic;
+  signal single_port_ram_data_out_net_x0: std_logic_vector(35 downto 0);
+  signal single_port_ram_data_out_net_x2: std_logic_vector(35 downto 0);
+  signal slice1_y_net: std_logic;
+  signal slice_y_net_x0: std_logic;
+  signal sync_delay_q_net_x4: std_logic;
+  signal sync_delay_q_net_x5: std_logic;
+
+begin
+  ce_1_sg_x166 <= ce_1;
+  clk_1_sg_x166 <= clk_1;
+  concat_y_net_x9 <= in1;
+  concat_y_net_x11 <= in2;
+  constant2_op_net_x2 <= shift;
+  sync_delay_q_net_x4 <= sync;
+  out1 <= concat_y_net_x12;
+  out2 <= concat_y_net_x13;
+  sync_out <= sync_delay_q_net_x5;
+
+  butterfly_direct_60ddf1fbe5: entity work.butterfly_direct_entity_60ddf1fbe5
+    port map (
+      a => single_port_ram_data_out_net_x2,
+      b => mux_y_net_x3,
+      ce_1 => ce_1_sg_x166,
+      clk_1 => clk_1_sg_x166,
+      shift => slice_y_net_x0,
+      sync => mux_y_net_x5,
+      a_bw => concat_y_net_x12,
+      a_bw_x0 => concat_y_net_x13,
+      sync_out => sync_delay_q_net_x5
+    );
+
+  counter: entity work.xlcounter_free
+    generic map (
+      core_name0 => "cntr_11_0_7d2d2ebbf32c6bf7",
+      op_arith => xlUnsigned,
+      op_width => 6
+    )
+    port map (
+      ce => ce_1_sg_x166,
+      clk => clk_1_sg_x166,
+      clr => '0',
+      en => "1",
+      rst(0) => sync_delay_q_net_x4,
+      op => counter_op_net
+    );
+
+  delay: entity work.xldelay
+    generic map (
+      latency => 1,
+      reg_retiming => 0,
+      width => 1
+    )
+    port map (
+      ce => ce_1_sg_x166,
+      clk => clk_1_sg_x166,
+      d(0) => sync_delay_q_net_x4,
+      en => '1',
+      q(0) => delay_q_net_x0
+    );
+
+  delay_b_4fb51c5ca7: entity work.delay_b_entity_763da937e2
+    port map (
+      ce_1 => ce_1_sg_x166,
+      clk_1 => clk_1_sg_x166,
+      in1 => mux1_y_net_x0,
+      out1 => single_port_ram_data_out_net_x2
+    );
+
+  delay_f_ae373653b3: entity work.delay_b_entity_763da937e2
+    port map (
+      ce_1 => ce_1_sg_x166,
+      clk_1 => clk_1_sg_x166,
+      in1 => concat_y_net_x11,
+      out1 => single_port_ram_data_out_net_x0
+    );
+
+  mux: entity work.mux_4bb6f691f7
+    port map (
+      ce => ce_1_sg_x166,
+      clk => clk_1_sg_x166,
+      clr => '0',
+      d0 => single_port_ram_data_out_net_x0,
+      d1 => concat_y_net_x9,
+      sel(0) => slice1_y_net,
+      y => mux_y_net_x3
+    );
+
+  mux1: entity work.mux_4bb6f691f7
+    port map (
+      ce => ce_1_sg_x166,
+      clk => clk_1_sg_x166,
+      clr => '0',
+      d0 => concat_y_net_x9,
+      d1 => single_port_ram_data_out_net_x0,
+      sel(0) => slice1_y_net,
+      y => mux1_y_net_x0
+    );
+
+  slice: entity work.xlslice
+    generic map (
+      new_lsb => 2,
+      new_msb => 2,
+      x_width => 32,
+      y_width => 1
+    )
+    port map (
+      x => constant2_op_net_x2,
+      y(0) => slice_y_net_x0
+    );
+
+  slice1: entity work.xlslice
+    generic map (
+      new_lsb => 5,
+      new_msb => 5,
+      x_width => 6,
+      y_width => 1
+    )
+    port map (
+      x => counter_op_net,
+      y(0) => slice1_y_net
+    );
+
+  sync_delay_e2a8472bc9: entity work.sync_delay_entity_73caf59576
+    port map (
+      ce_1 => ce_1_sg_x166,
+      clk_1 => clk_1_sg_x166,
+      in_x0 => delay_q_net_x0,
+      out_x0 => mux_y_net_x5
+    );
+
+end structural;
+library IEEE;
+use IEEE.std_logic_1164.all;
+use work.conv_pkg.all;
+
+-- Generated from Simulink block "chan_512_packet/PFB/fft1/fft_biplex0/biplex_core"
+
+entity biplex_core_entity_6def144ef0 is
+  port (
+    ce_1: in std_logic; 
+    clk_1: in std_logic; 
+    pol1: in std_logic_vector(35 downto 0); 
+    pol2: in std_logic_vector(35 downto 0); 
+    shift: in std_logic_vector(31 downto 0); 
+    sync: in std_logic; 
+    out1: out std_logic_vector(35 downto 0); 
+    out2: out std_logic_vector(35 downto 0); 
+    sync_out: out std_logic
+  );
+end biplex_core_entity_6def144ef0;
+
+architecture structural of biplex_core_entity_6def144ef0 is
+  signal ce_1_sg_x232: std_logic;
+  signal clk_1_sg_x232: std_logic;
+  signal concat_y_net_x10: std_logic_vector(35 downto 0);
+  signal concat_y_net_x11: std_logic_vector(35 downto 0);
+  signal concat_y_net_x12: std_logic_vector(35 downto 0);
+  signal concat_y_net_x13: std_logic_vector(35 downto 0);
+  signal concat_y_net_x14: std_logic_vector(35 downto 0);
+  signal concat_y_net_x15: std_logic_vector(35 downto 0);
+  signal concat_y_net_x16: std_logic_vector(35 downto 0);
+  signal concat_y_net_x17: std_logic_vector(35 downto 0);
+  signal concat_y_net_x18: std_logic_vector(35 downto 0);
+  signal concat_y_net_x21: std_logic_vector(35 downto 0);
+  signal concat_y_net_x22: std_logic_vector(35 downto 0);
+  signal concat_y_net_x5: std_logic_vector(35 downto 0);
+  signal concat_y_net_x6: std_logic_vector(35 downto 0);
+  signal concat_y_net_x7: std_logic_vector(35 downto 0);
+  signal concat_y_net_x8: std_logic_vector(35 downto 0);
+  signal concat_y_net_x9: std_logic_vector(35 downto 0);
+  signal constant2_op_net_x8: std_logic_vector(31 downto 0);
+  signal delay10_q_net_x1: std_logic;
+  signal delay18_q_net_x1: std_logic_vector(35 downto 0);
+  signal delay19_q_net_x2: std_logic_vector(35 downto 0);
+  signal sync_delay_q_net_x10: std_logic;
+  signal sync_delay_q_net_x2: std_logic;
+  signal sync_delay_q_net_x3: std_logic;
+  signal sync_delay_q_net_x4: std_logic;
+  signal sync_delay_q_net_x5: std_logic;
+  signal sync_delay_q_net_x6: std_logic;
+  signal sync_delay_q_net_x7: std_logic;
+  signal sync_delay_q_net_x8: std_logic;
+
+begin
+  ce_1_sg_x232 <= ce_1;
+  clk_1_sg_x232 <= clk_1;
+  delay18_q_net_x1 <= pol1;
+  delay19_q_net_x2 <= pol2;
+  constant2_op_net_x8 <= shift;
+  delay10_q_net_x1 <= sync;
+  out1 <= concat_y_net_x21;
+  out2 <= concat_y_net_x22;
+  sync_out <= sync_delay_q_net_x10;
+
+  fft_stage_1_ccb7dc2ebd: entity work.fft_stage_1_entity_0c2c5f43a1
+    port map (
+      ce_1 => ce_1_sg_x232,
+      clk_1 => clk_1_sg_x232,
+      in1 => delay18_q_net_x1,
+      in2 => delay19_q_net_x2,
+      shift => constant2_op_net_x8,
+      sync => delay10_q_net_x1,
+      out1 => concat_y_net_x5,
+      out2 => concat_y_net_x7,
+      sync_out => sync_delay_q_net_x2
+    );
+
+  fft_stage_2_0ccb220a99: entity work.fft_stage_2_entity_6b4a7b4058
+    port map (
+      ce_1 => ce_1_sg_x232,
+      clk_1 => clk_1_sg_x232,
+      in1 => concat_y_net_x5,
+      in2 => concat_y_net_x7,
+      shift => constant2_op_net_x8,
+      sync => sync_delay_q_net_x2,
+      out1 => concat_y_net_x9,
+      out2 => concat_y_net_x11,
+      sync_out => sync_delay_q_net_x4
+    );
+
+  fft_stage_3_60a9684e86: entity work.fft_stage_3_entity_60a9684e86
+    port map (
+      ce_1 => ce_1_sg_x232,
+      clk_1 => clk_1_sg_x232,
+      in1 => concat_y_net_x9,
+      in2 => concat_y_net_x11,
+      shift => constant2_op_net_x8,
+      sync => sync_delay_q_net_x4,
+      out1 => concat_y_net_x13,
+      out2 => concat_y_net_x15,
+      sync_out => sync_delay_q_net_x6
+    );
+
+  fft_stage_4_d6fb28369e: entity work.fft_stage_4_entity_2855cff6e9
+    port map (
+      ce_1 => ce_1_sg_x232,
+      clk_1 => clk_1_sg_x232,
+      in1 => concat_y_net_x13,
+      in2 => concat_y_net_x15,
+      shift => constant2_op_net_x8,
+      sync => sync_delay_q_net_x6,
+      out1 => concat_y_net_x6,
+      out2 => concat_y_net_x8,
+      sync_out => sync_delay_q_net_x3
+    );
+
+  fft_stage_5_f6a8489259: entity work.fft_stage_5_entity_fb8f76298e
+    port map (
+      ce_1 => ce_1_sg_x232,
+      clk_1 => clk_1_sg_x232,
+      in1 => concat_y_net_x6,
+      in2 => concat_y_net_x8,
+      shift => constant2_op_net_x8,
+      sync => sync_delay_q_net_x3,
+      out1 => concat_y_net_x10,
+      out2 => concat_y_net_x12,
+      sync_out => sync_delay_q_net_x5
+    );
+
+  fft_stage_6_2cf085bac1: entity work.fft_stage_6_entity_82392ad9ac
+    port map (
+      ce_1 => ce_1_sg_x232,
+      clk_1 => clk_1_sg_x232,
+      in1 => concat_y_net_x10,
+      in2 => concat_y_net_x12,
+      shift => constant2_op_net_x8,
+      sync => sync_delay_q_net_x5,
+      out1 => concat_y_net_x14,
+      out2 => concat_y_net_x16,
+      sync_out => sync_delay_q_net_x7
+    );
+
+  fft_stage_7_42a7c2eb81: entity work.fft_stage_7_entity_8ce28a0c41
+    port map (
+      ce_1 => ce_1_sg_x232,
+      clk_1 => clk_1_sg_x232,
+      in1 => concat_y_net_x14,
+      in2 => concat_y_net_x16,
+      shift => constant2_op_net_x8,
+      sync => sync_delay_q_net_x7,
+      out1 => concat_y_net_x17,
+      out2 => concat_y_net_x18,
+      sync_out => sync_delay_q_net_x8
+    );
+
+  fft_stage_8_c281db8814: entity work.fft_stage_8_entity_adad90150e
+    port map (
+      ce_1 => ce_1_sg_x232,
+      clk_1 => clk_1_sg_x232,
+      in1 => concat_y_net_x17,
+      in2 => concat_y_net_x18,
+      shift => constant2_op_net_x8,
+      sync => sync_delay_q_net_x8,
+      out1 => concat_y_net_x21,
+      out2 => concat_y_net_x22,
+      sync_out => sync_delay_q_net_x10
+    );
+
+end structural;
+library IEEE;
+use IEEE.std_logic_1164.all;
+use work.conv_pkg.all;
+
+-- Generated from Simulink block "chan_512_packet/PFB/fft1/fft_biplex0"
+
+entity fft_biplex0_entity_72bd202cab is
+  port (
+    ce_1: in std_logic; 
+    clk_1: in std_logic; 
+    pol1: in std_logic_vector(35 downto 0); 
+    pol2: in std_logic_vector(35 downto 0); 
+    shift: in std_logic_vector(31 downto 0); 
+    sync: in std_logic; 
+    pol1_out: out std_logic_vector(35 downto 0); 
+    pol2_out: out std_logic_vector(35 downto 0); 
+    sync_out: out std_logic
+  );
+end fft_biplex0_entity_72bd202cab;
+
+architecture structural of fft_biplex0_entity_72bd202cab is
+  signal ce_1_sg_x239: std_logic;
+  signal clk_1_sg_x239: std_logic;
+  signal concat_y_net_x25: std_logic_vector(35 downto 0);
+  signal concat_y_net_x26: std_logic_vector(35 downto 0);
+  signal constant2_op_net_x9: std_logic_vector(31 downto 0);
+  signal delay10_q_net_x2: std_logic;
+  signal delay18_q_net_x2: std_logic_vector(35 downto 0);
+  signal delay19_q_net_x3: std_logic_vector(35 downto 0);
+  signal delay_sync_q_net_x2: std_logic;
+  signal mux11_y_net_x3: std_logic_vector(35 downto 0);
+  signal mux21_y_net_x3: std_logic_vector(35 downto 0);
+  signal sync_delay_q_net_x12: std_logic;
+
+begin
+  ce_1_sg_x239 <= ce_1;
+  clk_1_sg_x239 <= clk_1;
+  delay18_q_net_x2 <= pol1;
+  delay19_q_net_x3 <= pol2;
+  constant2_op_net_x9 <= shift;
+  delay10_q_net_x2 <= sync;
+  pol1_out <= mux11_y_net_x3;
+  pol2_out <= mux21_y_net_x3;
+  sync_out <= delay_sync_q_net_x2;
+
+  biplex_core_6def144ef0: entity work.biplex_core_entity_6def144ef0
+    port map (
+      ce_1 => ce_1_sg_x239,
+      clk_1 => clk_1_sg_x239,
+      pol1 => delay18_q_net_x2,
+      pol2 => delay19_q_net_x3,
+      shift => constant2_op_net_x9,
+      sync => delay10_q_net_x2,
+      out1 => concat_y_net_x25,
+      out2 => concat_y_net_x26,
+      sync_out => sync_delay_q_net_x12
+    );
+
+  biplex_cplx_unscrambler_ad462f7f99: entity work.biplex_cplx_unscrambler_entity_8d6fa2088c
+    port map (
+      ce_1 => ce_1_sg_x239,
+      clk_1 => clk_1_sg_x239,
+      even => concat_y_net_x25,
+      odd => concat_y_net_x26,
+      sync => sync_delay_q_net_x12,
+      pol1 => mux11_y_net_x3,
+      pol2 => mux21_y_net_x3,
+      sync_out => delay_sync_q_net_x2
+    );
+
+end structural;
+library IEEE;
+use IEEE.std_logic_1164.all;
+use work.conv_pkg.all;
+
 -- Generated from Simulink block "chan_512_packet/PFB/fft1/fft_unscrambler/reorder"
 
 entity reorder_entity_949899ad43 is
@@ -17609,7 +18324,7 @@ begin
   out0 <= bram0_data_out_net_x2;
   out1 <= bram1_data_out_net_x3;
 
-  fft_biplex0_72bd202cab: entity work.fft_biplex0_entity_ec5a2b9919
+  fft_biplex0_72bd202cab: entity work.fft_biplex0_entity_72bd202cab
     port map (
       ce_1 => ce_1_sg_x254,
       clk_1 => clk_1_sg_x254,
@@ -33734,7 +34449,7 @@ end chan_512_packet;
 
 architecture structural of chan_512_packet is
   attribute core_generation_info: string;
-  attribute core_generation_info of structural : architecture is "chan_512_packet,sysgen_core_11_4,{modelsim_hdl_co_simulation_interface_block=1,total_blocks=8576,xilinx_adder_subtracter_block=129,xilinx_arithmetic_relational_operator_block=90,xilinx_assert_block=8,xilinx_bit_slice_extractor_block=840,xilinx_black_box_block=1,xilinx_bus_concatenator_block=182,xilinx_bus_multiplexer_block=231,xilinx_constant_block_block=412,xilinx_cordic_4_0_block=1,xilinx_counter_block=139,xilinx_delay_block=614,xilinx_disregard_subsystem_for_generation_block=7,xilinx_divider_generator_3_0_block=1,xilinx_dsp48e_block=36,xilinx_fifo_block_block=3,xilinx_gateway_in_block=60,xilinx_gateway_out_block=45,xilinx_input_scaler_block=80,xilinx_inverter_block=304,xilinx_logical_block_block=339,xilinx_multiplier_block=162,xilinx_negate_block_block=4,xilinx_register_block=108,xilinx_simulation_multiplexer_block=4,xilinx_single_port_random_access_memory_block=65,xilinx_single_port_read_only_memory_block=62,xilinx_system_generator_block=1,xilinx_type_converter_block=405,xilinx_type_reinterpreter_block=768,}";
+  attribute core_generation_info of structural : architecture is "chan_512_packet,sysgen_core_11_4,{modelsim_hdl_co_simulation_interface_block=1,total_blocks=8580,xilinx_adder_subtracter_block=129,xilinx_arithmetic_relational_operator_block=90,xilinx_assert_block=8,xilinx_bit_slice_extractor_block=840,xilinx_black_box_block=1,xilinx_bus_concatenator_block=182,xilinx_bus_multiplexer_block=231,xilinx_constant_block_block=412,xilinx_cordic_4_0_block=1,xilinx_counter_block=139,xilinx_delay_block=618,xilinx_disregard_subsystem_for_generation_block=7,xilinx_divider_generator_3_0_block=1,xilinx_dsp48e_block=36,xilinx_fifo_block_block=3,xilinx_gateway_in_block=60,xilinx_gateway_out_block=45,xilinx_input_scaler_block=80,xilinx_inverter_block=304,xilinx_logical_block_block=339,xilinx_multiplier_block=162,xilinx_negate_block_block=4,xilinx_register_block=108,xilinx_simulation_multiplexer_block=4,xilinx_single_port_random_access_memory_block=65,xilinx_single_port_read_only_memory_block=62,xilinx_system_generator_block=1,xilinx_type_converter_block=405,xilinx_type_reinterpreter_block=768,}";
 
   signal addsub40_s_net_x0: std_logic_vector(11 downto 0);
   signal ce_1_sg_x421: std_logic;

@@ -1,0 +1,2 @@
+VHDL timestamper_pulses_bram0_ramblk_elaborate_v1_00_a /home/sean/SDR/Firmware/projects/timestamper/XPS_ROACH_base/hdl/elaborate/timestamper_pulses_bram0_ramblk_elaborate_v1_00_a/hdl/vhdl/timestamper_pulses_bram0_ramblk_elaborate.vhd
+vhdl work ../hdl/timestamper_pulses_bram0_ramblk_wrapper.vhd

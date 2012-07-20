@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "sys_block_inst_wrapper_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -53,7 +53,7 @@ Cores Search Directories           : {../implementation/sys_block_inst_wrapper}
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling verilog file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/sys_block_v1_00_a/hdl/verilog/sys_block.v" in library sys_block_v1_00_a
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/sys_block_v1_00_a/hdl/verilog/sys_block.v" in library sys_block_v1_00_a
 Module <sys_block> compiled
 Compiling verilog file "../hdl/sys_block_inst_wrapper.v" in library work
 Module <sys_block_inst_wrapper> compiled
@@ -110,7 +110,7 @@ Module <sys_block> is correct for synthesis.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <sys_block>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/sys_block_v1_00_a/hdl/verilog/sys_block.v".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/sys_block_v1_00_a/hdl/verilog/sys_block.v".
 WARNING:Xst:647 - Input <app_irq> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <OPB_seqAddr> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:1780 - Signal <got_wait> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
@@ -507,7 +507,7 @@ Delay:               1.741ns (Levels of Logic = 2)
 
 
 Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 3.85 secs
+Total CPU time to Xst completion: 3.87 secs
  
 --> 
 

@@ -1,7 +1,7 @@
 {
   'attributes' => {
     'HDLCodeGenStatus' => 0,
-    'HDL_PATH' => '/home/sean/Casper/ddc256',
+    'HDL_PATH' => '/home/sean/SDR/Firmware/projects',
     'TEMP' => '/tmp',
     'TMP' => '/tmp',
     'Temp' => '/tmp',
@@ -30,7 +30,7 @@
     'compilation_target' => 'NGC Netlist',
     'core_generation' => 1,
     'core_is_deployed' => 0,
-    'coregen_core_generation_tmpdir' => '/tmp/sysgentmp-sean/cg_wk/c180d7aa81cfdd2d1',
+    'coregen_core_generation_tmpdir' => '/tmp/sysgentmp-sean/cg_wk/c2ec089a02137a1bf',
     'coregen_part_family' => 'virtex5',
     'createTestbench' => 0,
     'dbl_ovrd' => -1,
@@ -39,18 +39,18 @@
     'deprecated_control' => 'off',
     'design' => 'chan_512_packet',
     'designFile' => 'chan_512_packet.vhd',
-    'design_full_path' => '/home/sean/Casper/ddc256/chan_512_packet.mdl',
+    'design_full_path' => '/home/sean/SDR/Firmware/projects/chan_512_packet.mdl',
     'device' => 'xc5vsx95t-1ff1136',
     'device_speed' => -1,
-    'directory' => '/home/sean/Casper/ddc256/chan_512_packet/sysgen',
+    'directory' => '/home/sean/SDR/Firmware/projects/chan_512_packet/sysgen',
     'disregard_subsystem_handles' => [
-      67095.0006103516,
-      67113.0006103516,
-      67232.0006103516,
-      73020.0047607422,
-      74222.0047607422,
-      74775.0045166016,
-      74823.0045166016,
+      70978.0003662109,
+      70996.0003662109,
+      71115.0003662109,
+      74548.0002441406,
+      75238.0001220703,
+      75279.0003662109,
+      75327.0003662109,
     ],
     'dsp_cache_root_path' => '/home/sean/.Xilinx/Sysgen',
     'entityNamingInstrs' => {
@@ -351,20 +351,20 @@
     'generation_directory' => './chan_512_packet/sysgen',
     'hdlDir' => '/opt/Xilinx/11.1/DSP_Tools/lin64/sysgen/hdl',
     'hdlKind' => 'vhdl',
-    'hdl_path' => '/home/sean/Casper/ddc256',
+    'hdl_path' => '/home/sean/SDR/Firmware/projects',
     'incr_netlist' => 'off',
     'isdeployed' => 0,
     'ise_full_version' => '11.4.i',
     'ise_version' => '11.4i',
-    'master_sysgen_token_handle' => 55252.9887695312,
+    'master_sysgen_token_handle' => 55250.0812988281,
     'matlab' => '/usr/local/matlabR2009a',
     'matlabJavaDirectory' => '/usr/local/matlabR2009a/sys/java/jre/win32/jre1.4.2/bin',
     'matlab_fixedpoint' => 0,
     'mdlHandle' => 55249.0004882812,
-    'mdlPath' => '/home/sean/Casper/ddc256/chan_512_packet.mdl',
+    'mdlPath' => '/home/sean/SDR/Firmware/projects/chan_512_packet.mdl',
     'modelDiagnostics' => [
       {
-        'count' => 8576,
+        'count' => 8580,
         'isMask' => 0,
         'type' => 'chan_512_packet Total blocks',
       },
@@ -399,7 +399,7 @@
         'type' => 'Outport',
       },
       {
-        'count' => 5101,
+        'count' => 5105,
         'isMask' => 0,
         'type' => 'S-Function',
       },
@@ -484,7 +484,7 @@
         'type' => 'Xilinx DSP48E Block',
       },
       {
-        'count' => 614,
+        'count' => 618,
         'isMask' => 1,
         'type' => 'Xilinx Delay Block',
       },
@@ -770,7 +770,7 @@
       },
     ],
     'model_globals_initialized' => 1,
-    'model_path' => '/home/sean/Casper/ddc256/chan_512_packet.mdl',
+    'model_path' => '/home/sean/SDR/Firmware/projects/chan_512_packet.mdl',
     'myxilinx' => '/opt/Xilinx/11.1/ISE',
     'netlistingWrapupScript' => 'java:com.xilinx.sysgen.netlister.DefaultWrapupNetlister',
     'ngc_config' => {
@@ -825,7 +825,7 @@
       'deprecated_control' => 'off',
       'directory' => './chan_512_packet/sysgen',
       'incr_netlist' => 'off',
-      'master_sysgen_token_handle' => 55252.9887695312,
+      'master_sysgen_token_handle' => 55250.0812988281,
       'ngc_config' => {
         'include_cf' => 0,
         'include_clockwrapper' => 1,
@@ -848,7 +848,7 @@
     'systemClockPeriod' => 3.9062,
     'tempdir' => '/tmp',
     'testbench' => 0,
-    'tmpDir' => '/home/sean/Casper/ddc256/chan_512_packet/sysgen/sysgen',
+    'tmpDir' => '/home/sean/SDR/Firmware/projects/chan_512_packet/sysgen/sysgen',
     'trim_vbits' => 1,
     'use_strict_names' => 1,
     'user_tips_enabled' => 0,
@@ -5105,7 +5105,7 @@
             'attributes' => {
               'defaultHdlValue' => '\'1\'',
               'domain' => 'default',
-              'group' => 2,
+              'group' => 4,
               'isCe' => 1,
               'period' => 1,
             },
@@ -6862,7 +6862,7 @@
           'clk' => {
             'attributes' => {
               'domain' => 'default',
-              'group' => 2,
+              'group' => 4,
               'iobMap' => [ 'd7hack', ],
               'isClk' => 1,
               'period' => 1,
@@ -8676,7 +8676,7 @@
                 },
                 'sysce' => {
                   'attributes' => {
-                    'group' => 2,
+                    'group' => 4,
                     'isCe' => 1,
                     'period' => 1,
                   },
@@ -8686,7 +8686,7 @@
                 },
                 'sysce_clr' => {
                   'attributes' => {
-                    'group' => 2,
+                    'group' => 4,
                     'isClr' => 1,
                     'period' => 1,
                   },
@@ -8696,7 +8696,7 @@
                 },
                 'sysclk' => {
                   'attributes' => {
-                    'group' => 2,
+                    'group' => 4,
                     'isClk' => 1,
                     'period' => 1,
                   },

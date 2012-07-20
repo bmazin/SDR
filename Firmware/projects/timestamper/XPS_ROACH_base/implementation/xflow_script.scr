@@ -1,0 +1,25 @@
+#!/bin/csh -f
+###########################################
+# Script file to run the flow 
+# 
+###########################################
+#
+# Command line for ngdbuild
+#
+ngdbuild -ise ../__xps/ise/system.ise -p xc5vsx95tff1136-1 -nt timestamp -sd ../pcores -uc system.ucf "/home/sean/SDR/Firmware/projects/timestamper/XPS_ROACH_base/implementation/system.ngc" system.ngd 
+
+#
+# Command line for map
+#
+map -ise ../__xps/ise/system.ise -timing -detail -ol high -xe n -register_duplication -o system_map.ncd -w -pr b system.ngd system.pcf 
+
+#
+# Command line for par
+#
+par -ise ../__xps/ise/system.ise -xe n -w -ol high system_map.ncd system.ncd system.pcf 
+
+#
+# Command line for post_par_trce
+#
+trce -ise ../__xps/ise/system.ise -e 200 -xml system.twx system.ncd system.pcf 
+

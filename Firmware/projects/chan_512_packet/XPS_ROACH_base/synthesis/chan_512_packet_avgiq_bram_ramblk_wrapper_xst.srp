@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "chan_512_packet_avgiq_bram_ramblk_wrapper_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -53,10 +53,10 @@ Cores Search Directories           : {../implementation/chan_512_packet_avgiq_br
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling vhdl file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" in Library chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a.
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" in Library chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a.
 Entity <chan_512_packet_avgiq_bram_ramblk_elaborate> compiled.
 Entity <chan_512_packet_avgiq_bram_ramblk_elaborate> (Architecture <STRUCTURE>) compiled.
-Compiling vhdl file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_avgiq_bram_ramblk_wrapper.vhd" in Library work.
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_avgiq_bram_ramblk_wrapper.vhd" in Library work.
 Entity <chan_512_packet_avgiq_bram_ramblk_wrapper> compiled.
 Entity <chan_512_packet_avgiq_bram_ramblk_wrapper> (Architecture <STRUCTURE>) compiled.
 
@@ -87,13 +87,13 @@ Analyzing generic Entity <chan_512_packet_avgiq_bram_ramblk_elaborate> in librar
 	C_NUM_WE = 4
 	C_PORT_AWIDTH = 32
 	C_PORT_DWIDTH = 32
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'CASCADEOUTLATA' of component 'RAMB36'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'CASCADEOUTREGA' of component 'RAMB36'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'DOPA' of component 'RAMB36'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'CASCADEOUTLATB' of component 'RAMB36'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'CASCADEOUTREGB' of component 'RAMB36'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'DOPB' of component 'RAMB36'.
-WARNING:Xst:2211 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Instantiating black box module <RAMB36>.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'CASCADEOUTLATA' of component 'RAMB36'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'CASCADEOUTREGA' of component 'RAMB36'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'DOPA' of component 'RAMB36'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'CASCADEOUTLATB' of component 'RAMB36'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'CASCADEOUTREGB' of component 'RAMB36'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Unconnected output port 'DOPB' of component 'RAMB36'.
+WARNING:Xst:2211 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd" line 109: Instantiating black box module <RAMB36>.
     Set user-defined property "RAM_EXTENSION_A =  NONE" for instance <ramb36_0> in unit <chan_512_packet_avgiq_bram_ramblk_elaborate>.
     Set user-defined property "RAM_EXTENSION_B =  NONE" for instance <ramb36_0> in unit <chan_512_packet_avgiq_bram_ramblk_elaborate>.
     Set user-defined property "READ_WIDTH_A =  36" for instance <ramb36_0> in unit <chan_512_packet_avgiq_bram_ramblk_elaborate>.
@@ -112,7 +112,7 @@ Entity <chan_512_packet_avgiq_bram_ramblk_elaborate> analyzed. Unit <chan_512_pa
 Performing bidirectional port resolution...
 
 Synthesizing Unit <chan_512_packet_avgiq_bram_ramblk_elaborate>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/elaborate/chan_512_packet_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_packet_avgiq_bram_ramblk_elaborate.vhd".
 WARNING:Xst:647 - Input <BRAM_Addr_A<0:19>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <BRAM_Addr_A<30:31>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <BRAM_Addr_B<0:19>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
@@ -123,7 +123,7 @@ Unit <chan_512_packet_avgiq_bram_ramblk_elaborate> synthesized.
 
 
 Synthesizing Unit <chan_512_packet_avgiq_bram_ramblk_wrapper>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_avgiq_bram_ramblk_wrapper.vhd".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/chan_512_packet_avgiq_bram_ramblk_wrapper.vhd".
 Unit <chan_512_packet_avgiq_bram_ramblk_wrapper> synthesized.
 
 
@@ -345,12 +345,12 @@ Offset:              2.180ns (Levels of Logic = 1)
 
 
 Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 3.86 secs
+Total CPU time to Xst completion: 3.75 secs
  
 --> 
 
 
-Total memory usage is 449104 kilobytes
+Total memory usage is 449108 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   13 (   0 filtered)

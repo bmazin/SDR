@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "system_xst.prj"
-Verilog Include Directory          : {"/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
 
 ---- Target Parameters
 Target Device                      : xc5vsx95tff1136-1
@@ -54,7 +54,7 @@ Cores Search Directories           : {../implementation}
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling vhdl file "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" in Library work.
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" in Library work.
 Entity <system> compiled.
 Entity <system> (Architecture <STRUCTURE>) compiled.
 
@@ -68,66 +68,66 @@ Analyzing hierarchy for entity <system> in library <work> (architecture <STRUCTU
 *                            HDL Analysis                               *
 =========================================================================
 Analyzing Entity <system> in library <work> (Architecture <STRUCTURE>).
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk90' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk180' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk270' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk_lock' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk2x' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk2x90' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk2x180' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk2x270' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk90' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk180' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk270' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux1_clk' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux1_clk90' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux1_clk180' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux1_clk270' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk2x' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk2x90' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk2x180' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk2x270' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'idelay_rdy' of component 'infrastructure_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_MRequest' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_beXfer' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_beAck' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_busLock' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_rdDBus' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_wrDBus' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_dwAck' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_dwXfer' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_fwAck' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_fwXfer' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_hwAck' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_hwXfer' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_pendReq' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_toutSup' of component 'opb0_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2221: Unconnected output port 'soft_reset' of component 'sys_block_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2350: Unconnected output port 'cal_fail' of component 'dram_controller_inst_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2803: Unconnected output port 'adc_clk180_out' of component 'chan_512_packet_adc_mkid_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2803: Unconnected output port 'adc_clk270_out' of component 'chan_512_packet_adc_mkid_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2803: Unconnected output port 'adc_dcm_locked' of component 'chan_512_packet_adc_mkid_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_clk_out' of component 'chan_512_packet_dac_mkid_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_clk90_out' of component 'chan_512_packet_dac_mkid_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_clk180_out' of component 'chan_512_packet_dac_mkid_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_clk270_out' of component 'chan_512_packet_dac_mkid_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_dcm_locked' of component 'chan_512_packet_dac_mkid_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_MRequest' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_beXfer' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_beAck' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_busLock' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_rdDBus' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_wrDBus' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_dwAck' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_dwXfer' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_fwAck' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_fwXfer' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_hwAck' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_hwXfer' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_pendReq' of component 'opb1_wrapper'.
-WARNING:Xst:753 - "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_toutSup' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk90' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk180' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk270' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk_lock' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk2x' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk2x90' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk2x180' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'sys_clk2x270' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk90' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk180' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk270' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux1_clk' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux1_clk90' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux1_clk180' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux1_clk270' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk2x' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk2x90' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk2x180' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'aux0_clk2x270' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2061: Unconnected output port 'idelay_rdy' of component 'infrastructure_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_MRequest' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_beXfer' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_beAck' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_busLock' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_rdDBus' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_wrDBus' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_dwAck' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_dwXfer' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_fwAck' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_fwXfer' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_hwAck' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_hwXfer' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_pendReq' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2107: Unconnected output port 'OPB_toutSup' of component 'opb0_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2221: Unconnected output port 'soft_reset' of component 'sys_block_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2350: Unconnected output port 'cal_fail' of component 'dram_controller_inst_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2803: Unconnected output port 'adc_clk180_out' of component 'chan_512_packet_adc_mkid_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2803: Unconnected output port 'adc_clk270_out' of component 'chan_512_packet_adc_mkid_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 2803: Unconnected output port 'adc_dcm_locked' of component 'chan_512_packet_adc_mkid_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_clk_out' of component 'chan_512_packet_dac_mkid_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_clk90_out' of component 'chan_512_packet_dac_mkid_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_clk180_out' of component 'chan_512_packet_dac_mkid_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_clk270_out' of component 'chan_512_packet_dac_mkid_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3038: Unconnected output port 'dac_dcm_locked' of component 'chan_512_packet_dac_mkid_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_MRequest' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_beXfer' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_beAck' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_busLock' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_rdDBus' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_wrDBus' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_dwAck' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_dwXfer' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_fwAck' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_fwXfer' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_hwAck' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_hwXfer' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_pendReq' of component 'opb1_wrapper'.
+WARNING:Xst:753 - "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd" line 3539: Unconnected output port 'OPB_toutSup' of component 'opb1_wrapper'.
 Entity <system> analyzed. Unit <system> generated.
 
 
@@ -138,7 +138,7 @@ Entity <system> analyzed. Unit <system> generated.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <system>.
-    Related source file is "/home/sean/Casper/ddc256/chan_512_packet/XPS_ROACH_base/hdl/system.vhd".
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_packet/XPS_ROACH_base/hdl/system.vhd".
 Unit <system> synthesized.
 
 
@@ -315,7 +315,7 @@ INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulse_ext4_ee7f0373c5/posedge_7
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> 
-INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_6def144ef0/fft_stage_2_0ccb220a99/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_6def144ef0/fft_stage_2_0ccb220a99/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_6def144ef0/fft_stage_2_0ccb220a99/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/bufferedswitch_34c401de0a/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_packet_x0/bufferedswitch_34c401de0a/delay14/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> 
@@ -326,7 +326,7 @@ INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline6_a285a86d7e/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_packet_x0/pulses_94d622d91c/pipeline3_cee88a6817/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/bufferedswitch_34c401de0a/delay5/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_packet_x0/bufferedswitch_34c401de0a/delay10/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
-INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/dac_mkid_606ffc5d4a/pipeline11_7796beade3/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_packet_x0/dac_mkid_606ffc5d4a/pipeline10_ca8c8b3ee6/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 47 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2>
@@ -370,7 +370,7 @@ INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulse_ext4_ee7f0373c5/posedge_7
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> 
-INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_6def144ef0/fft_stage_2_0ccb220a99/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_6def144ef0/fft_stage_2_0ccb220a99/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/fft1_4c00fcd113/fft_biplex0_72bd202cab/biplex_core_6def144ef0/fft_stage_2_0ccb220a99/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/bufferedswitch_34c401de0a/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_packet_x0/bufferedswitch_34c401de0a/delay14/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> 
@@ -381,7 +381,7 @@ INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline6_a285a86d7e/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_packet_x0/pulses_94d622d91c/pipeline3_cee88a6817/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/bufferedswitch_34c401de0a/delay5/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_packet_x0/bufferedswitch_34c401de0a/delay10/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
-INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/fft_fdd4cc6214/fft_biplex0_ec5a2b9919/biplex_core_2f64509dac/fft_stage_2_6b4a7b4058/butterfly_direct_1ce6fff7da/twiddle_stage_2_fabf3a9cfa/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/dac_mkid_606ffc5d4a/pipeline11_7796beade3/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_packet_x0/dac_mkid_606ffc5d4a/pipeline10_ca8c8b3ee6/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pulses_94d622d91c/pipeline2_96a43b6c76/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_packet_x0/pulses_94d622d91c/pipeline4_1a8b052bcc/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> <chan_512_packet_x0/pulses_94d622d91c/pipeline7_ebe91986a8/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> 
 INFO:Xst:2260 - The FF/Latch <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> in Unit <chan_512_packet_XSG_core_config> is equivalent to the following 47 FFs/Latches : <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_packet_x0/pfb_9cae33743a/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2>
@@ -465,13 +465,13 @@ Cell Usage :
 #      MUXF7                       : 133
 #      VCC                         : 455
 #      XORCY                       : 2885
-# FlipFlops/Latches                : 52995
+# FlipFlops/Latches                : 53285
 #      FD                          : 3327
 #      FD_1                        : 29
 #      FDC                         : 155
 #      FDCE                        : 841
 #      FDCPE                       : 21
-#      FDE                         : 40013
+#      FDE                         : 40303
 #      FDP                         : 46
 #      FDPE                        : 20
 #      FDR                         : 564
@@ -491,9 +491,9 @@ Cell Usage :
 #      RAM32X1D                    : 3
 #      RAMB18                      : 104
 #      RAMB36_EXP                  : 34
-# Shift Registers                  : 20914
+# Shift Registers                  : 21204
 #      SRL16                       : 2
-#      SRL16E                      : 17927
+#      SRL16E                      : 18217
 #      SRLC16E                     : 860
 #      SRLC32E                     : 2125
 # Clock Buffers                    : 24
@@ -527,18 +527,18 @@ Selected Device : 5vsx95tff1136-1
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:           52894  out of  58880    89%  
- Number of Slice LUTs:                35158  out of  58880    59%  
+ Number of Slice Registers:           53184  out of  58880    90%  
+ Number of Slice LUTs:                35448  out of  58880    60%  
     Number used as Logic:             13982  out of  58880    23%  
-    Number used as Memory:            21176  out of  24320    87%  
+    Number used as Memory:            21466  out of  24320    88%  
        Number used as RAM:              262
-       Number used as SRL:            20914
+       Number used as SRL:            21204
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:  59785
-   Number with an unused Flip Flop:    6891  out of  59785    11%  
-   Number with an unused LUT:         24627  out of  59785    41%  
-   Number of fully used LUT-FF pairs: 28267  out of  59785    47%  
+ Number of LUT Flip Flop pairs used:  60075
+   Number with an unused Flip Flop:    6891  out of  60075    11%  
+   Number with an unused LUT:         24627  out of  60075    40%  
+   Number of fully used LUT-FF pairs: 28557  out of  60075    47%  
    Number of unique control sets:       879
 
 IO Utilization: 
@@ -576,7 +576,7 @@ Clock Information:
 Clock Signal                                                      | Clock buffer(FF name)                     | Load  |
 ------------------------------------------------------------------+-------------------------------------------+-------+
 epb_clk_in                                                        | infrastructure_inst/dcm_epb_inst:CLK0     | 2073  |
-adcmkid1_DRDY_I_p                                                 | chan_512_packet_adc_mkid/CLK_DCM:CLK0+BUFG| 68283 |
+adcmkid1_DRDY_I_p                                                 | chan_512_packet_adc_mkid/CLK_DCM:CLK0+BUFG| 68863 |
 dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_div_int| BUFG                                      | 1003  |
 dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_90_int | BUFG                                      | 377   |
 dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_0_int  | BUFG                                      | 2588  |
@@ -674,7 +674,7 @@ Delay:               6.969ns (Levels of Logic = 11)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'adcmkid1_DRDY_I_p'
   Clock period: 3.703ns (frequency: 270.051MHz)
-  Total number of paths / destination ports: 177251 / 93398
+  Total number of paths / destination ports: 177831 / 93978
 -------------------------------------------------------------------------
 Delay:               3.703ns (Levels of Logic = 14)
   Source:            chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir_05358fbf64/pol1_in1_tap2_2f34d5f271/sync_delay_c321f6aba1/counter/comp16.core_instance16/BU2/U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_2 (FF)
@@ -1015,13 +1015,13 @@ Delay:               4.765ns (Levels of Logic = 7)
 =========================================================================
 
 
-Total REAL time to Xst completion: 293.00 secs
-Total CPU time to Xst completion: 292.73 secs
+Total REAL time to Xst completion: 306.00 secs
+Total CPU time to Xst completion: 306.36 secs
  
 --> 
 
 
-Total memory usage is 1168604 kilobytes
+Total memory usage is 1171632 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   60 (   0 filtered)

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<document OS="lin64" product="ISE" version="11.4">
+
+  <!--The data in this file is primarily intended for consumption by Xilinx tools.
+    The structure and the elements are likely to change over the next few releases.
+    This means code written to parse this file will need to be revisited each subsequent release.-->
+
+  <application stringID="NgdBuild" timeStamp="Thu Jul 19 16:35:27 2012">
+    <section stringID="User_Env">
+      <table stringID="User_EnvVar">
+        <column stringID="variable"/>
+        <column stringID="value"/>
+        <row stringID="row" value="0">
+          <item stringID="variable" value="XILINX_DSP"/>
+          <item stringID="value" value="/opt/Xilinx/11.1/DSP_Tools/lin64"/>
+        </row>
+        <row stringID="row" value="1">
+          <item stringID="variable" value="XILINX_EDK"/>
+          <item stringID="value" value="/opt/Xilinx/11.1/EDK"/>
+        </row>
+        <row stringID="row" value="2">
+          <item stringID="variable" value="XILINX"/>
+          <item stringID="value" value="/opt/Xilinx/11.1/ISE:/opt/Xilinx/11.1/EDK"/>
+        </row>
+      </table>
+      <item stringID="User_EnvOs" value="OS Information">
+        <item stringID="User_EnvOsname" value="ScientificSL"/>
+        <item stringID="User_EnvOsrelease" value="Scientific Linux SL release 5.5 (Boron)"/>
+      </item>
+      <item stringID="User_EnvHost" value="arcons"/>
+      <table stringID="User_EnvCpu">
+        <column stringID="arch"/>
+        <column stringID="speed"/>
+        <row stringID="row" value="0">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="1">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="2">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="3">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="4">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="5">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="6">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="7">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="8">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="9">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1867.000 MHz"/>
+        </row>
+        <row stringID="row" value="10">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+        <row stringID="row" value="11">
+          <item stringID="arch" value="Intel(R) Core(TM) i7 CPU       X 980  @ 3.33GHz"/>
+          <item stringID="speed" value="1600.000 MHz"/>
+        </row>
+      </table>
+    </section>
+    <task stringID="NGDBUILD_REPORT">
+      <section stringID="NGDBUILD_DESIGN_SUMMARY">
+        <item dataType="int" stringID="NGDBUILD_NUM_ERRORS" value="0"/>
+        <item dataType="int" stringID="NGDBUILD_FILTERED_WARNINGS" value="0"/>
+        <item dataType="int" stringID="NGDBUILD_NUM_WARNINGS" value="31"/>
+        <item dataType="int" stringID="NGDBUILD_FILTERED_INFOS" value="0"/>
+        <item dataType="int" stringID="NGDBUILD_NUM_INFOS" value="4"/>
+      </section>
+      <section stringID="NGDBUILD_CORE_SUMMARY">
+        <item COUNT="1" stringID="NGDBUILD_CORE" value="roach_infrastructure_v1_00_a"/>
+        <section stringID="NGDBUILD_CORE_GENERATION_SUMMARY">
+          <section stringID="NGDBUILD_CORE_INSTANCES">
+            <scope stringID="NGDBUILD_CORE_INSTANCE" value="cntr_11_0_18bbeb067aa07bfe">
+              <item stringID="NGDBUILD_CORE_INFO" type="c_counter_binary_v11_0" value="cntr_11_0_18bbeb067aa07bfe"/>
+              <item c_ainit_val="0" c_ce_overrides_sync="0" c_count_by="1" c_count_mode="0" c_count_to="1" c_fb_latency="0" c_has_ce="1" c_has_load="0" c_has_sclr="0" c_has_sinit="1" c_has_sset="0" c_has_thresh0="0" c_implementation="0" c_latency="1" c_load_low="0" c_restrict_count="0" c_sclr_overrides_sset="1" c_sinit_val="0" c_thresh0_value="1" c_width="8" component_name="cntr_11_0_18bbeb067aa07bfe" stringID="NGDBUILD_CORE_PARAMETERS" value="cntr_11_0_18bbeb067aa07bfe"/>
+            </scope>
+            <scope stringID="NGDBUILD_CORE_INSTANCE" value="cntr_11_0_82b9fd0243bf8494">
+              <item stringID="NGDBUILD_CORE_INFO" type="c_counter_binary_v11_0" value="cntr_11_0_82b9fd0243bf8494"/>
+              <item c_ainit_val="0" c_ce_overrides_sync="0" c_count_by="1" c_count_mode="0" c_count_to="1" c_fb_latency="0" c_has_ce="1" c_has_load="0" c_has_sclr="0" c_has_sinit="1" c_has_sset="0" c_has_thresh0="0" c_implementation="0" c_latency="1" c_load_low="0" c_restrict_count="0" c_sclr_overrides_sset="1" c_sinit_val="0" c_thresh0_value="1" c_width="14" component_name="cntr_11_0_82b9fd0243bf8494" stringID="NGDBUILD_CORE_PARAMETERS" value="cntr_11_0_82b9fd0243bf8494"/>
+            </scope>
+            <scope stringID="NGDBUILD_CORE_INSTANCE" value="cntr_11_0_b40c42d5e24bb86a">
+              <item stringID="NGDBUILD_CORE_INFO" type="c_counter_binary_v11_0" value="cntr_11_0_b40c42d5e24bb86a"/>
+              <item c_ainit_val="0" c_ce_overrides_sync="0" c_count_by="1" c_count_mode="0" c_count_to="1" c_fb_latency="0" c_has_ce="1" c_has_load="0" c_has_sclr="0" c_has_sinit="1" c_has_sset="0" c_has_thresh0="0" c_implementation="0" c_latency="1" c_load_low="0" c_restrict_count="0" c_sclr_overrides_sset="1" c_sinit_val="0" c_thresh0_value="1" c_width="20" component_name="cntr_11_0_b40c42d5e24bb86a" stringID="NGDBUILD_CORE_PARAMETERS" value="cntr_11_0_b40c42d5e24bb86a"/>
+            </scope>
+            <scope stringID="NGDBUILD_CORE_INSTANCE" value="cntr_11_0_f52338cfe462aa75">
+              <item stringID="NGDBUILD_CORE_INFO" type="c_counter_binary_v11_0" value="cntr_11_0_f52338cfe462aa75"/>
+              <item c_ainit_val="0" c_ce_overrides_sync="0" c_count_by="1" c_count_mode="0" c_count_to="1" c_fb_latency="0" c_has_ce="1" c_has_load="0" c_has_sclr="0" c_has_sinit="1" c_has_sset="0" c_has_thresh0="0" c_implementation="0" c_latency="1" c_load_low="0" c_restrict_count="0" c_sclr_overrides_sset="1" c_sinit_val="0" c_thresh0_value="1" c_width="32" component_name="cntr_11_0_f52338cfe462aa75" stringID="NGDBUILD_CORE_PARAMETERS" value="cntr_11_0_f52338cfe462aa75"/>
+            </scope>
+            <scope stringID="NGDBUILD_CORE_INSTANCE" value="timestamper">
+              <item stringID="NGDBUILD_CORE_INFO" type="sysgen_core_11_4" value="timestamper"/>
+              <item stringID="NGDBUILD_CORE_PARAMETERS" total_blocks="287" value="timestamper" xilinx_arithmetic_relational_operator_block="1" xilinx_bit_slice_extractor_block="13" xilinx_bus_concatenator_block="5" xilinx_bus_multiplexer_block="3" xilinx_constant_block_block="7" xilinx_counter_block="5" xilinx_delay_block="38" xilinx_disregard_subsystem_for_generation_block="2" xilinx_gateway_in_block="14" xilinx_gateway_out_block="10" xilinx_inverter_block="7" xilinx_logical_block_block="5" xilinx_register_block="35" xilinx_single_port_random_access_memory_block="2" xilinx_system_generator_block="1" xilinx_type_converter_block="8" xilinx_type_reinterpreter_block="7"/>
+            </scope>
+          </section>
+        </section>
+      </section>
+    </task>
+  </application>
+
+</document>

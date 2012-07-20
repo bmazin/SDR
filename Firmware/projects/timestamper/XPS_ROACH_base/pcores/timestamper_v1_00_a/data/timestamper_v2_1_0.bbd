@@ -1,0 +1,11 @@
+#############################################################################
+##
+## IP Name  : timestamper
+## Desc     : Automatically generated IP core wrapping a
+##            Simulink Xilinx System Generator netlist.
+##            Please do not modify by hand, this file will be erased
+##
+#############################################################################
+
+Files
+timestamper.ngc

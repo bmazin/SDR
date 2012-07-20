@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="warning" file="ConstraintSystem" num="137" delta="new" >Constraint <arg fmt="%s" index="1">&lt;Net dly_clk_n TNM_NET = dly_clk_n;&gt; [system.ucf(7)]</arg>: No appropriate instances for the TNM constraint are driven by &quot;<arg fmt="%s" index="2">dly_clk_n</arg>&quot;.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="56" delta="new" >Constraint <arg fmt="%s" index="1">&lt;TIMESPEC TS_dly_clk_n = PERIOD dly_clk_n 200 MHz;&gt; [system.ucf(8)]</arg>: Unable to find an active <arg fmt="%s" index="2">&apos;TNM&apos; or &apos;TimeGrp&apos;</arg> constraint named &apos;<arg fmt="%s" index="3">dly_clk_n</arg>&apos;.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="137" delta="new" >Constraint <arg fmt="%s" index="1">&lt;NET adcmkid1_DRDY_Q_p       TNM_NET = adcmkid1_DRDY_Q_p;&gt; [system.ucf(122)]</arg>: No appropriate instances for the TNM constraint are driven by &quot;<arg fmt="%s" index="2">adcmkid1_DRDY_Q_p</arg>&quot;.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="56" delta="new" >Constraint <arg fmt="%s" index="1">&lt;TIMESPEC TS_adcmkid1_DRDY_Q_p = PERIOD adcmkid1_DRDY_Q_p 3.906 ns;&gt; [system.ucf(123)]</arg>: Unable to find an active <arg fmt="%s" index="2">&apos;TNM&apos; or &apos;TimeGrp&apos;</arg> constraint named &apos;<arg fmt="%s" index="3">adcmkid1_DRDY_Q_p</arg>&apos;.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="137" delta="new" >Constraint <arg fmt="%s" index="1">&lt;NET adcmkid1_DRDY_Q_n       TNM_NET = adcmkid1_DRDY_Q_n;&gt; [system.ucf(124)]</arg>: No appropriate instances for the TNM constraint are driven by &quot;<arg fmt="%s" index="2">adcmkid1_DRDY_Q_n</arg>&quot;.
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="56" delta="new" >Constraint <arg fmt="%s" index="1">&lt;TIMESPEC TS_adcmkid1_DRDY_Q_n = PERIOD adcmkid1_DRDY_Q_n 3.906 ns;&gt; [system.ucf(125)]</arg>: Unable to find an active <arg fmt="%s" index="2">&apos;TNM&apos; or &apos;TimeGrp&apos;</arg> constraint named &apos;<arg fmt="%s" index="3">adcmkid1_DRDY_Q_n</arg>&apos;.
+</msg>
+
+<msg type="info" file="ConstraintSystem" num="178" delta="new" ><arg fmt="%s" index="1">TNM</arg> &apos;<arg fmt="%s" index="2">sys_clk_n</arg>&apos;, used in period specification &apos;<arg fmt="%s" index="3">TS_sys_clk_n</arg>&apos;, was traced into <arg fmt="%s" index="4">DCM_ADV</arg> instance <arg fmt="%s" index="5">infrastructure_inst/SYS_CLK_DCM</arg>. The following new TNM groups and period specifications were generated at the <arg fmt="%s" index="6">DCM_ADV</arg> output(s): 
+<arg fmt="%s" index="7">CLK2X</arg>: <arg fmt="%s" index="8">&lt;TIMESPEC TS_infrastructure_inst_infrastructure_inst_sys_clk2x_int = PERIOD &quot;infrastructure_inst_infrastructure_inst_sys_clk2x_int&quot; TS_sys_clk_n * 2 HIGH 50%&gt;</arg>
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="191" delta="new" >The <arg fmt="%s" index="1">TNM</arg> &apos;<arg fmt="%s" index="2">dly_clk_n</arg>&apos;, does not directly or indirectly drive any flip-flops, latches and/or RAMS and cannot be actively used by the referencing <arg fmt="%s" index="3">Period</arg> constraint &apos;<arg fmt="%s" index="4">TS_dly_clk_n</arg>&apos;. If clock manager blocks are directly or indirectly driven, a new TNM constraint will not be derived even though the referencing constraint is a PERIOD constraint unless an output of the clock manager drives flip-flops, latches or RAMs. This TNM is used in the following user PERIOD specification:
+<arg fmt="%s" index="5">&lt;TIMESPEC TS_dly_clk_n = PERIOD dly_clk_n 200 MHz;&gt; [system.ucf(8)]
+</arg></msg>
+
+<msg type="warning" file="ConstraintSystem" num="197" delta="new" >The following specification is invalid because the referenced TNM constraint was removed:
+<arg fmt="%s" index="1">&lt;TIMESPEC TS_dly_clk_n = PERIOD dly_clk_n 200 MHz;&gt; [system.ucf(8)]</arg>
+</msg>
+
+<msg type="info" file="ConstraintSystem" num="178" delta="new" ><arg fmt="%s" index="1">TNM</arg> &apos;<arg fmt="%s" index="2">adcmkid1_DRDY_I_p</arg>&apos;, used in period specification &apos;<arg fmt="%s" index="3">TS_adcmkid1_DRDY_I_p</arg>&apos;, was traced into <arg fmt="%s" index="4">DCM_ADV</arg> instance <arg fmt="%s" index="5">timestamper_adc_mkid/CLK_DCM</arg>. The following new TNM groups and period specifications were generated at the <arg fmt="%s" index="6">DCM_ADV</arg> output(s): 
+<arg fmt="%s" index="7">CLK0</arg>: <arg fmt="%s" index="8">&lt;TIMESPEC TS_timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk = PERIOD &quot;timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk&quot; TS_adcmkid1_DRDY_I_p HIGH 50%&gt;</arg>
+</msg>
+
+<msg type="info" file="ConstraintSystem" num="178" delta="new" ><arg fmt="%s" index="1">TNM</arg> &apos;<arg fmt="%s" index="2">adcmkid1_DRDY_I_n</arg>&apos;, used in period specification &apos;<arg fmt="%s" index="3">TS_adcmkid1_DRDY_I_n</arg>&apos;, was traced into <arg fmt="%s" index="4">DCM_ADV</arg> instance <arg fmt="%s" index="5">timestamper_adc_mkid/CLK_DCM</arg>. The following new TNM groups and period specifications were generated at the <arg fmt="%s" index="6">DCM_ADV</arg> output(s): 
+<arg fmt="%s" index="7">CLK0</arg>: <arg fmt="%s" index="8">&lt;TIMESPEC TS_timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk_0 = PERIOD &quot;timestamper_adc_mkid_timestamper_adc_mkid_dcm_clk_0&quot; TS_adcmkid1_DRDY_I_n HIGH 50%&gt;</arg>
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="191" delta="new" >The <arg fmt="%s" index="1">TNM</arg> &apos;<arg fmt="%s" index="2">adcmkid1_DRDY_Q_p</arg>&apos;, does not directly or indirectly drive any flip-flops, latches and/or RAMS and cannot be actively used by the referencing <arg fmt="%s" index="3">Period</arg> constraint &apos;<arg fmt="%s" index="4">TS_adcmkid1_DRDY_Q_p</arg>&apos;. If clock manager blocks are directly or indirectly driven, a new TNM constraint will not be derived even though the referencing constraint is a PERIOD constraint unless an output of the clock manager drives flip-flops, latches or RAMs. This TNM is used in the following user PERIOD specification:
+<arg fmt="%s" index="5">&lt;TIMESPEC TS_adcmkid1_DRDY_Q_p = PERIOD adcmkid1_DRDY_Q_p 3.906 ns;&gt; [system.ucf(123)]
+</arg></msg>
+
+<msg type="warning" file="ConstraintSystem" num="197" delta="new" >The following specification is invalid because the referenced TNM constraint was removed:
+<arg fmt="%s" index="1">&lt;TIMESPEC TS_adcmkid1_DRDY_Q_p = PERIOD adcmkid1_DRDY_Q_p 3.906 ns;&gt; [system.ucf(123)]</arg>
+</msg>
+
+<msg type="warning" file="ConstraintSystem" num="191" delta="new" >The <arg fmt="%s" index="1">TNM</arg> &apos;<arg fmt="%s" index="2">adcmkid1_DRDY_Q_n</arg>&apos;, does not directly or indirectly drive any flip-flops, latches and/or RAMS and cannot be actively used by the referencing <arg fmt="%s" index="3">Period</arg> constraint &apos;<arg fmt="%s" index="4">TS_adcmkid1_DRDY_Q_n</arg>&apos;. If clock manager blocks are directly or indirectly driven, a new TNM constraint will not be derived even though the referencing constraint is a PERIOD constraint unless an output of the clock manager drives flip-flops, latches or RAMs. This TNM is used in the following user PERIOD specification:
+<arg fmt="%s" index="5">&lt;TIMESPEC TS_adcmkid1_DRDY_Q_n = PERIOD adcmkid1_DRDY_Q_n 3.906 ns;&gt; [system.ucf(125)]
+</arg></msg>
+
+<msg type="warning" file="ConstraintSystem" num="197" delta="new" >The following specification is invalid because the referenced TNM constraint was removed:
+<arg fmt="%s" index="1">&lt;TIMESPEC TS_adcmkid1_DRDY_Q_n = PERIOD adcmkid1_DRDY_Q_n 3.906 ns;&gt; [system.ucf(125)]</arg>
+</msg>
+
+<msg type="info" file="NgdBuild" num="1222" delta="new" >Setting <arg fmt="%s" index="1">CLKIN_PERIOD</arg> attribute associated with <arg fmt="%s" index="2">DCM</arg> instance <arg fmt="%s" index="3">infrastructure_inst/SYS_CLK_DCM</arg> to <arg fmt="%s" index="4">10.000000</arg> ns based on the period specification (<arg fmt="%s" index="5">&lt;TIMESPEC TS_sys_clk_n = PERIOD sys_clk_n 100 MHz;&gt; [system.ucf(5)]</arg>).
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1212" delta="new" >User specified non-default attribute value (<arg fmt="%s" index="1">0.0000000000000000</arg>) was detected for the <arg fmt="%s" index="2">CLKIN_PERIOD</arg> attribute on <arg fmt="%s" index="3">DCM</arg> &quot;<arg fmt="%s" index="4">timestamper_adc_mkid/CLK_DCM</arg>&quot;.  This does not match the PERIOD constraint value (<arg fmt="%s" index="5">3.906 ns.</arg>).  The uncertainty calculation will use the non-default attribute value.  This could result in incorrect uncertainty calculated for <arg fmt="%s" index="6">DCM</arg> output clocks.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="1212" delta="new" >User specified non-default attribute value (<arg fmt="%s" index="1">0.0000000000000000</arg>) was detected for the <arg fmt="%s" index="2">CLKIN_PERIOD</arg> attribute on <arg fmt="%s" index="3">DCM</arg> &quot;<arg fmt="%s" index="4">timestamper_adc_mkid/CLK_DCM</arg>&quot;.  This does not match the PERIOD constraint value (<arg fmt="%s" index="5">3.906 ns.</arg>).  The uncertainty calculation will use the non-default attribute value.  This could result in incorrect uncertainty calculated for <arg fmt="%s" index="6">DCM</arg> output clocks.
+</msg>
+
+<msg type="warning" file="NgdBuild" num="443" delta="new" >SFF primitive &apos;<arg fmt="%s" index="1">timestamper_XSG_core_config/timestamper_XSG_core_config/default_clock_driver_x0/xlclockdriver_1/clr_reg/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp</arg>&apos; has unconnected output pin
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N18</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N19</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N20</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N21</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N22</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N23</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N24</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N25</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N26</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N27</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N28</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N29</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N30</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N31</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N32</arg>&apos; has no driver
+</msg>
+
+<msg type="warning" file="NgdBuild" num="452" delta="new" ><arg fmt="%s" index="1">logical</arg> net &apos;<arg fmt="%s" index="2">N33</arg>&apos; has no driver
+</msg>
+
+</messages>
+

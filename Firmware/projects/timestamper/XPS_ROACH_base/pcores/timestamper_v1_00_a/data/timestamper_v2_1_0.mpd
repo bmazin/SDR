@@ -1,0 +1,57 @@
+#############################################################################
+##
+## IP Name  : timestamper
+## Desc     : Automatically generated IP core wrapping a
+##            Simulink Xilinx System Generator netlist.
+##            Please do not modify by hand, this file will be erased
+##
+#############################################################################
+
+BEGIN timestamper
+
+###################
+# Generic Options #
+###################
+OPTION IPTYPE = IP
+OPTION STYLE  = BLACKBOX
+
+###################
+# Clock port      #
+###################
+PORT clk = "", DIR = I, SIGIS = CLK, CLK_FREQ = 256000000
+
+###################
+# Interfaces      #
+###################
+
+# timestamper/XSG core config
+
+# timestamper/adc_mkid
+PORT timestamper_adc_mkid_user_data_i0 = "", DIR = in, VEC = [11:0]
+PORT timestamper_adc_mkid_user_data_i1 = "", DIR = in, VEC = [11:0]
+PORT timestamper_adc_mkid_user_data_q0 = "", DIR = in, VEC = [11:0]
+PORT timestamper_adc_mkid_user_data_q1 = "", DIR = in, VEC = [11:0]
+PORT timestamper_adc_mkid_user_sync = "", DIR = in
+
+# timestamper/pulses/addr
+PORT timestamper_pulses_addr_user_data_in = "", DIR = out, VEC = [31:0]
+
+# timestamper/pulses/bram0
+PORT timestamper_pulses_bram0_data_out = "", DIR = in, VEC = [31:0]
+PORT timestamper_pulses_bram0_addr = "", DIR = out, VEC = [13:0]
+PORT timestamper_pulses_bram0_data_in = "", DIR = out, VEC = [31:0]
+PORT timestamper_pulses_bram0_we = "", DIR = out
+
+# timestamper/pulses/bram1
+PORT timestamper_pulses_bram1_data_out = "", DIR = in, VEC = [31:0]
+PORT timestamper_pulses_bram1_addr = "", DIR = out, VEC = [13:0]
+PORT timestamper_pulses_bram1_data_in = "", DIR = out, VEC = [31:0]
+PORT timestamper_pulses_bram1_we = "", DIR = out
+
+# timestamper/seconds
+PORT timestamper_seconds_user_data_in = "", DIR = out, VEC = [31:0]
+
+# timestamper/startBuffer
+PORT timestamper_startBuffer_user_data_out = "", DIR = in, VEC = [31:0]
+
+END
