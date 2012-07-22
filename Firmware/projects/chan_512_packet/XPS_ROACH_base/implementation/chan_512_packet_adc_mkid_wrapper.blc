@@ -23,7 +23,7 @@ NGCBUILD Design Results Summary:
 Total memory usage is 294360 kilobytes
 
 Writing NGC file "../chan_512_packet_adc_mkid_wrapper.ngc" ...
-Total REAL time to NGCBUILD completion:  1 sec
+Total REAL time to NGCBUILD completion:  0 sec
 Total CPU time to NGCBUILD completion:   0 sec
 
 Writing NGCBUILD log file "../chan_512_packet_adc_mkid_wrapper.blc"...

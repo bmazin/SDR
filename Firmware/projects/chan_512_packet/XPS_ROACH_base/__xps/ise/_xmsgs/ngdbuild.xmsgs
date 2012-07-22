@@ -7900,52 +7900,52 @@
 <msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay44/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[24].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[143].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[143].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[142].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[142].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[141].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[141].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[140].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[140].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[139].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[139].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[138].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[138].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[137].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[137].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[136].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[136].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[71].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[71].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[70].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[70].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[69].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[69].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[68].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[68].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[67].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[67].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[66].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[66].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[65].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[65].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
-<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[64].fde_used.u2</arg>&apos; has unconnected output pin
+<msg type="warning" file="NgdBuild" num="440" delta="new" >FF primitive &apos;<arg fmt="%s" index="1">chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/dram_lut_4fca5cbbf0/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[64].fde_used.u2</arg>&apos; has unconnected output pin
 </msg>
 
 <msg type="warning" file="NgdBuild" num="443" delta="new" >SFF primitive &apos;<arg fmt="%s" index="1">dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/u_phy_calib/gen_rden[8].u_calib_rden_r</arg>&apos; has unconnected output pin

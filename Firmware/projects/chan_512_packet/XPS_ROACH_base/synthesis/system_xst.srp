@@ -465,13 +465,13 @@ Cell Usage :
 #      MUXF7                       : 133
 #      VCC                         : 455
 #      XORCY                       : 2885
-# FlipFlops/Latches                : 53285
+# FlipFlops/Latches                : 53140
 #      FD                          : 3327
 #      FD_1                        : 29
 #      FDC                         : 155
 #      FDCE                        : 841
 #      FDCPE                       : 21
-#      FDE                         : 40303
+#      FDE                         : 40158
 #      FDP                         : 46
 #      FDPE                        : 20
 #      FDR                         : 564
@@ -491,9 +491,9 @@ Cell Usage :
 #      RAM32X1D                    : 3
 #      RAMB18                      : 104
 #      RAMB36_EXP                  : 34
-# Shift Registers                  : 21204
+# Shift Registers                  : 21059
 #      SRL16                       : 2
-#      SRL16E                      : 18217
+#      SRL16E                      : 18072
 #      SRLC16E                     : 860
 #      SRLC32E                     : 2125
 # Clock Buffers                    : 24
@@ -527,18 +527,18 @@ Selected Device : 5vsx95tff1136-1
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:           53184  out of  58880    90%  
- Number of Slice LUTs:                35448  out of  58880    60%  
+ Number of Slice Registers:           53039  out of  58880    90%  
+ Number of Slice LUTs:                35303  out of  58880    59%  
     Number used as Logic:             13982  out of  58880    23%  
-    Number used as Memory:            21466  out of  24320    88%  
+    Number used as Memory:            21321  out of  24320    87%  
        Number used as RAM:              262
-       Number used as SRL:            21204
+       Number used as SRL:            21059
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:  60075
-   Number with an unused Flip Flop:    6891  out of  60075    11%  
-   Number with an unused LUT:         24627  out of  60075    40%  
-   Number of fully used LUT-FF pairs: 28557  out of  60075    47%  
+ Number of LUT Flip Flop pairs used:  59930
+   Number with an unused Flip Flop:    6891  out of  59930    11%  
+   Number with an unused LUT:         24627  out of  59930    41%  
+   Number of fully used LUT-FF pairs: 28412  out of  59930    47%  
    Number of unique control sets:       879
 
 IO Utilization: 
@@ -576,7 +576,7 @@ Clock Information:
 Clock Signal                                                      | Clock buffer(FF name)                     | Load  |
 ------------------------------------------------------------------+-------------------------------------------+-------+
 epb_clk_in                                                        | infrastructure_inst/dcm_epb_inst:CLK0     | 2073  |
-adcmkid1_DRDY_I_p                                                 | chan_512_packet_adc_mkid/CLK_DCM:CLK0+BUFG| 68863 |
+adcmkid1_DRDY_I_p                                                 | chan_512_packet_adc_mkid/CLK_DCM:CLK0+BUFG| 68573 |
 dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_div_int| BUFG                                      | 1003  |
 dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_90_int | BUFG                                      | 377   |
 dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_0_int  | BUFG                                      | 2588  |
@@ -674,7 +674,7 @@ Delay:               6.969ns (Levels of Logic = 11)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'adcmkid1_DRDY_I_p'
   Clock period: 3.703ns (frequency: 270.051MHz)
-  Total number of paths / destination ports: 177831 / 93978
+  Total number of paths / destination ports: 177541 / 93688
 -------------------------------------------------------------------------
 Delay:               3.703ns (Levels of Logic = 14)
   Source:            chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir_05358fbf64/pol1_in1_tap2_2f34d5f271/sync_delay_c321f6aba1/counter/comp16.core_instance16/BU2/U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_2 (FF)
@@ -1015,13 +1015,13 @@ Delay:               4.765ns (Levels of Logic = 7)
 =========================================================================
 
 
-Total REAL time to Xst completion: 306.00 secs
-Total CPU time to Xst completion: 306.36 secs
+Total REAL time to Xst completion: 300.00 secs
+Total CPU time to Xst completion: 299.55 secs
  
 --> 
 
 
-Total memory usage is 1171632 kilobytes
+Total memory usage is 1164144 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   60 (   0 filtered)

@@ -1077,10 +1077,8 @@ architecture structural of dram_lut_entity_4fca5cbbf0 is
   signal counter5_op_net: std_logic;
   signal delay1_q_net_x0: std_logic;
   signal delay2_q_net: std_logic_vector(143 downto 0);
-  signal delay3_q_net: std_logic_vector(143 downto 0);
   signal delay4_q_net: std_logic;
   signal delay5_q_net: std_logic;
-  signal delay6_q_net: std_logic;
   signal force_data_in_output_port_net_x1: std_logic_vector(143 downto 0);
   signal force_rd_dout_output_port_net_x0: std_logic_vector(143 downto 0);
   signal inverter1_op_net: std_logic;
@@ -1261,20 +1259,6 @@ begin
       q => delay2_q_net
     );
 
-  delay3: entity work.xldelay
-    generic map (
-      latency => 2,
-      reg_retiming => 0,
-      width => 144
-    )
-    port map (
-      ce => ce_1_sg_x3,
-      clk => clk_1_sg_x3,
-      d => delay2_q_net,
-      en => '1',
-      q => delay3_q_net
-    );
-
   delay4: entity work.xldelay
     generic map (
       latency => 2,
@@ -1301,20 +1285,6 @@ begin
       d(0) => simulation_multiplexer3_dout_net_x0,
       en => '1',
       q(0) => delay5_q_net
-    );
-
-  delay6: entity work.xldelay
-    generic map (
-      latency => 2,
-      reg_retiming => 0,
-      width => 1
-    )
-    port map (
-      ce => ce_1_sg_x3,
-      clk => clk_1_sg_x3,
-      d(0) => delay5_q_net,
-      en => '1',
-      q(0) => delay6_q_net
     );
 
   dram_f5718fec94: entity work.dram_entity_f5718fec94
@@ -1345,7 +1315,7 @@ begin
       ce => ce_1_sg_x3,
       clk => clk_1_sg_x3,
       clr => '0',
-      ip(0) => delay6_q_net,
+      ip(0) => delay5_q_net,
       op(0) => inverter_op_net
     );
 
@@ -1499,7 +1469,7 @@ begin
       y_width => 64
     )
     port map (
-      x => delay3_q_net,
+      x => delay2_q_net,
       y => slice2_y_net
     );
 
@@ -1511,7 +1481,7 @@ begin
       y_width => 64
     )
     port map (
-      x => delay3_q_net,
+      x => delay2_q_net,
       y => slice3_y_net
     );
 
@@ -34449,7 +34419,7 @@ end chan_512_packet;
 
 architecture structural of chan_512_packet is
   attribute core_generation_info: string;
-  attribute core_generation_info of structural : architecture is "chan_512_packet,sysgen_core_11_4,{modelsim_hdl_co_simulation_interface_block=1,total_blocks=8580,xilinx_adder_subtracter_block=129,xilinx_arithmetic_relational_operator_block=90,xilinx_assert_block=8,xilinx_bit_slice_extractor_block=840,xilinx_black_box_block=1,xilinx_bus_concatenator_block=182,xilinx_bus_multiplexer_block=231,xilinx_constant_block_block=412,xilinx_cordic_4_0_block=1,xilinx_counter_block=139,xilinx_delay_block=618,xilinx_disregard_subsystem_for_generation_block=7,xilinx_divider_generator_3_0_block=1,xilinx_dsp48e_block=36,xilinx_fifo_block_block=3,xilinx_gateway_in_block=60,xilinx_gateway_out_block=45,xilinx_input_scaler_block=80,xilinx_inverter_block=304,xilinx_logical_block_block=339,xilinx_multiplier_block=162,xilinx_negate_block_block=4,xilinx_register_block=108,xilinx_simulation_multiplexer_block=4,xilinx_single_port_random_access_memory_block=65,xilinx_single_port_read_only_memory_block=62,xilinx_system_generator_block=1,xilinx_type_converter_block=405,xilinx_type_reinterpreter_block=768,}";
+  attribute core_generation_info of structural : architecture is "chan_512_packet,sysgen_core_11_4,{modelsim_hdl_co_simulation_interface_block=1,total_blocks=8578,xilinx_adder_subtracter_block=129,xilinx_arithmetic_relational_operator_block=90,xilinx_assert_block=8,xilinx_bit_slice_extractor_block=840,xilinx_black_box_block=1,xilinx_bus_concatenator_block=182,xilinx_bus_multiplexer_block=231,xilinx_constant_block_block=412,xilinx_cordic_4_0_block=1,xilinx_counter_block=139,xilinx_delay_block=616,xilinx_disregard_subsystem_for_generation_block=7,xilinx_divider_generator_3_0_block=1,xilinx_dsp48e_block=36,xilinx_fifo_block_block=3,xilinx_gateway_in_block=60,xilinx_gateway_out_block=45,xilinx_input_scaler_block=80,xilinx_inverter_block=304,xilinx_logical_block_block=339,xilinx_multiplier_block=162,xilinx_negate_block_block=4,xilinx_register_block=108,xilinx_simulation_multiplexer_block=4,xilinx_single_port_random_access_memory_block=65,xilinx_single_port_read_only_memory_block=62,xilinx_system_generator_block=1,xilinx_type_converter_block=405,xilinx_type_reinterpreter_block=768,}";
 
   signal addsub40_s_net_x0: std_logic_vector(11 downto 0);
   signal ce_1_sg_x421: std_logic;

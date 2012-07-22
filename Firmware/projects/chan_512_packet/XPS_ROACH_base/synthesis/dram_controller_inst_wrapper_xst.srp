@@ -4291,12 +4291,12 @@ WARNING:Xst:616 - Invalid property "SYN_USEIOFF 1": Did not attach to dram_contr
 
 
 Total REAL time to Xst completion: 50.00 secs
-Total CPU time to Xst completion: 49.83 secs
+Total CPU time to Xst completion: 49.14 secs
  
 --> 
 
 
-Total memory usage is 552544 kilobytes
+Total memory usage is 552540 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 1366 (   0 filtered)

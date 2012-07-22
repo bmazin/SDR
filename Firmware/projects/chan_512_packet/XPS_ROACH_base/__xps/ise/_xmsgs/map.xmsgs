@@ -4454,6 +4454,24 @@ of frag <arg fmt="%s" index="2">REGCLKBL</arg> connected to power/ground net <ar
 <msg type="info" file="Map" num="215" delta="new" >The Interim Design Summary has been generated in the MAP Report (.mrp).
 </msg>
 
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_16&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_16)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net)</arg>
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_17&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_17)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net)</arg>
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_18&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_18)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net)</arg>
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_19&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_19)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net)</arg>
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_20&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_20)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net)</arg>
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_21&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net_REPLICA_21)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/fir_bb87ab9629/delay30_q_net)</arg>
+</msg>
+
 <msg type="info" file="Pack" num="1650" delta="new" >Map created a placed design.
 </msg>
 

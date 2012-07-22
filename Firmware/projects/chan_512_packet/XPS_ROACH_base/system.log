@@ -34,7 +34,5 @@ WARNING:EDK - IPNAME:opb_opb_lite INSTANCE:opb2opb_bridge_opb1 -
    line 1119 - deprecated core for architecture 'virtex5sx'!
 
 XPS% Evaluating file run_xps.tcl
-ERROR:EDK - Error while running "gmake -f system.make bits".
-   Return code = 2 
 No changes to be saved in MSS file
 Saved project XMP file

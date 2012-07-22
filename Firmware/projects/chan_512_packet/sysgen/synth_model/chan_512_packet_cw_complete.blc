@@ -313,7 +313,7 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 620720 kilobytes
+Total memory usage is 620280 kilobytes
 
 Writing NGC file "chan_512_packet_cw_complete.ngc" ...
 Total REAL time to NGCBUILD completion:  4 sec

@@ -29,7 +29,7 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 300036 kilobytes
+Total memory usage is 300032 kilobytes
 
 Writing NGC file "../async_dram_1_wrapper.ngc" ...
 Total REAL time to NGCBUILD completion:  1 sec

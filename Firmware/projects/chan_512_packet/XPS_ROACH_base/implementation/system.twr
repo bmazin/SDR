@@ -34,7 +34,7 @@ Timing constraint: NET "epb_cs_n_IBUF" MAXDELAY = 4 ns;
 
  1 net analyzed, 0 failing nets detected.
  0 timing errors detected.
- Maximum net delay is   2.350ns.
+ Maximum net delay is   1.904ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -62,1089 +62,9 @@ Timing constraint: PERIOD analysis for net
 "chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk" PERIOD =        
 3.9062 ns HIGH 50%;  duty cycle corrected to 3.906 nS  HIGH 1.953 nS  
 
- 147774 paths analyzed, 92773 endpoints analyzed, 36 failing endpoints
- 36 timing errors detected. (36 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is   4.257ns.
---------------------------------------------------------------------------------
-Slack:                  -0.351ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.697ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU3 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A3       net (fanout=1)        2.623   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(3)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.697ns (1.074ns logic, 2.623ns route)
-                                                       (29.1% logic, 70.9% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.282ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.628ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU10Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A8       net (fanout=1)        2.554   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(8)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.628ns (1.074ns logic, 2.554ns route)
-                                                       (29.6% logic, 70.4% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.198ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.544ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU2 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A2       net (fanout=1)        2.470   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(2)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.544ns (1.074ns logic, 2.470ns route)
-                                                       (30.3% logic, 69.7% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.194ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.540ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU5 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A5       net (fanout=1)        2.466   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(5)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.540ns (1.074ns logic, 2.466ns route)
-                                                       (30.3% logic, 69.7% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.176ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.522ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU0 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A0       net (fanout=1)        2.448   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(0)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.522ns (1.074ns logic, 2.448ns route)
-                                                       (30.5% logic, 69.5% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.172ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.518ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU1 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A1       net (fanout=1)        2.444   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(1)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.518ns (1.074ns logic, 2.444ns route)
-                                                       (30.5% logic, 69.5% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.171ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.517ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU4 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A4       net (fanout=1)        2.443   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(4)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.517ns (1.074ns logic, 2.443ns route)
-                                                       (30.5% logic, 69.5% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.170ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.516ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU11Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A9       net (fanout=1)        2.442   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(9)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.516ns (1.074ns logic, 2.442ns route)
-                                                       (30.5% logic, 69.5% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.164ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.485ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.550ns (1.297 - 1.847)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y9.DOADOL10 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y19.A8       net (fanout=2)        2.411   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/core_data_out(8)
-    DSP48_X6Y19.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.485ns (1.074ns logic, 2.411ns route)
-                                                       (30.8% logic, 69.2% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.152ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.498ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU9 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A7       net (fanout=1)        2.424   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(7)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.498ns (1.074ns logic, 2.424ns route)
-                                                       (30.7% logic, 69.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.150ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.496ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU12Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A10      net (fanout=1)        2.422   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(10)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.496ns (1.074ns logic, 2.422ns route)
-                                                       (30.7% logic, 69.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.145ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.466ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.550ns (1.297 - 1.847)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y9.DOADOL3  Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y19.A3       net (fanout=2)        2.392   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/core_data_out(3)
-    DSP48_X6Y19.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.466ns (1.074ns logic, 2.392ns route)
-                                                       (31.0% logic, 69.0% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.134ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.481ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.524ns (1.297 - 1.821)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOL10Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y20.A8       net (fanout=2)        2.407   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/core_data_out(8)
-    DSP48_X6Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.481ns (1.074ns logic, 2.407ns route)
-                                                       (30.9% logic, 69.1% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.128ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.475ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.524ns (1.297 - 1.821)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOL3 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y20.A3       net (fanout=2)        2.401   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/core_data_out(3)
-    DSP48_X6Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.475ns (1.074ns logic, 2.401ns route)
-                                                       (30.9% logic, 69.1% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.046ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.392ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A14      net (fanout=14)       2.318   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.392ns (1.074ns logic, 2.318ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.046ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.392ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A13      net (fanout=14)       2.318   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.392ns (1.074ns logic, 2.318ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.046ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.392ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A15      net (fanout=14)       2.318   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.392ns (1.074ns logic, 2.318ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.046ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.392ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A12      net (fanout=14)       2.318   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.392ns (1.074ns logic, 2.318ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.041ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.387ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A11      net (fanout=14)       2.313   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.387ns (1.074ns logic, 2.313ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.039ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.360ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.550ns (1.297 - 1.847)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y9.DOADOL2  Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y19.A2       net (fanout=2)        2.286   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/core_data_out(2)
-    DSP48_X6Y19.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.360ns (1.074ns logic, 2.286ns route)
-                                                       (32.0% logic, 68.0% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.039ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.385ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A16      net (fanout=14)       2.311   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.385ns (1.074ns logic, 2.311ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.039ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.385ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A19      net (fanout=14)       2.311   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.385ns (1.074ns logic, 2.311ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.039ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.385ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A18      net (fanout=14)       2.311   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.385ns (1.074ns logic, 2.311ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.039ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.385ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A17      net (fanout=14)       2.311   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.385ns (1.074ns logic, 2.311ns route)
-                                                       (31.7% logic, 68.3% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.029ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.376ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.524ns (1.297 - 1.821)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOL1 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y20.A1       net (fanout=2)        2.302   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/core_data_out(1)
-    DSP48_X6Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.376ns (1.074ns logic, 2.302ns route)
-                                                       (31.8% logic, 68.2% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.024ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.370ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU8 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A6       net (fanout=1)        2.296   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(6)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.370ns (1.074ns logic, 2.296ns route)
-                                                       (31.9% logic, 68.1% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.018ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.339ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.550ns (1.297 - 1.847)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y9.DOADOL13 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y19.A11      net (fanout=15)       2.265   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/core_data_out(11)
-    DSP48_X6Y19.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.339ns (1.074ns logic, 2.265ns route)
-                                                       (32.2% logic, 67.8% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.007ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.328ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.550ns (1.297 - 1.847)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y9.DOADOL1  Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y19.A1       net (fanout=2)        2.254   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/core_data_out(1)
-    DSP48_X6Y19.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.328ns (1.074ns logic, 2.254ns route)
-                                                       (32.3% logic, 67.7% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.007ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.328ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.550ns (1.297 - 1.847)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y9.DOADOL0  Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y19.A0       net (fanout=2)        2.254   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/core_data_out(0)
-    DSP48_X6Y19.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.328ns (1.074ns logic, 2.254ns route)
-                                                       (32.3% logic, 67.7% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.004ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.350ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A23      net (fanout=14)       2.276   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.350ns (1.074ns logic, 2.276ns route)
-                                                       (32.1% logic, 67.9% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.004ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.350ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A21      net (fanout=14)       2.276   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.350ns (1.074ns logic, 2.276ns route)
-                                                       (32.1% logic, 67.9% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.004ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.350ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A20      net (fanout=14)       2.276   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.350ns (1.074ns logic, 2.276ns route)
-                                                       (32.1% logic, 67.9% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.004ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.350ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A24      net (fanout=14)       2.276   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.350ns (1.074ns logic, 2.276ns route)
-                                                       (32.1% logic, 67.9% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.004ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.350ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.525ns (1.320 - 1.845)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y10.DOADOU13Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/delay_bram_b73607fc66/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X7Y20.A22      net (fanout=14)       2.276   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap3_eb32ec71a3/delay_bram_cb673bb66b/single_port_ram/core_data_out(11)
-    DSP48_X7Y20.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_last_tap_b82800561c/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.350ns (1.074ns logic, 2.276ns route)
-                                                       (32.1% logic, 67.9% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.003ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.324ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.550ns (1.297 - 1.847)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y9.DOADOL5  Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y19.A5       net (fanout=2)        2.250   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/core_data_out(5)
-    DSP48_X6Y19.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.324ns (1.074ns logic, 2.250ns route)
-                                                       (32.3% logic, 67.7% route)
-
---------------------------------------------------------------------------------
-Slack:                  -0.003ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP (RAM)
-  Destination:          chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56 (DSP)
-  Requirement:          3.906ns
-  Data Path Delay:      3.324ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.550ns (1.297 - 1.847)
-  Source Clock:         adc1_clk rising at 0.000ns
-  Destination Clock:    adc1_clk rising at 3.906ns
-  Clock Uncertainty:    0.035ns
-
-  Clock Uncertainty:          0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.000ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path: chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP to chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB36_X1Y9.DOADOL11 Trcko_DOA             0.818   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/comp11.core_instance11/BU2/U0/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_init.ram/SP.WIDE_PRIM18.SP
-    DSP48_X6Y19.A9       net (fanout=2)        2.250   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_first_tap_cfde13fe7f/delay_bram_e1b8369945/single_port_ram/core_data_out(9)
-    DSP48_X6Y19.CLK      Tdspdck_AA            0.256   chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-                                                       chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_packet_x0/pfb_9cae33743a/pfb_fir1_865cea1ae0/pol1_in1_tap2_2f34d5f271/mult/Mmult_mult_46_56
-    -------------------------------------------------  ---------------------------
-    Total                                      3.324ns (1.074ns logic, 2.250ns route)
-                                                       (32.3% logic, 67.7% route)
-
+ 147651 paths analyzed, 92650 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   3.874ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1160,7 +80,7 @@ Timing constraint: TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88 MHz HIGH 50%;
 
  382709 paths analyzed, 10701 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is  11.313ns.
+ Minimum period is  11.318ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1169,7 +89,7 @@ TO TIMEGRP "FFS"         10 ns;
 
  402 paths analyzed, 402 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors)
- Maximum delay is   6.493ns.
+ Maximum delay is   5.703ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1178,7 +98,7 @@ Timing constraint: TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGRP
 
  128 paths analyzed, 128 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors)
- Maximum delay is   4.011ns.
+ Maximum delay is   2.889ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1187,7 +107,7 @@ Timing constraint: TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM TIMEGRP
 
  311 paths analyzed, 311 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors)
- Maximum delay is   9.290ns.
+ Maximum delay is   5.682ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1204,7 +124,7 @@ TIMEGRP "FFS" 10 ns;
 
  45 paths analyzed, 45 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors)
- Maximum delay is   5.783ns.
+ Maximum delay is   2.348ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1213,7 +133,7 @@ TIMEGRP "FFS" 10 ns;
 
  5 paths analyzed, 5 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors)
- Maximum delay is   2.714ns.
+ Maximum delay is   2.348ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1222,7 +142,7 @@ Timing constraint: TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGRP
 
  5 paths analyzed, 5 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors)
- Maximum delay is   3.326ns.
+ Maximum delay is   1.868ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1283,9 +203,9 @@ TS_dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_0_int = PERIOD
 "dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_0_int"         
 TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk HIGH 50%;
 
- 11631 paths analyzed, 6254 endpoints analyzed, 0 failing endpoints
+ 11631 paths analyzed, 6255 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is   3.717ns.
+ Minimum period is   3.719ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1298,7 +218,7 @@ TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk PHASE
 
  729 paths analyzed, 708 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is   3.708ns.
+ Minimum period is   3.583ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -1309,9 +229,9 @@ TS_dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_div_int = PERIOD
 TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk * 0.5         HIGH 
 50%;
 
- 13489 paths analyzed, 4258 endpoints analyzed, 0 failing endpoints
+ 13489 paths analyzed, 4257 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is   7.428ns.
+ Minimum period is   7.500ns.
 --------------------------------------------------------------------------------
 
 
@@ -1322,9 +242,9 @@ Derived Constraints for chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_c
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|chan_512_packet_adc_mkid/chan_5|      3.906ns|      3.000ns|      4.257ns|            0|           36|            0|       147774|
+|chan_512_packet_adc_mkid/chan_5|      3.906ns|      3.000ns|      3.874ns|            0|            0|            0|       147651|
 |12_packet_adc_mkid/drdy_clk    |             |             |             |             |             |             |             |
-| chan_512_packet_adc_mkid/chan_|      3.906ns|      4.257ns|          N/A|           36|            0|       147774|            0|
+| chan_512_packet_adc_mkid/chan_|      3.906ns|      3.874ns|          N/A|            0|            0|       147651|            0|
 | 512_packet_adc_mkid/dcm_clk   |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
@@ -1334,16 +254,16 @@ Derived Constraints for TS_dly_clk_n
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|TS_dly_clk_n                   |      5.000ns|      3.600ns|      4.956ns|            0|            0|            0|        25849|
-| TS_dram_infrastructure_inst_dr|      3.750ns|      2.334ns|      3.717ns|            0|            0|            0|        25849|
+|TS_dly_clk_n                   |      5.000ns|      3.600ns|      5.000ns|            0|            0|            0|        25849|
+| TS_dram_infrastructure_inst_dr|      3.750ns|      2.334ns|      3.750ns|            0|            0|            0|        25849|
 | am_infrastructure_inst_mem_clk|             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      3.750ns|      3.717ns|          N/A|            0|            0|        11631|            0|
+|  TS_dram_infrastructure_inst_d|      3.750ns|      3.719ns|          N/A|            0|            0|        11631|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_0_int                    |             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      3.750ns|      3.708ns|          N/A|            0|            0|          729|            0|
+|  TS_dram_infrastructure_inst_d|      3.750ns|      3.583ns|          N/A|            0|            0|          729|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_90_int                   |             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      7.500ns|      7.428ns|          N/A|            0|            0|        13489|            0|
+|  TS_dram_infrastructure_inst_d|      7.500ns|      7.500ns|          N/A|            0|            0|        13489|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_div_int                  |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -1371,7 +291,7 @@ Derived Constraints for TS_adcmkid1_DRDY_I_n
 | _0                            |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
-1 constraint not met.
+All constraints were met.
 WARNING:Timing - DCM chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/CLK_DCM 
    does not have a CLKIN_PERIOD attribute (the period of the DCM input 
    clock).DCM jitter will not be included in timing analysis when this 
@@ -1388,8 +308,8 @@ Clock to Setup on destination clock adcmkid1_DRDY_I_n
                  | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 -----------------+---------+---------+---------+---------+
-adcmkid1_DRDY_I_n|    4.257|         |         |         |
-adcmkid1_DRDY_I_p|    4.257|         |         |         |
+adcmkid1_DRDY_I_n|    3.874|         |         |         |
+adcmkid1_DRDY_I_p|    3.874|         |         |         |
 -----------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock adcmkid1_DRDY_I_p
@@ -1397,8 +317,8 @@ Clock to Setup on destination clock adcmkid1_DRDY_I_p
                  | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 -----------------+---------+---------+---------+---------+
-adcmkid1_DRDY_I_n|    4.257|         |         |         |
-adcmkid1_DRDY_I_p|    4.257|         |         |         |
+adcmkid1_DRDY_I_n|    3.874|         |         |         |
+adcmkid1_DRDY_I_p|    3.874|         |         |         |
 -----------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock dly_clk_n
@@ -1406,8 +326,8 @@ Clock to Setup on destination clock dly_clk_n
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-dly_clk_n      |    9.290|    1.776|    1.961|    3.641|
-dly_clk_p      |    9.290|    1.776|    1.961|    3.641|
+dly_clk_n      |    7.438|    1.607|    2.684|    3.679|
+dly_clk_p      |    7.438|    1.607|    2.684|    3.679|
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock dly_clk_p
@@ -1415,8 +335,8 @@ Clock to Setup on destination clock dly_clk_p
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-dly_clk_n      |    9.290|    1.776|    1.961|    3.641|
-dly_clk_p      |    9.290|    1.776|    1.961|    3.641|
+dly_clk_n      |    7.438|    1.607|    2.684|    3.679|
+dly_clk_p      |    7.438|    1.607|    2.684|    3.679|
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock epb_clk_in
@@ -1424,34 +344,34 @@ Clock to Setup on destination clock epb_clk_in
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-epb_clk_in     |   11.313|         |    4.028|         |
+epb_clk_in     |   11.318|         |    3.758|         |
 ---------------+---------+---------+---------+---------+
 
 
 Timing summary:
 ---------------
 
-Timing errors: 36  Score: 3118  (Setup/Max: 3118, Hold: 0)
+Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
 
-Constraints cover 557228 paths, 1 nets, and 129618 connections
+Constraints cover 557105 paths, 1 nets, and 129474 connections
 
 Design statistics:
-   Minimum period:  11.313ns   (Maximum frequency:  88.394MHz)
-   Maximum path delay from/to any node:   9.290ns
-   Maximum net delay:   2.350ns
+   Minimum period:  11.318ns   (Maximum frequency:  88.355MHz)
+   Maximum path delay from/to any node:   5.703ns
+   Maximum net delay:   1.904ns
 
 
-Analysis completed Thu Jul 19 20:55:38 2012 
+Analysis completed Fri Jul 20 00:36:56 2012 
 --------------------------------------------------------------------------------
 
 Trace Settings:
 -------------------------
 Trace Settings 
 
-Peak Memory Usage: 1796 MB
+Peak Memory Usage: 1795 MB
 
-Total REAL time to Trace completion: 2 mins 4 secs 
-Total CPU time to Trace completion: 2 mins 4 secs 
+Total REAL time to Trace completion: 2 mins 6 secs 
+Total CPU time to Trace completion: 2 mins 5 secs 
 
 
 

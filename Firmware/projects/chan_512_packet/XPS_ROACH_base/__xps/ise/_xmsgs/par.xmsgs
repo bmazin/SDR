@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="ConstraintSystem" num="65" delta="new" >Constraint <arg fmt="%s" index="1">&lt;NET &quot;chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk&quot; PERIOD =         3.9062 ns HIGH 50%;&gt; [system.pcf(282634)]</arg> overrides constraint <arg fmt="%s" index="2">&lt;NET &quot;chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk&quot; PERIOD =         3.9062 ns HIGH 50%;&gt; [system.pcf(282632)]</arg>.
+<msg type="warning" file="ConstraintSystem" num="65" delta="new" >Constraint <arg fmt="%s" index="1">&lt;NET &quot;chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk&quot; PERIOD =         3.9062 ns HIGH 50%;&gt; [system.pcf(281626)]</arg> overrides constraint <arg fmt="%s" index="2">&lt;NET &quot;chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk&quot; PERIOD =         3.9062 ns HIGH 50%;&gt; [system.pcf(281624)]</arg>.
 </msg>
 
 <msg type="warning" file="Timing" num="3223" delta="new" >Timing constraint <arg fmt="%s" index="1">TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FROM TIMEGRP &quot;TNM_PHY_INIT_DATA_SEL&quot; TO        TIMEGRP &quot;RAMS&quot; 10 ns;</arg> ignored during timing analysis.</msg>
@@ -18,21 +18,6 @@
 </msg>
 
 <msg type="info" file="Timing" num="2761" delta="new" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
-
-<msg type="info" file="Timing" num="2761" delta="new" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
-
-<msg type="info" file="Timing" num="2761" delta="new" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
-
-<msg type="info" file="Timing" num="2761" delta="new" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
-
-<msg type="warning" file="Par" num="468" delta="new" >Your design did not meet timing.  The following are some suggestions to assist you to meet timing in your design.
-
-Review the timing report using Timing Analyzer (In ISE select &quot;Post-Place &amp;
-Route Static Timing Report&quot;). Go to the failing constraint(s) and evaluate the failing paths for each constraint.
-
-Try the Design Goal and Strategies for Timing Performance(In ISE select Project -&gt; Design Goals &amp; Strategies) to ensure the best options are set in the tools for timing closure.
-
-</msg>
 
 <msg type="info" file="Timing" num="2761" delta="new" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
 
