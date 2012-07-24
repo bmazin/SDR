@@ -1,0 +1,11 @@
+Warning:
+ code:     
+ severity: L1
+ open_fcn:   
+ summary:  Externally connected blocks are defined as blocks that directly drive Simulink/Non-SysGen blocks without going through a gateway. An example is the output port of a SysGen block connected to the input port of Simulink Scope. This feature will be removed in future releases of SysGen. The table below lists blocks with such connections. Modify the design by inserting gateway outs with 'Translate into output port' turned off. For more details look into <a href=" file:///home/sean/SDR/Firmware/projects/SysgenFeatureReport.htm">SysgenFeatureReport.htm</a>.
+<a href="matlab:xlignoremodelforwarning('chan_532')">Disable</a> feature warnings for this model.
+
+ details:  Externally connected blocks are defined as blocks that directly drive Simulink/Non-SysGen blocks without going through a gateway. An example is the output port of a SysGen block connected to the input port of Simulink Scope. This feature will be removed in future releases of SysGen. The table below lists blocks with such connections. Modify the design by inserting gateway outs with 'Translate into output port' turned off. For more details look into <a href=" file:///home/sean/SDR/Firmware/projects/SysgenFeatureReport.htm">SysgenFeatureReport.htm</a>.
+<a href="matlab:xlignoremodelforwarning('chan_532')">Disable</a> feature warnings for this model.
+
+

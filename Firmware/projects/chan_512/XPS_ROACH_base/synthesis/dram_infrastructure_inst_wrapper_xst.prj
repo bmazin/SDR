@@ -1,0 +1,2 @@
+verilog dram_infrastructure_v1_00_a /home/sean/SDR/Firmware/projects/chan_512/XPS_ROACH_base/pcores/dram_infrastructure_v1_00_a/hdl/verilog/dram_infrastructure.v
+verilog work ../hdl/dram_infrastructure_inst_wrapper.v

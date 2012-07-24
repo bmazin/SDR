@@ -1,0 +1,376 @@
+--------------------------------------------------------------------------------
+Release 11.4 Trace  (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+
+/opt/Xilinx/11.1/ISE/bin/lin64/unwrapped/trce -ise ../__xps/ise/system.ise -e
+200 -xml system.twx system.ncd system.pcf
+
+Design file:              system.ncd
+Physical constraint file: system.pcf
+Device,package,speed:     xc5vsx95t,ff1136,-1 (PRODUCTION 1.66 2009-11-16, STEPPING level 0)
+Report level:             error report, limited to 200 items per constraint
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+WARNING:Timing:3223 - Timing constraint TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY 
+   FROM TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO        TIMEGRP "RAMS" 10 ns; ignored 
+   during timing analysis.
+INFO:Timing:3386 - Intersecting Constraints found and resolved.  For more 
+   information, see the TSI report.  Please consult the Xilinx Command Line 
+   Tools User Guide for information on generating a TSI report.
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+
+================================================================================
+Timing constraint: NET "epb_cs_n_IBUF" MAXDELAY = 4 ns;
+
+ 1 net analyzed, 0 failing nets detected.
+ 0 timing errors detected.
+ Maximum net delay is   1.634ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: NET 
+"chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/drdy_clk" PERIOD = 3.9062      
+   ns HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: NET 
+"chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/drdy_clk" PERIOD = 3.9062      
+   ns HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: PERIOD analysis for net 
+"chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/dcm_clk" derived from  NET 
+"chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/drdy_clk" PERIOD = 3.9062      
+  ns HIGH 50%;  duty cycle corrected to 3.906 nS  HIGH 1.953 nS  
+
+ 131164 paths analyzed, 85764 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   3.881ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_dly_clk_n = PERIOD TIMEGRP "dly_clk_n" 200 MHz HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.600ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88 MHz HIGH 50%;
+
+ 382709 paths analyzed, 10701 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is  11.269ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP "TNM_RD_DATA_SEL" 
+TO TIMEGRP "FFS"         10 ns;
+
+ 402 paths analyzed, 402 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   5.494ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGRP 
+"TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"         10 ns;
+
+ 128 paths analyzed, 128 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   3.631ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM TIMEGRP 
+"TNM_PHY_INIT_DATA_SEL" TO         TIMEGRP "FFS" 10 ns;
+
+ 311 paths analyzed, 311 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   6.583ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FROM TIMEGRP 
+"TNM_PHY_INIT_DATA_SEL" TO         TIMEGRP "RAMS" 10 ns;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "TNM_GATE_DLY" TO 
+TIMEGRP "FFS" 10 ns;
+
+ 45 paths analyzed, 45 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   2.352ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "TNM_RDEN_DLY" TO 
+TIMEGRP "FFS" 10 ns;
+
+ 5 paths analyzed, 5 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   1.953ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGRP 
+"TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"         10 ns;
+
+ 5 paths analyzed, 5 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors)
+ Maximum delay is   2.038ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_adcmkid1_DRDY_I_p = PERIOD TIMEGRP "adcmkid1_DRDY_I_p" 
+3.906 ns HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_adcmkid1_DRDY_I_n = PERIOD TIMEGRP "adcmkid1_DRDY_I_n" 
+3.906 ns HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   3.000ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk 
+= PERIOD TIMEGRP         
+"dram_infrastructure_inst_dram_infrastructure_inst_mem_clk"         
+TS_dly_clk_n * 1.33333333 HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   2.334ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_chan_512_clean_adc_mkid_chan_512_clean_adc_mkid_dcm_clk = 
+PERIOD TIMEGRP         
+"chan_512_clean_adc_mkid_chan_512_clean_adc_mkid_dcm_clk"         
+TS_adcmkid1_DRDY_I_p HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   2.222ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_chan_512_clean_adc_mkid_chan_512_clean_adc_mkid_dcm_clk_0 
+= PERIOD TIMEGRP         
+"chan_512_clean_adc_mkid_chan_512_clean_adc_mkid_dcm_clk_0"         
+TS_adcmkid1_DRDY_I_n HIGH 50%;
+
+ 0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 component switching limit errors)
+ Minimum period is   2.222ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: 
+TS_dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_0_int = PERIOD    
+     TIMEGRP         
+"dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_0_int"         
+TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk HIGH 50%;
+
+ 11631 paths analyzed, 6254 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   3.716ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: 
+TS_dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_90_int = PERIOD   
+      TIMEGRP         
+"dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_90_int"         
+TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk PHASE         
+0.938 ns HIGH 50%;
+
+ 729 paths analyzed, 708 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   3.692ns.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: 
+TS_dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_div_int = PERIOD  
+       TIMEGRP         
+"dram_infrastructure_inst_dram_infrastructure_inst_dram_clk_div_int"         
+TS_dram_infrastructure_inst_dram_infrastructure_inst_mem_clk * 0.5         HIGH 
+50%;
+
+ 13489 paths analyzed, 4258 endpoints analyzed, 0 failing endpoints
+ 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
+ Minimum period is   7.496ns.
+--------------------------------------------------------------------------------
+
+
+Derived Constraint Report
+Derived Constraints for chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/drdy_clk
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|chan_512_clean_adc_mkid/chan_51|      3.906ns|      3.000ns|      3.881ns|            0|            0|            0|       131164|
+|2_clean_adc_mkid/drdy_clk      |             |             |             |             |             |             |             |
+| chan_512_clean_adc_mkid/chan_5|      3.906ns|      3.881ns|          N/A|            0|            0|       131164|            0|
+| 12_clean_adc_mkid/dcm_clk     |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_dly_clk_n
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_dly_clk_n                   |      5.000ns|      3.600ns|      4.997ns|            0|            0|            0|        25849|
+| TS_dram_infrastructure_inst_dr|      3.750ns|      2.334ns|      3.748ns|            0|            0|            0|        25849|
+| am_infrastructure_inst_mem_clk|             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      3.750ns|      3.716ns|          N/A|            0|            0|        11631|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_0_int                    |             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      3.750ns|      3.692ns|          N/A|            0|            0|          729|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_90_int                   |             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      7.500ns|      7.496ns|          N/A|            0|            0|        13489|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_div_int                  |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_adcmkid1_DRDY_I_p
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_adcmkid1_DRDY_I_p           |      3.906ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
+| TS_chan_512_clean_adc_mkid_cha|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| n_512_clean_adc_mkid_dcm_clk  |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_adcmkid1_DRDY_I_n
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_adcmkid1_DRDY_I_n           |      3.906ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
+| TS_chan_512_clean_adc_mkid_cha|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| n_512_clean_adc_mkid_dcm_clk_0|             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+All constraints were met.
+WARNING:Timing - DCM chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/CLK_DCM 
+   does not have a CLKIN_PERIOD attribute (the period of the DCM input 
+   clock).DCM jitter will not be included in timing analysis when this 
+   attribute is not defined. For more information, please refer to the 
+   appropriate architectural handbook
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Clock to Setup on destination clock adcmkid1_DRDY_I_n
+-----------------+---------+---------+---------+---------+
+                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-----------------+---------+---------+---------+---------+
+adcmkid1_DRDY_I_n|    3.881|         |         |         |
+adcmkid1_DRDY_I_p|    3.881|         |         |         |
+-----------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock adcmkid1_DRDY_I_p
+-----------------+---------+---------+---------+---------+
+                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock     |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+-----------------+---------+---------+---------+---------+
+adcmkid1_DRDY_I_n|    3.881|         |         |         |
+adcmkid1_DRDY_I_p|    3.881|         |         |         |
+-----------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock dly_clk_n
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+dly_clk_n      |    7.410|    1.616|    2.391|    3.301|
+dly_clk_p      |    7.410|    1.616|    2.391|    3.301|
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock dly_clk_p
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+dly_clk_n      |    7.410|    1.616|    2.391|    3.301|
+dly_clk_p      |    7.410|    1.616|    2.391|    3.301|
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock epb_clk_in
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+epb_clk_in     |   11.269|         |    3.635|         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
+
+Constraints cover 540618 paths, 1 nets, and 124101 connections
+
+Design statistics:
+   Minimum period:  11.269ns   (Maximum frequency:  88.739MHz)
+   Maximum path delay from/to any node:   6.583ns
+   Maximum net delay:   1.634ns
+
+
+Analysis completed Tue Jul 24 15:43:55 2012 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 1711 MB
+
+Total REAL time to Trace completion: 1 mins 58 secs 
+Total CPU time to Trace completion: 1 mins 58 secs 
+
+
+

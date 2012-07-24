@@ -1,0 +1,3 @@
+/opt/Xilinx/11.1/DSP_Tools/lin64/sysgen/bin/saferun -- /opt/Xilinx/11.1/ISE/bin/lin64/xtclsh xreport.tcl
+/opt/Xilinx/11.1/DSP_Tools/lin64/sysgen/bin/saferun -- /opt/Xilinx/11.1/ISE/bin/lin64/xst -ifn xst_chan_512_clean.scr -ofn chan_512_clean_cw.syr -ise chan_512_clean_cw.ise
+/opt/Xilinx/11.1/DSP_Tools/lin64/sysgen/bin/saferun -- /opt/Xilinx/11.1/ISE/bin/lin64/ngcbuild -p xc5vsx95t-1ff1136 chan_512_clean_cw chan_512_clean_cw_complete.ngc

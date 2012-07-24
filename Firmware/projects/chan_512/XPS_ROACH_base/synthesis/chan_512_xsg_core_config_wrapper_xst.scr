@@ -1,0 +1,12 @@
+run
+-opt_mode speed
+-netlist_hierarchy as_optimized
+-opt_level 1
+-p xc5vsx95tff1136-1
+-top chan_512_xsg_core_config_wrapper
+-ifmt MIXED
+-ifn chan_512_xsg_core_config_wrapper_xst.prj
+-ofn ../implementation/chan_512_xsg_core_config_wrapper.ngc
+-hierarchy_separator /
+-iobuf NO
+-sd {../implementation/chan_512_xsg_core_config_wrapper}

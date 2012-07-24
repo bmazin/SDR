@@ -1,0 +1,2 @@
+VHDL chan_512_pulses_bram1_ramblk_elaborate_v1_00_a /home/sean/SDR/Firmware/projects/chan_512/XPS_ROACH_base/hdl/elaborate/chan_512_pulses_bram1_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_512_pulses_bram1_ramblk_elaborate.vhd
+vhdl work ../hdl/chan_512_pulses_bram1_ramblk_wrapper.vhd

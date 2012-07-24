@@ -1,0 +1,293 @@
+Release 11.4 - xst L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+--> 
+PMSPEC -- Overriding Xilinx file </opt/Xilinx/11.1/EDK/virtex5/data/virtex5.acd> with local file </opt/Xilinx/11.1/ISE/virtex5/data/virtex5.acd>
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input Format                       : MIXED
+Input File Name                    : "chan_550_simple_gpio_a2_wrapper_xst.prj"
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+
+---- Target Parameters
+Target Device                      : xc5vsx95tff1136-1
+Output File Name                   : "../implementation/chan_550_simple_gpio_a2_wrapper.ngc"
+
+---- Source Options
+Top Module Name                    : chan_550_simple_gpio_a2_wrapper
+
+---- Target Options
+Add IO Buffers                     : NO
+
+---- General Options
+Optimization Goal                  : speed
+Netlist Hierarchy                  : as_optimized
+Optimization Effort                : 1
+Hierarchy Separator                : /
+
+---- Other Options
+Cores Search Directories           : {../implementation/chan_550_simple_gpio_a2_wrapper}
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/gpio_simulink2ext_v1_00_a/hdl/vhdl/gpio_simulink2ext.vhd" in Library gpio_simulink2ext_v1_00_a.
+Entity <gpio_simulink2ext> compiled.
+Entity <gpio_simulink2ext> (Architecture <Behavioral>) compiled.
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/hdl/chan_550_simple_gpio_a2_wrapper.vhd" in Library work.
+Entity <chan_550_simple_gpio_a2_wrapper> compiled.
+Entity <chan_550_simple_gpio_a2_wrapper> (Architecture <STRUCTURE>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <chan_550_simple_gpio_a2_wrapper> in library <work> (architecture <STRUCTURE>).
+
+Analyzing hierarchy for entity <gpio_simulink2ext> in library <gpio_simulink2ext_v1_00_a> (architecture <Behavioral>) with generics.
+	CLK_PHASE = 0
+	DDR = 0
+	REG_IOB = "true"
+	WIDTH = 1
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <chan_550_simple_gpio_a2_wrapper> in library <work> (Architecture <STRUCTURE>).
+WARNING:Xst:1540 - "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/hdl/chan_550_simple_gpio_a2_wrapper.vhd" line 45: Different binding for component: <gpio_simulink2ext>. Ports <gateway,io_pad> do not match.
+Entity <chan_550_simple_gpio_a2_wrapper> analyzed. Unit <chan_550_simple_gpio_a2_wrapper> generated.
+
+Analyzing generic Entity <gpio_simulink2ext> in library <gpio_simulink2ext_v1_00_a> (Architecture <Behavioral>).
+	CLK_PHASE = 0
+	DDR = 0
+	REG_IOB = "true"
+	WIDTH = 1
+    Set user-defined property "INIT =  0" for instance <SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR> in unit <gpio_simulink2ext>.
+    Set user-defined property "IOB =  true" for instance <SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR> in unit <gpio_simulink2ext>.
+Entity <gpio_simulink2ext> analyzed. Unit <gpio_simulink2ext> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <gpio_simulink2ext>.
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/gpio_simulink2ext_v1_00_a/hdl/vhdl/gpio_simulink2ext.vhd".
+WARNING:Xst:647 - Input <clk90> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:1780 - Signal <zero> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <one> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <not_sample_clk> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+Unit <gpio_simulink2ext> synthesized.
+
+
+Synthesizing Unit <chan_550_simple_gpio_a2_wrapper>.
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/hdl/chan_550_simple_gpio_a2_wrapper.vhd".
+Unit <chan_550_simple_gpio_a2_wrapper> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 1
+ Flip-Flops                                            : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <chan_550_simple_gpio_a2_wrapper> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 1
+ Flip-Flops                                            : 1
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+Top Level Output File Name         : ../implementation/chan_550_simple_gpio_a2_wrapper.ngc
+Output Format                      : ngc
+Optimization Goal                  : speed
+Keep Hierarchy                     : no
+
+Design Statistics
+# IOs                              : 4
+
+Cell Usage :
+# FlipFlops/Latches                : 1
+#      FD                          : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 5vsx95tff1136-1 
+
+
+Slice Logic Utilization: 
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:      0
+   Number with an unused Flip Flop:       0  out of      0         
+   Number with an unused LUT:             0  out of      0         
+   Number of fully used LUT-FF pairs:     0  out of      0         
+   Number of unique control sets:         1
+
+IO Utilization: 
+ Number of IOs:                           4
+ Number of bonded IOBs:                   0  out of    640     0%  
+    IOB Flip Flops/Latches:               1
+
+Specific Feature Utilization:
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+---------------------------------------------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)                                         | Load  |
+-----------------------------------+---------------------------------------------------------------+-------+
+clk                                | NONE(chan_550_simple_gpio_a2/SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR)| 1     |
+-----------------------------------+---------------------------------------------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: 0.000ns
+   Maximum output required time after clock: 0.471ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              0.000ns (Levels of Logic = 0)
+  Source:            gateway<0> (PAD)
+  Destination:       chan_550_simple_gpio_a2/SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR (FF)
+  Destination Clock: clk rising
+
+  Data Path: gateway<0> to chan_550_simple_gpio_a2/SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:D                     -0.018          chan_550_simple_gpio_a2/SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR
+    ----------------------------------------
+    Total                      0.000ns (0.000ns logic, 0.000ns route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              0.471ns (Levels of Logic = 0)
+  Source:            chan_550_simple_gpio_a2/SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR (FF)
+  Destination:       io_pad<0> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: chan_550_simple_gpio_a2/SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR to io_pad<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               0   0.471   0.000  chan_550_simple_gpio_a2/SDR_GEN.REG_SDR_GEN[0].Q_REG_SDR (io_pad<0>)
+    ----------------------------------------
+    Total                      0.471ns (0.471ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 3.00 secs
+Total CPU time to Xst completion: 3.20 secs
+ 
+--> 
+
+
+Total memory usage is 415436 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    5 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
+

@@ -1,0 +1,559 @@
+Release 11.4 par L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+
+arcons::  Tue Jul 24 15:26:10 2012
+
+par -ise ../__xps/ise/system.ise -xe n -w -ol high system_map.ncd system.ncd
+system.pcf 
+
+
+Constraints file: system.pcf.
+   "system" is an NCD, version 3.2, device xc5vsx95t, package ff1136, speed -1
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+INFO:Security:51 - The XILINXD_LICENSE_FILE environment variable is not set.
+INFO:Security:53 - The LM_LICENSE_FILE environment variable is not set.
+INFO:Security:56 - Part 'xc5vsx95t' is not a WebPack part.
+WARNING:Security:43 - No license file was found in the standard Xilinx license directory.
+WARNING:Security:44 - No license file was found.
+       Please run the Xilinx License Configuration Manager
+       (xlcm or "Manage Xilinx Licenses")
+       to assist in obtaining a license.
+WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue
+to function, but you no longer qualify for Xilinx software updates or new releases.
+
+----------------------------------------------------------------------
+WARNING:ConstraintSystem:65 - Constraint <NET "chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/drdy_clk" PERIOD = 3.9062
+           ns HIGH 50%;> [system.pcf(265072)] overrides constraint <NET
+   "chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/drdy_clk" PERIOD = 3.9062         ns HIGH 50%;>
+   [system.pcf(265070)].
+
+
+Initializing temperature to 85.000 Celsius. (default - Range: 0.000 to 85.000 Celsius)
+Initializing voltage to 0.950 Volts. (default - Range: 0.950 to 1.050 Volts)
+
+WARNING:Timing:3223 - Timing constraint TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FROM TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO   
+       TIMEGRP "RAMS" 10 ns; ignored during timing analysis.
+INFO:Timing:3386 - Intersecting Constraints found and resolved.  For more information, see the TSI report.  Please
+   consult the Xilinx Command Line Tools User Guide for information on generating a TSI report.
+
+Device speed data version:  "PRODUCTION 1.66 2009-11-16".
+
+
+
+Device Utilization Summary:
+
+   Number of BUFGs                           9 out of 32     28%
+   Number of BUFIOs                          9 out of 80     11%
+   Number of DCM_ADVs                        3 out of 12     25%
+   Number of DSP48Es                       264 out of 640    41%
+   Number of FIFO36_72_EXPs                  3 out of 244     1%
+   Number of FIFO36_EXPs                     1 out of 244     1%
+   Number of IDELAYCTRLs                     4 out of 22     18%
+   Number of ILOGICs                       153 out of 800    19%
+   Number of External IOBs                 248 out of 640    38%
+      Number of LOCed IOBs                 248 out of 248   100%
+
+   Number of External IOBMs                 36 out of 320    11%
+      Number of LOCed IOBMs                 36 out of 36    100%
+
+   Number of External IOBSs                 36 out of 320    11%
+      Number of LOCed IOBSs                 36 out of 36    100%
+
+   Number of IODELAYs                       90 out of 800    11%
+   Number of OLOGICs                       178 out of 800    22%
+   Number of PLL_ADVs                        1 out of 6      16%
+   Number of RAMB18X2s                      69 out of 244    28%
+   Number of RAMB36_EXPs                    34 out of 244    13%
+   Number of Slice Registers             46805 out of 58880  79%
+      Number used as Flip Flops          46804
+      Number used as Latches                 0
+      Number used as LatchThrus              1
+
+   Number of Slice LUTS                  32600 out of 58880  55%
+   Number of Slice LUT-Flip Flop pairs   50145 out of 58880  85%
+
+
+Overall effort level (-ol):   High 
+Router effort level (-rl):    High 
+
+Starting initial Timing Analysis.  REAL time: 1 mins 40 secs 
+WARNING:Timing - DCM chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/CLK_DCM does not have a CLKIN_PERIOD attribute (the
+   period of the DCM input clock).DCM jitter will not be included in timing analysis when this attribute is not defined.
+   For more information, please refer to the appropriate architectural handbook
+Finished initial Timing Analysis.  REAL time: 1 mins 41 secs 
+
+Starting Router
+
+INFO:Route:501 - One or more directed routing (DIRT) constraints generated for a specific device have been found. Note
+   that DIRT strings are guaranteed to work only on the same device they were created for. If the DIRT constraints fail,
+   verify that the same connectivity is available in the target device for this implementation. 
+
+Wirelength Stats for nets on all pins. NumPins: 127125
+
+Phase  1  : 275138 unrouted;      REAL time: 1 mins 49 secs 
+
+Phase  2  : 117147 unrouted;      REAL time: 2 mins 23 secs 
+
+Phase  3  : 32129 unrouted;      REAL time: 3 mins 2 secs 
+
+Phase  4  : 32251 unrouted; (Setup:4197, Hold:731, Component Switching Limit:0)     REAL time: 3 mins 23 secs 
+
+Updating file: system.ncd with current fully routed design.
+
+Phase  5  : 0 unrouted; (Setup:3984, Hold:731, Component Switching Limit:0)     REAL time: 4 mins 40 secs 
+
+Phase  6  : 0 unrouted; (Setup:3845, Hold:731, Component Switching Limit:0)     REAL time: 4 mins 56 secs 
+
+Updating file: system.ncd with current fully routed design.
+
+Phase  7  : 0 unrouted; (Setup:122, Hold:731, Component Switching Limit:0)     REAL time: 9 mins 25 secs 
+
+Updating file: system.ncd with current fully routed design.
+
+Phase  8  : 0 unrouted; (Setup:122, Hold:731, Component Switching Limit:0)     REAL time: 9 mins 46 secs 
+
+Phase  9  : 0 unrouted; (Setup:0, Hold:731, Component Switching Limit:0)     REAL time: 14 mins 42 secs 
+
+Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 14 mins 54 secs 
+
+Phase 11  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 15 mins 17 secs 
+Total REAL time to Router completion: 15 mins 17 secs 
+Total CPU time to Router completion: 15 mins 17 secs 
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Generating "PAR" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++---------------------+--------------+------+------+------------+-------------+
+|        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++---------------------+--------------+------+------+------------+-------------+
+|            adc1_clk | BUFGCTRL_X0Y1| No   |12219 |  0.879     |  2.422      |
++---------------------+--------------+------+------+------------+-------------+
+|chan_512_clean_avgIQ |              |      |      |            |             |
+|_bram_ramblk_portb_B |              |      |      |            |             |
+|             RAM_Clk | BUFGCTRL_X0Y0| No   |  709 |  0.769     |  2.298      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_sys_dram_clk_90 |              |      |      |            |             |
+|                     |BUFGCTRL_X0Y27| No   |  183 |  0.654     |  2.354      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_sys_dram_clk_di |              |      |      |            |             |
+|                   v |BUFGCTRL_X0Y28| No   |  480 |  0.733     |  2.373      |
++---------------------+--------------+------+------+------------+-------------+
+| dram_sys_dram_clk_0 |BUFGCTRL_X0Y26| No   |  838 |  0.786     |  2.347      |
++---------------------+--------------+------+------+------------+-------------+
+|chan_512_clean_dac_m |              |      |      |            |             |
+|kid/chan_512_clean_d |              |      |      |            |             |
+|    ac_mkid/smpl_clk | BUFGCTRL_X0Y2| No   |   34 |  0.192     |  2.290      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<1> |        IO Clk| No   |   18 |  0.079     |  0.425      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<2> |        IO Clk| No   |   18 |  0.128     |  0.425      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<3> |        IO Clk| No   |   18 |  0.128     |  0.425      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<5> |        IO Clk| No   |   18 |  0.073     |  0.419      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<4> |        IO Clk| No   |   18 |  0.079     |  0.425      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<6> |        IO Clk| No   |   18 |  0.088     |  0.412      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<7> |        IO Clk| No   |   18 |  0.060     |  0.425      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<8> |        IO Clk| No   |   18 |  0.073     |  0.419      |
++---------------------+--------------+------+------+------------+-------------+
+|dram_controller_inst |              |      |      |            |             |
+|/dram_controller_ins |              |      |      |            |             |
+|t/mem_if_top_inst/u_ |              |      |      |            |             |
+|phy_top/u_phy_io/del |              |      |      |            |             |
+|         ayed_dqs<0> |        IO Clk| No   |   18 |  0.128     |  0.425      |
++---------------------+--------------+------+------+------------+-------------+
+|             dly_clk |BUFGCTRL_X0Y30| No   |    5 |  0.475     |  2.204      |
++---------------------+--------------+------+------+------------+-------------+
+
+* Net Skew is the difference between the minimum and maximum routing
+only delays for the net. Note this is different from Clock Skew which
+is reported in TRCE timing report. Clock Skew is the difference between
+the minimum and maximum path delays which includes logic delays.
+
+Timing Score: 0 (Setup: 0, Hold: 0, Component Switching Limit: 0)
+
+Number of Timing Constraints that were not applied: 9
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+----------------------------------------------------------------------------------------------------------
+  Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
+                                            |             |    Slack   | Achievable | Errors |    Score   
+----------------------------------------------------------------------------------------------------------
+  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.002ns|     7.496ns|       0|           0
+  ucture_inst_dram_clk_div_int = PERIOD     | HOLD        |     0.078ns|            |       0|           0
+       TIMEGRP         "dram_infrastructure |             |            |            |        |            
+  _inst_dram_infrastructure_inst_dram_clk_d |             |            |            |        |            
+  iv_int"         TS_dram_infrastructure_in |             |            |            |        |            
+  st_dram_infrastructure_inst_mem_clk * 0.5 |             |            |            |        |            
+           HIGH 50%                         |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  PERIOD analysis for net "chan_512_clean_a | SETUP       |     0.025ns|     3.881ns|       0|           0
+  dc_mkid/chan_512_clean_adc_mkid/dcm_clk"  | HOLD        |     0.003ns|            |       0|           0
+  derived from  NET "chan_512_clean_adc_mki |             |            |            |        |            
+  d/chan_512_clean_adc_mkid/drdy_clk" PERIO |             |            |            |        |            
+  D = 3.9062        ns HIGH 50%             |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.034ns|     3.716ns|       0|           0
+  ucture_inst_dram_clk_0_int = PERIOD       | HOLD        |     0.196ns|            |       0|           0
+     TIMEGRP         "dram_infrastructure_i |             |            |            |        |            
+  nst_dram_infrastructure_inst_dram_clk_0_i |             |            |            |        |            
+  nt"         TS_dram_infrastructure_inst_d |             |            |            |        |            
+  ram_infrastructure_inst_mem_clk HIGH 50%  |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.058ns|     3.692ns|       0|           0
+  ucture_inst_dram_clk_90_int = PERIOD      | HOLD        |     0.465ns|            |       0|           0
+      TIMEGRP         "dram_infrastructure_ |             |            |            |        |            
+  inst_dram_infrastructure_inst_dram_clk_90 |             |            |            |        |            
+  _int"         TS_dram_infrastructure_inst |             |            |            |        |            
+  _dram_infrastructure_inst_mem_clk PHASE   |             |            |            |        |            
+         0.938 ns HIGH 50%                  |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88  | SETUP       |     0.094ns|    11.269ns|       0|           0
+  MHz HIGH 50%                              | HOLD        |     0.247ns|            |       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_dly_clk_n = PERIOD TIMEGRP "dly_clk_n" | MINLOWPULSE |     1.400ns|     3.600ns|       0|           0
+   200 MHz HIGH 50%                         |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  NET "chan_512_clean_adc_mkid/chan_512_cle | MINLOWPULSE |     0.906ns|     3.000ns|       0|           0
+  an_adc_mkid/drdy_clk" PERIOD = 3.9062     |             |            |            |        |            
+       ns HIGH 50%                          |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_adcmkid1_DRDY_I_n = PERIOD TIMEGRP "ad | MINLOWPULSE |     0.906ns|     3.000ns|       0|           0
+  cmkid1_DRDY_I_n" 3.906 ns HIGH 50%        |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_adcmkid1_DRDY_I_p = PERIOD TIMEGRP "ad | MINLOWPULSE |     0.906ns|     3.000ns|       0|           0
+  cmkid1_DRDY_I_p" 3.906 ns HIGH 50%        |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_dram_infrastructure_inst_dram_infrastr | MINLOWPULSE |     1.416ns|     2.334ns|       0|           0
+  ucture_inst_mem_clk = PERIOD TIMEGRP      |             |            |            |        |            
+      "dram_infrastructure_inst_dram_infras |             |            |            |        |            
+  tructure_inst_mem_clk"         TS_dly_clk |             |            |            |        |            
+  _n * 1.33333333 HIGH 50%                  |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_chan_512_clean_adc_mkid_chan_512_clean | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
+  _adc_mkid_dcm_clk_0 = PERIOD TIMEGRP      |             |            |            |        |            
+      "chan_512_clean_adc_mkid_chan_512_cle |             |            |            |        |            
+  an_adc_mkid_dcm_clk_0"         TS_adcmkid |             |            |            |        |            
+  1_DRDY_I_n HIGH 50%                       |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_chan_512_clean_adc_mkid_chan_512_clean | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
+  _adc_mkid_dcm_clk = PERIOD TIMEGRP        |             |            |            |        |            
+    "chan_512_clean_adc_mkid_chan_512_clean |             |            |            |        |            
+  _adc_mkid_dcm_clk"         TS_adcmkid1_DR |             |            |            |        |            
+  DY_I_p HIGH 50%                           |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  NET "epb_cs_n_IBUF" MAXDELAY = 4 ns       | MAXDELAY    |     2.366ns|     1.634ns|       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM | SETUP       |     3.417ns|     6.583ns|       0|           0
+   TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO       | HOLD        |     0.967ns|            |       0|           0
+     TIMEGRP "FFS" 10 ns                    |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP | SETUP       |     4.506ns|     5.494ns|       0|           0
+   "TNM_RD_DATA_SEL" TO TIMEGRP "FFS"       | HOLD        |     0.054ns|            |       0|           0
+     10 ns                                  |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGR | SETUP       |     6.369ns|     3.631ns|       0|           0
+  P "TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"     | HOLD        |     0.526ns|            |       0|           0
+       10 ns                                |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.648ns|     2.352ns|       0|           0
+  NM_GATE_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.002ns|            |       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGR | SETUP       |     7.962ns|     2.038ns|       0|           0
+  P "TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"     | HOLD        |     0.247ns|            |       0|           0
+       10 ns                                |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     8.047ns|     1.953ns|       0|           0
+  NM_RDEN_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.151ns|            |       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FRO | N/A         |         N/A|         N/A|     N/A|         N/A
+  M TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO      |             |            |            |        |            
+      TIMEGRP "RAMS" 10 ns                  |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  NET "chan_512_clean_adc_mkid/chan_512_cle | N/A         |         N/A|         N/A|     N/A|         N/A
+  an_adc_mkid/drdy_clk" PERIOD = 3.9062     |             |            |            |        |            
+       ns HIGH 50%                          |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+
+
+Derived Constraint Report
+Derived Constraints for chan_512_clean_adc_mkid/chan_512_clean_adc_mkid/drdy_clk
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|chan_512_clean_adc_mkid/chan_51|      3.906ns|      3.000ns|      3.881ns|            0|            0|            0|       131164|
+|2_clean_adc_mkid/drdy_clk      |             |             |             |             |             |             |             |
+| chan_512_clean_adc_mkid/chan_5|      3.906ns|      3.881ns|          N/A|            0|            0|       131164|            0|
+| 12_clean_adc_mkid/dcm_clk     |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_dly_clk_n
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_dly_clk_n                   |      5.000ns|      3.600ns|      4.997ns|            0|            0|            0|        25849|
+| TS_dram_infrastructure_inst_dr|      3.750ns|      2.334ns|      3.748ns|            0|            0|            0|        25849|
+| am_infrastructure_inst_mem_clk|             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      3.750ns|      3.716ns|          N/A|            0|            0|        11631|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_0_int                    |             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      3.750ns|      3.692ns|          N/A|            0|            0|          729|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_90_int                   |             |             |             |             |             |             |             |
+|  TS_dram_infrastructure_inst_d|      7.500ns|      7.496ns|          N/A|            0|            0|        13489|            0|
+|  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
+|  clk_div_int                  |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_adcmkid1_DRDY_I_p
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_adcmkid1_DRDY_I_p           |      3.906ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
+| TS_chan_512_clean_adc_mkid_cha|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| n_512_clean_adc_mkid_dcm_clk  |             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+Derived Constraints for TS_adcmkid1_DRDY_I_n
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
+|           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
+|                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+|TS_adcmkid1_DRDY_I_n           |      3.906ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
+| TS_chan_512_clean_adc_mkid_cha|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| n_512_clean_adc_mkid_dcm_clk_0|             |             |             |             |             |             |             |
++-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+All constraints were met.
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the 
+   constraint does not cover any paths or that it has no requested value.
+
+
+Generating Pad Report.
+
+All signals are completely routed.
+
+Loading device for application Rf_Device from file '5vlx50t.nph' in environment
+/opt/Xilinx/11.1/ISE:/opt/Xilinx/11.1/EDK.
+INFO:ParHelpers:197 - Number of "Exact" mode Directed Routing Constraints: 144
+WARNING:ParHelpers:198 - One or more "EXACT" mode Directed Routing constrained net(s) were not successfully routed
+   according to the constraint(s). The router attempted to route the net(s) without regard to the constraint. The number
+   of nets found with Directed Routing Constraints: 144, number successfully routed using the constraints: 0, number
+   failed: 144. The failed nets are listed below. Please use FPGA Editor to determine the cause of the failure.
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[1].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[1].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[28].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[28].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[36].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[36].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[44].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[44].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[52].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[52].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[60].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[60].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[69].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[69].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[8].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[8].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[18].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[18].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[26].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[26].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[34].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[34].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[42].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[42].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[50].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[50].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[59].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[59].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[67].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[67].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[6].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[6].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[16].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[16].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[24].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[24].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[32].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[32].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[40].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[40].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[13].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[13].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[21].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[21].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[49].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[49].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[57].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[57].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[65].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[65].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[4].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[4].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[11].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[11].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[39].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[39].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[47].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[47].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[55].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[55].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[63].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[63].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[71].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[71].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[2].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[2].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[29].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[29].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[37].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[37].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[45].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[45].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[53].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[53].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[61].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[61].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[0].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[0].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[9].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[9].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[19].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[19].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[27].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[27].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[35].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[35].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[43].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[43].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[51].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[51].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[68].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[68].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[7].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[7].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[17].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[17].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[25].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[25].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[33].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[33].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[41].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[41].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[14].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[14].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[22].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[22].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[30].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[30].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[58].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[58].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[66].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[66].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[5].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[5].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[15].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[15].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[23].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[23].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[31].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[31].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[12].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[12].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[20].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[20].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[48].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[48].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[56].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[56].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[64].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[64].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[3].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[3].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[10].u_iob_dq/stg1_out_rise_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[10].u_iob_dq/stg1_out_fall_0m
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[38].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[38].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[46].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[46].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[54].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[54].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[62].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[62].u_iob_dq/stg1_out_rise_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[70].u_iob_dq/stg1_out_fall_0s
+	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[70].u_iob_dq/stg1_out_rise_0s
+Total REAL time to PAR completion: 15 mins 35 secs 
+Total CPU time to PAR completion: 15 mins 35 secs 
+
+Peak Memory Usage:  1946 MB
+
+Placer: Placement generated during map.
+Routing: Completed - No errors found.
+Timing: Completed - No errors found.
+
+Number of error messages: 0
+Number of warning messages: 4
+Number of info messages: 3
+
+Writing design to file system.ncd
+
+
+
+PAR done!

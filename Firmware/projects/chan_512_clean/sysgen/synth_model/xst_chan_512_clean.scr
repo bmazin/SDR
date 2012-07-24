@@ -1,0 +1,1 @@
+run -ifn xst_chan_512_clean.prj -ifmt mixed -ofn chan_512_clean_cw.ngc -ofmt NGC -p xc5vsx95t-1ff1136 -ent chan_512_clean_cw -keep_hierarchy NO -iobuf NO -bus_delimiter () -top chan_512_clean_cw -hierarchy_separator / -report_timing_constraint_problems warning -register_balancing no -iob Auto

@@ -1,0 +1,2 @@
+VHDL gpio_simulink2ext_v1_00_a /home/sean/SDR/Firmware/projects/chan_550/XPS_ROACH_base/pcores/gpio_simulink2ext_v1_00_a/hdl/vhdl/gpio_simulink2ext.vhd
+vhdl work ../hdl/chan_550_gpio_a3_wrapper.vhd

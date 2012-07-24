@@ -1,0 +1,70 @@
+Release 11.4 Physical Synthesis Report L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc. All rights reserved.
+
+TABLE OF CONTENTS
+  1) Physical Synthesis Options Summary
+  2) Optimizations statistics and details
+
+
+=========================================================================
+*                 Physical Synthesis Options Summary                    *
+=========================================================================
+---- Options
+Global Optimization                 : OFF
+    Retiming                        : OFF
+    Equivalent Register Removal     : OFF
+Timing-Driven Packing and Placement : ON
+    Logic Optimization              : OFF
+    Register Duplication            : ON
+
+---- Target Parameters
+Target Device                       : 5vsx95tff1136-1
+
+=========================================================================
+
+
+=========================================================================
+*                        Optimizations                                  *
+=========================================================================
+---- Statistics
+   Number of registers added by Replication                  | 7               
+   Number of LUTs added by Replication                       | 21              
+
+   Overall change in number of design objects                | +28              
+
+
+---- Details
+
+New or modified components                             | Optimization             | Objective           
+-------------------------------------------------------|--------------------------|----------------------
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_0| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_1| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_10| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_11| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_12| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_13| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_14| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_15| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_16| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_17| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_18| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_19| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_2| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_3| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_4| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_5| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_6| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_7| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_8| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_9| Replication              | Fanout Optimization
+chan_550_simple_XSG_core_config/chan_550_simple_XSG_core_config/chan_550_simple_x0/fir_0ec00ef97c/delay30_q_net_REPLICA_21| Replication              | Fanout Optimization
+chan_550_simple_XSG_core_config/chan_550_simple_XSG_core_config/chan_550_simple_x0/fir_0ec00ef97c/delay30_q_net_REPLICA_22| Replication              | Fanout Optimization
+chan_550_simple_XSG_core_config/chan_550_simple_XSG_core_config/chan_550_simple_x0/fir_0ec00ef97c/delay30_q_net_REPLICA_23| Replication              | Fanout Optimization
+chan_550_simple_XSG_core_config/chan_550_simple_XSG_core_config/chan_550_simple_x0/fir_0ec00ef97c/delay30_q_net_REPLICA_24| Replication              | Fanout Optimization
+chan_550_simple_XSG_core_config/chan_550_simple_XSG_core_config/chan_550_simple_x0/fir_0ec00ef97c/delay30_q_net_REPLICA_25| Replication              | Fanout Optimization
+chan_550_simple_XSG_core_config/chan_550_simple_XSG_core_config/chan_550_simple_x0/fir_0ec00ef97c/delay30_q_net_REPLICA_26| Replication              | Fanout Optimization
+chan_550_simple_XSG_core_config/chan_550_simple_XSG_core_config/chan_550_simple_x0/fir_0ec00ef97c/delay30_q_net_REPLICA_27| Replication              | Fanout Optimization
+opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.mem_opb_attach_inst/cache_data_31_not0001_REPLICA_20| Replication              | Fanout Optimization
+
+
+

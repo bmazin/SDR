@@ -1,0 +1,60 @@
+// File: /home/sean/SDR/Firmware/projects/chan_550/XPS_ROACH_base/implementation/system.bmm
+
+ADDRESS_MAP epb_opb_bridge_inst  100
+	ADDRESS_SPACE chan_550_avgiq_bram_ramblk_combined COMBINED [0x01002000:0x01002fff]
+		ADDRESS_RANGE RAMB32
+		BUS_BLOCK
+			chan_550_avgiq_bram_ramblk/chan_550_avgiq_bram_ramblk/ramb36_0 [31:0] ;
+		END_BUS_BLOCK;
+		END_ADDRESS_RANGE;
+	END_ADDRESS_SPACE;
+	ADDRESS_SPACE chan_550_pulses_bram0_ramblk_combined COMBINED [0x01090000:0x010affff]
+		ADDRESS_RANGE RAMB32
+		BUS_BLOCK
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_0 [31:30] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_1 [29:28] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_2 [27:26] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_3 [25:24] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_4 [23:22] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_5 [21:20] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_6 [19:18] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_7 [17:16] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_8 [15:14] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_9 [13:12] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_10 [11:10] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_11 [9:8] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_12 [7:6] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_13 [5:4] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_14 [3:2] ;
+			chan_550_pulses_bram0_ramblk/chan_550_pulses_bram0_ramblk/ramb36_15 [1:0] ;
+		END_BUS_BLOCK;
+		END_ADDRESS_RANGE;
+		ADDRESS_RANGE RAMB32
+		BUS_BLOCK
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_0 [31:30] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_1 [29:28] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_2 [27:26] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_3 [25:24] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_4 [23:22] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_5 [21:20] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_6 [19:18] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_7 [17:16] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_8 [15:14] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_9 [13:12] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_10 [11:10] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_11 [9:8] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_12 [7:6] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_13 [5:4] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_14 [3:2] ;
+			chan_550_pulses_bram1_ramblk/chan_550_pulses_bram1_ramblk/ramb36_15 [1:0] ;
+		END_BUS_BLOCK;
+		END_ADDRESS_RANGE;
+	END_ADDRESS_SPACE;
+	ADDRESS_SPACE chan_550_snapphase_bram_ramblk_combined COMBINED [0x010b1000:0x010b1fff]
+		ADDRESS_RANGE RAMB32
+		BUS_BLOCK
+			chan_550_snapphase_bram_ramblk/chan_550_snapphase_bram_ramblk/ramb36_0 [31:0] ;
+		END_BUS_BLOCK;
+		END_ADDRESS_RANGE;
+	END_ADDRESS_SPACE;
+END_ADDRESS_MAP;

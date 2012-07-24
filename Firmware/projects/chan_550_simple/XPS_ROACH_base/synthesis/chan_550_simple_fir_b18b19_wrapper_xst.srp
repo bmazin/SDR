@@ -1,0 +1,411 @@
+Release 11.4 - xst L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+--> 
+PMSPEC -- Overriding Xilinx file </opt/Xilinx/11.1/EDK/virtex5/data/virtex5.acd> with local file </opt/Xilinx/11.1/ISE/virtex5/data/virtex5.acd>
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input Format                       : MIXED
+Input File Name                    : "chan_550_simple_fir_b18b19_wrapper_xst.prj"
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+
+---- Target Parameters
+Target Device                      : xc5vsx95tff1136-1
+Output File Name                   : "../implementation/chan_550_simple_fir_b18b19_wrapper.ngc"
+
+---- Source Options
+Top Module Name                    : chan_550_simple_fir_b18b19_wrapper
+
+---- Target Options
+Add IO Buffers                     : NO
+
+---- General Options
+Optimization Goal                  : speed
+Netlist Hierarchy                  : as_optimized
+Optimization Effort                : 1
+Hierarchy Separator                : /
+
+---- Other Options
+Cores Search Directories           : {../implementation/chan_550_simple_fir_b18b19_wrapper}
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/opb_register_ppc2simulink_v1_00_a/hdl/verilog/opb_register_ppc2simulink.v" in library opb_register_ppc2simulink_v1_00_a
+Module <opb_register_ppc2simulink> compiled
+Compiling verilog file "../hdl/chan_550_simple_fir_b18b19_wrapper.v" in library work
+Module <chan_550_simple_fir_b18b19_wrapper> compiled
+No errors in compilation
+Analysis of file <"chan_550_simple_fir_b18b19_wrapper_xst.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <chan_550_simple_fir_b18b19_wrapper> in library <work>.
+
+Analyzing hierarchy for module <opb_register_ppc2simulink> in library <opb_register_ppc2simulink_v1_00_a> with parameters.
+	C_BASEADDR = "00000001000000000000011000000000"
+	C_FAMILY = "virtex5"
+	C_HIGHADDR = "00000001000000000000011011111111"
+	C_OPB_AWIDTH = "00000000000000000000000000100000"
+	C_OPB_DWIDTH = "00000000000000000000000000100000"
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <chan_550_simple_fir_b18b19_wrapper>.
+Module <chan_550_simple_fir_b18b19_wrapper> is correct for synthesis.
+ 
+Analyzing module <opb_register_ppc2simulink> in library <opb_register_ppc2simulink_v1_00_a>.
+	C_BASEADDR = 32'b00000001000000000000011000000000
+	C_FAMILY = "virtex5"
+	C_HIGHADDR = 32'b00000001000000000000011011111111
+	C_OPB_AWIDTH = 32'sb00000000000000000000000000100000
+	C_OPB_DWIDTH = 32'sb00000000000000000000000000100000
+Module <opb_register_ppc2simulink> is correct for synthesis.
+ 
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <opb_register_ppc2simulink>.
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/opb_register_ppc2simulink_v1_00_a/hdl/verilog/opb_register_ppc2simulink.v".
+WARNING:Xst:647 - Input <OPB_seqAddr> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:646 - Signal <a_trans> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Found 32-bit comparator greatequal for signal <a_match$cmp_ge0000> created at line 39.
+    Found 32-bit comparator lessequal for signal <a_match$cmp_le0000> created at line 39.
+    Found 32-bit register for signal <reg_buffer>.
+    Found 1-bit register for signal <register_done>.
+    Found 1-bit register for signal <register_doneR>.
+    Found 1-bit register for signal <register_doneRR>.
+    Found 1-bit register for signal <register_ready>.
+    Found 1-bit register for signal <register_readyR>.
+    Found 1-bit register for signal <register_readyRR>.
+    Found 1-bit register for signal <Sl_xferAck_reg>.
+    Found 32-bit register for signal <user_data_out_reg>.
+    Summary:
+	inferred  71 D-type flip-flop(s).
+	inferred   2 Comparator(s).
+Unit <opb_register_ppc2simulink> synthesized.
+
+
+Synthesizing Unit <chan_550_simple_fir_b18b19_wrapper>.
+    Related source file is "../hdl/chan_550_simple_fir_b18b19_wrapper.v".
+Unit <chan_550_simple_fir_b18b19_wrapper> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 40
+ 1-bit register                                        : 39
+ 32-bit register                                       : 1
+# Comparators                                          : 2
+ 32-bit comparator greatequal                          : 1
+ 32-bit comparator lessequal                           : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 71
+ Flip-Flops                                            : 71
+# Comparators                                          : 2
+ 32-bit comparator greatequal                          : 1
+ 32-bit comparator lessequal                           : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <chan_550_simple_fir_b18b19_wrapper> ...
+
+Optimizing unit <opb_register_ppc2simulink> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+
+Final Macro Processing ...
+
+Processing Unit <chan_550_simple_fir_b18b19_wrapper> :
+	Found 2-bit shift register for signal <chan_550_simple_FIR_b18b19/register_doneRR>.
+	Found 2-bit shift register for signal <chan_550_simple_FIR_b18b19/register_readyRR>.
+Unit <chan_550_simple_fir_b18b19_wrapper> processed.
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 67
+ Flip-Flops                                            : 67
+# Shift Registers                                      : 2
+ 2-bit shift register                                  : 2
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+Top Level Output File Name         : ../implementation/chan_550_simple_fir_b18b19_wrapper.ngc
+Output Format                      : ngc
+Optimization Goal                  : speed
+Keep Hierarchy                     : no
+
+Design Statistics
+# IOs                              : 142
+
+Cell Usage :
+# BELS                             : 100
+#      GND                         : 1
+#      LUT2                        : 32
+#      LUT3                        : 3
+#      LUT4                        : 9
+#      LUT5                        : 11
+#      LUT6                        : 33
+#      MUXCY                       : 10
+#      VCC                         : 1
+# FlipFlops/Latches                : 69
+#      FD                          : 35
+#      FDE                         : 34
+# Shift Registers                  : 2
+#      SRLC16E                     : 2
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 5vsx95tff1136-1 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:              69  out of  58880     0%  
+ Number of Slice LUTs:                   90  out of  58880     0%  
+    Number used as Logic:                88  out of  58880     0%  
+    Number used as Memory:                2  out of  24320     0%  
+       Number used as SRL:                2
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:    107
+   Number with an unused Flip Flop:      38  out of    107    35%  
+   Number with an unused LUT:            17  out of    107    15%  
+   Number of fully used LUT-FF pairs:    52  out of    107    48%  
+   Number of unique control sets:         5
+
+IO Utilization: 
+ Number of IOs:                         142
+ Number of bonded IOBs:                   0  out of    640     0%  
+
+Specific Feature Utilization:
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------------------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)                                | Load  |
+-----------------------------------+------------------------------------------------------+-------+
+user_clk                           | NONE(chan_550_simple_FIR_b18b19/user_data_out_reg_31)| 35    |
+OPB_Clk                            | NONE(chan_550_simple_FIR_b18b19/reg_buffer_0)        | 36    |
+-----------------------------------+------------------------------------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: 1.889ns (Maximum Frequency: 529.381MHz)
+   Minimum input arrival time before clock: 3.609ns
+   Maximum output required time after clock: 1.275ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'user_clk'
+  Clock period: 1.889ns (frequency: 529.381MHz)
+  Total number of paths / destination ports: 34 / 34
+-------------------------------------------------------------------------
+Delay:               1.889ns (Levels of Logic = 0)
+  Source:            chan_550_simple_FIR_b18b19/Mshreg_register_readyRR (FF)
+  Destination:       chan_550_simple_FIR_b18b19/register_readyRR (FF)
+  Source Clock:      user_clk rising
+  Destination Clock: user_clk rising
+
+  Data Path: chan_550_simple_FIR_b18b19/Mshreg_register_readyRR to chan_550_simple_FIR_b18b19/register_readyRR
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     SRLC16E:CLK->Q        1   1.889   0.000  chan_550_simple_FIR_b18b19/Mshreg_register_readyRR (chan_550_simple_FIR_b18b19/Mshreg_register_readyRR)
+     FDE:D                    -0.018          chan_550_simple_FIR_b18b19/register_readyRR
+    ----------------------------------------
+    Total                      1.889ns (1.889ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'OPB_Clk'
+  Clock period: 1.889ns (frequency: 529.381MHz)
+  Total number of paths / destination ports: 69 / 35
+-------------------------------------------------------------------------
+Delay:               1.889ns (Levels of Logic = 0)
+  Source:            chan_550_simple_FIR_b18b19/Mshreg_register_doneRR (FF)
+  Destination:       chan_550_simple_FIR_b18b19/register_doneRR (FF)
+  Source Clock:      OPB_Clk rising
+  Destination Clock: OPB_Clk rising
+
+  Data Path: chan_550_simple_FIR_b18b19/Mshreg_register_doneRR to chan_550_simple_FIR_b18b19/register_doneRR
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     SRLC16E:CLK->Q        1   1.889   0.000  chan_550_simple_FIR_b18b19/Mshreg_register_doneRR (chan_550_simple_FIR_b18b19/Mshreg_register_doneRR)
+     FDE:D                    -0.018          chan_550_simple_FIR_b18b19/register_doneRR
+    ----------------------------------------
+    Total                      1.889ns (1.889ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'OPB_Clk'
+  Total number of paths / destination ports: 2716 / 34
+-------------------------------------------------------------------------
+Offset:              3.609ns (Levels of Logic = 8)
+  Source:            OPB_ABus<22> (PAD)
+  Destination:       chan_550_simple_FIR_b18b19/register_ready (FF)
+  Destination Clock: OPB_Clk rising
+
+  Data Path: OPB_ABus<22> to chan_550_simple_FIR_b18b19/register_ready
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LUT5:I0->O            1   0.094   0.000  chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_lut<0> (chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_lut<0>)
+     MUXCY:S->O            1   0.372   0.000  chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<0> (chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<0>)
+     MUXCY:CI->O           1   0.026   0.000  chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<1> (chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<1>)
+     MUXCY:CI->O           1   0.026   0.000  chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<2> (chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<2>)
+     MUXCY:CI->O           1   0.026   0.000  chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<3> (chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<3>)
+     MUXCY:CI->O          34   0.254   0.917  chan_550_simple_FIR_b18b19/Mcompar_a_match_cmp_ge0000_cy<4> (chan_550_simple_FIR_b18b19/a_match_cmp_ge0000)
+     LUT4:I0->O            1   0.094   1.069  chan_550_simple_FIR_b18b19/register_ready_rstpot_SW0 (N74)
+     LUT6:I0->O            1   0.094   0.000  chan_550_simple_FIR_b18b19/register_ready_rstpot (chan_550_simple_FIR_b18b19/register_ready_rstpot)
+     FD:D                     -0.018          chan_550_simple_FIR_b18b19/register_ready
+    ----------------------------------------
+    Total                      3.609ns (1.623ns logic, 1.986ns route)
+                                       (45.0% logic, 55.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'OPB_Clk'
+  Total number of paths / destination ports: 65 / 33
+-------------------------------------------------------------------------
+Offset:              1.275ns (Levels of Logic = 1)
+  Source:            chan_550_simple_FIR_b18b19/Sl_xferAck_reg (FF)
+  Destination:       Sl_DBus<0> (PAD)
+  Source Clock:      OPB_Clk rising
+
+  Data Path: chan_550_simple_FIR_b18b19/Sl_xferAck_reg to Sl_DBus<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q              66   0.471   0.710  chan_550_simple_FIR_b18b19/Sl_xferAck_reg (chan_550_simple_FIR_b18b19/Sl_xferAck_reg)
+     LUT2:I0->O            0   0.094   0.000  chan_550_simple_FIR_b18b19/Sl_DBus_reg<9>1 (Sl_DBus<9>)
+    ----------------------------------------
+    Total                      1.275ns (0.565ns logic, 0.710ns route)
+                                       (44.3% logic, 55.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'user_clk'
+  Total number of paths / destination ports: 32 / 32
+-------------------------------------------------------------------------
+Offset:              0.471ns (Levels of Logic = 0)
+  Source:            chan_550_simple_FIR_b18b19/user_data_out_reg_31 (FF)
+  Destination:       user_data_out<31> (PAD)
+  Source Clock:      user_clk rising
+
+  Data Path: chan_550_simple_FIR_b18b19/user_data_out_reg_31 to user_data_out<31>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              0   0.471   0.000  chan_550_simple_FIR_b18b19/user_data_out_reg_31 (chan_550_simple_FIR_b18b19/user_data_out_reg_31)
+    ----------------------------------------
+    Total                      0.471ns (0.471ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.51 secs
+ 
+--> 
+
+
+Total memory usage is 407912 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
+

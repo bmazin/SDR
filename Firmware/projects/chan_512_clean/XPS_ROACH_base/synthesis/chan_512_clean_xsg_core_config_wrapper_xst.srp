@@ -1,0 +1,393 @@
+Release 11.4 - xst L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+--> 
+PMSPEC -- Overriding Xilinx file </opt/Xilinx/11.1/EDK/virtex5/data/virtex5.acd> with local file </opt/Xilinx/11.1/ISE/virtex5/data/virtex5.acd>
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input Format                       : MIXED
+Input File Name                    : "chan_512_clean_xsg_core_config_wrapper_xst.prj"
+
+---- Target Parameters
+Target Device                      : xc5vsx95tff1136-1
+Output File Name                   : "../implementation/chan_512_clean_xsg_core_config_wrapper.ngc"
+
+---- Source Options
+Top Module Name                    : chan_512_clean_xsg_core_config_wrapper
+
+---- Target Options
+Add IO Buffers                     : NO
+
+---- General Options
+Optimization Goal                  : speed
+Netlist Hierarchy                  : as_optimized
+Optimization Effort                : 1
+Hierarchy Separator                : /
+
+---- Other Options
+Cores Search Directories           : {../implementation/chan_512_clean_xsg_core_config_wrapper}
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "/home/sean/SDR/Firmware/projects/chan_512_clean/XPS_ROACH_base/hdl/chan_512_clean_xsg_core_config_wrapper.vhd" in Library work.
+Entity <chan_512_clean_xsg_core_config_wrapper> compiled.
+Entity <chan_512_clean_xsg_core_config_wrapper> (Architecture <STRUCTURE>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <chan_512_clean_xsg_core_config_wrapper> in library <work> (architecture <STRUCTURE>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <chan_512_clean_xsg_core_config_wrapper> in library <work> (Architecture <STRUCTURE>).
+Entity <chan_512_clean_xsg_core_config_wrapper> analyzed. Unit <chan_512_clean_xsg_core_config_wrapper> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <chan_512_clean_xsg_core_config_wrapper>.
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_512_clean/XPS_ROACH_base/hdl/chan_512_clean_xsg_core_config_wrapper.vhd".
+Unit <chan_512_clean_xsg_core_config_wrapper> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Reading core <../implementation/chan_512_clean_xsg_core_config_wrapper/chan_512_clean.ngc>.
+Loading core <chan_512_clean> for timing and area information for instance <chan_512_clean_XSG_core_config>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <chan_512_clean_xsg_core_config_wrapper> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/dac_mkid_562389ae59/pipeline11_c58cc7a500/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/dac_mkid_562389ae59/pipeline10_aba8df6726/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pfb_d83d8fc9f6/fft1_e5227511b0/fft_biplex0_5cccd5487f/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pfb_d83d8fc9f6/fft1_e5227511b0/fft_biplex0_5cccd5487f/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/fft1_e5227511b0/fft_biplex0_5cccd5487f/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 47 FFs/Latches : <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[4].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[3].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[2].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[1].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[4].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[3].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[2].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[1].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[4].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[3].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[2].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[1].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[4].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[3].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[2].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[1].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2>
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/bufferedswitch_5a7620c24d/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/bufferedswitch_5a7620c24d/delay14/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulse_ext4_5dcf7b9a40/posedge_ed68c3e8a3/delay/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulse_ext3_d662f5bd82/posedge_cbaa1cbc21/delay/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> <chan_512_clean_x0/pulse_ext2_59542487b9/posedge_1f64e71797/delay/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[11].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[11].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[11].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[13].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[13].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[13].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pfb_d83d8fc9f6/fft_39b4a5d56a/fft_biplex0_b8d0b78258/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pfb_d83d8fc9f6/fft_39b4a5d56a/fft_biplex0_b8d0b78258/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/fft_39b4a5d56a/fft_biplex0_b8d0b78258/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline6_9c027026ca/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/pulses_b41946d268/pipeline3_18d500fc97/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[5].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[5].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[5].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[10].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[10].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[10].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[12].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[12].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[12].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/negedge_8065189e8c/delay/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/delay45/op_mem_20_24_0> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/bufferedswitch_5a7620c24d/delay5/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/bufferedswitch_5a7620c24d/delay10/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[4].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[4].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[4].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <blk000006e5> in Unit <blk00000003> is equivalent to the following FF/Latch : <blk00000969> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/dac_mkid_562389ae59/pipeline11_c58cc7a500/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/dac_mkid_562389ae59/pipeline10_aba8df6726/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[9].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pfb_d83d8fc9f6/fft1_e5227511b0/fft_biplex0_5cccd5487f/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pfb_d83d8fc9f6/fft1_e5227511b0/fft_biplex0_5cccd5487f/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/fft1_e5227511b0/fft_biplex0_5cccd5487f/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 47 FFs/Latches : <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[4].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[3].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[2].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[1].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay16/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[4].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[3].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[2].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[1].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay17/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[4].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[3].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[2].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[1].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[23].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[22].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[21].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[20].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[18].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[5].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[4].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[3].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[2].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[1].fde_used.u2>
+   <chan_512_clean_x0/pfb_d83d8fc9f6/delay19/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2>
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/bufferedswitch_5a7620c24d/delay18/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/bufferedswitch_5a7620c24d/delay14/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulse_ext4_5dcf7b9a40/posedge_ed68c3e8a3/delay/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulse_ext3_d662f5bd82/posedge_cbaa1cbc21/delay/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> <chan_512_clean_x0/pulse_ext2_59542487b9/posedge_1f64e71797/delay/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[1].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[3].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[6].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[11].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[11].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[11].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[8].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[13].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[13].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[13].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pfb_d83d8fc9f6/fft_39b4a5d56a/fft_biplex0_b8d0b78258/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[18].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pfb_d83d8fc9f6/fft_39b4a5d56a/fft_biplex0_b8d0b78258/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[19].fde_used.u2> <chan_512_clean_x0/pfb_d83d8fc9f6/fft_39b4a5d56a/fft_biplex0_b8d0b78258/biplex_core_395992e382/fft_stage_2_2a93e1c051/butterfly_direct_6265bd49fe/twiddle_stage_2_30e453baa4/convert/convert/latency_qr.reg_qr/partial_one.last_srl17e/reg_array[20].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline6_9c027026ca/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/pulses_b41946d268/pipeline3_18d500fc97/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[5].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[5].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[5].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[10].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[10].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[10].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[7].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[12].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[12].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[12].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/negedge_8065189e8c/delay/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/delay45/op_mem_20_24_0> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[2].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/bufferedswitch_5a7620c24d/delay5/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following FF/Latch : <chan_512_clean_x0/bufferedswitch_5a7620c24d/delay10/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2> 
+INFO:Xst:2260 - The FF/Latch <chan_512_clean_x0/pulses_b41946d268/pipeline2_e5f717eecf/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[4].bit_is_0.fdre_comp> in Unit <chan_512_clean_XSG_core_config> is equivalent to the following 2 FFs/Latches : <chan_512_clean_x0/pulses_b41946d268/pipeline4_c8536cee10/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[4].bit_is_0.fdre_comp> <chan_512_clean_x0/pulses_b41946d268/pipeline7_67f505b877/register0/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[4].bit_is_0.fdre_comp> 
+INFO:Xst:2260 - The FF/Latch <blk000006e5> in Unit <blk00000003> is equivalent to the following FF/Latch : <blk00000969> 
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+Top Level Output File Name         : ../implementation/chan_512_clean_xsg_core_config_wrapper.ngc
+Output Format                      : ngc
+Optimization Goal                  : speed
+Keep Hierarchy                     : no
+
+Design Statistics
+# IOs                              : 2091
+
+Cell Usage :
+# BELS                             : 11168
+#      GND                         : 405
+#      INV                         : 201
+#      LUT1                        : 595
+#      LUT2                        : 889
+#      LUT3                        : 3672
+#      LUT4                        : 347
+#      LUT5                        : 274
+#      LUT6                        : 135
+#      MUXCY                       : 2045
+#      MUXF7                       : 18
+#      VCC                         : 384
+#      XORCY                       : 2203
+# FlipFlops/Latches                : 42237
+#      FD                          : 1
+#      FDE                         : 35675
+#      FDRE                        : 6532
+#      FDSE                        : 29
+# RAMS                             : 104
+#      RAMB18                      : 104
+# Shift Registers                  : 19620
+#      SRL16E                      : 16862
+#      SRLC16E                     : 726
+#      SRLC32E                     : 2032
+# DSPs                             : 264
+#      DSP48E                      : 264
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 5vsx95tff1136-1 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:           42237  out of  58880    71%  
+ Number of Slice LUTs:                25733  out of  58880    43%  
+    Number used as Logic:              6113  out of  58880    10%  
+    Number used as Memory:            19620  out of  24320    80%  
+       Number used as SRL:            19620
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:  44684
+   Number with an unused Flip Flop:    2447  out of  44684     5%  
+   Number with an unused LUT:         18951  out of  44684    42%  
+   Number of fully used LUT-FF pairs: 23286  out of  44684    52%  
+   Number of unique control sets:       324
+
+IO Utilization: 
+ Number of IOs:                        2091
+ Number of bonded IOBs:                   0  out of    640     0%  
+
+Specific Feature Utilization:
+ Number of Block RAM/FIFO:               52  out of    244    21%  
+    Number using Block RAM only:         52
+ Number of DSP48Es:                     264  out of    640    41%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)                                                                                                                                     | Load  |
+-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+clk                                | NONE(chan_512_clean_XSG_core_config/default_clock_driver_x0/xlclockdriver_1/clr_reg/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp)| 62225 |
+-----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: 3.703ns (Maximum Frequency: 270.051MHz)
+   Minimum input arrival time before clock: 1.401ns
+   Maximum output required time after clock: 0.471ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 3.703ns (frequency: 270.051MHz)
+  Total number of paths / destination ports: 150083 / 84040
+-------------------------------------------------------------------------
+Delay:               3.703ns (Levels of Logic = 14)
+  Source:            chan_512_clean_XSG_core_config/chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/pol1_in1_tap2_7c77e909f3/sync_delay_ca2a712015/counter/comp16.core_instance16/BU2/U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_2 (FF)
+  Destination:       chan_512_clean_XSG_core_config/chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/pol1_in1_tap3_f42e83e65f/sync_delay_5d3a40f787/counter/comp16.core_instance16/BU2/U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_9 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: chan_512_clean_XSG_core_config/chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/pol1_in1_tap2_7c77e909f3/sync_delay_ca2a712015/counter/comp16.core_instance16/BU2/U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_2 to chan_512_clean_XSG_core_config/chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/pol1_in1_tap3_f42e83e65f/sync_delay_5d3a40f787/counter/comp16.core_instance16/BU2/U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_9
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             3   0.471   0.800  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_2 (q(1))
+     end scope: 'BU2'
+     end scope: 'chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/pol1_in1_tap2_7c77e909f3/sync_delay_ca2a712015/counter/comp16.core_instance16'
+     LUT4:I0->O            1   0.094   0.480  chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/pol1_in1_tap2_7c77e909f3/sync_delay_ca2a712015/mux_y_net_x0_SW0 (N90)
+     LUT6:I5->O           10   0.094   0.759  chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/pol1_in1_tap2_7c77e909f3/sync_delay_ca2a712015/mux_y_net_x0 (chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/mux_y_net_x6)
+     begin scope: 'chan_512_clean_x0/pfb_d83d8fc9f6/pfb_fir_5700d3bdc2/pol1_in1_tap3_f42e83e65f/sync_delay_5d3a40f787/counter/comp16.core_instance16'
+     begin scope: 'BU2'
+     LUT3:I0->O            1   0.094   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/halfsum(0)1 (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/halfsum(0))
+     MUXCY:S->O            1   0.372   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.carrymux0 (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/carry_simple(0))
+     MUXCY:CI->O           1   0.026   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.i_gt_1.carrychaingen[1].carrymux (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/carry_simple(1))
+     MUXCY:CI->O           1   0.026   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.i_gt_1.carrychaingen[2].carrymux (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/carry_simple(2))
+     MUXCY:CI->O           1   0.026   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.i_gt_1.carrychaingen[3].carrymux (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/carry_simple(3))
+     MUXCY:CI->O           1   0.026   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.i_gt_1.carrychaingen[4].carrymux (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/carry_simple(4))
+     MUXCY:CI->O           1   0.026   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.i_gt_1.carrychaingen[5].carrymux (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/carry_simple(5))
+     MUXCY:CI->O           1   0.026   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.i_gt_1.carrychaingen[6].carrymux (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/carry_simple(6))
+     MUXCY:CI->O           0   0.026   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.i_gt_1.carrychaingen[7].carrymux (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/carry_simple(7))
+     XORCY:CI->O           1   0.357   0.000  U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_simple_model.i_gt_1.carryxortop (U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/sum_simple(8))
+     FDRE:D                   -0.018          U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_9
+    ----------------------------------------
+    Total                      3.703ns (1.664ns logic, 2.039ns route)
+                                       (44.9% logic, 55.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 911 / 882
+-------------------------------------------------------------------------
+Offset:              1.401ns (Levels of Logic = 3)
+  Source:            chan_512_clean_ch_we_user_data_out<7> (PAD)
+  Destination:       chan_512_clean_XSG_core_config/chan_512_clean_x0/relational/op_mem_32_22_0 (FF)
+  Destination Clock: clk rising
+
+  Data Path: chan_512_clean_ch_we_user_data_out<7> to chan_512_clean_XSG_core_config/chan_512_clean_x0/relational/op_mem_32_22_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     begin scope: 'chan_512_clean_XSG_core_config'
+     LUT6:I1->O            1   0.094   0.576  chan_512_clean_x0/relational/result_12_3_rel8126 (chan_512_clean_x0/relational/result_12_3_rel8126)
+     LUT6:I4->O            1   0.094   0.000  chan_512_clean_x0/relational/result_12_3_rel8142 (chan_512_clean_x0/relational/result_12_3_rel)
+     FDE:D                    -0.018          chan_512_clean_x0/relational/op_mem_32_22_0
+    ----------------------------------------
+    Total                      1.401ns (0.825ns logic, 0.576ns route)
+                                       (58.9% logic, 41.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 338 / 338
+-------------------------------------------------------------------------
+Offset:              0.471ns (Levels of Logic = 1)
+  Source:            chan_512_clean_XSG_core_config/chan_512_clean_x0/pulses_b41946d268/pipeline3_18d500fc97/register1/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp (FF)
+  Destination:       chan_512_clean_pulses_bram0_we (PAD)
+  Source Clock:      clk rising
+
+  Data Path: chan_512_clean_XSG_core_config/chan_512_clean_x0/pulses_b41946d268/pipeline3_18d500fc97/register1/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp to chan_512_clean_pulses_bram0_we
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             0   0.471   0.000  chan_512_clean_x0/pulses_b41946d268/pipeline3_18d500fc97/register1/synth_reg_inst/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp (chan_512_clean_pulses_bram0_we)
+     end scope: 'chan_512_clean_XSG_core_config'
+    ----------------------------------------
+    Total                      0.471ns (0.471ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 172.00 secs
+Total CPU time to Xst completion: 171.98 secs
+ 
+--> 
+
+
+Total memory usage is 1027516 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :   49 (   0 filtered)
+

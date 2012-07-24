@@ -1,0 +1,524 @@
+Release 11.4 - xst L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+--> 
+PMSPEC -- Overriding Xilinx file </opt/Xilinx/11.1/EDK/virtex5/data/virtex5.acd> with local file </opt/Xilinx/11.1/ISE/virtex5/data/virtex5.acd>
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input Format                       : MIXED
+Input File Name                    : "dram_infrastructure_inst_wrapper_xst.prj"
+Verilog Include Directory          : {"/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/" "/opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/" }
+
+---- Target Parameters
+Target Device                      : xc5vsx95tff1136-1
+Output File Name                   : "../implementation/dram_infrastructure_inst_wrapper.ngc"
+
+---- Source Options
+Top Module Name                    : dram_infrastructure_inst_wrapper
+
+---- Target Options
+Add IO Buffers                     : NO
+
+---- General Options
+Optimization Goal                  : speed
+Netlist Hierarchy                  : as_optimized
+Optimization Effort                : 1
+Hierarchy Separator                : /
+
+---- Other Options
+Cores Search Directories           : {../implementation/dram_infrastructure_inst_wrapper}
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/dram_infrastructure_v1_00_a/hdl/verilog/dram_infrastructure.v" in library dram_infrastructure_v1_00_a
+Module <dram_infrastructure> compiled
+Compiling verilog file "../hdl/dram_infrastructure_inst_wrapper.v" in library work
+Module <dram_infrastructure_inst_wrapper> compiled
+No errors in compilation
+Analysis of file <"dram_infrastructure_inst_wrapper_xst.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <dram_infrastructure_inst_wrapper> in library <work>.
+
+Analyzing hierarchy for module <dram_infrastructure> in library <dram_infrastructure_v1_00_a> with parameters.
+	CLK_FREQ = "00000000000000000000000100101100"
+	CLK_PERIOD = "00000000000000000000110100000101"
+	FX_DIV = "00000000000000000000000000000010"
+	FX_MULT = "00000000000000000000000000000011"
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <dram_infrastructure_inst_wrapper>.
+Module <dram_infrastructure_inst_wrapper> is correct for synthesis.
+ 
+Analyzing module <dram_infrastructure> in library <dram_infrastructure_v1_00_a>.
+	CLK_FREQ = 32'sb00000000000000000000000100101100
+	CLK_PERIOD = 32'sb00000000000000000000110100000101
+	FX_DIV = 32'sb00000000000000000000000000000010
+	FX_MULT = 32'sb00000000000000000000000000000011
+Module <dram_infrastructure> is correct for synthesis.
+ 
+    Set user-defined property "CLKDV_DIVIDE =  2.000000" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKFX_DIVIDE =  2" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKFX_MULTIPLY =  3" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKIN_DIVIDE_BY_2 =  FALSE" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKIN_PERIOD =  5.000000" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT_PHASE_SHIFT =  NONE" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLK_FEEDBACK =  1X" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "DCM_AUTOCALIBRATION =  TRUE" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "DCM_PERFORMANCE_MODE =  MAX_SPEED" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "DESKEW_ADJUST =  SYSTEM_SYNCHRONOUS" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "DFS_FREQUENCY_MODE =  HIGH" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "DLL_FREQUENCY_MODE =  HIGH" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "DUTY_CYCLE_CORRECTION =  TRUE" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "FACTORY_JF =  F0F0" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "PHASE_SHIFT =  0" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "STARTUP_WAIT =  FALSE" for instance <DCM_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "BANDWIDTH =  OPTIMIZED" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKFBOUT_MULT =  3" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKFBOUT_PHASE =  0.000000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKIN_PERIOD =  3.000000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT0_DIVIDE =  3" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT0_DUTY_CYCLE =  0.500000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT0_PHASE =  0.000000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT1_DIVIDE =  3" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT1_DUTY_CYCLE =  0.500000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT1_PHASE =  90.000000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT2_DIVIDE =  6" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT2_DUTY_CYCLE =  0.500000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT2_PHASE =  0.000000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT3_DIVIDE =  1" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT3_DUTY_CYCLE =  0.500000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT3_PHASE =  0.000000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT4_DIVIDE =  1" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT4_DUTY_CYCLE =  0.500000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT4_PHASE =  0.000000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT5_DIVIDE =  1" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT5_DUTY_CYCLE =  0.500000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLKOUT5_PHASE =  0.000000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "CLK_FEEDBACK =  CLKFBOUT" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "COMPENSATION =  SYSTEM_SYNCHRONOUS" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "DIVCLK_DIVIDE =  1" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "REF_JITTER =  0.100000" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+    Set user-defined property "RESET_ON_LOSS_OF_LOCK =  FALSE" for instance <PLL_BASE_inst> in unit <dram_infrastructure>.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <dram_infrastructure>.
+    Related source file is "/home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/dram_infrastructure_v1_00_a/hdl/verilog/dram_infrastructure.v".
+    Found 8-bit register for signal <dram_rst_0_reg>.
+    Found 8-bit register for signal <dram_rst_90_reg>.
+    Found 8-bit register for signal <dram_rst_div_reg>.
+    Summary:
+	inferred  24 D-type flip-flop(s).
+Unit <dram_infrastructure> synthesized.
+
+
+Synthesizing Unit <dram_infrastructure_inst_wrapper>.
+    Related source file is "../hdl/dram_infrastructure_inst_wrapper.v".
+Unit <dram_infrastructure_inst_wrapper> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 3
+ 8-bit register                                        : 3
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 24
+ Flip-Flops                                            : 24
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+INFO:Xst:1901 - Instance DCM_BASE_inst in unit dram_infrastructure of type DCM_BASE has been replaced by DCM_ADV
+INFO:Xst:1901 - Instance PLL_BASE_inst in unit dram_infrastructure of type PLL_BASE has been replaced by PLL_ADV
+
+Optimizing unit <dram_infrastructure_inst_wrapper> ...
+
+Optimizing unit <dram_infrastructure> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+
+Final Macro Processing ...
+
+Processing Unit <dram_infrastructure_inst_wrapper> :
+INFO:Xst:741 - HDL ADVISOR - A 8-bit shift register was found for signal <dram_infrastructure_inst/dram_rst_div_reg_7> and currently occupies 8 logic cells (4 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+INFO:Xst:741 - HDL ADVISOR - A 8-bit shift register was found for signal <dram_infrastructure_inst/dram_rst_90_reg_7> and currently occupies 8 logic cells (4 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+INFO:Xst:741 - HDL ADVISOR - A 8-bit shift register was found for signal <dram_infrastructure_inst/dram_rst_0_reg_7> and currently occupies 8 logic cells (4 slices). Removing the set/reset logic would take advantage of SRL32 (and derived) primitives and reduce this to 1 logic cells (1 slices). Evaluate if the set/reset can be removed for this simple shift register. The majority of simple pipeline structures do not need to be set/reset operationally.
+Unit <dram_infrastructure_inst_wrapper> processed.
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 24
+ Flip-Flops                                            : 24
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+Top Level Output File Name         : ../implementation/dram_infrastructure_inst_wrapper.ngc
+Output Format                      : ngc
+Optimization Goal                  : speed
+Keep Hierarchy                     : no
+
+Design Statistics
+# IOs                              : 10
+
+Cell Usage :
+# BELS                             : 5
+#      GND                         : 1
+#      LUT2                        : 3
+#      VCC                         : 1
+# FlipFlops/Latches                : 24
+#      FDS                         : 24
+# Clock Buffers                    : 4
+#      BUFG                        : 4
+# DCM_ADVs                         : 1
+#      DCM_ADV                     : 1
+# Others                           : 1
+#      PLL_ADV                     : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 5vsx95tff1136-1 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:              24  out of  58880     0%  
+ Number of Slice LUTs:                    3  out of  58880     0%  
+    Number used as Logic:                 3  out of  58880     0%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:     26
+   Number with an unused Flip Flop:       2  out of     26     7%  
+   Number with an unused LUT:            23  out of     26    88%  
+   Number of fully used LUT-FF pairs:     1  out of     26     3%  
+   Number of unique control sets:         3
+
+IO Utilization: 
+ Number of IOs:                          10
+ Number of bonded IOBs:                   0  out of    640     0%  
+
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                4  out of     32    12%  
+ Number of DCM_ADVs:                      1  out of     12     8%  
+ Number of PLL_ADVs:                      1  out of      6    16%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------------+------------------------+-------+
+Clock Signal                             | Clock buffer(FF name)  | Load  |
+-----------------------------------------+------------------------+-------+
+dram_infrastructure_inst/dram_clk_div_int| BUFG                   | 8     |
+dram_infrastructure_inst/dram_clk_90_int | BUFG                   | 8     |
+dram_infrastructure_inst/dram_clk_0_int  | BUFG                   | 8     |
+-----------------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -1
+
+   Minimum period: 0.807ns (Maximum Frequency: 1239.157MHz)
+   Minimum input arrival time before clock: 1.605ns
+   Maximum output required time after clock: 0.471ns
+   Maximum combinational path delay: 0.334ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'dram_infrastructure_inst/dram_clk_div_int'
+  Clock period: 0.807ns (frequency: 1239.157MHz)
+  Total number of paths / destination ports: 7 / 7
+-------------------------------------------------------------------------
+Delay:               0.807ns (Levels of Logic = 0)
+  Source:            dram_infrastructure_inst/dram_rst_div_reg_6 (FF)
+  Destination:       dram_infrastructure_inst/dram_rst_div_reg_7 (FF)
+  Source Clock:      dram_infrastructure_inst/dram_clk_div_int rising
+  Destination Clock: dram_infrastructure_inst/dram_clk_div_int rising
+
+  Data Path: dram_infrastructure_inst/dram_rst_div_reg_6 to dram_infrastructure_inst/dram_rst_div_reg_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              1   0.471   0.336  dram_infrastructure_inst/dram_rst_div_reg_6 (dram_infrastructure_inst/dram_rst_div_reg_6)
+     FDS:D                    -0.018          dram_infrastructure_inst/dram_rst_div_reg_7
+    ----------------------------------------
+    Total                      0.807ns (0.471ns logic, 0.336ns route)
+                                       (58.4% logic, 41.6% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'dram_infrastructure_inst/dram_clk_90_int'
+  Clock period: 0.807ns (frequency: 1239.157MHz)
+  Total number of paths / destination ports: 7 / 7
+-------------------------------------------------------------------------
+Delay:               0.807ns (Levels of Logic = 0)
+  Source:            dram_infrastructure_inst/dram_rst_90_reg_6 (FF)
+  Destination:       dram_infrastructure_inst/dram_rst_90_reg_7 (FF)
+  Source Clock:      dram_infrastructure_inst/dram_clk_90_int rising
+  Destination Clock: dram_infrastructure_inst/dram_clk_90_int rising
+
+  Data Path: dram_infrastructure_inst/dram_rst_90_reg_6 to dram_infrastructure_inst/dram_rst_90_reg_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              1   0.471   0.336  dram_infrastructure_inst/dram_rst_90_reg_6 (dram_infrastructure_inst/dram_rst_90_reg_6)
+     FDS:D                    -0.018          dram_infrastructure_inst/dram_rst_90_reg_7
+    ----------------------------------------
+    Total                      0.807ns (0.471ns logic, 0.336ns route)
+                                       (58.4% logic, 41.6% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'dram_infrastructure_inst/dram_clk_0_int'
+  Clock period: 0.807ns (frequency: 1239.157MHz)
+  Total number of paths / destination ports: 7 / 7
+-------------------------------------------------------------------------
+Delay:               0.807ns (Levels of Logic = 0)
+  Source:            dram_infrastructure_inst/dram_rst_0_reg_6 (FF)
+  Destination:       dram_infrastructure_inst/dram_rst_0_reg_7 (FF)
+  Source Clock:      dram_infrastructure_inst/dram_clk_0_int rising
+  Destination Clock: dram_infrastructure_inst/dram_clk_0_int rising
+
+  Data Path: dram_infrastructure_inst/dram_rst_0_reg_6 to dram_infrastructure_inst/dram_rst_0_reg_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              1   0.471   0.336  dram_infrastructure_inst/dram_rst_0_reg_6 (dram_infrastructure_inst/dram_rst_0_reg_6)
+     FDS:D                    -0.018          dram_infrastructure_inst/dram_rst_0_reg_7
+    ----------------------------------------
+    Total                      0.807ns (0.471ns logic, 0.336ns route)
+                                       (58.4% logic, 41.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'dram_infrastructure_inst/dram_clk_div_int'
+  Total number of paths / destination ports: 16 / 8
+-------------------------------------------------------------------------
+Offset:              1.605ns (Levels of Logic = 1)
+  Source:            dram_infrastructure_inst/PLL_BASE_inst:LOCKED (PAD)
+  Destination:       dram_infrastructure_inst/dram_rst_div_reg_7 (FF)
+  Destination Clock: dram_infrastructure_inst/dram_clk_div_int rising
+
+  Data Path: dram_infrastructure_inst/PLL_BASE_inst:LOCKED to dram_infrastructure_inst/dram_rst_div_reg_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+    PLL_ADV:LOCKED         1   0.000   0.480  dram_infrastructure_inst/PLL_BASE_inst (dram_infrastructure_inst/pll_locked)
+     LUT2:I1->O           24   0.094   0.458  dram_infrastructure_inst/reset_int1 (dram_infrastructure_inst/reset_int)
+     FDS:S                     0.573          dram_infrastructure_inst/dram_rst_div_reg_0
+    ----------------------------------------
+    Total                      1.605ns (0.667ns logic, 0.938ns route)
+                                       (41.6% logic, 58.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'dram_infrastructure_inst/dram_clk_90_int'
+  Total number of paths / destination ports: 16 / 8
+-------------------------------------------------------------------------
+Offset:              1.605ns (Levels of Logic = 1)
+  Source:            dram_infrastructure_inst/PLL_BASE_inst:LOCKED (PAD)
+  Destination:       dram_infrastructure_inst/dram_rst_90_reg_7 (FF)
+  Destination Clock: dram_infrastructure_inst/dram_clk_90_int rising
+
+  Data Path: dram_infrastructure_inst/PLL_BASE_inst:LOCKED to dram_infrastructure_inst/dram_rst_90_reg_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+    PLL_ADV:LOCKED         1   0.000   0.480  dram_infrastructure_inst/PLL_BASE_inst (dram_infrastructure_inst/pll_locked)
+     LUT2:I1->O           24   0.094   0.458  dram_infrastructure_inst/reset_int1 (dram_infrastructure_inst/reset_int)
+     FDS:S                     0.573          dram_infrastructure_inst/dram_rst_90_reg_0
+    ----------------------------------------
+    Total                      1.605ns (0.667ns logic, 0.938ns route)
+                                       (41.6% logic, 58.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'dram_infrastructure_inst/dram_clk_0_int'
+  Total number of paths / destination ports: 16 / 8
+-------------------------------------------------------------------------
+Offset:              1.605ns (Levels of Logic = 1)
+  Source:            dram_infrastructure_inst/PLL_BASE_inst:LOCKED (PAD)
+  Destination:       dram_infrastructure_inst/dram_rst_0_reg_7 (FF)
+  Destination Clock: dram_infrastructure_inst/dram_clk_0_int rising
+
+  Data Path: dram_infrastructure_inst/PLL_BASE_inst:LOCKED to dram_infrastructure_inst/dram_rst_0_reg_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+    PLL_ADV:LOCKED         1   0.000   0.480  dram_infrastructure_inst/PLL_BASE_inst (dram_infrastructure_inst/pll_locked)
+     LUT2:I1->O           24   0.094   0.458  dram_infrastructure_inst/reset_int1 (dram_infrastructure_inst/reset_int)
+     FDS:S                     0.573          dram_infrastructure_inst/dram_rst_0_reg_0
+    ----------------------------------------
+    Total                      1.605ns (0.667ns logic, 0.938ns route)
+                                       (41.6% logic, 58.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'dram_infrastructure_inst/dram_clk_0_int'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              0.471ns (Levels of Logic = 0)
+  Source:            dram_infrastructure_inst/dram_rst_0_reg_7 (FF)
+  Destination:       dram_rst_0 (PAD)
+  Source Clock:      dram_infrastructure_inst/dram_clk_0_int rising
+
+  Data Path: dram_infrastructure_inst/dram_rst_0_reg_7 to dram_rst_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              0   0.471   0.000  dram_infrastructure_inst/dram_rst_0_reg_7 (dram_infrastructure_inst/dram_rst_0_reg_7)
+    ----------------------------------------
+    Total                      0.471ns (0.471ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'dram_infrastructure_inst/dram_clk_90_int'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              0.471ns (Levels of Logic = 0)
+  Source:            dram_infrastructure_inst/dram_rst_90_reg_7 (FF)
+  Destination:       dram_rst_90 (PAD)
+  Source Clock:      dram_infrastructure_inst/dram_clk_90_int rising
+
+  Data Path: dram_infrastructure_inst/dram_rst_90_reg_7 to dram_rst_90
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              0   0.471   0.000  dram_infrastructure_inst/dram_rst_90_reg_7 (dram_infrastructure_inst/dram_rst_90_reg_7)
+    ----------------------------------------
+    Total                      0.471ns (0.471ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'dram_infrastructure_inst/dram_clk_div_int'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              0.471ns (Levels of Logic = 0)
+  Source:            dram_infrastructure_inst/dram_rst_div_reg_7 (FF)
+  Destination:       dram_rst_div (PAD)
+  Source Clock:      dram_infrastructure_inst/dram_clk_div_int rising
+
+  Data Path: dram_infrastructure_inst/dram_rst_div_reg_7 to dram_rst_div
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDS:C->Q              0   0.471   0.000  dram_infrastructure_inst/dram_rst_div_reg_7 (dram_infrastructure_inst/dram_rst_div_reg_7)
+    ----------------------------------------
+    Total                      0.471ns (0.471ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Delay:               0.334ns (Levels of Logic = 1)
+  Source:            reset (PAD)
+  Destination:       dram_infrastructure_inst/PLL_BASE_inst:RST (PAD)
+
+  Data Path: reset to dram_infrastructure_inst/PLL_BASE_inst:RST
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LUT2:I0->O            0   0.094   0.000  dram_infrastructure_inst/_or00011 (dram_infrastructure_inst/_or0001)
+    PLL_ADV:RST                0.000          dram_infrastructure_inst/PLL_BASE_inst
+    ----------------------------------------
+    Total                      0.334ns (0.334ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.83 secs
+ 
+--> 
+
+
+Total memory usage is 440544 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    5 (   0 filtered)
+
