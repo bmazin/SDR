@@ -1,0 +1,59 @@
+Release 11.4 ngdbuild L.68 (lin64)
+Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
+
+Command Line: /opt/Xilinx/11.1/ISE/bin/lin64/unwrapped/ngdbuild -ise
+timestamper_cw.ise -intstyle ise -dd _ngo -nt timestamp -i -p xc5vsx95t-ff1136-1
+timestamper_cw.ngc timestamper_cw.ngd
+
+Reading NGO file
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/timestamper_cw.ngc" ...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/xlpersistentdff.ngc"...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/cntr_11_0_82b9fd0243bf8494.
+ngc"...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/cntr_11_0_b40c42d5e24bb86a.
+ngc"...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/cntr_11_0_18bbeb067aa07bfe.
+ngc"...
+Loading design module
+"/home/sean/SDR/Firmware/projects/timestamper/sysgen/cntr_11_0_f52338cfe462aa75.
+ngc"...
+Reading in constraint information from 'timestamper_cw.ucf'...
+Gathering constraint information from source properties...
+Done.
+
+Resolving constraint associations...
+Checking Constraint Associations...
+WARNING:ConstraintSystem:203 - A target design object for the Locate constraint
+   '<NET: UniqueName: /timestamper_cw/EXPANDED/clk LOC = D7HACK>' could not be
+   found and so the Locate constraint will be removed.
+
+WARNING:NgdBuild:1012 - The constraint <NET: UniqueName:
+   /timestamper_cw/EXPANDED/clk LOC = D7HACK> is overridden on the design object
+   clk by the constraint <NET "clk" LOC = "d7hack";> [timestamper_cw.ucf(14)].
+Done...
+Checking Partitions ...
+
+Checking expanded design ...
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   2
+
+Total memory usage is 313656 kilobytes
+
+Writing NGD file "timestamper_cw.ngd" ...
+Total REAL time to NGDBUILD completion:  2 sec
+Total CPU time to NGDBUILD completion:   2 sec
+
+Writing NGDBUILD log file "timestamper_cw.bld"...

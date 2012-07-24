@@ -1,0 +1,158 @@
+
+<smartXplorerReport>
+    <command>smartxplorer -p xc5vsx95t-ff1136-1 -b -wd smartxplorer_results timestamper_cw.ngd -host_list hostlistfile.txt -max_runs 20 -ra
+    </command>
+    <programStatus>Done
+    </programStatus>
+    <programPID>21816
+    </programPID>
+    
+    <strategy name="MapRunTime">
+        <strategyData>map  -ol high -w ; par  -ol high 
+        </strategyData>
+        <xdsFile>mapruntime.xds
+        </xdsFile>
+        <host name="arcons">
+            <hostData>Linux, x86_64, 12-processor, 12G RAM
+            </hostData>
+        </host>
+        <runIndex>run1
+        </runIndex>
+        <status>Failed Map
+        </status>
+        <logFile>timestamper_cw_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <runTime>0h 1m 3s
+        </runTime>
+    </strategy>
+    <strategy name="MapGlobOptLogOptRegDup">
+        <strategyData>map  -ol high -xe n -global_opt speed -logic_opt on -register_duplication on -w ; par  -ol high -xe n 
+        </strategyData>
+        <xdsFile>mapgloboptlogoptregdup.xds
+        </xdsFile>
+        <host name="arcons">
+            <hostData>Linux, x86_64, 12-processor, 12G RAM
+            </hostData>
+        </host>
+        <runIndex>run2
+        </runIndex>
+        <status>Failed Map
+        </status>
+        <logFile>timestamper_cw_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <runTime>0h 1m 9s
+        </runTime>
+    </strategy>
+    <strategy name="MapGlobOptIOReg">
+        <strategyData>map  -ol high -global_opt speed -pr b -w ; par  -ol high -xe n 
+        </strategyData>
+        <xdsFile>mapgloboptioreg.xds
+        </xdsFile>
+        <host name="arcons">
+            <hostData>Linux, x86_64, 12-processor, 12G RAM
+            </hostData>
+        </host>
+        <runIndex>run3
+        </runIndex>
+        <status>Failed Map
+        </status>
+        <logFile>timestamper_cw_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <runTime>0h 1m 15s
+        </runTime>
+    </strategy>
+    <strategy name="MapRegDup">
+        <strategyData>map  -ol high -xe n -register_duplication on -w ; par  -ol high -xe n 
+        </strategyData>
+        <xdsFile>mapregdup.xds
+        </xdsFile>
+        <host name="arcons">
+            <hostData>Linux, x86_64, 12-processor, 12G RAM
+            </hostData>
+        </host>
+        <runIndex>run4
+        </runIndex>
+        <status>Failed Map
+        </status>
+        <logFile>timestamper_cw_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <runTime>0h 0m 39s
+        </runTime>
+    </strategy>
+    <strategy name="MapExtraEffortIOReg">
+        <strategyData>map  -ol high -xe n -pr b -t 7 -w ; par  -ol high -xe n -t 7 
+        </strategyData>
+        <xdsFile>mapextraeffortioreg.xds
+        </xdsFile>
+        <host name="arcons">
+            <hostData>Linux, x86_64, 12-processor, 12G RAM
+            </hostData>
+        </host>
+        <runIndex>run5
+        </runIndex>
+        <status>Failed Map
+        </status>
+        <logFile>timestamper_cw_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <runTime>0h 0m 45s
+        </runTime>
+    </strategy>
+    <strategy name="MapLogOptRegDup">
+        <strategyData>map  -ol high -xe n -logic_opt on -register_duplication on -t 2 -w ; par  -ol high -xe n -t 2 
+        </strategyData>
+        <xdsFile>maplogoptregdup.xds
+        </xdsFile>
+        <host name="arcons">
+            <hostData>Linux, x86_64, 12-processor, 12G RAM
+            </hostData>
+        </host>
+        <runIndex>run6
+        </runIndex>
+        <status>Failed Map
+        </status>
+        <logFile>timestamper_cw_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <runTime>0h 0m 51s
+        </runTime>
+    </strategy>
+    <strategy name="MapExtraEffort2">
+        <strategyData>map  -ol high -xe n -t 3 -w ; par  -ol high -t 3 
+        </strategyData>
+        <xdsFile>mapextraeffort2.xds
+        </xdsFile>
+        <host name="arcons">
+            <hostData>Linux, x86_64, 12-processor, 12G RAM
+            </hostData>
+        </host>
+        <runIndex>run7
+        </runIndex>
+        <status>Failed Map
+        </status>
+        <logFile>timestamper_cw_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <runTime>0h 0m 57s
+        </runTime>
+    </strategy>
+    <bestStrategy>None
+    </bestStrategy>
+    <envVariables> 
+        <env name="PATH"  value="/opt/Xilinx/11.1/ISE/bin/lin64:/home/sean/epd-7.0-2-rh5-x86_64/bin:/usr/local/Trolltech/Qt-4.7.3/bin:/usr/lib64/qt-3.3/bin:/usr/kerberos/bin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/home/sean/bin"/>
+        <env name="XILINX"  value="/opt/Xilinx/11.1/ISE"/>
+        <env name="LD_LIBRARY_PATH"  value="/opt/Xilinx/11.1/ISE/lib/lin64"/>
+        
+    </envVariables>
+</smartXplorerReport>

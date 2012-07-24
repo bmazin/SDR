@@ -1,0 +1,2 @@
+vhdl work "timestamper.vhd"
+vhdl work "timestamper_cw.vhd"

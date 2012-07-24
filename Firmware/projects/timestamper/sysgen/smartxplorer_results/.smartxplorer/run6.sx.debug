@@ -1,0 +1,20 @@
+strategySpecString = ':ocurly:squoteindex:squote:colon:space6:comma:space:squotepar:squote:colon:space:squote:space:dashol:spacehigh:space:dashxe:spacen:space:dasht:space2:space:squote:comma:space:squotename:squote:colon:space:squoteMapLogOptRegDup:squote:comma:space:squotexst:squote:colon:space:squote:squote:comma:space:squotemap:squote:colon:space:squote:space:dashol:spacehigh:space:dashxe:spacen:space:dashlogic_opt:spaceon:space:dashregister_duplication:spaceon:space:dasht:space2:space:dashw:space:squote:comma:space:squotesynplify:squote:colon:space:squote:squote:comma:space:squotengdbuild:squote:colon:space:squote:dashsd:space:colonslashhome:colonslashsean:colonslashSDR:colonslashFirmware:colonslashprojects:colonslashtimestamper:colonslashsysgen:space:dashp:spacexc5vsx95t:dashff1136:dash1:space:dashuc:space:colonslashhome:colonslashsean:colonslashSDR:colonslashFirmware:colonslashprojects:colonslashtimestamper:colonslashsysgen:colonslashtimestamper_cw.ucf:squote:comma:space:squoteenv:squote:colon:space:squote:ocurly:ccurly:squote:ccurly'
+Xilinx Environment Variables:
+
+{'XILINX': '/opt/Xilinx/11.1/ISE'
+'PATH': '/opt/Xilinx/11.1/ISE/bin/lin64:/home/sean/epd-7.0-2-rh5-x86_64/bin:/usr/local/Trolltech/Qt-4.7.3/bin:/usr/lib64/qt-3.3/bin:/usr/kerberos/bin:/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/home/sean/bin'
+'LD_LIBRARY_PATH': '/opt/Xilinx/11.1/ISE/lib/lin64'}
+envDict = {}
+PATH = ['/opt/Xilinx/11.1/ISE/bin/lin64', '/home/sean/epd-7.0-2-rh5-x86_64/bin', '/usr/local/Trolltech/Qt-4.7.3/bin', '/usr/lib64/qt-3.3/bin', '/usr/kerberos/bin', '/usr/local/bin', '/usr/bin', '/bin', '/usr/X11R6/bin', '/home/sean/bin']
+Found xst at /opt/Xilinx/11.1/ISE/bin/lin64/xst.
+Found ngdbuild at /opt/Xilinx/11.1/ISE/bin/lin64/ngdbuild.
+Found map at /opt/Xilinx/11.1/ISE/bin/lin64/map.
+Found par at /opt/Xilinx/11.1/ISE/bin/lin64/par.
+Found trce at /opt/Xilinx/11.1/ISE/bin/lin64/trce.
+arcons_5.stat:/home/sean/SDR/Firmware/projects/timestamper/sysgen/smartxplorer_results/.smartxplorer/.sx.keepAlive.arcons_5
+...searching for file: maplogoptregdup.xds
+launching map with options  -ol high -xe n -logic_opt on -register_duplication on -t 2 -w  -o timestamper_cw_map.ncd  -intstyle ise -ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun6:slashtimestamper_cw.ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun6:slashtimestamper_cw.pcf...
+runTask: map timestamper_cw.ngd -ol high -xe n -logic_opt on -register_duplication on -t 2 -w -o timestamper_cw_map.ncd -intstyle ise -ise /home/sean/SDR/Firmware/projects/timestamper/sysgen/smartxplorer_results/run6/timestamper_cw.ise /home/sean/SDR/Firmware/projects/timestamper/sysgen/smartxplorer_results/run6/timestamper_cw.pcf
+args = ['map', 'timestamper_cw.ngd', '-ol', 'high', '-xe', 'n', '-logic_opt', 'on', '-register_duplication', 'on', '-t', '2', '-w', '-o', 'timestamper_cw_map.ncd', '-intstyle', 'ise', '-ise', '/home/sean/SDR/Firmware/projects/timestamper/sysgen/smartxplorer_results/run6/timestamper_cw.ise', '/home/sean/SDR/Firmware/projects/timestamper/sysgen/smartxplorer_results/run6/timestamper_cw.pcf']
+ERROR: Missing output file: timestamper_cw_map.ncd for program: map
+/home/sean/SDR/Firmware/projects/timestamper/sysgen/smartxplorer_results/.smartxplorer/arcons_5.stat- ERROR: Failed in MAP

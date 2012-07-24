@@ -1,0 +1,6 @@
+verilog opb_dram_sniffer_v1_00_a /home/sean/SDR/Firmware/projects/chan_550_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/opb_dram_sniffer.v
+verilog opb_dram_sniffer_v1_00_a /home/sean/SDR/Firmware/projects/chan_550_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/ctrl_opb_attach.v
+verilog opb_dram_sniffer_v1_00_a /home/sean/SDR/Firmware/projects/chan_550_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/mem_opb_attach.v
+verilog opb_dram_sniffer_v1_00_a /home/sean/SDR/Firmware/projects/chan_550_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/read_history_fifo.v
+verilog opb_dram_sniffer_v1_00_a /home/sean/SDR/Firmware/projects/chan_550_packet/XPS_ROACH_base/pcores/opb_dram_sniffer_v1_00_a/hdl/verilog/dram_arbiter.v
+verilog work ../hdl/opb_dram_sniffer_inst_wrapper.v

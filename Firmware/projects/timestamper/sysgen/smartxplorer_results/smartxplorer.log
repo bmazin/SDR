@@ -1,0 +1,30 @@
+Release 11.4 SmartXplorer
+Copyright(c) 1995-2009 Xilinx, Inc. All rights reserved.
+smartxplorer -p xc5vsx95t-ff1136-1 -b -wd smartxplorer_results timestamper_cw.ngd -host_list hostlistfile.txt -max_runs 20 -ra
+
+SmartXplorer Settings: 
+
+designName=/home/sean/SDR/Firmware/projects/timestamper/sysgen/timestamper_cw.ngd 
+write_dir=/home/sean/SDR/Firmware/projects/timestamper/sysgen/smartxplorer_results 
+host_list=/home/sean/SDR/Firmware/projects/timestamper/sysgen/hostlistfile.txt 
+part=xc5vsx95t-ff1136-1 
+strategy_file=None 
+notify=None 
+source_dir=/home/sean/SDR/Firmware/projects/timestamper/sysgen 
+batch_mode=True 
+run_all_strategies=True 
+list_all_strategies=False 
+remote_command=rsh
+max_runs=20
+multi_threading=off
+
+Starting SmartXplorer...
+See file 'smartxplorer.html' for real-time report.
+
+
+Running SmartXplorer strategies...
+
+
+INFO: No best strategy!
+
+SmartXplorer Done. See file 'smartxplorer.txt' for detailed report.

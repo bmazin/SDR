@@ -1,0 +1,18 @@
+<DesignStrategy goal="Timing Performance" strategy="SmartXplorer - Map Extra Effort and IO Registers" version="11.1">
+   <Description><![CDATA[      This is a Timing Performance optimized strategy.  This strategy is also one of the strategies used by SmartXplorer.  If you wish to run SmartXplorer to automatically try multiple Timing Performance strategies, including this one, close this dialog and then select Project -> Launch SmartXplorer.   ]]></Description>
+   <DeviceList devices="virtex5" />
+   <Properties>
+      <property name = "Map:Placer Effort Level"
+               value = "High" />
+      <property name = "Place &amp; Route:Place &amp; Route Effort Level (Overall)"
+               value = "High" />
+      <property name = "Place &amp; Route:Extra Effort (Highest PAR level only)"
+               value = "Normal" />
+      <property name = "Map:Placer Extra Effort"
+               value = "Normal" />
+      <property name = "Map:Starting Placer Cost Table (1-100)"
+               value = "7" />
+      <property name = "Map:Pack I/O Registers/Latches into IOBs"
+               value = "For Inputs Only" />
+   </Properties>
+</DesignStrategy>

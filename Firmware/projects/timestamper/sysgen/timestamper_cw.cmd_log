@@ -1,0 +1,2 @@
+xst -ise "/home/sean/SDR/Firmware/projects/timestamper/sysgen/timestamper_cw.ise" -intstyle ise -ifn "/home/sean/SDR/Firmware/projects/timestamper/sysgen/timestamper_cw.xst" -ofn "/home/sean/SDR/Firmware/projects/timestamper/sysgen/timestamper_cw.syr" 
+ngdbuild -ise "timestamper_cw.ise" -intstyle ise -dd _ngo -nt timestamp -i -p xc5vsx95t-ff1136-1 timestamper_cw.ngc timestamper_cw.ngd  
