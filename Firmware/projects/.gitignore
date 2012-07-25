@@ -6,3 +6,4 @@ timestamper
 chan_550_packet
 chan_550_clean.mdl.autosave
 *.autosave
+*_sysgen*
