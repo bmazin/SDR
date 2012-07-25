@@ -9,7 +9,7 @@ Target Device  : xc5vsx95t
 Target Package : ff1136
 Target Speed   : -1
 Mapper Version : virtex5 -- $Revision: 1.51.18.1 $
-Mapped Date    : Tue Jul 24 18:17:17 2012
+Mapped Date    : Tue Jul 24 20:34:54 2012
 
 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 INFO:Security:51 - The XILINXD_LICENSE_FILE environment variable is not set.
@@ -2894,13 +2894,13 @@ WARNING:LIT:243 - Logical network
    opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.dram_arbiter/read
    _history_fifo_inst/BU2/U0/grf.rf/mem/gdm.dm/Mram_RAM8/SPO has no load.
 WARNING:LIT:243 - Logical network
-   async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/prog_full has no load.
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/prog_full has no load.
 WARNING:LIT:243 - Logical network
-   async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/overflow has no load.
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/overflow has no load.
 WARNING:LIT:243 - Logical network
-   async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/full has no load.
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/full has no load.
 WARNING:LIT:243 - Logical network
-   async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/underflow has no load.
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/underflow has no load.
 WARNING:LIT:243 - Logical network async_dram_1/async_dram_1/txn_fifo/overflow
    has no load.
 WARNING:LIT:243 - Logical network async_dram_1/async_dram_1/txn_fifo/full has no
@@ -3795,6 +3795,134 @@ WARNING:Pack:2874 - Trimming timing constraints from pin
    of frag REGCLKBL connected to power/ground net
    chan_550_clean_snapphase_bram_ramblk/chan_550_clean_snapphase_bram_ramblk/ram
    b36_0_REGCLKBL_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKAU connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKAU_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKAL connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKAL_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKBU connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKBU_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKBL connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKBL_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKAU connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKAU_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKAL connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKAL_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKBU connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKBU_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKBL connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKBL_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKAU connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKAU_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKAL connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKAL_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKBU connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKBU_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKBL connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKBL_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKAU connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKAU_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKAL connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKAL_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKBU connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKBU_tiesig
+WARNING:Pack:2874 - Trimming timing constraints from pin
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP
+   of frag REGCLKBL connected to power/ground net
+   async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg
+   .gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/
+   SDP.SINGLE_PRIM36.TDP_REGCLKBL_tiesig
 Running directed packing...
 WARNING:Pack:2573 - The F7 multiplexer symbol
    "chan_550_clean_avgIQ_ctrl/chan_550_clean_avgIQ_ctrl/a_match10_f7" and its I0
@@ -3815,26 +3943,26 @@ WARNING:Timing - DCM chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/CLK_DCM
 INFO:Map:215 - The Interim Design Summary has been generated in the MAP Report
    (.mrp).
 Running timing-driven placement...
-Total REAL time at the beginning of Placer: 3 mins 26 secs 
-Total CPU  time at the beginning of Placer: 3 mins 21 secs 
+Total REAL time at the beginning of Placer: 3 mins 19 secs 
+Total CPU  time at the beginning of Placer: 3 mins 18 secs 
 
 Phase 1.1  Initial Placement Analysis
-Phase 1.1  Initial Placement Analysis (Checksum:2637eb7f) REAL time: 3 mins 35 secs 
+Phase 1.1  Initial Placement Analysis (Checksum:4d545c2a) REAL time: 3 mins 28 secs 
 
 Phase 2.7  Design Feasibility Check
-Phase 2.7  Design Feasibility Check (Checksum:2637eb7f) REAL time: 3 mins 36 secs 
+Phase 2.7  Design Feasibility Check (Checksum:4d545c2a) REAL time: 3 mins 29 secs 
 
 Phase 3.31  Local Placement Optimization
-Phase 3.31  Local Placement Optimization (Checksum:2637eb7f) REAL time: 3 mins 36 secs 
+Phase 3.31  Local Placement Optimization (Checksum:4d545c2a) REAL time: 3 mins 29 secs 
 
 Phase 4.37  Local Placement Optimization
-Phase 4.37  Local Placement Optimization (Checksum:2637eb7f) REAL time: 3 mins 36 secs 
+Phase 4.37  Local Placement Optimization (Checksum:4d545c2a) REAL time: 3 mins 29 secs 
 
 Phase 5.33  Local Placement Optimization
-Phase 5.33  Local Placement Optimization (Checksum:2637eb7f) REAL time: 4 mins 8 secs 
+Phase 5.33  Local Placement Optimization (Checksum:4d545c2a) REAL time: 4 mins 3 secs 
 
 Phase 6.32  Local Placement Optimization
-Phase 6.32  Local Placement Optimization (Checksum:2637eb7f) REAL time: 4 mins 13 secs 
+Phase 6.32  Local Placement Optimization (Checksum:4d545c2a) REAL time: 4 mins 8 secs 
 
 Phase 7.2  Initial Clock and IO Placement
 
@@ -4087,50 +4215,50 @@ AREA_GROUP "CLKAG_dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_ph
 CLOCKREGION_X0Y0;
 
 
-Phase 7.2  Initial Clock and IO Placement (Checksum:138da061) REAL time: 4 mins 18 secs 
+Phase 7.2  Initial Clock and IO Placement (Checksum:d9e42087) REAL time: 4 mins 12 secs 
 
 Phase 8.36  Local Placement Optimization
-Phase 8.36  Local Placement Optimization (Checksum:138da061) REAL time: 4 mins 18 secs 
+Phase 8.36  Local Placement Optimization (Checksum:d9e42087) REAL time: 4 mins 12 secs 
 
 Phase 9.30  Global Clock Region Assignment
-Phase 9.30  Global Clock Region Assignment (Checksum:138da061) REAL time: 4 mins 18 secs 
+Phase 9.30  Global Clock Region Assignment (Checksum:d9e42087) REAL time: 4 mins 12 secs 
 
 Phase 10.3  Local Placement Optimization
-Phase 10.3  Local Placement Optimization (Checksum:138da061) REAL time: 4 mins 18 secs 
+Phase 10.3  Local Placement Optimization (Checksum:d9e42087) REAL time: 4 mins 13 secs 
 
 Phase 11.5  Local Placement Optimization
-Phase 11.5  Local Placement Optimization (Checksum:138da061) REAL time: 4 mins 19 secs 
+Phase 11.5  Local Placement Optimization (Checksum:d9e42087) REAL time: 4 mins 14 secs 
 
 Phase 12.8  Global Placement
-....................................
-.........................................................................................................................................
-.........................................................................................................................
-...................................................................................................................................................
-....................................................................................................................................................................................
-......................................................................................................
-....................................................................................................
+...................................
+...................................................................................................................
+.................................................................................................
+........................................................................................................................................................
+.....................................................................................................................
+.............................................................................................................
+..................................................................................................................
 ...................................................................................
-Phase 12.8  Global Placement (Checksum:714b57ee) REAL time: 33 mins 1 secs 
+Phase 12.8  Global Placement (Checksum:1fd4a860) REAL time: 32 mins 18 secs 
 
 Phase 13.29  Local Placement Optimization
-Phase 13.29  Local Placement Optimization (Checksum:714b57ee) REAL time: 33 mins 1 secs 
+Phase 13.29  Local Placement Optimization (Checksum:1fd4a860) REAL time: 32 mins 18 secs 
 
 Phase 14.5  Local Placement Optimization
-Phase 14.5  Local Placement Optimization (Checksum:714b57ee) REAL time: 33 mins 4 secs 
+Phase 14.5  Local Placement Optimization (Checksum:1fd4a860) REAL time: 32 mins 21 secs 
 
 Phase 15.18  Placement Optimization
-Phase 15.18  Placement Optimization (Checksum:780ed777) REAL time: 53 mins 28 secs 
+Phase 15.18  Placement Optimization (Checksum:9e1ac100) REAL time: 53 mins 40 secs 
 
 Phase 16.5  Local Placement Optimization
-Phase 16.5  Local Placement Optimization (Checksum:780ed777) REAL time: 53 mins 31 secs 
+Phase 16.5  Local Placement Optimization (Checksum:9e1ac100) REAL time: 53 mins 43 secs 
 
 Phase 17.34  Placement Validation
-Phase 17.34  Placement Validation (Checksum:780ed777) REAL time: 53 mins 34 secs 
+Phase 17.34  Placement Validation (Checksum:9e1ac100) REAL time: 53 mins 46 secs 
 
-Total REAL time to Placer completion: 53 mins 36 secs 
-Total CPU  time to Placer completion: 53 mins 31 secs 
+Total REAL time to Placer completion: 53 mins 48 secs 
+Total CPU  time to Placer completion: 53 mins 45 secs 
 Running physical synthesis...
-..................
+..........................
 Physical synthesis completed.
 Running post-placement packing...
 Writing output files...
@@ -4197,38 +4325,38 @@ Design Summary
 
 Design Summary:
 Number of errors:      0
-Number of warnings: 1316
+Number of warnings: 1332
 Slice Logic Utilization:
-  Number of Slice Registers:                46,809 out of  58,880   79%
-    Number used as Flip Flops:              46,808
+  Number of Slice Registers:                46,941 out of  58,880   79%
+    Number used as Flip Flops:              46,940
     Number used as Latch-thrus:                  1
-  Number of Slice LUTs:                     32,619 out of  58,880   55%
-    Number used as logic:                   12,563 out of  58,880   21%
-      Number using O6 output only:          11,127
-      Number using O5 output only:             698
-      Number using O5 and O6:                  738
-    Number used as Memory:                  19,950 out of  24,320   82%
-      Number used as Dual Port RAM:            248
+  Number of Slice LUTs:                     32,718 out of  58,880   55%
+    Number used as logic:                   12,617 out of  58,880   21%
+      Number using O6 output only:          11,142
+      Number using O5 output only:             718
+      Number using O5 and O6:                  757
+    Number used as Memory:                  19,993 out of  24,320   82%
+      Number used as Dual Port RAM:            162
         Number using O6 output only:            34
         Number using O5 output only:             1
-        Number using O5 and O6:                213
-      Number used as Shift Register:        19,702
-        Number using O6 output only:        19,694
+        Number using O5 and O6:                127
+      Number used as Shift Register:        19,831
+        Number using O6 output only:        19,823
         Number using O5 output only:             8
-    Number used as exclusive route-thru:       106
-  Number of route-thrus:                       995
-    Number using O6 output only:               798
-    Number using O5 output only:               197
+    Number used as exclusive route-thru:       108
+  Number of route-thrus:                       988
+    Number using O6 output only:               818
+    Number using O5 output only:               170
 
 Slice Logic Distribution:
-  Number of occupied Slices:                13,684 out of  14,720   92%
-  Number of LUT Flip Flop pairs used:       50,466
-    Number with an unused Flip Flop:         3,657 out of  50,466    7%
-    Number with an unused LUT:              17,847 out of  50,466   35%
-    Number of fully used LUT-FF pairs:      28,962 out of  50,466   57%
-    Number of unique control sets:             409
+  Number of occupied Slices:                13,725 out of  14,720   93%
+  Number of LUT Flip Flop pairs used:       50,504
+    Number with an unused Flip Flop:         3,563 out of  50,504    7%
+    Number with an unused LUT:              17,786 out of  50,504   35%
+    Number of fully used LUT-FF pairs:      29,155 out of  50,504   57%
+    Number of unique control sets:             400
     Number of slice register sites lost
-      to control set restrictions:             741 out of  58,880    1%
+      to control set restrictions:             748 out of  58,880    1%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -4246,14 +4374,14 @@ IO Utilization:
     IOB Slave Pads:                             36
 
 Specific Feature Utilization:
-  Number of BlockRAM/FIFO:                     103 out of     244   42%
-    Number using BlockRAM only:                 99
+  Number of BlockRAM/FIFO:                     112 out of     244   45%
+    Number using BlockRAM only:                108
     Number using FIFO only:                      4
     Total primitives used:
-      Number of 36k BlockRAM used:              34
+      Number of 36k BlockRAM used:              38
       Number of 18k BlockRAM used:             104
       Number of 36k FIFO used:                   4
-    Total Memory used (KB):                  3,240 out of   8,784   36%
+    Total Memory used (KB):                  3,384 out of   8,784   38%
   Number of BUFG/BUFGCTRLs:                      9 out of      32   28%
     Number used as BUFGs:                        9
   Number of IDELAYCTRLs:                         4 out of      22   18%
@@ -4265,9 +4393,9 @@ Specific Feature Utilization:
   Number of RPM macros:           74
 Average Fanout of Non-Clock Nets:                1.84
 
-Peak Memory Usage:  2296 MB
-Total REAL time to MAP completion:  55 mins 37 secs 
-Total CPU time to MAP completion:   55 mins 32 secs 
+Peak Memory Usage:  2299 MB
+Total REAL time to MAP completion:  55 mins 47 secs 
+Total CPU time to MAP completion:   55 mins 44 secs 
 
 Mapping completed.
 See MAP report file "system_map.mrp" for details.

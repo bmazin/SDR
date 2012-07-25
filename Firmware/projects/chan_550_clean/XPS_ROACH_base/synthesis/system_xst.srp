@@ -452,26 +452,26 @@ Design Statistics
 # IOs                              : 333
 
 Cell Usage :
-# BELS                             : 19517
+# BELS                             : 19643
 #      GND                         : 474
-#      INV                         : 347
-#      LUT1                        : 708
-#      LUT2                        : 2863
-#      LUT3                        : 4208
-#      LUT4                        : 1280
-#      LUT5                        : 1353
-#      LUT6                        : 2662
-#      MUXCY                       : 2664
+#      INV                         : 345
+#      LUT1                        : 728
+#      LUT2                        : 2882
+#      LUT3                        : 4206
+#      LUT4                        : 1297
+#      LUT5                        : 1352
+#      LUT6                        : 2659
+#      MUXCY                       : 2712
 #      MUXF7                       : 133
-#      VCC                         : 444
-#      XORCY                       : 2381
-# FlipFlops/Latches                : 50343
+#      VCC                         : 445
+#      XORCY                       : 2410
+# FlipFlops/Latches                : 50413
 #      FD                          : 3327
 #      FD_1                        : 29
-#      FDC                         : 155
-#      FDCE                        : 841
+#      FDC                         : 199
+#      FDCE                        : 722
 #      FDCPE                       : 21
-#      FDE                         : 37361
+#      FDE                         : 37506
 #      FDP                         : 46
 #      FDPE                        : 20
 #      FDR                         : 564
@@ -485,15 +485,15 @@ Cell Usage :
 #      FDSE                        : 47
 #      IDDR_2CLK                   : 105
 #      ODDR                        : 195
-# RAMS                             : 205
+# RAMS                             : 185
 #      RAM128X1D                   : 8
-#      RAM32M                      : 56
+#      RAM32M                      : 32
 #      RAM32X1D                    : 3
 #      RAMB18                      : 104
-#      RAMB36_EXP                  : 34
-# Shift Registers                  : 19726
+#      RAMB36_EXP                  : 38
+# Shift Registers                  : 19871
 #      SRL16                       : 2
-#      SRL16E                      : 16862
+#      SRL16E                      : 17007
 #      SRLC16E                     : 811
 #      SRLC32E                     : 2051
 # Clock Buffers                    : 24
@@ -527,19 +527,19 @@ Selected Device : 5vsx95tff1136-1
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:           50242  out of  58880    85%  
- Number of Slice LUTs:                33409  out of  58880    56%  
-    Number used as Logic:             13421  out of  58880    22%  
-    Number used as Memory:            19988  out of  24320    82%  
-       Number used as RAM:              262
-       Number used as SRL:            19726
+ Number of Slice Registers:           50312  out of  58880    85%  
+ Number of Slice LUTs:                33506  out of  58880    56%  
+    Number used as Logic:             13469  out of  58880    22%  
+    Number used as Memory:            20037  out of  24320    82%  
+       Number used as RAM:              166
+       Number used as SRL:            19871
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:  57018
-   Number with an unused Flip Flop:    6776  out of  57018    11%  
-   Number with an unused LUT:         23609  out of  57018    41%  
-   Number of fully used LUT-FF pairs: 26633  out of  57018    46%  
-   Number of unique control sets:       871
+ Number of LUT Flip Flop pairs used:  57006
+   Number with an unused Flip Flop:    6694  out of  57006    11%  
+   Number with an unused LUT:         23500  out of  57006    41%  
+   Number of fully used LUT-FF pairs: 26812  out of  57006    47%  
+   Number of unique control sets:       870
 
 IO Utilization: 
  Number of IOs:                         333
@@ -547,8 +547,8 @@ IO Utilization:
     IOB Flip Flops/Latches:             101
 
 Specific Feature Utilization:
- Number of Block RAM/FIFO:               86  out of    244    35%  
-    Number using Block RAM only:         86
+ Number of Block RAM/FIFO:               90  out of    244    36%  
+    Number using Block RAM only:         90
  Number of BUFG/BUFGCTRLs:               24  out of     32    75%  
  Number of DCM_ADVs:                      8  out of     12    66%  
  Number of DSP48Es:                     264  out of    640    41%  
@@ -576,51 +576,52 @@ Clock Information:
 Clock Signal                                                      | Clock buffer(FF name)                    | Load  |
 ------------------------------------------------------------------+------------------------------------------+-------+
 epb_clk_in                                                        | infrastructure_inst/dcm_epb_inst:CLK0    | 2073  |
-adcmkid1_DRDY_I_p                                                 | chan_550_clean_adc_mkid/CLK_DCM:CLK0+BUFG| 64433 |
+adcmkid1_DRDY_I_p                                                 | chan_550_clean_adc_mkid/CLK_DCM:CLK0+BUFG| 64613 |
 dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_div_int| BUFG                                     | 1003  |
 dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_90_int | BUFG                                     | 377   |
-dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_0_int  | BUFG                                     | 2588  |
+dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_0_int  | BUFG                                     | 2607  |
 ------------------------------------------------------------------+------------------------------------------+-------+
 
 Asynchronous Control Signals Information:
 ----------------------------------------
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
-Control Signal                                                                                                                                                                                                            | Buffer(FF name)                                                                                                                                       | Load  |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
-async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/mem/dout_i_0)                                                                                   | 324   |
-async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)                                       | NONE(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/dout_i_0)                                                                | 288   |
-chan_550_clean_pulses_bram0_ramblk/chan_550_clean_pulses_bram0_ramblk/net_gnd0(chan_550_clean_pulses_bram0_ramblk/chan_550_clean_pulses_bram0_ramblk/XST_GND:G)                                                           | NONE(chan_550_clean_pulses_bram0_ramblk/chan_550_clean_pulses_bram0_ramblk/ramb36_0)                                                                  | 128   |
-chan_550_clean_pulses_bram1_ramblk/chan_550_clean_pulses_bram1_ramblk/net_gnd0(chan_550_clean_pulses_bram1_ramblk/chan_550_clean_pulses_bram1_ramblk/XST_GND:G)                                                           | NONE(chan_550_clean_pulses_bram1_ramblk/chan_550_clean_pulses_bram1_ramblk/ramb36_0)                                                                  | 128   |
-async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/mem/dout_i_0)                                                                                   | 66    |
-N0(XST_GND:G)                                                                                                                                                                                                             | NONE(reset_block_inst/reset_block_inst/delay_counter_0)                                                                                               | 65    |
-opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.dram_arbiter/read_history_fifo_inst/BU2/dbiterr(opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.dram_arbiter/read_history_fifo_inst/BU2/XST_GND:G)| NONE(opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.dram_arbiter/read_history_fifo_inst/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)| 61    |
-dram_controller_inst/dram_cke<1>(dram_controller_inst/XST_GND:G)                                                                                                                                                          | NONE(dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_ctl_io/gen_addr[0].u_ff_addr)                                          | 36    |
-async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_1)                                                           | 24    |
-async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)                                       | NONE(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_1)                                        | 24    |
-async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                                          | 20    |
-async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                                         | 20    |
-async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)                                       | NONE(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                       | 20    |
-async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)                                       | NONE(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                      | 20    |
-async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_3)                                                           | 18    |
-async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                                          | 16    |
-async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                                         | 16    |
-async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                                             | 15    |
-async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)                                       | NONE(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                          | 15    |
-dram_infrastructure_inst/dram_rst_0(dram_infrastructure_inst/dram_infrastructure_inst/dram_rst_0_reg_7:Q)                                                                                                                 | NONE(dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_ctl_io/gen_cke[0].u_ff_cke)                                            | 15    |
-dram_controller_inst/dram_reset_n(dram_controller_inst/XST_VCC:P)                                                                                                                                                         | NONE(dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_usr_top/u_usr_addr_fifo/u_af)                                                        | 14    |
-async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                                             | 13    |
-chan_550_clean_avgiq_bram_ramblk/chan_550_clean_avgiq_bram_ramblk/net_gnd0(chan_550_clean_avgiq_bram_ramblk/chan_550_clean_avgiq_bram_ramblk/XST_GND:G)                                                                   | NONE(chan_550_clean_avgiq_bram_ramblk/chan_550_clean_avgiq_bram_ramblk/ramb36_0)                                                                      | 8     |
-chan_550_clean_snapphase_bram_ramblk/chan_550_clean_snapphase_bram_ramblk/net_gnd0(chan_550_clean_snapphase_bram_ramblk/chan_550_clean_snapphase_bram_ramblk/XST_GND:G)                                                   | NONE(chan_550_clean_snapphase_bram_ramblk/chan_550_clean_snapphase_bram_ramblk/ramb36_0)                                                              | 8     |
-async_dram_1/dram_reset(async_dram_1/async_dram_1/dram_reset:Q)                                                                                                                                                           | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_asreg)                                                                            | 6     |
-opb2opb_bridge_opb1/opb2opb_bridge_opb1/sopb_select_not(opb2opb_bridge_opb1/opb2opb_bridge_opb1/sopb_select_not1_INV_0:O)                                                                                                 | NONE(opb2opb_bridge_opb1/opb2opb_bridge_opb1/ERRACK_FF_I)                                                                                             | 5     |
-async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)                                                                               | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                                            | 3     |
-async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)                                         | NONE(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                         | 3     |
-async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)                                                                               | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                                            | 3     |
-async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)                                                                               | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                                            | 2     |
-async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)                                         | NONE(async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                         | 2     |
-async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)                                                                               | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                                            | 2     |
-opb0/OPB_Rst(opb0/opb0/POR_FF_I:Q)                                                                                                                                                                                        | NONE(opb2opb_bridge_opb1/opb2opb_bridge_opb1/RNW_INT_FF_I)                                                                                            | 2     |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+Control Signal                                                                                                                                                                                                            | Buffer(FF name)                                                                                                                                                                      | Load  |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/mem/dout_i_0)                                                                                                                  | 324   |
+async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)                                             | NONE(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/dout_i_0)                                                                                                  | 144   |
+chan_550_clean_pulses_bram0_ramblk/chan_550_clean_pulses_bram0_ramblk/net_gnd0(chan_550_clean_pulses_bram0_ramblk/chan_550_clean_pulses_bram0_ramblk/XST_GND:G)                                                           | NONE(chan_550_clean_pulses_bram0_ramblk/chan_550_clean_pulses_bram0_ramblk/ramb36_0)                                                                                                 | 128   |
+chan_550_clean_pulses_bram1_ramblk/chan_550_clean_pulses_bram1_ramblk/net_gnd0(chan_550_clean_pulses_bram1_ramblk/chan_550_clean_pulses_bram1_ramblk/XST_GND:G)                                                           | NONE(chan_550_clean_pulses_bram1_ramblk/chan_550_clean_pulses_bram1_ramblk/ramb36_0)                                                                                                 | 128   |
+async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<0>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/mem/dout_i_0)                                                                                                                  | 66    |
+N0(XST_GND:G)                                                                                                                                                                                                             | NONE(reset_block_inst/reset_block_inst/delay_counter_0)                                                                                                                              | 65    |
+opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.dram_arbiter/read_history_fifo_inst/BU2/dbiterr(opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.dram_arbiter/read_history_fifo_inst/BU2/XST_GND:G)| NONE(opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.dram_arbiter/read_history_fifo_inst/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                               | 61    |
+async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)                                             | NONE(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_10)                                                                         | 43    |
+async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)                                             | NONE(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                                                         | 40    |
+async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)                                             | NONE(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                                                        | 40    |
+dram_controller_inst/dram_cke<1>(dram_controller_inst/XST_GND:G)                                                                                                                                                          | NONE(dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_ctl_io/gen_addr[0].u_ff_addr)                                                                         | 36    |
+async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/dbiterr(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/XST_GND:G)                                                                                          | NONE(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP)| 32    |
+async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)                                             | NONE(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                                                            | 25    |
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_1)                                                                                          | 24    |
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                                                                         | 20    |
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                                                                        | 20    |
+async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<1>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_1:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/gl0.wr/gwas.gpf.wrpf/diff_pntr_pad_3)                                                                                          | 18    |
+async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<1>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_1:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_gc_0)                                                                                                         | 16    |
+async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg<0>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/gcx.clkx/rd_pntr_bin_0)                                                                                                        | 16    |
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)                                                                             | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                                                                            | 15    |
+dram_infrastructure_inst/dram_rst_0(dram_infrastructure_inst/dram_infrastructure_inst/dram_rst_0_reg_7:Q)                                                                                                                 | NONE(dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_ctl_io/gen_cke[0].u_ff_cke)                                                                           | 15    |
+dram_controller_inst/dram_reset_n(dram_controller_inst/XST_VCC:P)                                                                                                                                                         | NONE(dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_usr_top/u_usr_addr_fifo/u_af)                                                                                       | 14    |
+async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg<2>(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_2:Q)                                                                             | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/gl0.rd/gr1.rfwft/curr_fwft_state_0)                                                                                            | 13    |
+chan_550_clean_avgiq_bram_ramblk/chan_550_clean_avgiq_bram_ramblk/net_gnd0(chan_550_clean_avgiq_bram_ramblk/chan_550_clean_avgiq_bram_ramblk/XST_GND:G)                                                                   | NONE(chan_550_clean_avgiq_bram_ramblk/chan_550_clean_avgiq_bram_ramblk/ramb36_0)                                                                                                     | 8     |
+chan_550_clean_snapphase_bram_ramblk/chan_550_clean_snapphase_bram_ramblk/net_gnd0(chan_550_clean_snapphase_bram_ramblk/chan_550_clean_snapphase_bram_ramblk/XST_GND:G)                                                   | NONE(chan_550_clean_snapphase_bram_ramblk/chan_550_clean_snapphase_bram_ramblk/ramb36_0)                                                                                             | 8     |
+async_dram_1/dram_reset(async_dram_1/async_dram_1/dram_reset:Q)                                                                                                                                                           | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_asreg)                                                                                                           | 6     |
+opb2opb_bridge_opb1/opb2opb_bridge_opb1/sopb_select_not(opb2opb_bridge_opb1/opb2opb_bridge_opb1/sopb_select_not1_INV_0:O)                                                                                                 | NONE(opb2opb_bridge_opb1/opb2opb_bridge_opb1/ERRACK_FF_I)                                                                                                                            | 5     |
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)                                                                               | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                                                                           | 3     |
+async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)                                               | NONE(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                                                           | 3     |
+async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_comb1:O)                                                                               | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/rd_rst_reg_0)                                                                                                           | 3     |
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)                                                                               | NONE(async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                                                                           | 2     |
+async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)                                               | NONE(async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                                                           | 2     |
+async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_comb1:O)                                                                               | NONE(async_dram_1/async_dram_1/txn_fifo/BU2/U0/grf.rf/rstblk/wr_rst_reg_0)                                                                                                           | 2     |
+opb0/OPB_Rst(opb0/opb0/POR_FF_I:Q)                                                                                                                                                                                        | NONE(opb2opb_bridge_opb1/opb2opb_bridge_opb1/RNW_INT_FF_I)                                                                                                                           | 2     |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
 
 Timing Summary:
 ---------------
@@ -674,7 +675,7 @@ Delay:               6.969ns (Levels of Logic = 11)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'adcmkid1_DRDY_I_p'
   Clock period: 3.703ns (frequency: 270.051MHz)
-  Total number of paths / destination ports: 157215 / 88783
+  Total number of paths / destination ports: 156615 / 88908
 -------------------------------------------------------------------------
 Delay:               3.703ns (Levels of Logic = 14)
   Source:            chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/pfb_e4e97e63c9/pfb_fir_c0a21c5c4b/pol1_in1_tap2_5719ec7a4f/sync_delay_c4c46f79bb/counter/comp16.core_instance16/BU2/U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_2 (FF)
@@ -758,7 +759,7 @@ Delay:               1.381ns (Levels of Logic = 0)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'dram_infrastructure_inst/dram_infrastructure_inst/dram_clk_0_int'
   Clock period: 3.422ns (frequency: 292.227MHz)
-  Total number of paths / destination ports: 10571 / 3684
+  Total number of paths / destination ports: 10852 / 3701
 -------------------------------------------------------------------------
 Delay:               3.422ns (Levels of Logic = 3)
   Source:            dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_ctrl/state_r_FSM_FFd5 (FF)
@@ -1015,13 +1016,13 @@ Delay:               4.765ns (Levels of Logic = 7)
 =========================================================================
 
 
-Total REAL time to Xst completion: 294.00 secs
-Total CPU time to Xst completion: 293.50 secs
+Total REAL time to Xst completion: 295.00 secs
+Total CPU time to Xst completion: 294.54 secs
  
 --> 
 
 
-Total memory usage is 1125252 kilobytes
+Total memory usage is 1125328 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   60 (   0 filtered)

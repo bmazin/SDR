@@ -542,10 +542,10 @@ IPNAME:bram_block INSTANCE:chan_550_clean_snapPhase_bram_ramblk -
 Writing HDL for elaborated instances ...
 
 Inserting wrapper level ...
-Completion time: 0.00 seconds
+Completion time: 1.00 seconds
 
 Constructing platform-level connectivity ...
-Completion time: 1.00 seconds
+Completion time: 0.00 seconds
 
 Writing (top-level) BMM ...
 
@@ -789,4 +789,4 @@ IPNAME:chan_550_clean_adc_mkid_wrapper INSTANCE:chan_550_clean_adc_mkid -
 
 Rebuilding cache ...
 
-Total run time: 581.00 seconds
+Total run time: 584.00 seconds

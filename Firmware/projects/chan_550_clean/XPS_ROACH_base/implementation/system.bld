@@ -14391,67 +14391,67 @@ WARNING:NgdBuild:440 - FF primitive
    7e/reg_array[24].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[143].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[142].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[141].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[140].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[139].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[138].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[137].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[136].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[71].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[70].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[69].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[68].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[67].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[66].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[65].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:440 - FF primitive
    'chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean
-   _x0/dram_lut_4c2455098b/delay2/srl_delay.synth_reg_srl_inst/partial_one.last_
+   _x0/dram_lut_4c2455098b/delay3/srl_delay.synth_reg_srl_inst/partial_one.last_
    srl17e/reg_array[64].fde_used.u2' has unconnected output pin
 WARNING:NgdBuild:443 - SFF primitive
    'dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io
@@ -14658,10 +14658,10 @@ NGDBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings: 2754
 
-Total memory usage is 944900 kilobytes
+Total memory usage is 946352 kilobytes
 
 Writing NGD file "system.ngd" ...
 Total REAL time to NGDBUILD completion: 2 min  22 sec
-Total CPU time to NGDBUILD completion:  1 min  55 sec
+Total CPU time to NGDBUILD completion:  1 min  56 sec
 
 Writing NGDBUILD log file "system.bld"...

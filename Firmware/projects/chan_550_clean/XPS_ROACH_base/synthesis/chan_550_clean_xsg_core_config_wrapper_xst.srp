@@ -213,15 +213,15 @@ Cell Usage :
 #      MUXF7                       : 18
 #      VCC                         : 384
 #      XORCY                       : 2203
-# FlipFlops/Latches                : 42237
+# FlipFlops/Latches                : 42382
 #      FD                          : 1
-#      FDE                         : 35675
+#      FDE                         : 35820
 #      FDRE                        : 6532
 #      FDSE                        : 29
 # RAMS                             : 104
 #      RAMB18                      : 104
-# Shift Registers                  : 19620
-#      SRL16E                      : 16862
+# Shift Registers                  : 19765
+#      SRL16E                      : 17007
 #      SRLC16E                     : 726
 #      SRLC32E                     : 2032
 # DSPs                             : 264
@@ -235,17 +235,17 @@ Selected Device : 5vsx95tff1136-1
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:           42237  out of  58880    71%  
- Number of Slice LUTs:                25733  out of  58880    43%  
+ Number of Slice Registers:           42382  out of  58880    71%  
+ Number of Slice LUTs:                25878  out of  58880    43%  
     Number used as Logic:              6113  out of  58880    10%  
-    Number used as Memory:            19620  out of  24320    80%  
-       Number used as SRL:            19620
+    Number used as Memory:            19765  out of  24320    81%  
+       Number used as SRL:            19765
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:  44684
-   Number with an unused Flip Flop:    2447  out of  44684     5%  
-   Number with an unused LUT:         18951  out of  44684    42%  
-   Number of fully used LUT-FF pairs: 23286  out of  44684    52%  
+ Number of LUT Flip Flop pairs used:  44829
+   Number with an unused Flip Flop:    2447  out of  44829     5%  
+   Number with an unused LUT:         18951  out of  44829    42%  
+   Number of fully used LUT-FF pairs: 23431  out of  44829    52%  
    Number of unique control sets:       324
 
 IO Utilization: 
@@ -278,7 +278,7 @@ Clock Information:
 -----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)                                                                                                                                     | Load  |
 -----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
-clk                                | NONE(chan_550_clean_XSG_core_config/default_clock_driver_x0/xlclockdriver_1/clr_reg/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp)| 62225 |
+clk                                | NONE(chan_550_clean_XSG_core_config/default_clock_driver_x0/xlclockdriver_1/clr_reg/latency_gt_0.fd_array[1].reg_comp/fd_prim_array[0].bit_is_0.fdre_comp)| 62515 |
 -----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
@@ -302,7 +302,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
   Clock period: 3.703ns (frequency: 270.051MHz)
-  Total number of paths / destination ports: 150083 / 84040
+  Total number of paths / destination ports: 150373 / 84330
 -------------------------------------------------------------------------
 Delay:               3.703ns (Levels of Logic = 14)
   Source:            chan_550_clean_XSG_core_config/chan_550_clean_x0/pfb_e4e97e63c9/pfb_fir_c0a21c5c4b/pol1_in1_tap2_5719ec7a4f/sync_delay_c4c46f79bb/counter/comp16.core_instance16/BU2/U0/i_baseblox.i_baseblox_counter/the_addsub/no_pipelining.the_addsub/i_lut6.i_lut6_addsub/i_q.i_simple.qreg/fd/output_2 (FF)
@@ -379,13 +379,13 @@ Offset:              0.471ns (Levels of Logic = 1)
 =========================================================================
 
 
-Total REAL time to Xst completion: 174.00 secs
-Total CPU time to Xst completion: 173.04 secs
+Total REAL time to Xst completion: 175.00 secs
+Total CPU time to Xst completion: 174.76 secs
  
 --> 
 
 
-Total memory usage is 1027516 kilobytes
+Total memory usage is 1029228 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)
