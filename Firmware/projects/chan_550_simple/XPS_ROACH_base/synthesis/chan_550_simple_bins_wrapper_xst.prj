@@ -1,2 +1,0 @@
-verilog opb_register_ppc2simulink_v1_00_a /home/sean/SDR/Firmware/projects/chan_550_simple/XPS_ROACH_base/pcores/opb_register_ppc2simulink_v1_00_a/hdl/verilog/opb_register_ppc2simulink.v
-verilog work ../hdl/chan_550_simple_bins_wrapper.v
