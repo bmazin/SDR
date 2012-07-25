@@ -1,5 +1,0 @@
-#!/bin/bash
-cp implementation/system.bit ../bit_files/timestamper_2012_Jul_19_1633.bit
-./mkbof -o implementation/system.bof -s core_info.tab -t 3 implementation/system.bin
-chmod +x implementation/system.bof
-cp implementation/system.bof ../bit_files/timestamper_2012_Jul_19_1633.bof

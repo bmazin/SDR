@@ -1,4 +1,0 @@
-START:Strategy:1:MapRunTime
-REMOTE_PID:21823
-RUNNING:21823:21843:MapRunTime:map:timestamper_cw.ngd: -ol high -w  -o timestamper_cw_map.ncd  -intstyle ise -ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun1:slashtimestamper_cw.ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun1:slashtimestamper_cw.pcf
-DONE:map:211

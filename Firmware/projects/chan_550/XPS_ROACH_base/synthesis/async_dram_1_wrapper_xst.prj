@@ -1,6 +1,0 @@
-verilog async_dram_v1_00_a /home/sean/SDR/Firmware/projects/chan_550/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/async_dram.v
-verilog async_dram_v1_00_a /home/sean/SDR/Firmware/projects/chan_550/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/rd_fifo_bram.v
-verilog async_dram_v1_00_a /home/sean/SDR/Firmware/projects/chan_550/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/rd_fifo_dist.v
-verilog async_dram_v1_00_a /home/sean/SDR/Firmware/projects/chan_550/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/data_fifo_dist.v
-verilog async_dram_v1_00_a /home/sean/SDR/Firmware/projects/chan_550/XPS_ROACH_base/pcores/async_dram_v1_00_a/hdl/verilog/transaction_fifo_dist.v
-verilog work ../hdl/async_dram_1_wrapper.v

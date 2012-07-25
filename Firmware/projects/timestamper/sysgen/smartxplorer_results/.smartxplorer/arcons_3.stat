@@ -1,4 +1,0 @@
-START:Strategy:4:MapRegDup
-REMOTE_PID:21826
-RUNNING:21826:21841:MapRegDup:map:timestamper_cw.ngd: -ol high -xe n -register_duplication on -w  -o timestamper_cw_map.ncd  -intstyle ise -ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun4:slashtimestamper_cw.ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun4:slashtimestamper_cw.pcf
-DONE:map:211

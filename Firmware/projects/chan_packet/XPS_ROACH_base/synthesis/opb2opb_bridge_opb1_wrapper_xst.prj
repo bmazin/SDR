@@ -1,4 +1,0 @@
-vhdl proc_common_v1_00_a /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v1_00_a/hdl/vhdl/proc_common_pkg.vhd
-vhdl proc_common_v1_00_a /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/proc_common_v1_00_a/hdl/vhdl/pselect.vhd
-vhdl opb_opb_lite_v1_00_a /opt/Xilinx/11.1/EDK/hw/XilinxProcessorIPLib/pcores/opb_opb_lite_v1_00_a/hdl/vhdl/opb_opb_lite.vhd
-vhdl work ../hdl/opb2opb_bridge_opb1_wrapper.vhd

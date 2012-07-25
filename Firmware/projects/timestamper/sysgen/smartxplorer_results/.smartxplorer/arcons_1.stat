@@ -1,4 +1,0 @@
-START:Strategy:2:MapGlobOptLogOptRegDup
-REMOTE_PID:21824
-RUNNING:21824:21837:MapGlobOptLogOptRegDup:map:timestamper_cw.ngd: -ol high -xe n -global_opt speed -logic_opt on -register_duplication on -w  -o timestamper_cw_map.ncd  -intstyle ise -ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun2:slashtimestamper_cw.ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun2:slashtimestamper_cw.pcf
-DONE:map:211

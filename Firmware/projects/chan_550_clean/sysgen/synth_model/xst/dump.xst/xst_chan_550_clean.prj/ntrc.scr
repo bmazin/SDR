@@ -1,3 +1,0 @@
-set -xsthdpdir xst/
-set -checkcmdline no
-run -ifn xst_chan_550_clean.prj -ifmt mixed -ofn chan_550_clean_cw.ngc -ofmt NGC -p xc5vsx95t-1ff1136 -ent chan_550_clean_cw -keep_hierarchy NO -iobuf NO -bus_delimiter () -top chan_550_clean_cw -hierarchy_separator / -report_timing_constraint_problems warning -register_balancing no -iob Auto -crit SPEED -mapstyle lut -fsm_encoding auto -t XILINX -addsub_extract yes

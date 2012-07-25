@@ -1,3 +1,0 @@
-VHDL adc_mkid_interface_v1_00_a /home/sean/SDR/Firmware/projects/chan_512/XPS_ROACH_base/pcores/adc_mkid_interface_v1_00_a/hdl/vhdl/adc_mkid_interface.vhd
-VHDL adc_mkid_interface_v1_00_a /home/sean/SDR/Firmware/projects/chan_512/XPS_ROACH_base/pcores/adc_mkid_interface_v1_00_a/hdl/vhdl/async_fifo_24x128.vhd
-vhdl work ../hdl/chan_512_adc_mkid_wrapper.vhd

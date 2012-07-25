@@ -1,2 +1,0 @@
-VHDL bram_if_v1_00_a /home/sean/SDR/Firmware/projects/chan_550_clean/XPS_ROACH_base/pcores/bram_if_v1_00_a/hdl/vhdl/bram_if.vhd
-vhdl work ../hdl/chan_550_clean_pulses_bram0_ramif_wrapper.vhd

@@ -1,2 +1,0 @@
-VHDL chan_550_clean_avgiq_bram_ramblk_elaborate_v1_00_a /home/sean/SDR/Firmware/projects/chan_550_clean/XPS_ROACH_base/hdl/elaborate/chan_550_clean_avgiq_bram_ramblk_elaborate_v1_00_a/hdl/vhdl/chan_550_clean_avgiq_bram_ramblk_elaborate.vhd
-vhdl work ../hdl/chan_550_clean_avgiq_bram_ramblk_wrapper.vhd

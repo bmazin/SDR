@@ -1,1 +1,0 @@
-/opt/Xilinx/11.1/DSP_Tools/lin64/sysgen/bin/saferun -a /home/sean/SDR/Firmware/projects/timestamper/sysgen/timestamper_cw_import.log -- /opt/Xilinx/11.1/ISE/bin/lin64/xtclsh timestamper_cw_import.tcl

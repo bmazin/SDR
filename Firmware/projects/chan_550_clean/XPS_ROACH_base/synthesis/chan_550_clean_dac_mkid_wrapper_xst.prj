@@ -1,2 +1,0 @@
-VHDL dac_mkid_interface_v1_01_a /home/sean/SDR/Firmware/projects/chan_550_clean/XPS_ROACH_base/pcores/dac_mkid_interface_v1_01_a/hdl/vhdl/dac_mkid_interface.vhd
-vhdl work ../hdl/chan_550_clean_dac_mkid_wrapper.vhd

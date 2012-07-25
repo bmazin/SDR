@@ -1,2 +1,0 @@
-verilog epb_opb_bridge_v1_00_a /home/sean/SDR/Firmware/projects/chan_550/XPS_ROACH_base/pcores/epb_opb_bridge_v1_00_a/hdl/verilog/epb_opb_bridge.v
-verilog work ../hdl/epb_opb_bridge_inst_wrapper.v

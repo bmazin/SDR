@@ -1,4 +1,0 @@
-START:Strategy:5:MapExtraEffortIOReg
-REMOTE_PID:21827
-RUNNING:21827:21842:MapExtraEffortIOReg:map:timestamper_cw.ngd: -ol high -xe n -pr b -t 7 -w  -o timestamper_cw_map.ncd  -intstyle ise -ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun5:slashtimestamper_cw.ise :slashhome:slashsean:slashSDR:slashFirmware:slashprojects:slashtimestamper:slashsysgen:slashsmartxplorer_results:slashrun5:slashtimestamper_cw.pcf
-DONE:map:211
