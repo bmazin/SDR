@@ -3359,16 +3359,16 @@
 <msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">opb_dram_sniffer_inst/opb_dram_sniffer_inst/sniffer_enabled.dram_arbiter/read_history_fifo_inst/BU2/U0/grf.rf/mem/gdm.dm/Mram_RAM8/SPO</arg> has no load.
 </msg>
 
-<msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/prog_full</arg> has no load.
+<msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/prog_full</arg> has no load.
 </msg>
 
-<msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/overflow</arg> has no load.
+<msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/overflow</arg> has no load.
 </msg>
 
-<msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/full</arg> has no load.
+<msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/full</arg> has no load.
 </msg>
 
-<msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/underflow</arg> has no load.
+<msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/shallow_fifos.rd_data_fifo0/underflow</arg> has no load.
 </msg>
 
 <msg type="warning" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">async_dram_1/async_dram_1/txn_fifo/overflow</arg> has no load.
@@ -4148,70 +4148,6 @@ of frag <arg fmt="%s" index="2">REGCLKBU</arg> connected to power/ground net <ar
 of frag <arg fmt="%s" index="2">REGCLKBL</arg> connected to power/ground net <arg fmt="%s" index="3">chan_550_clean_snapphase_bram_ramblk/chan_550_clean_snapphase_bram_ramblk/ramb36_0_REGCLKBL_tiesig</arg>
 </msg>
 
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKAU</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKAU_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKAL</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKAL_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKBU</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKBU_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKBL</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[0].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKBL_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKAU</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKAU_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKAL</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKAL_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKBU</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKBU_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKBL</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[1].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKBL_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKAU</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKAU_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKAL</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKAL_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKBU</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKBU_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKBL</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[2].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKBL_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKAU</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKAU_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKAL</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKAL_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKBU</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKBU_tiesig</arg>
-</msg>
-
-<msg type="warning" file="Pack" num="2874" delta="new" >Trimming timing constraints from pin <arg fmt="%s" index="1">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP</arg>
-of frag <arg fmt="%s" index="2">REGCLKBL</arg> connected to power/ground net <arg fmt="%s" index="3">async_dram_1/async_dram_1/deep_fifos.rd_data_fifo0/BU2/U0/grf.rf/mem/gbm.gbmg.gbmga.ngecc.bmg/blk_mem_generator/valid.cstr/ramloop[3].ram.r/v5_noinit.ram/SDP.SINGLE_PRIM36.TDP_REGCLKBL_tiesig</arg>
-</msg>
-
 <msg type="warning" file="Pack" num="2573" delta="new" >The F7 multiplexer symbol &quot;<arg fmt="%s" index="1">chan_550_clean_avgIQ_ctrl/chan_550_clean_avgIQ_ctrl/a_match10_f7</arg>&quot; and its I0 input driver &quot;<arg fmt="%s" index="2">epb_opb_bridge_inst/epb_opb_bridge_inst/M_ABus&lt;5&gt;1</arg>&quot; were implemented suboptimally in the same slice component. The function generator could not be placed directly driving the F7 multiplexer. The design will exhibit suboptimal timing.
 </msg>
 
@@ -4228,6 +4164,18 @@ of frag <arg fmt="%s" index="2">REGCLKBL</arg> connected to power/ground net <ar
 <msg type="warning" file="Timing" num="0" delta="new" >DCM chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/CLK_DCM does not have a CLKIN_PERIOD attribute (the period of the DCM input clock).DCM jitter will not be included in timing analysis when this attribute is not defined. For more information, please refer to the appropriate architectural handbook</msg>
 
 <msg type="info" file="Map" num="215" delta="new" >The Interim Design Summary has been generated in the MAP Report (.mrp).
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_19&quot; (Output Signal = chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_19)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net)</arg>
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_20&quot; (Output Signal = chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_20)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net)</arg>
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_21&quot; (Output Signal = chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_21)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net)</arg>
+</msg>
+
+<msg type="info" file="Pack" num="1679" delta="new" ><arg fmt="%s" index="1">FLOP symbol &quot;chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_22&quot; (Output Signal = chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_22)</arg> was replicated from <arg fmt="%s" index="2">FLOP symbol &quot;chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30/srl_delay.synth_reg_srl_inst/partial_one.last_srl17e/reg_array[0].fde_used.u2&quot; (Output Signal = chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net)</arg>
 </msg>
 
 <msg type="info" file="Pack" num="1650" delta="new" >Map created a placed design.

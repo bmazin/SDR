@@ -57,7 +57,7 @@ module async_dram_1_wrapper
     #(
       .C_WIDE_DATA ( 0 ),
       .C_HALF_BURST ( 0 ),
-      .BRAM_FIFOS ( 1 ),
+      .BRAM_FIFOS ( 0 ),
       .TAG_BUFFER_EN ( 0 )
     )
     async_dram_1 (

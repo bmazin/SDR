@@ -25,7 +25,7 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 575836 kilobytes
+Total memory usage is 575016 kilobytes
 
 Writing NGC file "../chan_550_clean_xsg_core_config_wrapper.ngc" ...
 Total REAL time to NGCBUILD completion:  7 sec

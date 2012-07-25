@@ -30,7 +30,7 @@
     'compilation_target' => 'NGC Netlist',
     'core_generation' => 1,
     'core_is_deployed' => 0,
-    'coregen_core_generation_tmpdir' => '/tmp/sysgentmp-sean/cg_wk/c5c5fd240f2d96cdc',
+    'coregen_core_generation_tmpdir' => '/tmp/sysgentmp-sean/cg_wk/cfddec5cbcdff53e1',
     'coregen_part_family' => 'virtex5',
     'createTestbench' => 0,
     'dbl_ovrd' => -1,
@@ -44,13 +44,13 @@
     'device_speed' => -1,
     'directory' => '/home/sean/SDR/Firmware/projects/chan_550_clean/sysgen',
     'disregard_subsystem_handles' => [
-      70514.0001220703,
-      70532.0001220703,
-      70651.0001220703,
-      74427.0003662109,
-      75127.0003662109,
-      75168.0003662109,
-      75216.0003662109,
+      70497.0001220703,
+      70515.0001220703,
+      70634.0001220703,
+      74410.0001220703,
+      75110.0024414062,
+      75151.0024414062,
+      75199.0024414062,
     ],
     'dsp_cache_root_path' => '/home/sean/.Xilinx/Sysgen',
     'entityNamingInstrs' => {
@@ -342,12 +342,12 @@
     'mdlPath' => '/home/sean/SDR/Firmware/projects/chan_550_clean.mdl',
     'modelDiagnostics' => [
       {
-        'count' => 8535,
+        'count' => 8531,
         'isMask' => 0,
         'type' => 'chan_550_clean Total blocks',
       },
       {
-        'count' => 17,
+        'count' => 16,
         'isMask' => 0,
         'type' => 'Constant',
       },
@@ -377,7 +377,7 @@
         'type' => 'Outport',
       },
       {
-        'count' => 5067,
+        'count' => 5064,
         'isMask' => 0,
         'type' => 'S-Function',
       },
@@ -462,7 +462,7 @@
         'type' => 'Xilinx DSP48E Block',
       },
       {
-        'count' => 599,
+        'count' => 596,
         'isMask' => 1,
         'type' => 'Xilinx Delay Block',
       },

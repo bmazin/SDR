@@ -4290,13 +4290,13 @@ WARNING:Xst:616 - Invalid property "SYN_USEIOFF 1": Did not attach to dram_contr
 WARNING:Xst:616 - Invalid property "SYN_USEIOFF 1": Did not attach to dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_ctl_io/gen_ba[1].u_ff_ba.
 
 
-Total REAL time to Xst completion: 49.00 secs
-Total CPU time to Xst completion: 48.78 secs
+Total REAL time to Xst completion: 50.00 secs
+Total CPU time to Xst completion: 49.54 secs
  
 --> 
 
 
-Total memory usage is 552676 kilobytes
+Total memory usage is 552680 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 1366 (   0 filtered)

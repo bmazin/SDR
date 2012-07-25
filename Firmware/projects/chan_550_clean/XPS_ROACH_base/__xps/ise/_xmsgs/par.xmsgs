@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="ConstraintSystem" num="65" delta="new" >Constraint <arg fmt="%s" index="1">&lt;NET &quot;chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk&quot; PERIOD = 3.6364         ns HIGH 50%;&gt; [system.pcf(265734)]</arg> overrides constraint <arg fmt="%s" index="2">&lt;NET &quot;chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk&quot; PERIOD = 3.6364         ns HIGH 50%;&gt; [system.pcf(265732)]</arg>.
+<msg type="warning" file="ConstraintSystem" num="65" delta="new" >Constraint <arg fmt="%s" index="1">&lt;NET &quot;chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk&quot; PERIOD = 3.6364         ns HIGH 50%;&gt; [system.pcf(265088)]</arg> overrides constraint <arg fmt="%s" index="2">&lt;NET &quot;chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk&quot; PERIOD = 3.6364         ns HIGH 50%;&gt; [system.pcf(265086)]</arg>.
 </msg>
 
 <msg type="warning" file="Timing" num="3223" delta="new" >Timing constraint <arg fmt="%s" index="1">TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FROM TIMEGRP &quot;TNM_PHY_INIT_DATA_SEL&quot; TO        TIMEGRP &quot;RAMS&quot; 10 ns;</arg> ignored during timing analysis.</msg>
@@ -16,6 +16,10 @@
 
 <msg type="info" file="Route" num="501" delta="new" >One or more directed routing (DIRT) constraints generated for a specific device have been found. Note that DIRT strings are guaranteed to work only on the same device they were created for. If the DIRT constraints fail, verify that the same connectivity is available in the target device for this implementation. 
 </msg>
+
+<msg type="info" file="Timing" num="2761" delta="new" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
+
+<msg type="info" file="Timing" num="2761" delta="new" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
 
 <msg type="info" file="Timing" num="2761" delta="new" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
 
@@ -39,7 +43,7 @@ Try the Design Goal and Strategies for Timing Performance(In ISE select Project 
 <msg type="info" file="ParHelpers" num="197" delta="new" >Number of &quot;Exact&quot; mode Directed Routing Constraints: <arg fmt="%d" index="1">144</arg>
 </msg>
 
-<msg type="warning" file="ParHelpers" num="198" delta="new" >One or more &quot;EXACT&quot; mode Directed Routing constrained net(s) were not successfully routed according to the constraint(s). The router attempted to route the net(s) without regard to the constraint. The number of nets found with Directed Routing Constraints: <arg fmt="%d" index="1">144</arg>, number successfully routed using the constraints: <arg fmt="%d" index="2">0</arg>, number failed: <arg fmt="%d" index="3">144</arg>. The failed nets are listed below. Please use FPGA Editor to determine the cause of the failure.
+<msg type="warning" file="ParHelpers" num="198" delta="new" >One or more &quot;EXACT&quot; mode Directed Routing constrained net(s) were not successfully routed according to the constraint(s). The router attempted to route the net(s) without regard to the constraint. The number of nets found with Directed Routing Constraints: <arg fmt="%d" index="1">144</arg>, number successfully routed using the constraints: <arg fmt="%d" index="2">2</arg>, number failed: <arg fmt="%d" index="3">142</arg>. The failed nets are listed below. Please use FPGA Editor to determine the cause of the failure.
 </msg>
 
 </messages>

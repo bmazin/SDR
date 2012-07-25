@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <DeviceUsageSummary rev="1">
-<DesignStatistics TimeStamp="Mon Jul 23 23:44:11 2012"><group name="MiscellaneousStatistics">
+<DesignStatistics TimeStamp="Tue Jul 24 19:12:53 2012"><group name="MiscellaneousStatistics">
 <item name="AGG_BONDED_IO" rev="1">
 <attrib name="value" value="320"/></item>
 <item name="AGG_IO" rev="1">
@@ -13,7 +13,7 @@
 <item name="AGG_LOCED_IO" rev="1">
 <attrib name="value" value="320"/></item>
 <item name="AGG_SLICE" rev="1">
-<attrib name="value" value="13433"/></item>
+<attrib name="value" value="13684"/></item>
 <item name="NUM_BONDED_IOB" rev="1">
 <attrib name="value" value="248"/></item>
 <item name="NUM_BONDED_IOBM" rev="1">
@@ -21,13 +21,13 @@
 <item name="NUM_BONDED_IOBS" rev="1">
 <attrib name="value" value="36"/></item>
 <item name="NUM_BSFULL" rev="1">
-<attrib name="value" value="29399"/></item>
+<attrib name="value" value="28962"/></item>
 <item name="NUM_BSLUTONLY" rev="1">
-<attrib name="value" value="3319"/></item>
+<attrib name="value" value="3657"/></item>
 <item name="NUM_BSREGONLY" rev="1">
-<attrib name="value" value="17538"/></item>
+<attrib name="value" value="17847"/></item>
 <item name="NUM_BSUSED" rev="1">
-<attrib name="value" value="50256"/></item>
+<attrib name="value" value="50466"/></item>
 <item name="NUM_BUFG" rev="1">
 <attrib name="value" value="9"/></item>
 <item name="NUM_BUFIO" rev="1">
@@ -35,7 +35,7 @@
 <item name="NUM_DCM_ADV" rev="1">
 <attrib name="value" value="3"/></item>
 <item name="NUM_DPRAM_O5ANDO6" rev="1">
-<attrib name="value" value="127"/></item>
+<attrib name="value" value="213"/></item>
 <item name="NUM_DPRAM_O5ONLY" rev="1">
 <attrib name="value" value="1"/></item>
 <item name="NUM_DPRAM_O6ONLY" rev="1">
@@ -61,55 +61,55 @@
 <item name="NUM_LOCED_IOBS" rev="1">
 <attrib name="value" value="36"/></item>
 <item name="NUM_LOGIC_O5ANDO6" rev="1">
-<attrib name="value" value="757"/></item>
+<attrib name="value" value="738"/></item>
 <item name="NUM_LOGIC_O5ONLY" rev="1">
-<attrib name="value" value="717"/></item>
+<attrib name="value" value="698"/></item>
 <item name="NUM_LOGIC_O6ONLY" rev="1">
-<attrib name="value" value="11143"/></item>
+<attrib name="value" value="11127"/></item>
 <item name="NUM_LUT_RT_EXO6" rev="1">
-<attrib name="value" value="108"/></item>
+<attrib name="value" value="106"/></item>
 <item name="NUM_LUT_RT_O5" rev="1">
-<attrib name="value" value="163"/></item>
+<attrib name="value" value="197"/></item>
 <item name="NUM_LUT_RT_O6" rev="1">
-<attrib name="value" value="710"/></item>
+<attrib name="value" value="692"/></item>
 <item name="NUM_OLOGIC" rev="1">
 <attrib name="value" value="178"/></item>
 <item name="NUM_PLL_ADV" rev="1">
 <attrib name="value" value="1"/></item>
 <item name="NUM_RAMB18X2" rev="1">
-<attrib name="value" value="67"/></item>
+<attrib name="value" value="65"/></item>
 <item name="NUM_RAMB18X2_LOWER" rev="1">
-<attrib name="value" value="67"/></item>
+<attrib name="value" value="65"/></item>
 <item name="NUM_RAMB18X2_UPPER" rev="1">
-<attrib name="value" value="37"/></item>
+<attrib name="value" value="39"/></item>
 <item name="NUM_RAMB36_EXP" rev="1">
-<attrib name="value" value="38"/></item>
+<attrib name="value" value="34"/></item>
 <item name="NUM_RPM" rev="1">
 <attrib name="value" value="74"/></item>
 <item name="NUM_SLICEL" rev="1">
-<attrib name="value" value="8026"/></item>
+<attrib name="value" value="8136"/></item>
 <item name="NUM_SLICEM" rev="1">
-<attrib name="value" value="5407"/></item>
+<attrib name="value" value="5548"/></item>
 <item name="NUM_SLICE_CARRY4" rev="1">
-<attrib name="value" value="830"/></item>
+<attrib name="value" value="816"/></item>
 <item name="NUM_SLICE_CONTROLSET" rev="1">
-<attrib name="value" value="399"/></item>
+<attrib name="value" value="409"/></item>
 <item name="NUM_SLICE_CYINIT" rev="1">
-<attrib name="value" value="34725"/></item>
+<attrib name="value" value="34703"/></item>
 <item name="NUM_SLICE_F7MUX" rev="1">
 <attrib name="value" value="133"/></item>
 <item name="NUM_SLICE_FF" rev="1">
-<attrib name="value" value="46936"/></item>
+<attrib name="value" value="46808"/></item>
 <item name="NUM_SLICE_LATCHTHRU" rev="1">
 <attrib name="value" value="1"/></item>
 <item name="NUM_SLICE_UNUSEDCTRL" rev="1">
-<attrib name="value" value="271"/></item>
+<attrib name="value" value="333"/></item>
 <item name="NUM_SRL_O5ONLY" rev="1">
 <attrib name="value" value="8"/></item>
 <item name="NUM_SRL_O6ONLY" rev="1">
-<attrib name="value" value="19823"/></item>
+<attrib name="value" value="19694"/></item>
 <item name="NUM_UNUSABLE_FF_BELS" rev="1">
-<attrib name="value" value="748"/></item>
+<attrib name="value" value="741"/></item>
 <item name="Xilinx Core adc_mkid_interface_v1_00_a" rev="1">
 <attrib name="value" value="1"/></item>
 <item name="Xilinx Core async_dram_v1_00_a" rev="1">

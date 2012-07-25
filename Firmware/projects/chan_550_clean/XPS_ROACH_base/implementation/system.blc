@@ -129,7 +129,7 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 652472 kilobytes
+Total memory usage is 651412 kilobytes
 
 Writing NGC file "../implementation/system.ngc" ...
 Total REAL time to NGCBUILD completion:  8 sec

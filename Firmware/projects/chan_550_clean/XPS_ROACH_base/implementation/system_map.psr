@@ -27,9 +27,10 @@ Target Device                       : 5vsx95tff1136-1
 *                        Optimizations                                  *
 =========================================================================
 ---- Statistics
-   Number of LUTs added by Replication                       | 10              
+   Number of registers added by Replication                  | 4               
+   Number of LUTs added by Replication                       | 19              
 
-   Overall change in number of design objects                | +10              
+   Overall change in number of design objects                | +23              
 
 
 ---- Details
@@ -38,6 +39,15 @@ New or modified components                             | Optimization           
 -------------------------------------------------------|--------------------------|----------------------
 async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_0| Replication              | Fanout Optimization
 async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_1| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_10| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_11| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_12| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_13| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_14| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_15| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_16| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_17| Replication              | Fanout Optimization
+async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_18| Replication              | Fanout Optimization
 async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_2| Replication              | Fanout Optimization
 async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_3| Replication              | Fanout Optimization
 async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_4| Replication              | Fanout Optimization
@@ -46,6 +56,10 @@ async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_6| Replic
 async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_7| Replication              | Fanout Optimization
 async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_8| Replication              | Fanout Optimization
 async_dram_1/async_dram_1/dat_fifo/BU2/U0/grf.rf/ram_regout_en_REPLICA_9| Replication              | Fanout Optimization
+chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_19| Replication              | Fanout Optimization
+chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_20| Replication              | Fanout Optimization
+chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_21| Replication              | Fanout Optimization
+chan_550_clean_XSG_core_config/chan_550_clean_XSG_core_config/chan_550_clean_x0/fir_5589f10850/delay30_q_net_REPLICA_22| Replication              | Fanout Optimization
 
 
 

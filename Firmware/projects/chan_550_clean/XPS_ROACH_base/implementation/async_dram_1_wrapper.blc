@@ -10,7 +10,7 @@ Reading NGO file
 sync_dram_1_wrapper/async_dram_1_wrapper.ngc" ...
 Loading design module
 "/home/sean/SDR/Firmware/projects/chan_550_clean/XPS_ROACH_base/implementation/a
-sync_dram_1_wrapper/rd_fifo_bram.ngc"...
+sync_dram_1_wrapper/rd_fifo_dist.ngc"...
 Loading design module
 "/home/sean/SDR/Firmware/projects/chan_550_clean/XPS_ROACH_base/implementation/a
 sync_dram_1_wrapper/transaction_fifo_dist.ngc"...
@@ -29,7 +29,7 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 300284 kilobytes
+Total memory usage is 300036 kilobytes
 
 Writing NGC file "../async_dram_1_wrapper.ngc" ...
 Total REAL time to NGCBUILD completion:  1 sec

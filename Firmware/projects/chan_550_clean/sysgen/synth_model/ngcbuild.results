@@ -280,10 +280,10 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 604168 kilobytes
+Total memory usage is 603744 kilobytes
 
 Writing NGC file "chan_550_clean_cw_complete.ngc" ...
-Total REAL time to NGCBUILD completion:  4 sec
+Total REAL time to NGCBUILD completion:  5 sec
 Total CPU time to NGCBUILD completion:   4 sec
 
 Writing NGCBUILD log file "chan_550_clean_cw_complete.blc"...
