@@ -4,3 +4,5 @@ chan_512_packet
 chan_550
 timestamper
 chan_550_packet
+chan_550_clean.mdl.autosave
+*.autosave

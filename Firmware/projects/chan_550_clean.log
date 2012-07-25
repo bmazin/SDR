@@ -14688,7 +14688,7 @@ NGDBUILD Design Results Summary:
 
 Writing NGD file "system.ngd" ...
 Total REAL time to NGDBUILD completion: 2 min  22 sec
-Total CPU time to NGDBUILD completion:  1 min  56 sec
+Total CPU time to NGDBUILD completion:  1 min  55 sec
 
 Writing NGDBUILD log file "system.bld"...
 
@@ -18638,26 +18638,26 @@ WARNING:Timing - DCM chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/CLK_DCM
 INFO:Map:215 - The Interim Design Summary has been generated in the MAP Report
    (.mrp).
 Running timing-driven placement...
-Total REAL time at the beginning of Placer: 3 mins 19 secs 
-Total CPU  time at the beginning of Placer: 3 mins 18 secs 
+Total REAL time at the beginning of Placer: 3 mins 24 secs 
+Total CPU  time at the beginning of Placer: 3 mins 22 secs 
 
 Phase 1.1  Initial Placement Analysis
-Phase 1.1  Initial Placement Analysis (Checksum:4d545c2a) REAL time: 3 mins 28 secs 
+Phase 1.1  Initial Placement Analysis (Checksum:ea4dc099) REAL time: 3 mins 32 secs 
 
 Phase 2.7  Design Feasibility Check
-Phase 2.7  Design Feasibility Check (Checksum:4d545c2a) REAL time: 3 mins 29 secs 
+Phase 2.7  Design Feasibility Check (Checksum:ea4dc099) REAL time: 3 mins 33 secs 
 
 Phase 3.31  Local Placement Optimization
-Phase 3.31  Local Placement Optimization (Checksum:4d545c2a) REAL time: 3 mins 29 secs 
+Phase 3.31  Local Placement Optimization (Checksum:ea4dc099) REAL time: 3 mins 33 secs 
 
 Phase 4.37  Local Placement Optimization
-Phase 4.37  Local Placement Optimization (Checksum:4d545c2a) REAL time: 3 mins 29 secs 
+Phase 4.37  Local Placement Optimization (Checksum:ea4dc099) REAL time: 3 mins 33 secs 
 
 Phase 5.33  Local Placement Optimization
-Phase 5.33  Local Placement Optimization (Checksum:4d545c2a) REAL time: 4 mins 3 secs 
+Phase 5.33  Local Placement Optimization (Checksum:ea4dc099) REAL time: 4 mins 7 secs 
 
 Phase 6.32  Local Placement Optimization
-Phase 6.32  Local Placement Optimization (Checksum:4d545c2a) REAL time: 4 mins 8 secs 
+Phase 6.32  Local Placement Optimization (Checksum:ea4dc099) REAL time: 4 mins 12 secs 
 
 Phase 7.2  Initial Clock and IO Placement
 
@@ -18910,50 +18910,50 @@ AREA_GROUP "CLKAG_dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_ph
 CLOCKREGION_X0Y0;
 
 
-Phase 7.2  Initial Clock and IO Placement (Checksum:d9e42087) REAL time: 4 mins 12 secs 
+Phase 7.2  Initial Clock and IO Placement (Checksum:b8ba49a6) REAL time: 4 mins 16 secs 
 
 Phase 8.36  Local Placement Optimization
-Phase 8.36  Local Placement Optimization (Checksum:d9e42087) REAL time: 4 mins 12 secs 
+Phase 8.36  Local Placement Optimization (Checksum:b8ba49a6) REAL time: 4 mins 16 secs 
 
 Phase 9.30  Global Clock Region Assignment
-Phase 9.30  Global Clock Region Assignment (Checksum:d9e42087) REAL time: 4 mins 12 secs 
+Phase 9.30  Global Clock Region Assignment (Checksum:b8ba49a6) REAL time: 4 mins 16 secs 
 
 Phase 10.3  Local Placement Optimization
-Phase 10.3  Local Placement Optimization (Checksum:d9e42087) REAL time: 4 mins 13 secs 
+Phase 10.3  Local Placement Optimization (Checksum:b8ba49a6) REAL time: 4 mins 17 secs 
 
 Phase 11.5  Local Placement Optimization
-Phase 11.5  Local Placement Optimization (Checksum:d9e42087) REAL time: 4 mins 14 secs 
+Phase 11.5  Local Placement Optimization (Checksum:b8ba49a6) REAL time: 4 mins 18 secs 
 
 Phase 12.8  Global Placement
-...................................
-...................................................................................................................
-.................................................................................................
-........................................................................................................................................................
+.....................................
+.................................................................................................................................................................
+..............................................................................................................
+....................................................................................................................................................................................
 .....................................................................................................................
-.............................................................................................................
-..................................................................................................................
-...................................................................................
-Phase 12.8  Global Placement (Checksum:1fd4a860) REAL time: 32 mins 18 secs 
+....................................................................................................................
+............................................
+................................................................................
+Phase 12.8  Global Placement (Checksum:cfd94d72) REAL time: 33 mins 29 secs 
 
 Phase 13.29  Local Placement Optimization
-Phase 13.29  Local Placement Optimization (Checksum:1fd4a860) REAL time: 32 mins 18 secs 
+Phase 13.29  Local Placement Optimization (Checksum:cfd94d72) REAL time: 33 mins 29 secs 
 
 Phase 14.5  Local Placement Optimization
-Phase 14.5  Local Placement Optimization (Checksum:1fd4a860) REAL time: 32 mins 21 secs 
+Phase 14.5  Local Placement Optimization (Checksum:cfd94d72) REAL time: 33 mins 32 secs 
 
 Phase 15.18  Placement Optimization
-Phase 15.18  Placement Optimization (Checksum:9e1ac100) REAL time: 53 mins 40 secs 
+Phase 15.18  Placement Optimization (Checksum:78bee826) REAL time: 55 mins 8 secs 
 
 Phase 16.5  Local Placement Optimization
-Phase 16.5  Local Placement Optimization (Checksum:9e1ac100) REAL time: 53 mins 43 secs 
+Phase 16.5  Local Placement Optimization (Checksum:78bee826) REAL time: 55 mins 11 secs 
 
 Phase 17.34  Placement Validation
-Phase 17.34  Placement Validation (Checksum:9e1ac100) REAL time: 53 mins 46 secs 
+Phase 17.34  Placement Validation (Checksum:78bee826) REAL time: 55 mins 14 secs 
 
-Total REAL time to Placer completion: 53 mins 48 secs 
-Total CPU  time to Placer completion: 53 mins 45 secs 
+Total REAL time to Placer completion: 55 mins 16 secs 
+Total CPU  time to Placer completion: 55 mins 13 secs 
 Running physical synthesis...
-..........................
+...............
 Physical synthesis completed.
 Running post-placement packing...
 Writing output files...
@@ -18962,36 +18962,36 @@ Design Summary:
 Number of errors:      0
 Number of warnings: 1332
 Slice Logic Utilization:
-  Number of Slice Registers:                46,941 out of  58,880   79%
-    Number used as Flip Flops:              46,940
+  Number of Slice Registers:                46,940 out of  58,880   79%
+    Number used as Flip Flops:              46,939
     Number used as Latch-thrus:                  1
-  Number of Slice LUTs:                     32,718 out of  58,880   55%
-    Number used as logic:                   12,617 out of  58,880   21%
-      Number using O6 output only:          11,142
+  Number of Slice LUTs:                     32,722 out of  58,880   55%
+    Number used as logic:                   12,622 out of  58,880   21%
+      Number using O6 output only:          11,147
       Number using O5 output only:             718
       Number using O5 and O6:                  757
-    Number used as Memory:                  19,993 out of  24,320   82%
+    Number used as Memory:                  19,992 out of  24,320   82%
       Number used as Dual Port RAM:            162
         Number using O6 output only:            34
         Number using O5 output only:             1
         Number using O5 and O6:                127
-      Number used as Shift Register:        19,831
-        Number using O6 output only:        19,823
+      Number used as Shift Register:        19,830
+        Number using O6 output only:        19,822
         Number using O5 output only:             8
     Number used as exclusive route-thru:       108
-  Number of route-thrus:                       988
+  Number of route-thrus:                     1,004
     Number using O6 output only:               818
-    Number using O5 output only:               170
+    Number using O5 output only:               186
 
 Slice Logic Distribution:
-  Number of occupied Slices:                13,725 out of  14,720   93%
-  Number of LUT Flip Flop pairs used:       50,504
-    Number with an unused Flip Flop:         3,563 out of  50,504    7%
-    Number with an unused LUT:              17,786 out of  50,504   35%
-    Number of fully used LUT-FF pairs:      29,155 out of  50,504   57%
-    Number of unique control sets:             400
+  Number of occupied Slices:                13,715 out of  14,720   93%
+  Number of LUT Flip Flop pairs used:       50,598
+    Number with an unused Flip Flop:         3,658 out of  50,598    7%
+    Number with an unused LUT:              17,876 out of  50,598   35%
+    Number of fully used LUT-FF pairs:      29,064 out of  50,598   57%
+    Number of unique control sets:             405
     Number of slice register sites lost
-      to control set restrictions:             748 out of  58,880    1%
+      to control set restrictions:             742 out of  58,880    1%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -19009,8 +19009,8 @@ IO Utilization:
     IOB Slave Pads:                             36
 
 Specific Feature Utilization:
-  Number of BlockRAM/FIFO:                     112 out of     244   45%
-    Number using BlockRAM only:                108
+  Number of BlockRAM/FIFO:                     110 out of     244   45%
+    Number using BlockRAM only:                106
     Number using FIFO only:                      4
     Total primitives used:
       Number of 36k BlockRAM used:              38
@@ -19029,8 +19029,8 @@ Specific Feature Utilization:
 Average Fanout of Non-Clock Nets:                1.84
 
 Peak Memory Usage:  2299 MB
-Total REAL time to MAP completion:  55 mins 47 secs 
-Total CPU time to MAP completion:   55 mins 44 secs 
+Total REAL time to MAP completion:  57 mins 18 secs 
+Total CPU time to MAP completion:   57 mins 16 secs 
 
 Mapping completed.
 See MAP report file "system_map.mrp" for details.
@@ -19068,9 +19068,9 @@ to function, but you no longer qualify for Xilinx software updates or new releas
 
 ----------------------------------------------------------------------
 WARNING:ConstraintSystem:65 - Constraint <NET "chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk" PERIOD = 3.6364
-           ns HIGH 50%;> [system.pcf(265750)] overrides constraint <NET
+           ns HIGH 50%;> [system.pcf(265742)] overrides constraint <NET
    "chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk" PERIOD = 3.6364         ns HIGH 50%;>
-   [system.pcf(265748)].
+   [system.pcf(265740)].
 
 
 Initializing temperature to 85.000 Celsius. (default - Range: 0.000 to 85.000 Celsius)
@@ -19107,15 +19107,15 @@ Device Utilization Summary:
    Number of IODELAYs                       90 out of 800    11%
    Number of OLOGICs                       178 out of 800    22%
    Number of PLL_ADVs                        1 out of 6      16%
-   Number of RAMB18X2s                      70 out of 244    28%
+   Number of RAMB18X2s                      68 out of 244    27%
    Number of RAMB36_EXPs                    38 out of 244    15%
-   Number of Slice Registers             46941 out of 58880  79%
-      Number used as Flip Flops          46940
+   Number of Slice Registers             46940 out of 58880  79%
+      Number used as Flip Flops          46939
       Number used as Latches                 0
       Number used as LatchThrus              1
 
-   Number of Slice LUTS                  32718 out of 58880  55%
-   Number of Slice LUT-Flip Flop pairs   50504 out of 58880  85%
+   Number of Slice LUTS                  32722 out of 58880  55%
+   Number of Slice LUT-Flip Flop pairs   50598 out of 58880  85%
 
 
 Overall effort level (-ol):   High 
@@ -19133,35 +19133,37 @@ INFO:Route:501 - One or more directed routing (DIRT) constraints generated for a
    that DIRT strings are guaranteed to work only on the same device they were created for. If the DIRT constraints fail,
    verify that the same connectivity is available in the target device for this implementation. 
 
-Wirelength Stats for nets on all pins. NumPins: 127289
+Wirelength Stats for nets on all pins. NumPins: 127250
 
-Phase  1  : 276291 unrouted;      REAL time: 1 mins 50 secs 
+Phase  1  : 276208 unrouted;      REAL time: 1 mins 49 secs 
 
-Phase  2  : 117261 unrouted;      REAL time: 2 mins 24 secs 
+Phase  2  : 117224 unrouted;      REAL time: 2 mins 23 secs 
 
-Phase  3  : 31663 unrouted;      REAL time: 3 mins 7 secs 
+Phase  3  : 31477 unrouted;      REAL time: 3 mins 6 secs 
 
-Phase  4  : 32028 unrouted; (Setup:126688, Hold:2107, Component Switching Limit:0)     REAL time: 3 mins 48 secs 
-
-Updating file: system.ncd with current fully routed design.
-
-Phase  5  : 0 unrouted; (Setup:191251, Hold:2107, Component Switching Limit:0)     REAL time: 5 mins 32 secs 
-
-Phase  6  : 0 unrouted; (Setup:191251, Hold:2107, Component Switching Limit:0)     REAL time: 6 mins 9 secs 
-
-Phase  7  : 0 unrouted; (Setup:3451, Hold:2107, Component Switching Limit:0)     REAL time: 13 mins 39 secs 
+Phase  4  : 31770 unrouted; (Setup:45028, Hold:2129, Component Switching Limit:0)     REAL time: 3 mins 41 secs 
 
 Updating file: system.ncd with current fully routed design.
 
-Phase  8  : 0 unrouted; (Setup:3451, Hold:2107, Component Switching Limit:0)     REAL time: 13 mins 59 secs 
+Phase  5  : 0 unrouted; (Setup:70298, Hold:2129, Component Switching Limit:0)     REAL time: 5 mins 32 secs 
 
-Phase  9  : 0 unrouted; (Setup:877, Hold:2107, Component Switching Limit:0)     REAL time: 20 mins 20 secs 
+Phase  6  : 0 unrouted; (Setup:68766, Hold:2129, Component Switching Limit:0)     REAL time: 5 mins 54 secs 
 
-Phase 10  : 0 unrouted; (Setup:877, Hold:0, Component Switching Limit:0)     REAL time: 20 mins 32 secs 
+Updating file: system.ncd with current fully routed design.
 
-Phase 11  : 0 unrouted; (Setup:456, Hold:0, Component Switching Limit:0)     REAL time: 20 mins 55 secs 
-Total REAL time to Router completion: 20 mins 55 secs 
-Total CPU time to Router completion: 20 mins 55 secs 
+Phase  7  : 0 unrouted; (Setup:8319, Hold:2129, Component Switching Limit:0)     REAL time: 8 mins 19 secs 
+
+Updating file: system.ncd with current fully routed design.
+
+Phase  8  : 0 unrouted; (Setup:8319, Hold:2129, Component Switching Limit:0)     REAL time: 8 mins 44 secs 
+
+Phase  9  : 0 unrouted; (Setup:8319, Hold:2129, Component Switching Limit:0)     REAL time: 17 mins 2 secs 
+
+Phase 10  : 0 unrouted; (Setup:8319, Hold:0, Component Switching Limit:0)     REAL time: 17 mins 15 secs 
+
+Phase 11  : 0 unrouted; (Setup:6196, Hold:0, Component Switching Limit:0)     REAL time: 17 mins 38 secs 
+Total REAL time to Router completion: 17 mins 38 secs 
+Total CPU time to Router completion: 17 mins 38 secs 
 
 Partition Implementation Status
 -------------------------------
@@ -19179,19 +19181,19 @@ Generating Clock Report
 +---------------------+--------------+------+------+------------+-------------+
 |        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
 +---------------------+--------------+------+------+------------+-------------+
-|            adc1_clk | BUFGCTRL_X0Y1| No   |12330 |  0.872     |  2.417      |
+|            adc1_clk | BUFGCTRL_X0Y1| No   |12275 |  0.891     |  2.440      |
 +---------------------+--------------+------+------+------------+-------------+
 |chan_550_clean_avgIQ |              |      |      |            |             |
 |_bram_ramblk_portb_B |              |      |      |            |             |
-|             RAM_Clk | BUFGCTRL_X0Y0| No   |  708 |  0.748     |  2.291      |
+|             RAM_Clk | BUFGCTRL_X0Y0| No   |  714 |  0.666     |  2.193      |
 +---------------------+--------------+------+------+------------+-------------+
 |dram_sys_dram_clk_di |              |      |      |            |             |
-|                   v |BUFGCTRL_X0Y28| No   |  480 |  0.715     |  2.373      |
+|                   v |BUFGCTRL_X0Y28| No   |  482 |  0.835     |  2.373      |
 +---------------------+--------------+------+------+------------+-------------+
-| dram_sys_dram_clk_0 |BUFGCTRL_X0Y26| No   |  825 |  0.813     |  2.347      |
+| dram_sys_dram_clk_0 |BUFGCTRL_X0Y26| No   |  825 |  0.802     |  2.347      |
 +---------------------+--------------+------+------+------------+-------------+
 |dram_sys_dram_clk_90 |              |      |      |            |             |
-|                     |BUFGCTRL_X0Y27| No   |  183 |  0.645     |  2.354      |
+|                     |BUFGCTRL_X0Y27| No   |  181 |  0.649     |  2.354      |
 +---------------------+--------------+------+------+------------+-------------+
 |chan_550_clean_dac_m |              |      |      |            |             |
 |kid/chan_550_clean_d |              |      |      |            |             |
@@ -19259,7 +19261,7 @@ only delays for the net. Note this is different from Clock Skew which
 is reported in TRCE timing report. Clock Skew is the difference between
 the minimum and maximum path delays which includes logic delays.
 
-Timing Score: 456 (Setup: 456, Hold: 0, Component Switching Limit: 0)
+Timing Score: 6196 (Setup: 6196, Hold: 0, Component Switching Limit: 0)
 
 WARNING:Par:468 - Your design did not meet timing.  The following are some suggestions to assist you to meet timing in
    your design.
@@ -19287,14 +19289,7 @@ Asterisk (*) preceding a constraint indicates it was not met.
   Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
                                             |             |    Slack   | Achievable | Errors |    Score   
 ----------------------------------------------------------------------------------------------------------
-* TS_dram_infrastructure_inst_dram_infrastr | SETUP       |    -0.256ns|     3.589ns|       5|         320
-  ucture_inst_dram_clk_0_int = PERIOD       | HOLD        |     0.007ns|            |       0|           0
-     TIMEGRP         "dram_infrastructure_i |             |            |            |        |            
-  nst_dram_infrastructure_inst_dram_clk_0_i |             |            |            |        |            
-  nt"         TS_dram_infrastructure_inst_d |             |            |            |        |            
-  ram_infrastructure_inst_mem_clk HIGH 50%  |             |            |            |        |            
-----------------------------------------------------------------------------------------------------------
-* TS_dram_infrastructure_inst_dram_infrastr | SETUP       |    -0.136ns|     3.469ns|       1|         136
+* TS_dram_infrastructure_inst_dram_infrastr | SETUP       |    -0.895ns|     4.230ns|       7|        3311
   ucture_inst_dram_clk_90_int = PERIOD      | HOLD        |     0.477ns|            |       0|           0
       TIMEGRP         "dram_infrastructure_ |             |            |            |        |            
   inst_dram_infrastructure_inst_dram_clk_90 |             |            |            |        |            
@@ -19302,8 +19297,15 @@ Asterisk (*) preceding a constraint indicates it was not met.
   _dram_infrastructure_inst_mem_clk PHASE   |             |            |            |        |            
          0.833 ns HIGH 50%                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.005ns|     6.656ns|       0|           0
-  ucture_inst_dram_clk_div_int = PERIOD     | HOLD        |     0.415ns|            |       0|           0
+* TS_dram_infrastructure_inst_dram_infrastr | SETUP       |    -0.570ns|     3.903ns|      29|        2885
+  ucture_inst_dram_clk_0_int = PERIOD       | HOLD        |     0.013ns|            |       0|           0
+     TIMEGRP         "dram_infrastructure_i |             |            |            |        |            
+  nst_dram_infrastructure_inst_dram_clk_0_i |             |            |            |        |            
+  nt"         TS_dram_infrastructure_inst_d |             |            |            |        |            
+  ram_infrastructure_inst_mem_clk HIGH 50%  |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.007ns|     6.652ns|       0|           0
+  ucture_inst_dram_clk_div_int = PERIOD     | HOLD        |     0.417ns|            |       0|           0
        TIMEGRP         "dram_infrastructure |             |            |            |        |            
   _inst_dram_infrastructure_inst_dram_clk_d |             |            |            |        |            
   iv_int"         TS_dram_infrastructure_in |             |            |            |        |            
@@ -19311,13 +19313,13 @@ Asterisk (*) preceding a constraint indicates it was not met.
            HIGH 50%                         |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
   PERIOD analysis for net "chan_550_clean_a | SETUP       |     0.025ns|     3.611ns|       0|           0
-  dc_mkid/chan_550_clean_adc_mkid/dcm_clk"  | HOLD        |     0.000ns|            |       0|           0
+  dc_mkid/chan_550_clean_adc_mkid/dcm_clk"  | HOLD        |     0.004ns|            |       0|           0
   derived from  NET "chan_550_clean_adc_mki |             |            |            |        |            
   d/chan_550_clean_adc_mkid/drdy_clk" PERIO |             |            |            |        |            
   D = 3.6364        ns HIGH 50%             |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88  | SETUP       |     0.045ns|    11.318ns|       0|           0
-  MHz HIGH 50%                              | HOLD        |     0.434ns|            |       0|           0
+  TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88  | SETUP       |     0.057ns|    11.306ns|       0|           0
+  MHz HIGH 50%                              | HOLD        |     0.378ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
   TS_dly_clk_n = PERIOD TIMEGRP "dly_clk_n" | MINLOWPULSE |     1.400ns|     3.600ns|       0|           0
    200 MHz HIGH 50%                         |             |            |            |        |            
@@ -19350,29 +19352,29 @@ Asterisk (*) preceding a constraint indicates it was not met.
   _adc_mkid_dcm_clk"         TS_adcmkid1_DR |             |            |            |        |            
   DY_I_p HIGH 50%                           |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  NET "epb_cs_n_IBUF" MAXDELAY = 4 ns       | MAXDELAY    |     1.505ns|     2.495ns|       0|           0
+  NET "epb_cs_n_IBUF" MAXDELAY = 4 ns       | MAXDELAY    |     1.486ns|     2.514ns|       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM | SETUP       |     2.995ns|     7.005ns|       0|           0
-   TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO       | HOLD        |     1.086ns|            |       0|           0
+  TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM | SETUP       |     2.199ns|     7.801ns|       0|           0
+   TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO       | HOLD        |     0.879ns|            |       0|           0
      TIMEGRP "FFS" 10 ns                    |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     4.922ns|     5.078ns|       0|           0
-  NM_GATE_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.305ns|            |       0|           0
-----------------------------------------------------------------------------------------------------------
-  TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP | SETUP       |     5.277ns|     4.723ns|       0|           0
-   "TNM_RD_DATA_SEL" TO TIMEGRP "FFS"       | HOLD        |     0.123ns|            |       0|           0
+  TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP | SETUP       |     5.816ns|     4.184ns|       0|           0
+   "TNM_RD_DATA_SEL" TO TIMEGRP "FFS"       | HOLD        |     0.074ns|            |       0|           0
      10 ns                                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGR | SETUP       |     6.351ns|     3.649ns|       0|           0
-  P "TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"     | HOLD        |     0.856ns|            |       0|           0
+  TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGR | SETUP       |     6.627ns|     3.373ns|       0|           0
+  P "TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"     | HOLD        |     0.583ns|            |       0|           0
        10 ns                                |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGR | SETUP       |     7.185ns|     2.815ns|       0|           0
-  P "TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"     | HOLD        |     0.895ns|            |       0|           0
+  TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.121ns|     2.879ns|       0|           0
+  NM_GATE_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.318ns|            |       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGR | SETUP       |     7.868ns|     2.132ns|       0|           0
+  P "TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"     | HOLD        |     0.380ns|            |       0|           0
        10 ns                                |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.395ns|     2.605ns|       0|           0
-  NM_RDEN_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.805ns|            |       0|           0
+  TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.981ns|     2.019ns|       0|           0
+  NM_RDEN_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.253ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
   TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FRO | N/A         |         N/A|         N/A|     N/A|         N/A
   M TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO      |             |            |            |        |            
@@ -19391,9 +19393,9 @@ Derived Constraints for chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|chan_550_clean_adc_mkid/chan_55|      3.636ns|      3.000ns|      3.611ns|            0|            0|            0|       130764|
+|chan_550_clean_adc_mkid/chan_55|      3.636ns|      3.000ns|      3.611ns|            0|            0|            0|       130763|
 |0_clean_adc_mkid/drdy_clk      |             |             |             |             |             |             |             |
-| chan_550_clean_adc_mkid/chan_5|      3.636ns|      3.611ns|          N/A|            0|            0|       130764|            0|
+| chan_550_clean_adc_mkid/chan_5|      3.636ns|      3.611ns|          N/A|            0|            0|       130763|            0|
 | 50_clean_adc_mkid/dcm_clk     |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
@@ -19403,16 +19405,16 @@ Derived Constraints for TS_dly_clk_n
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|TS_dly_clk_n                   |      5.000ns|      3.600ns|      5.383ns|            0|            6|            0|        25093|
-| TS_dram_infrastructure_inst_dr|      3.333ns|      2.221ns|      3.589ns|            0|            6|            0|        25093|
+|TS_dly_clk_n                   |      5.000ns|      3.600ns|      6.345ns|            0|           36|            0|        25093|
+| TS_dram_infrastructure_inst_dr|      3.333ns|      2.221ns|      4.230ns|            0|           36|            0|        25093|
 | am_infrastructure_inst_mem_clk|             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      3.333ns|      3.589ns|          N/A|            5|            0|        10851|            0|
+|  TS_dram_infrastructure_inst_d|      3.333ns|      3.903ns|          N/A|           29|            0|        10851|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_0_int                    |             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      3.333ns|      3.469ns|          N/A|            1|            0|          729|            0|
+|  TS_dram_infrastructure_inst_d|      3.333ns|      4.230ns|          N/A|            7|            0|          729|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_90_int                   |             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      6.667ns|      6.656ns|          N/A|            0|            0|        13513|            0|
+|  TS_dram_infrastructure_inst_d|      6.667ns|      6.652ns|          N/A|            0|            0|        13513|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_div_int                  |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -19599,14 +19601,14 @@ WARNING:ParHelpers:198 - One or more "EXACT" mode Directed Routing constrained n
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[62].u_iob_dq/stg1_out_rise_0s
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[70].u_iob_dq/stg1_out_fall_0s
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[70].u_iob_dq/stg1_out_rise_0s
-Total REAL time to PAR completion: 21 mins 13 secs 
-Total CPU time to PAR completion: 21 mins 13 secs 
+Total REAL time to PAR completion: 17 mins 56 secs 
+Total CPU time to PAR completion: 17 mins 56 secs 
 
-Peak Memory Usage:  1891 MB
+Peak Memory Usage:  1959 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.
-Timing: Completed - 6 errors found.
+Timing: Completed - 36 errors found.
 
 Number of error messages: 0
 Number of warning messages: 5
@@ -19636,9 +19638,9 @@ Loading device for application Rf_Device from file '5vsx95t.nph' in environment
    "system" is an NCD, version 3.2, device xc5vsx95t, package ff1136, speed -1
 WARNING:ConstraintSystem:65 - Constraint <NET
    "chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk" PERIOD = 3.6364   
-        ns HIGH 50%;> [system.pcf(265750)] overrides constraint <NET
+        ns HIGH 50%;> [system.pcf(265742)] overrides constraint <NET
    "chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/drdy_clk" PERIOD = 3.6364   
-        ns HIGH 50%;> [system.pcf(265748)].
+        ns HIGH 50%;> [system.pcf(265740)].
 
 WARNING:Timing:3223 - Timing constraint TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY
    FROM TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO        TIMEGRP "RAMS" 10 ns; ignored
@@ -19678,23 +19680,23 @@ WARNING:Timing - DCM chan_550_clean_adc_mkid/chan_550_clean_adc_mkid/CLK_DCM
 Timing summary:
 ---------------
 
-Timing errors: 6  Score: 456 (Setup/Max: 456, Hold: 0)
+Timing errors: 36  Score: 6196 (Setup/Max: 6196, Hold: 0)
 
-Constraints cover 539508 paths, 1 nets, and 124280 connections
+Constraints cover 539507 paths, 1 nets, and 124241 connections
 
 Design statistics:
-   Minimum period:  11.318ns (Maximum frequency:  88.355MHz)
-   Maximum path delay from/to any node:   7.005ns
-   Maximum net delay:   2.495ns
+   Minimum period:  11.306ns (Maximum frequency:  88.449MHz)
+   Maximum path delay from/to any node:   7.801ns
+   Maximum net delay:   2.514ns
 
 
-Analysis completed Tue Jul 24 21:54:18 2012
+Analysis completed Wed Jul 25 02:30:17 2012
 --------------------------------------------------------------------------------
 
 Generating Report ...
 
 Number of warnings: 3
 Number of info messages: 3
-Total time: 1 mins 58 secs 
+Total time: 1 mins 59 secs 
 
 
