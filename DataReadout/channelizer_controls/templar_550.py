@@ -529,11 +529,11 @@ class AppForm(QMainWindow):
             self.status_text.setText('DAC turned on. ')       
             print "done"
         else:
-			print "Stopping DAC..."
+            print "Stopping DAC..."
             self.roach.write_int('startDAC', 0)
             self.button_startDAC.setText('Start DAC')
             self.dacStatus = 'off'
-			print "done"
+            print "done"
             self.status_text.setText('DAC turned off. ')       
    
     def loadFreqsAttens(self):
