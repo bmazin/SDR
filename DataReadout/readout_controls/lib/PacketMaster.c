@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
 	copy_beam_file_tree(obs_filepath,path,beam_data);
 
 	create_datasets(obs_filepath,pixel_dataset_name,exptime);
-	update_beammap_names(obs_filepath, pixel_dataset_name, beam_data, pixel_adr);
+	//update_beammap_names(obs_filepath, pixel_dataset_name, beam_data, pixel_adr);
 	photon_counts = (int**)malloc(exptime*sizeof(int*));
 	if (photon_counts < 0)
 		error("Allocating photon_counts failed");

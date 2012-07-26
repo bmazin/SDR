@@ -1,5 +1,5 @@
 #!/bin/bash
-ROACHES=(0)
+ROACHES=(0 1 2 3)
 CLK="550"
 BOF="chan_550_clean_2012_Jul_03_0934.bof"
 
