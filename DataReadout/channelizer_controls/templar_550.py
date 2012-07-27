@@ -279,7 +279,7 @@ class AppForm(QMainWindow):
         
     def define_DDS_LUT(self, phase = [0.]*256):
         fft_len=2**9
-        ch_shift = 144  # This number should be verified in the utility ddc2x_v*.py
+        ch_shift = int(self.textbox_dds_shift.text())
         freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
         f_base = float(self.textbox_loFreq.text())
         for n in range(len(freqs)):
@@ -681,6 +681,11 @@ class AppForm(QMainWindow):
         self.textbox_offset = QLineEdit('0')
         self.textbox_offset.setMaximumWidth(50)
         label_offset = QLabel('DAC sync. lag:')
+		
+        # offset in lut
+        self.textbox_dds_shift = QLineEdit('144')
+        self.textbox_dds_shift.setMaximumWidth(50)
+        label_dds_shift = QLabel('DDS sync. lag:')
 
         # Power sweep range. 
         self.textbox_powerSweepStart = QLineEdit('16')
@@ -771,7 +776,11 @@ class AppForm(QMainWindow):
         hbox10 = QHBoxLayout()
         hbox10.addWidget(label_offset)
         hbox10.addWidget(self.textbox_offset)
+        hbox11 = QHBoxLayout()
+        hbox11.addWidget(label_dds_shift)
+        hbox11.addWidget(self.textbox_dds_shift)
         gbox1.addLayout(hbox10)
+        gbox1.addLayout(hbox11)
         gbox1.addWidget(self.button_define_LUTs)
         gbox1.addWidget(self.button_startDAC)
 
