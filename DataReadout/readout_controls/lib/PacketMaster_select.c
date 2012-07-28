@@ -51,6 +51,7 @@
 #define NPIXELS_PER_ROACH 3
 //max number of possible photon counts in a second of data for a pixel 
 #define MAX_EVENTS_PER_SEC 2500
+#define DEBUG 0
 
 void append_path(const char* path, char* rest);//creates a relative file path from pwd to a filename
 void add_group_attrs(hid_t group);//adds attributes to an H5 group so that it's readable by PyTables
@@ -221,7 +222,7 @@ int main(int argc, char *argv[])
 			if (sec[r] < exptime)
 			{
 				N_bytes = socket_ready(r,socket_id[r],BUFSIZE);
-				if (N_bytes > 0)
+				if (DEBUG == 1 && N_bytes > 0)
 					printf("%d bytes ready\n",N_bytes);
 				if (N_bytes >= BUFSIZE)
 				{
