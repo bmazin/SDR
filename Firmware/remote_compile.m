@@ -1,4 +1,4 @@
 cd('projects')
-open_system('chan_550_clean.mdl')
+open_system('chan_532.mdl')
 bee_xps
 
