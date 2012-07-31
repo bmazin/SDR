@@ -48,7 +48,7 @@
 //change number of roaches here and adjust hostnames in connect_to_roach()
 #define NROACHES 1
 //The number of channels or pixels corresponding to each roach
-#define NPIXELS_PER_ROACH 3
+#define NPIXELS_PER_ROACH 5
 //max number of possible photon counts in a second of data for a pixel 
 #define MAX_EVENTS_PER_SEC 2500
 #define DEBUG 0

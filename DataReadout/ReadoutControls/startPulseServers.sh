@@ -1,7 +1,6 @@
 #!/bin/bash
 ROACHES=(0 1 2 3)
 
-
 check_status()
 {
     status=$?
@@ -12,8 +11,6 @@ check_status()
     fi
     return 0
 }
-
-
 
 echo -n "Killing old PulseServer Processes "
 for i in ${ROACHES[*]}

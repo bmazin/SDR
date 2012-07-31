@@ -215,9 +215,9 @@ class StartQt4(QMainWindow):
 		logfile = 'logs/'+str(self.obsname)+'.log'
 		self.ui.file_name_lineEdit.setText(str(self.obsfile))
 		HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
-		proc = subprocess.Popen("h5cc -shlib -pthread -o PacketMaster PacketMaster.c",shell=True)
+		proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
 		proc.wait()
-		self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 ./PacketMaster %s > %s"%(str(self.datadir)+'/'+self.obsfile,logfile),shell=True)
+		self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s > %s"%(str(self.datadir)+'/'+self.obsfile,logfile),shell=True)
 		print "PacketMaster process started with logfile %s" % logfile
 		print "Header written to data file, beginning observation..."
 		
