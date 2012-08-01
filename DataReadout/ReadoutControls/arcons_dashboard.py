@@ -93,13 +93,13 @@ class StartQt4(QMainWindow):
 		self.taking_sky = False
 
 		#default beammap file, can be updated in gui with browse button
-		self.beammapfile = "beamimage.h5"
+		self.beammapfile = os.environ['BEAMMAP_PATH']#"beamimage.h5"
 
 		#set default directory, binning routine directory, and data directory
 		self.defaultdir = QDir.currentPath()
 		#self.bindir = str(self.defaultdir)+"/bin" # path where dataBin.py is saved and creates binned files
 		self.bindir = "./bin"
-		self.datadir = QDir.currentPath() #starts as default path until gui specifies new data path
+		self.datadir = os.environ['MKID_DATA_DIR']#QDir.currentPath() #starts as default path until gui specifies new data path
 		#put default directory in data directory search line upon startup
 		self.ui.data_directory_lineEdit.setText(self.datadir)
 		self.roachdir = "./" #where the roaches (or Ben's client) will look for directions on where to put data
@@ -217,7 +217,7 @@ class StartQt4(QMainWindow):
 		HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
 		proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
 		proc.wait()
-		self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s > %s"%(str(self.datadir)+'/'+self.obsfile,logfile),shell=True)
+		self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s > %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
 		print "PacketMaster process started with logfile %s" % logfile
 		print "Header written to data file, beginning observation..."
 		

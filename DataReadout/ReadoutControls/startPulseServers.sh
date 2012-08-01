@@ -1,5 +1,5 @@
 #!/bin/bash
-ROACHES=(0 1 2 3)
+ROACHES=(1)
 
 check_status()
 {
