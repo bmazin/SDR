@@ -68,9 +68,10 @@ class StartQt4(QMainWindow):
 	def on_press(self, event):
 		self.resfreq = event.xdata
 		self.ui.frequency.setText(str(self.resfreq))
+		self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx],'b.')
 		self.ui.plot_3.canvas.ax.plot(self.Res1.I[self.indx],self.Res1.Q[self.indx],'b.')
 		self.indx=where(self.Res1.freq >= self.resfreq)[0][0]
-		self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx])
+		self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx],'r.')
 		self.ui.plot_2.canvas.draw()
 		self.ui.plot_3.canvas.ax.plot(self.Res1.I[self.indx],self.Res1.Q[self.indx],'r.')
 		self.ui.plot_3.canvas.draw()
