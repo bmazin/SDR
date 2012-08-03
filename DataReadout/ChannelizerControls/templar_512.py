@@ -274,7 +274,7 @@ class AppForm(QMainWindow):
         self.status_text.setText('done defining DAC freqs. ')
         
     def define_DDS_LUT(self, phase = [0.]*256):
-        ch_shift = 147  # This number should be verified in the utility ddc2x_v*.py
+        ch_shift = int(self.textbox_dds_shift.text())
         freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
         f_base = float(self.textbox_loFreq.text())
         for n in range(len(freqs)):
@@ -669,6 +669,11 @@ class AppForm(QMainWindow):
         self.textbox_offset.setMaximumWidth(50)
         label_offset = QLabel('DAC sync. lag:')
 
+        # offset in lut
+        self.textbox_dds_shift = QLineEdit('147')
+        self.textbox_dds_shift.setMaximumWidth(50)
+        label_dds_shift = QLabel('DDS sync. lag:')
+
         # Power sweep range. 
         self.textbox_powerSweepStart = QLineEdit('16')
         self.textbox_powerSweepStart.setMaximumWidth(50)
@@ -678,13 +683,13 @@ class AppForm(QMainWindow):
         label_powerSweepStop = QLabel('Stop atten:')
 
         # Save directory
-        self.textbox_saveDir = QLineEdit('/home/sean/data/20120713/')
+        self.textbox_saveDir = QLineEdit('/home/sean/data/20120802/')
         self.textbox_saveDir.setMaximumWidth(250)
         label_saveDir = QLabel('Save directory:')
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20120713/freqs.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/20120802/freq0.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
@@ -758,7 +763,11 @@ class AppForm(QMainWindow):
         hbox10 = QHBoxLayout()
         hbox10.addWidget(label_offset)
         hbox10.addWidget(self.textbox_offset)
+        hbox11 = QHBoxLayout()
+        hbox11.addWidget(label_dds_shift)
+        hbox11.addWidget(self.textbox_dds_shift)
         gbox1.addLayout(hbox10)
+        gbox1.addLayout(hbox11)
         gbox1.addWidget(self.button_define_LUTs)
         gbox1.addWidget(self.button_startDAC)
 
