@@ -1,0 +1,37 @@
+iwindow zoom option
+
+When an iwindow was created with the menu option an interactive
+zoom is available.  The zoom is selected from the menu bar Zoom
+drop-down list:
+  Zoom image area
+  Toggle coordinates on/off
+  Resize zoom area
+  Reset to default zoom area
+
+Zoom image area
+  This gives a bubble-like round magnified area, somewhat like a
+  magnifying glass.  In the inner part of this area (the inner 70%
+  by default) the magnification is constant.  From there to the
+  outer edge is a transition region where the magnification goes
+  to one.  This technique makes navigating the mag area easier.
+  A 3-button mouse is assumed.  The left button increases the mag
+  factor.  The middle button decreases it.  The right button exits
+  the magnifier.
+
+Toggle coordinates on/off
+  Select this to toggle the display of pixel coordinates when the
+  magnifier is used.
+
+Resize zoom area
+  The size of the magnifier may be changed with this option.  Two
+  circles are shown on the image.  Drag the circles to the desired
+  size.  The inner circle is the area of constant magnification.
+  The outer circle is the outer edge of the transition region, the
+  limit of the magnifier.  Drag the center to reposition both circles
+  to adjust to some object in the image.
+
+Reset to default zoom area
+  Resets the magnifier back to the default values: outer circle 240
+  pixels across, inner circle %70 of the outer circle radius, mag
+  of 2.
+

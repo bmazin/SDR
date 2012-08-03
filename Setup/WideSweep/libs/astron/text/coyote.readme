@@ -1,0 +1,47 @@
+/coyote                                                   February 2011
+
+The procedures in this directory are taken from the IDL program library (the
+"Coyote library") developed by David Fanning ( http://www.idlcoyote.com/ ).  
+They are duplicated here because they are used by other procedures in the
+Astronomy library.    Users who have already have the Coyote library installed
+can delete this directory.     Please inform  wayne.landsman@nasa.gov if there
+are any discrepancies between these procedures and those in the current Coyote
+library.  
+
+
+Contents of /pro/coyote
+
+ASPECT() - Calculate position coordinates to return a plot with given aspect ratio
+CENTERTLB - Position a widget program on the display at an arbitrary location.
+cgCOLOR() - Obtain drawing colors by name 
+cgCOLORFILL - Wrapper to PolyFill to fill a polygon 
+cgCONTOUR - Wrapper to Contour to with extra features 
+cgControl - Set various properties of a cgWindow object
+cgDefCharSize - Define a default character size for Coyote Graphics routines
+cgERASE - Wrapper to ERASE to erase a graphics window with a particular color.
+cgPLOT - Wrapper to PLOT that provide device independence
+cgPLOTS - Wrapper to PLOTS that provide device independence
+cgquery - Provide information about  current cgWindow applications
+cgShow - Select the Cgwindow application to bring forward on the display
+cgSet - Make the selected cgWindow application the "current" window
+cgSnapshot() - Screen dumps with proper color decomposition
+cgTEXT - Wrapper to XYOUTS that provide device independence
+cgWINDOW - Implement a "smart" resizeable graphics window
+COLOR24() - Convert a RGB color triple into the equivalent 24-bit long integer.
+COLORSAREIDENTICAL() - Returns a 1 if the two input colors refer to the same color
+DECOMPOSEDCOLOR = Determine if current graphics device is using color decomposition
+cERROR_MESSAGE() - A device independent messaging function
+FIXPS - Orient an IDL-produced PostScript landscape mode file right side up
+FSC_BASE_FILENAME - Extract file base name, directory and extension 
+GETDECOMPOSEDSTATE() - Get the color decomposition state of the current device. 
+HASIMAGEMAGICK - Determine if IMageMagick is available on the system
+PICKCOLORNAME - Provide a blocking widget for selecting a color name
+PROGRAMROOTDIR - Portable way of finding root directory of program distribution
+PS_BACKGROUND - Device-independent way to set the background color in  PostScript
+PSWINDOW - Calculate size of a PostScript window with specified aspect ratio
+SETDECOMPOSEDSTATE - Set the color decomposition state of the current  device
+SETDEFAULTVALUE  - Set default values for positional and keyword arguments
+STR_SIZE() - Return the proper character size to fit a string in a window
+SYMCAT() - Provide plotting symbols not in the standard PSYM definitions.
+WindowAvailable() - Return 1 if specified window number is open or available
+XCOLORS - Enhanced version of XLOADCT to interactively load color tables

@@ -1,0 +1,11 @@
+Known problems in the iwindow object
+
+If a new image smaller than the current image
+is set it sometimes doesn't display correctly.
+  Try resizing the window a few times to fix this.
+
+Resizing the window can sometimes lose a scroll bar.
+  Resize again, maybe several times.
+
+Sometimes exiting the zoom mode will cause any mouse
+motion to pan the image.  Left click to clear this.

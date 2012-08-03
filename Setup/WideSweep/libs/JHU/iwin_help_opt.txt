@@ -1,0 +1,24 @@
+iwindow menu Options
+
+This drop-down list gives the following options:
+  Toggle image drag on/off
+  Save image as a JPEG
+  Save image as a PNG
+
+Toggle image drag on/off
+  By default the image may be panned by dragging inside the
+  window.  Sometimes this must be turned off (for example,
+  if the mouse is used to draw on the image).  This option
+  toggles image dragging.
+
+Save image as a JPEG
+  The image may be saved in a JPEG file.  This format is a
+  lossy format, the saved image is not exactly the displayed
+  image.  A default name is given and a default quality factor.
+  A low quality factor can cause the image to appear degraded.
+
+Save image as a PNG
+  The image may be saved in a PNG file.  This format is
+  non-lossy, the image will be saved exactly as it is in
+  memory.  Use this when there may be embedded scaling info
+  in the image.

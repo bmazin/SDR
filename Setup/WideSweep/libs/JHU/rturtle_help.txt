@@ -1,0 +1,235 @@
+
+  The rturtle object does turtle graphics in a relative coordinate
+  system.  The relative coordinate system may be rotated, scaled,
+  and offset relative to the device coordinate system.  This allows
+  plots to be designed in the simplest system and then shifted, scaled,
+  and rotated automatically.
+
+  An rturtle object is created by the command:
+
+	t = obj_new('rturtle')
+
+  A number of keywords can be given in the above call to customize
+  the object:
+    ORIENTATION=ang Angle of turtle coordinate system x axis from
+      screen x axis (Deg CCW).  Def = 0.
+    SCALE=sc Size of turtle coordinate system units relative to
+      device units (pixels).  Def = 1.
+      For sc=1 drawing a distance of 100 will be 100 pixels.
+      For sc=2 drawing a distance of 100 will be 200 pixels.
+    REFPOINT=[x,y] Origin of turtle coordinate system.
+    /DEVICE, /NORMAL, /DATA specifiy system for [x,y].  Def=/dev.
+    COLOR=clr Color of lines or polygon fill.  Def = !p.color.
+    OCOLOR=oclr Polygon outline color. Def = clr.
+    LINESTYLE=sty Style for plotted lines.  Def = !p.linestyle.
+    THICKNES=thk Thickness for plotted lines.  Def = !p.thick.
+    /NOCLIP means do not clip to plot window edges.  Def = do clip.
+
+
+  The Relative Turtle Coordinate (RTC) System:
+	The default Relative Turtle Coordinate system is the same as
+  device coordinates. The origin would be at the lower left corner,
+  1 distance unit is a pixel, and the x and y axes are same same as
+  device coordinates. A new origin may be set using the REFPOINT=[x,y]
+  keyword. By default x and y are device coordinates, but any IDL 
+  coordinate system may be used to set a new origin. A new scale may
+  be set using the SCALE=sc keyword. If SCALE is set to 2 then 100
+  units will be 200 pixels. The angle of the RTC relative to the device
+  coordinate system may be set using the ORIENTATION keyword.
+	For example, if REFPOINT=[100,100] and SCALE=2 then the origin
+  of the Relative Turtle Coordinate (RTC) System will be at device
+  coordinates [100,100]. Turtle X=50 will be at device x coordinate 200
+  (50 units or 100 pixels from the origin at dev x = 100). 
+
+
+  The following methods are available in the rturtle object:
+
+  HELP
+    List detailed help on the rturtle object and it's methods.
+    Keywords:
+    OUT=txt  Help text returned in a string array.
+    /QUIET   Do not list help text to screen.
+
+  STATUS
+    Shows turtle internal state values.  Useful for debugging.
+    
+  DRAW, dist, ang
+    Turn ang deg (CCW) from current pointing angle and then plot
+    a line from current position to position dist units away.
+    Points forward after draw.
+    Keywords:
+    TOX=tox, TOY=toy  Means do not draw past tox in X or toy in Y in RTC.
+      These are convenience keywords.  A large draw distance may be
+      given and these keywords will clip the result to the specified
+      limits.  May give TOX or TOY or both (uses shortest clipping).
+
+  MOVE, dist, ang
+    Turn ang deg (CCW) from current pointing angle and then move
+    from current position to position dist units away.
+    Points forward after move.
+    Keywords:
+    TOX=tox, TOY=toy  Means do not move past tox in X or toy in Y in RTC.
+      These are convenience keywords.  A large move distance may be
+      given and these keywords will clip the result to the specified
+      limits.  May give TOX or TOY or both (uses shortest clipping).
+
+  DRAWXY, dx, dy
+    Draw from current position to a position dx and dy away in RTC.
+    Starting pointing angle is ignored but is forward after draw.
+    DRAW is polar form, DRAWXY is rectangular form.
+
+  MOVEXY, dx, dy
+    Move from current position to a position dx and dy away in RTC.
+    Starting pointing angle is ignored but is forward after move.
+    MOVE is polar form, MOVEXY is rectangular form.
+
+  DRAWTOXY, x, y
+    Draw from current position to the position [x,y] in RTC.
+    So drawtoxy,0,0 would draw to the reference point which is
+    the origin of the RTC.
+
+  MOVETOXY, x, y
+    Move from current position to the position [x,y] in RTC.
+    So movetoxy,0,0 would move to the reference point which is
+    the origin of the RTC.
+
+  Making polygons:
+  The above methods may be used to construct a polygon using the
+  following keywords:
+    /START start a turtle polygon. The command with this keyword
+      will create one side of the polygon, the start and end points
+      of the segment drawn or moved, so the first 2 points of the
+      polygon are added with this keyword.
+    /CLOSE close current turtle polygon using first point, after
+      the command is done.  So two of the above MOVES or DRAWS
+      (in any combination) can be used to make a triangle (filled
+      or outlined).  The following can be used with /CLOSE:
+      /FILL fill polygon with clr.
+      /OUTLINE plot outline with oclt, thk, sty.
+
+  Setting color, linestyle, thickness:
+  The above methods also all allow extra keywords which be be sent
+  to the SET method.  This allows, for example, a new color or
+  thickness to be set on that call.  Those values will stay in effect
+  until changed.
+
+  XTURTLE
+    Toggle turtle symbol on or off.  Can force on or off using the
+    keywords /ON and /OFF.
+
+  CIRCLE, r
+    Draw a circle of radius r.  Color of circle may be set using
+    OCOLOR=oclr.  Can fill using /FILL and set fill color using
+    COLOR=clr.  Can set number of sides of a regular polygon using
+    the keyword N=n.
+    ANG=ang rotate circle (polygon) about center by ang (deg CCW).
+      Default is relative to current pointing direction.
+      The first polygon point will be in the forward direction.
+    /ABS means angle is for unrotated device coords.
+      The first polygon point will be in the device +x direction.
+    /REL means angle is for relative turtle coordinates (RTC).
+      The first polygon point will be in the RTC +x direction.
+    All keywords apply only to this circle and do not change the
+    global values.
+
+  CHORD, rr
+    Draw chords of a circle at offset from cirle center.  rr is the
+    array of offsets.  RADIUS=rd sets the radius of the circle (def=10).
+    ANG=ang works same as for circle, along with /ABS and /REL.
+    ang is the angle normal to the chords, so for ang=0 the chords
+    are at right angles to the pointing direction.
+    COLOR=clr, THICKNESS=thk, LINESTYLE=sty allowed.
+    All keywords apply only to these chords and do not change the
+    global values.
+
+  SAVE
+    Save current location and pointing direction.
+    May set a new pointing direction using ANGLE=ang which sets
+    a new direction in relative turtle coordinates.  Use with
+    /ABS to set a new direction in unrotated device coordinates.
+
+  RESTORE
+    Restores last saved location and pointing direction.
+    May set a new pointing direction using ANGLE=ang which sets
+    a new direction in relative turtle coordinates.  Use with
+    /ABS to set a new direction in unrotated device coordinates.
+
+  SET
+    This routine allows internal state values to be changed.
+    Relative Turtle Coordinates (RTC) is the working coordinate system.
+    ORIENTATION=orient    Set a new angle for the RTC.
+    SCALE=sc		  Set a new scale for the RTC.
+    REFPOINT=cen	  Set a new origin for the RTC.
+      /DEVICE, /NORMAL, /DATA  Coordinate system of REFPOINT.
+  	  Can set a new reference point to get a new plot location.
+    COLOR=clr		  Set new line or fill color.
+    OCOLOR=oclr 	  Set new outline color.
+    LINESTYLE=sty	  Set new linestyle.
+    THICKNESS=thk	  Set new line thickness.
+    NOCLIP=noclip	  Change clipping mode.
+  	  NOCLIP=0 means DO CLIP to the plot window.
+    TON=ton		  Display turtle symbol at current point and dir.
+  	  The turtle symbol is useful when laying out a turtle graphics
+  	  plot.  It shows the current position and direction of the
+  	  turtle.
+    TOFF=toff		  Erase turtle symbol.
+    TSTATE=tstate	  Specify turtle symbol state (1=on, 0=off).
+  	  This is useful in some case.  For example, if the screen gets
+  	  erased while the turtle was on this item should be set to
+  	  0 to specify that the turtle is now off.  Otherwise
+  	  When redrawn to erase it (using XOR) it would unintentionally
+  	  be replotted instead.
+    TURTLESCALE=tsc       Set turtle size scale (def=1.).
+    ANG=ang		  Set new pointing direction without moving.
+
+  GET
+    Get internal values.
+    ORIENTATION=orient    Get orientation angle of the RTC.
+    SCALE=sc		  Get scale of the RTC.
+    ANG=ang		  Get current pointing direction.
+    CURR_X=cx		  Get current x position in RTC.
+    CURR_Y=cy		  Get current y position in RTC. 
+    COLOR=clr		  Get line or fill color.
+    OCOLOR=oclr 	  Get outline color.
+    LINESTYLE=sty	  Get linestyle.
+    THICKNESS=thk	  Get line thickness.
+    CURR_X and CURR_Y are useful later with MOVETOXY to return to
+    a position if it was earlier obtained using GET.
+
+ 
+  --------------------------------------------------------------
+
+  INTERNAL METHODS
+
+  POLY = Draw polygon about current point.
+    xx, yy = polygon x and y arrays in dev coords.
+      Note these are device coordinates.
+    Polygon plot will not update current point
+    or direction.
+    /FILL fill polygon with COLOR=clr (def=global color),
+    /OUTLINE outline polygon with given attributes
+      (def=global attributes).
+    ANG=ang Rotate polygon about current point by ang.
+      Default is relative to current pointing direction.
+    /ABS means angle is for unrotated device coords.
+    /REL means angle is for relative turtle coordinates.
+    All keywords apply only to this polygon and do not change
+    the global values.
+
+  PLOT = Draw or Move.  Scalars only.
+    PEN: 0=move, 1=draw.
+    /POLAR p1=dist, p2=ang else p1=dx, p2=dy
+    /REF move or draw relative to reference point,
+      else last point.
+    TOX=tox Do not move past x = tox (non-polar).
+    TOY=toy Do not move past y = toy (non-polar).
+    /START start a turtle polygon (made from draws
+      and moves).
+    /CLOSE close current turtle polygon using first
+      point.
+      /FILL fill polygon with clr.
+      /OUTLINE plot outline with oclt, thk, sty.
+    Any keywords allowed to SET may be given (color, ocolor, thickness,
+    linestyle,...) and will change the current global settings.
+
+  --------------------------------------------------------------

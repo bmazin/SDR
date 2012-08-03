@@ -1,0 +1,22 @@
+Some iwindow examples
+ 
+Make a couple test images:
+ 
+  img1 = bytscl(makez(2000,500))
+  img2 = bytscl(makez(400,1500,5))
+ 
+Display first image in an iwindow:
+ 
+  a = obj_new('iwindow',img1,/menu)
+ 
+Now display the second image in the window:
+ 
+  a->set,image=img2,title='Image 2'
+ 
+Then the first again:
+ 
+  a->set,image=img1,title='Image 1'
+ 
+Autoscroll image:
+ 
+  for i=0,300 do begin a->set,view=[i,0] & wait,.01 & endfor

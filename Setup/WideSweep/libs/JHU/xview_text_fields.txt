@@ -1,0 +1,27 @@
+
+  Text fields in XVIEW:
+
+  Directory: Displays the current search directory.  It starts
+     with the current directory, but you may also enter a directory
+     in this field.  It is also set when the Directory Hotlist button
+     is used.
+
+  File name: This is usually the file search wild card but you may
+     enter an actual file name here.  Each of the supported image
+     types automatically enters a wild card here when selected.
+     The file types are assumed to be lower case, so upper case
+     files types may be missed unless this field is manually
+     changed if needed.
+
+  Known images: lists all images in the current search directory with
+     the file type in the wildcard in the File name field.  To display
+     one of these images just click on it.
+
+  Last image: the unlabeled text field below the Known images list shows
+     the last image file displayed.  This file name may be swept up by
+     the mouse from this field.
+
+  Image mag: this field is set by the Image Magnification button but
+     may also have a value entered directly.  This is the size factor
+     applied to the image before it is displayed.  This allows large
+     images to be viewed as smaller copies.

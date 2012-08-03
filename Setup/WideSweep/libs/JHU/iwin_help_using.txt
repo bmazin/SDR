@@ -1,0 +1,41 @@
+Overview on using an iwindow
+ 
+An iwindow is an IDL object that can display a given image
+in a resizable window.
+
+Some features of iwindows
+
+The window may be resized by dragging a side or corner.
+
+If the window is smaller than the image the window will have
+  scroll bars.  The image may also be scrolled by dragging it.
+
+Multiple iwindows may be used at one time.
+
+iwindows allow a lot of program control.  A new image may be given,
+  a new title may be given, the window size may be changed, the
+  window viewport may be changed, the image scaling may be changed.
+
+Internal iwindow values may be retrieved: the raw image, the displayed
+  image (scaled), the image type (TRUE), the window index, the draw
+  widget ID, the viewport, the viewport midpoint, the scaling option,
+  and the scaling parameters.
+
+An optional menu may be requested on an iwindow to provide a number of
+  interactive functions.  The image may be scaled in a variety of ways.
+  It may be saved as a JPEG or PNG.  A zoom option is available that can
+  show individual pixels and optionally list their pixel coordinates.
+
+To set up an iwindow object:
+
+   a = obj_new('iwindow',[image],[/menu])
+
+ where a is a new iwindow object.
+       image is an optional initial image.
+       /menu gives an optional menu with scaling,
+         zoom, and save options.
+
+To terminate an iwindow object:
+
+   obj_destroy, a
+

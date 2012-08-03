@@ -1,0 +1,13 @@
+;
+;   This @file sets up all the common blocks that
+;   need to be defined before using some of the HEAO A-1
+;   HBR routines
+;                                      H.C. Wen
+;
+def_hbrh
+def_hbrdbs
+
+;   Make these common blocks available at the main level
+
+common def_hbrh
+common def_hbrdbs

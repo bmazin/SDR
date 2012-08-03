@@ -1,0 +1,40 @@
+*-----------------------------------------------------
+*  Definitions of common ellipsoid
+*  (To be extended as needed)
+*  Ray Sterner, 2002 Apr 18
+*  See http://164.214.2.59/GandG/wgs84dt/ellips.txt
+*  This file is in .../idlusr/ellipsoid_definitions.txt
+*-----------------------------------------------------
+*  a = semimajor axis in meters
+*  f = flattening factor
+*  name = name of ellipsoid
+*-----------------------------------------------------
+
+*      a           1/f          Name
+  6377563.396   299.3249646     Airy
+  6377340.189   299.3249646     Airy (Modified)
+  6378160.      298.25          Australian National
+  6377397.155   299.1528128     Bessel 1841
+  6377483.865   299.1528128     Bessel 1841 (Namibia)
+  6378206.400   294.9786982     Clarke 1866
+  6378249.145	293.465000	Clarke 1880
+  6377298.556   300.8017        Everest (Brunei, E. Malaysia (Sabah & Sarawak))
+  6377276.345   300.8017        Everest 1830
+  6377301.243   300.8017        Everest 1956 (India and Nepal)
+  6377309.613   300.8017        Everest (Pakistan)
+  6377304.063   300.8017        Everest 1948 (W. Malaysia and Singapore)
+  6377295.664   300.8017        Everest 1969 (W. Malaysia)
+  6378137.      298.257222101   Geodetic Reference System 1980 (GRS 80)
+  6378200.      298.3           Helmert 1906
+  6378270.      297.            Hough 1960
+  6378160.      298.247         Indonesian 1974
+  6378388.000   297.000000      International
+  6378245.      298.3           Krassovsky 1940
+  6378155.      298.3           Modified Fischer 1960
+  6378160.000   298.250000      South American 1969
+  6378135.      298.26          WGS 1972
+  6378137.000   298.257223563   WGS 84
+  3396190.      169.8           Mars MOLA
+        1.      1D500           Unit Sphere
+  1000000.      1D500           1000 km Sphere
+  71492000.     15.414403	Jupiter IAU

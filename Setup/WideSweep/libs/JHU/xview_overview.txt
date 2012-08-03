@@ -1,0 +1,12 @@
+
+  XVIEW is a simple image viewing widget with
+  a few processing tools available.  Screen windows
+  may also be saved as images in a number of formats.
+
+  XVIEW is not meant to be a complete image procesing tool,
+  it is useful for loading an image to a screen window where
+  IDL can then do more processing.  The result may be saved
+  to an image file using XVIEW.
+
+  A few basic image tools are provided and the user may add
+  custom processing (see help for the buttons).

@@ -1,0 +1,44 @@
+
+  XVIEW buttons
+
+  Directory Hotlist
+      Gives quick access to commonly used directories.  Can add
+      the current search directory to the hot list or remove hotlist
+      directories.  This option has a browse suboption to allow
+      directory navigation using the mouse.
+
+  Help
+      Displays help text files.
+
+  Quit
+      Exits from XVIEW.
+
+  Erase
+      Deletes all screen windows.  Don't hit this accidently.
+
+  Change Type ...
+      Sets expected image type to one selected fro the pull down menu.
+      This must be down to change image type, setting the wild card
+      field will not work.  This options sets the wild card field.
+
+  Image Magnification ...
+      Gives a list of commonly useful mag factors to apply to the
+      image before display.  A mag factor may also be entered directly.
+
+  Tools and Functions ...
+      Gives a list of options for modifying or examining the current
+      image (the active screen window) or modifying the color table.
+
+  Save image as ...
+      Allows saving the current screen window as an image of the
+      selected format.
+
+  -----------------------------------------------------
+
+  User defined buttons (see "Buttons" -> "User defined buttons" for details).
+
+  PRINT
+      A pull down menu with the user defined print options.
+
+  PROCESS
+      A pull down menu with the user defined processing options.

@@ -1,0 +1,65 @@
+Setting image scaling under program control
+
+In addition to interactively setting image scaling, it may
+be set under program control using the object's SET method.
+
+Example:  If the iwindow object is named a:
+
+  a->set, scaling=sc, par=par
+
+  Where sc is the scaling option value, 0 to 7.
+  par is a structure with the values of the scaling
+  parameters as described below.  The above call will
+  apply the requested scaling to the current image in
+  the iwindow.
+
+Here are the available scaling options:
+  0 = No scaling
+  1 = Scale to image min/max
+  2 = Scale to specified min/max
+  3 = Percentile scaling
+  4 = Variance scaling
+  5 = Unsharp masking
+  6 = Interactive scaling
+  7 = Apply scaling from last interactive
+
+See the help on "iwindow menu Scaling" for a description
+of these scaling options.
+
+Commands and structures:
+
+0 = No scaling
+  Internal IDL command: None.
+  Parameter structure: None.
+
+1 = Scale to image min/max
+  Internal IDL command: bytscl(img)
+  Parameter structure: None.
+
+2 = Scale to specified min/max
+  Internal IDL command: scalearray(img,mn,mx)
+  Parameter structure: par = {min:min, max:max}
+
+3 = Percentile scaling
+  Internal IDL command: ls(img,lo,hi)
+  Parameter structure: par = {lo:min, hi:max, nbins:2000, quiet:0}
+
+4 = Variance scaling
+  Internal IDL command: bytscl(varf(img,wid)<thresh)
+  Parameter structure: par = {width:3, thresh:100}
+
+5 = Unsharp masking
+  Internal IDL command: ls(img-wt*smooth(img,wid),lo,hi)
+  Parameter structure: par = {wt:0.5, width:5, lo:1, hi:1, nbins:2000, quiet:0}
+
+6 = Interactive scaling
+  Internal IDL command: img_ice, img, scale=par
+  Parameter structure: None.  Internally handled.
+
+7 = Apply scaling from last interactive
+  Internal IDL command: img_ce, img, par
+  Parameter structure: None.  Internally uses par returned from img_ice.
+
+All these scalings are handled by the IDLUSR routine img_scale.
+The details given here are intended to help in understanding the
+parameter structures needed.

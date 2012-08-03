@@ -1,0 +1,34 @@
+
+  XVIEW user defined buttons
+
+  XVIEW allows the user to defined options which are set up
+  as XVIEW buttons at run time.  These options are defined
+  in a simple text file called xview.txt in the user's
+  home directory.  Currently two types of options are supported,
+  print and process.  The setup file has a simple format of one
+  line per option:
+
+	type: label text / comand or printer
+
+  type is either the word print or process.
+  label text is the text that will appear on the button so
+    should not be too long.
+  comand or printer can a printer number or substring of the
+    printer description given by psinit,/list, or a command to
+    be executed if type is process.
+
+  Null lines and lines with * as the first character are ignored.
+  An example setup file is
+
+*------  xview.txt = user defined xview commands  ---------
+*       R. Sterner, 1997 Oct 1
+
+print: Phaser 340 paper / Paper Color
+print: Phaser 340 trans / Transparency Color
+
+process: Negative / imgneg
+
+
+
+  Note: if printer numbers were used the vivid color option would
+  not work.  This option appears after the print command is requested.

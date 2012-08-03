@@ -1,0 +1,85 @@
+iwindow menu Scaling
+
+This drop-down list gives the following options:
+  0 = No scaling
+  1 = Scale to image min/max
+  2 = Scale to specified min/max
+  3 = Percentile scaling
+  4 = Variance scaling
+  5 = Unsharp masking
+  6 = Interactive scaling
+  7 = Apply scaling from last interactive
+
+Interactive image scaling allows an unscaled image to be
+loaded in the iwindow and then scaled as desired.  For
+example, a floating image with values from 0 to 1 may be
+loaded and then scaled to the image min and max.
+
+The number for each scaling option the value to give when
+setting the scaling under program control.
+
+0 = No scaling
+  This just displays the image as is.  If it happens to have
+  a range of 0 to 255 it may show well.  If the range is
+  something else it will display the image value mod 256, so
+  large value ranges will show banded contours.
+
+1 = Scale to image min/max
+  This displays the image with the minimum value scaled to 0
+  and the maximum value scaled to 255.  This option may work
+  well for many images.
+
+2 = Scale to specified min/max
+  This option allows a min and max to be entered.  The image
+  is clipped to these limits and then scaled 0 to 255 for
+  display.  Any new image loaded will use the same scaling
+  values, which may or may not be useful for that image.
+  The user may enter the min and max values.
+
+3 = Percentile scaling
+  This is a useful autoscaling option.  An image histogram is
+  computed and a lower and upper clipping applied.  The default
+  is to clip 1 percent off the low and high end of the image.
+  This often gives a good result.  The user may enter the lower
+  and upper histogram clipping limits.
+
+4 = Variance scaling
+  This option is useful for looking for image defects, like hot
+  of cold pixels.  The image variance is computed in a square
+  neighborhood around each pixel.  Resulting values from 0 to
+  a set cutoff are scaled for display.  The user may enter the
+  neighborhood width and cutoff.
+
+5 = Unsharp masking
+  A smoothed copy of the image may be subtracted from the original
+  image.  The smoothed version may be weighted first.  The result
+  is percentil scaled for display.  This is a form of image
+  sharpening.  The user may enter the smoothing width and the
+  weighting factor.  Also the percentile scaling parameters may be
+  entered.
+
+6 = Interactive scaling
+  This option allows the image to be interactively scaled.
+  A graphical display will be shown showing the image
+  transformation.  The actual image values are represented
+  the horizontal axis.  The scaled output values are
+  represented by the vertical axis.  The vertical axis extends
+  from 0 to 255, the horizontal from the image min to max, neither
+  are labeled with values.  The display starts with a diagonal line
+  showing the initial transformation.  This is changed by dragging
+  a marker.  The marker starts in the center of the upper half of
+  the display.  Drag the marker up or down to change image contrast
+  and left or right to change image brightness.  Labels on the
+  display indicate this.  The upper half of the display is for
+  positive images.  If the marker is dragged to the lower half the
+  image displays as a negative.  For an exact negative put the
+  marker at the center of the bottom half of the display.
+
+7 = Apply scaling from last interactive
+  Set this to use the scaling last set interactively.
+
+  Note: where the user can enter scaling parameters, these are
+  remembered as long as the same scaling method is called.  If
+  if different scaling is called then the parameters are reset
+  to the default values.  This allows the parameters to be
+  adjusted more easily.
