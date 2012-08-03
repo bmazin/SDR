@@ -600,7 +600,7 @@ int write_quicklook_image(char* obs_filepath, uint16_t data[BEAM_ROWS][BEAM_COLS
         fclose(lock_fid);
     if (fid <= 0)
     {
-        success = mkdir(bin_path,0755);
+        success = mkdir(bin_path,0777);
         fid = fopen(npy_filename,"wb");
         lock_fid  = fopen(lock_filename,"w");
         fclose(lock_fid);
