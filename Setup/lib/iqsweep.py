@@ -588,6 +588,85 @@ class IQsweep:
 
         h5file.close() 
 
+    def LoadPowers(self,filename,roach,f0):            # Load the desired IQ sweep data from a HDF5 file
+
+        #load the sweep with center frequency closest to f0 and input atten=atten1
+        h5file = openFile(filename, mode = "r")
+            
+        # find the table with the sweep data in it.
+        try:
+            group = h5file.getNode('/',roach )
+            group = h5file.getNode(group,'f'+str(int(f0*10000.0)) )
+            table = group.iqsweep
+            k = table.read()
+        except:
+            print 'Did not find sweep in file!'
+            h5file.close()
+            return     
+        
+        try:    
+            self.f0 = k['f0'][0]
+            self.span = k['span'][0]
+            self.fsteps = k['fsteps'][0]
+            self.atten1s = k['atten1']
+            self.atten2s = k['atten2']
+            self.scale = k['scale'][0]
+            self.PreadoutdB = k['PreadoutdB'][0]                       
+            self.Tstart = k['Tstart'][0]
+            self.Tend = k['Tend'][0]
+            self.I0 = k['I0'][0]
+            self.Q0 = k['Q0'][0]
+            self.resnum = k['resnum'][0]
+            self.time = k['time'][0]
+        except:
+            pass
+        
+        try:
+            self.freq = k['freq'][0,0:self.fsteps]
+            self.Is = k['I'][:,0:self.fsteps]
+            self.Qs = k['Q'][:,0:self.fsteps]
+            self.Isd = k['Isd'][0,0:self.fsteps]
+            self.Qsd = k['Qsd'][0,0:self.fsteps]   
+            self.vmaxidx = k['vmaxidx'][0]
+            self.Icengs = k['Iceng'][0]
+            self.Qcengs = k['Qceng'][0]
+            self.Icens = k['Icen']
+            self.Qcens = k['Qcen']
+            self.Qm= k['Qm'][0]
+            self.fm= k['fm'][0]          
+            self.Qc= k['Qc'][0]
+            self.Qi= k['Qi'][0]
+            self.dipdb= k['dipdb'][0]
+            self.popt = k['popt'][0]
+            self.fpoints = k['fpoints'][0]
+            self.fI = k['fI'][0,0:self.fpoints]
+            self.fQ = k['fQ'][0,0:self.fpoints]
+            self.ff = k['ff'][0,0:self.fpoints]
+        except:
+            pass
+
+        try:            
+            self.mag = k['mag'][0,0:self.fpoints]
+            self.magfreq = k['magfreq'][0]
+            self.magfit = k['magfit'][0]
+            self.mopt = k['mopt'][0]
+        except:
+            pass            
+
+        try:
+            self.savenoise =  k['savenoise'][0]      
+            self.samprate =  k['samprate'][0]
+            self.pn = k['pn'][0]
+            self.pnidx = k['pnidx'][0]    
+            self.an = k['an'][0]
+            self.anidx = k['anidx'][0]    
+            self.kn1k = k['fn1k'][0]           
+        except:
+            pass
+
+        h5file.close() 
+
+
     def LoadLeaf(self,table,row):                # Load up sweep table data from a hdf5 table
       
         # speed things up by loading the whole table at once
