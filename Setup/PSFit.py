@@ -29,7 +29,7 @@ class StartQt4(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
     
-        self.atten = 12
+        self.atten = -1
         self.ui.atten.setValue(self.atten)  
         self.resnum = 0
         self.indx=0
@@ -156,22 +156,22 @@ class StartQt4(QMainWindow):
     def select_freq(self,freq):
         self.resfreq = freq
         self.ui.frequency.setText(str(self.resfreq))
-        self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx],'b.')
-        self.ui.plot_3.canvas.ax.plot(self.Res1.I[self.indx],self.Res1.Q[self.indx],'b.')
+        self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx],'bo')
+        self.ui.plot_3.canvas.ax.plot(self.Res1.I[self.indx],self.Res1.Q[self.indx],'bo')
         self.indx=where(self.Res1.freq >= self.resfreq)[0][0]
-        print 'Highlighting res freq ',self.Res1.freq[self.indx]
-        self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx],'r.')
+        self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx],'ro')
         self.ui.plot_2.canvas.draw()
-        self.ui.plot_3.canvas.ax.plot(self.Res1.I[self.indx],self.Res1.Q[self.indx],'r.')
+        self.ui.plot_3.canvas.ax.plot(self.Res1.I[self.indx],self.Res1.Q[self.indx],'ro')
         self.ui.plot_3.canvas.draw()
        
         
     def select_atten(self,attenuation):
-        attenIndex = where(self.Res1.atten1s == self.atten)
-        if size(attenIndex) >= 1:
-            self.iAtten = attenIndex[0][0]
-            self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_ratio[self.iAtten],'k.')
-            self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_vels[self.iAtten],'b.')
+        if self.atten != -1:
+            attenIndex = where(self.Res1.atten1s == self.atten)
+            if size(attenIndex) >= 1:
+                self.iAtten = attenIndex[0][0]
+                self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_ratio[self.iAtten],'ko')
+                self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_vels[self.iAtten],'bo')
         self.atten = round(attenuation)
         attenIndex = where(self.Res1.atten1s == self.atten)
         if size(attenIndex) != 1:
@@ -183,11 +183,12 @@ class StartQt4(QMainWindow):
         self.Res1.Q=self.Res1.Qs[self.iAtten]
         self.Res1.Icen=self.Res1.Icens[self.iAtten]
         self.Res1.Qcen=self.Res1.Qcens[self.iAtten]
-        self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_ratio[self.iAtten],'r.')
-        self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_vels[self.iAtten],'r.')
+        self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_ratio[self.iAtten],'ro')
+        self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_vels[self.iAtten],'ro')
         self.ui.plot_1.canvas.draw()
         self.ui.atten.setValue(self.atten)
         self.makeplots()
+        self.guess_res_freq()
 
 
     
@@ -224,7 +225,7 @@ class StartQt4(QMainWindow):
 
     def jumptores(self):
         try:
-            self.ui.atten.setValue(12)
+            self.atten = -1
             self.resnum = self.ui.jumptonum.value()
             self.resfreq = self.resnum
             self.loadres()
@@ -252,9 +253,8 @@ class StartQt4(QMainWindow):
         self.f.write(str(self.resfreq)+'\t'+str(Icen)+'\t'+str(Qcen)+'\t'+str(self.atten)+'\n')
         self.f.close()
         self.resnum += 1
-        self.atten = 12
+        self.atten = -1
         self.loadres()
-        self.makeplots()
                 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
