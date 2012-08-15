@@ -1,7 +1,7 @@
 Release 11.4 par L.68 (lin64)
 Copyright (c) 1995-2009 Xilinx, Inc.  All rights reserved.
 
-arcons::  Tue Jul 31 04:34:02 2012
+arcons::  Wed Aug 15 02:07:20 2012
 
 par -ise ../__xps/ise/system.ise -xe n -w -ol high system_map.ncd system.ncd
 system.pcf 
@@ -22,10 +22,10 @@ WARNING:Security:42 - Your software subscription period has lapsed. Your current
 to function, but you no longer qualify for Xilinx software updates or new releases.
 
 ----------------------------------------------------------------------
-WARNING:ConstraintSystem:65 - Constraint <NET "chan_512_packet_2_adc_mkid/chan_512_packet_2_adc_mkid/drdy_clk" PERIOD = 
-          3.9062 ns HIGH 50%;> [system.pcf(282623)] overrides constraint <NET
-   "chan_512_packet_2_adc_mkid/chan_512_packet_2_adc_mkid/drdy_clk" PERIOD =         3.9062 ns HIGH 50%;>
-   [system.pcf(282621)].
+WARNING:ConstraintSystem:65 - Constraint <NET "chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk" PERIOD =     
+      3.9062 ns HIGH 50%;> [system.pcf(289322)] overrides constraint <NET
+   "chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk" PERIOD =         3.9062 ns HIGH 50%;>
+   [system.pcf(289320)].
 
 
 Initializing temperature to 85.000 Celsius. (default - Range: 0.000 to 85.000 Celsius)
@@ -62,24 +62,24 @@ Device Utilization Summary:
    Number of IODELAYs                       90 out of 800    11%
    Number of OLOGICs                       178 out of 800    22%
    Number of PLL_ADVs                        1 out of 6      16%
-   Number of RAMB18X2s                      70 out of 244    28%
-   Number of RAMB36_EXPs                    38 out of 244    15%
-   Number of Slice Registers             49644 out of 58880  84%
-      Number used as Flip Flops          49643
+   Number of RAMB18X2s                      71 out of 244    29%
+   Number of RAMB36_EXPs                    43 out of 244    17%
+   Number of Slice Registers             51600 out of 58880  87%
+      Number used as Flip Flops          51599
       Number used as Latches                 0
       Number used as LatchThrus              1
 
-   Number of Slice LUTS                  34586 out of 58880  58%
-   Number of Slice LUT-Flip Flop pairs   52783 out of 58880  89%
+   Number of Slice LUTS                  36601 out of 58880  62%
+   Number of Slice LUT-Flip Flop pairs   54526 out of 58880  92%
 
 
 Overall effort level (-ol):   High 
 Router effort level (-rl):    High 
 
 Starting initial Timing Analysis.  REAL time: 1 mins 49 secs 
-WARNING:Timing - DCM chan_512_packet_2_adc_mkid/chan_512_packet_2_adc_mkid/CLK_DCM does not have a CLKIN_PERIOD
-   attribute (the period of the DCM input clock).DCM jitter will not be included in timing analysis when this attribute
-   is not defined. For more information, please refer to the appropriate architectural handbook
+WARNING:Timing - DCM chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/CLK_DCM does not have a CLKIN_PERIOD attribute
+   (the period of the DCM input clock).DCM jitter will not be included in timing analysis when this attribute is not
+   defined. For more information, please refer to the appropriate architectural handbook
 Finished initial Timing Analysis.  REAL time: 1 mins 50 secs 
 
 Starting Router
@@ -88,33 +88,35 @@ INFO:Route:501 - One or more directed routing (DIRT) constraints generated for a
    that DIRT strings are guaranteed to work only on the same device they were created for. If the DIRT constraints fail,
    verify that the same connectivity is available in the target device for this implementation. 
 
-Wirelength Stats for nets on all pins. NumPins: 132550
+Wirelength Stats for nets on all pins. NumPins: 141257
 
-Phase  1  : 290243 unrouted;      REAL time: 1 mins 59 secs 
+Phase  1  : 299803 unrouted;      REAL time: 1 mins 58 secs 
 
-Phase  2  : 122104 unrouted;      REAL time: 2 mins 36 secs 
+Phase  2  : 130349 unrouted;      REAL time: 2 mins 35 secs 
 
-Phase  3  : 33890 unrouted;      REAL time: 3 mins 19 secs 
+Phase  3  : 37938 unrouted;      REAL time: 3 mins 18 secs 
 
-Phase  4  : 34383 unrouted; (Setup:20711, Hold:1070, Component Switching Limit:0)     REAL time: 3 mins 59 secs 
-
-Updating file: system.ncd with current fully routed design.
-
-Phase  5  : 0 unrouted; (Setup:20812, Hold:1050, Component Switching Limit:0)     REAL time: 6 mins 45 secs 
-
-Phase  6  : 0 unrouted; (Setup:20160, Hold:1050, Component Switching Limit:0)     REAL time: 9 mins 8 secs 
+Phase  4  : 38311 unrouted; (Setup:21108, Hold:2389, Component Switching Limit:0)     REAL time: 4 mins 4 secs 
 
 Updating file: system.ncd with current fully routed design.
 
-Phase  7  : 0 unrouted; (Setup:0, Hold:1043, Component Switching Limit:0)     REAL time: 21 mins 52 secs 
+Phase  5  : 0 unrouted; (Setup:20461, Hold:2393, Component Switching Limit:0)     REAL time: 6 mins 19 secs 
 
-Phase  8  : 0 unrouted; (Setup:0, Hold:1043, Component Switching Limit:0)     REAL time: 21 mins 52 secs 
+Phase  6  : 0 unrouted; (Setup:20461, Hold:2393, Component Switching Limit:0)     REAL time: 7 mins 14 secs 
 
-Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 22 mins 4 secs 
+Phase  7  : 0 unrouted; (Setup:20461, Hold:2393, Component Switching Limit:0)     REAL time: 9 mins 5 secs 
 
-Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 22 mins 29 secs 
-Total REAL time to Router completion: 22 mins 29 secs 
-Total CPU time to Router completion: 22 mins 28 secs 
+Phase  8  : 0 unrouted; (Setup:20360, Hold:2393, Component Switching Limit:0)     REAL time: 10 mins 36 secs 
+
+Updating file: system.ncd with current fully routed design.
+
+Phase  9  : 0 unrouted; (Setup:0, Hold:2387, Component Switching Limit:0)     REAL time: 17 mins 40 secs 
+
+Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 17 mins 53 secs 
+
+Phase 11  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 18 mins 18 secs 
+Total REAL time to Router completion: 18 mins 18 secs 
+Total CPU time to Router completion: 18 mins 17 secs 
 
 Partition Implementation Status
 -------------------------------
@@ -132,24 +134,23 @@ Generating Clock Report
 +---------------------+--------------+------+------+------------+-------------+
 |        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
 +---------------------+--------------+------+------+------------+-------------+
-|            adc1_clk | BUFGCTRL_X0Y1| No   |12827 |  0.810     |  2.358      |
+|            adc1_clk | BUFGCTRL_X0Y1| No   |12985 |  0.891     |  2.439      |
 +---------------------+--------------+------+------+------------+-------------+
-|chan_512_packet_2_av |              |      |      |            |             |
-|gIQ_bram_ramblk_port |              |      |      |            |             |
-|          b_BRAM_Clk | BUFGCTRL_X0Y0| No   |  715 |  0.695     |  2.228      |
+|chan_512_packet_avgI |              |      |      |            |             |
+|Q_bram_ramblk_portb_ |              |      |      |            |             |
+|            BRAM_Clk | BUFGCTRL_X0Y0| No   |  897 |  0.698     |  2.225      |
 +---------------------+--------------+------+------+------------+-------------+
-| dram_sys_dram_clk_0 |BUFGCTRL_X0Y26| No   |  816 |  0.801     |  2.357      |
-+---------------------+--------------+------+------+------------+-------------+
-|dram_sys_dram_clk_di |              |      |      |            |             |
-|                   v |BUFGCTRL_X0Y28| No   |  477 |  0.602     |  2.373      |
+| dram_sys_dram_clk_0 |BUFGCTRL_X0Y26| No   |  815 |  0.768     |  2.347      |
 +---------------------+--------------+------+------+------------+-------------+
 |dram_sys_dram_clk_90 |              |      |      |            |             |
-|                     |BUFGCTRL_X0Y27| No   |  183 |  0.632     |  2.354      |
+|                     |BUFGCTRL_X0Y27| No   |  178 |  0.633     |  2.354      |
 +---------------------+--------------+------+------+------------+-------------+
-|chan_512_packet_2_da |              |      |      |            |             |
-|c_mkid/chan_512_pack |              |      |      |            |             |
-|et_2_dac_mkid/smpl_c |              |      |      |            |             |
-|                  lk | BUFGCTRL_X0Y2| No   |   34 |  0.192     |  2.290      |
+|dram_sys_dram_clk_di |              |      |      |            |             |
+|                   v |BUFGCTRL_X0Y28| No   |  477 |  0.585     |  2.373      |
++---------------------+--------------+------+------+------------+-------------+
+|chan_512_packet_dac_ |              |      |      |            |             |
+|mkid/chan_512_packet |              |      |      |            |             |
+|  _dac_mkid/smpl_clk | BUFGCTRL_X0Y2| No   |   34 |  0.192     |  2.290      |
 +---------------------+--------------+------+------+------------+-------------+
 |dram_controller_inst |              |      |      |            |             |
 |/dram_controller_ins |              |      |      |            |             |
@@ -224,44 +225,44 @@ Asterisk (*) preceding a constraint indicates it was not met.
   Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
                                             |             |    Slack   | Achievable | Errors |    Score   
 ----------------------------------------------------------------------------------------------------------
-  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.006ns|     7.488ns|       0|           0
-  ucture_inst_dram_clk_div_int = PERIOD     | HOLD        |     0.176ns|            |       0|           0
-       TIMEGRP         "dram_infrastructure |             |            |            |        |            
-  _inst_dram_infrastructure_inst_dram_clk_d |             |            |            |        |            
-  iv_int"         TS_dram_infrastructure_in |             |            |            |        |            
-  st_dram_infrastructure_inst_mem_clk * 0.5 |             |            |            |        |            
-           HIGH 50%                         |             |            |            |        |            
-----------------------------------------------------------------------------------------------------------
   PERIOD analysis for net "chan_512_packet_ | SETUP       |     0.025ns|     3.881ns|       0|           0
-  2_adc_mkid/chan_512_packet_2_adc_mkid/dcm | HOLD        |     0.016ns|            |       0|           0
-  _clk" derived from  NET "chan_512_packet_ |             |            |            |        |            
-  2_adc_mkid/chan_512_packet_2_adc_mkid/drd |             |            |            |        |            
-  y_clk" PERIOD =        3.9062 ns HIGH 50% |             |            |            |        |            
+  adc_mkid/chan_512_packet_adc_mkid/dcm_clk | HOLD        |     0.021ns|            |       0|           0
+  " derived from  NET "chan_512_packet_adc_ |             |            |            |        |            
+  mkid/chan_512_packet_adc_mkid/drdy_clk" P |             |            |            |        |            
+  ERIOD =        3.9062 ns HIGH 50%         |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.027ns|     3.723ns|       0|           0
-  ucture_inst_dram_clk_0_int = PERIOD       | HOLD        |     0.018ns|            |       0|           0
+  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.026ns|     3.724ns|       0|           0
+  ucture_inst_dram_clk_0_int = PERIOD       | HOLD        |     0.061ns|            |       0|           0
      TIMEGRP         "dram_infrastructure_i |             |            |            |        |            
   nst_dram_infrastructure_inst_dram_clk_0_i |             |            |            |        |            
   nt"         TS_dram_infrastructure_inst_d |             |            |            |        |            
   ram_infrastructure_inst_mem_clk HIGH 50%  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88  | SETUP       |     0.043ns|    11.320ns|       0|           0
-  MHz HIGH 50%                              | HOLD        |     0.241ns|            |       0|           0
+  TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88  | SETUP       |     0.030ns|    11.333ns|       0|           0
+  MHz HIGH 50%                              | HOLD        |     0.352ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.048ns|     3.702ns|       0|           0
-  ucture_inst_dram_clk_90_int = PERIOD      | HOLD        |     0.464ns|            |       0|           0
+  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.047ns|     3.703ns|       0|           0
+  ucture_inst_dram_clk_90_int = PERIOD      | HOLD        |     0.435ns|            |       0|           0
       TIMEGRP         "dram_infrastructure_ |             |            |            |        |            
   inst_dram_infrastructure_inst_dram_clk_90 |             |            |            |        |            
   _int"         TS_dram_infrastructure_inst |             |            |            |        |            
   _dram_infrastructure_inst_mem_clk PHASE   |             |            |            |        |            
          0.938 ns HIGH 50%                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
+  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.048ns|     7.451ns|       0|           0
+  ucture_inst_dram_clk_div_int = PERIOD     | HOLD        |     0.139ns|            |       0|           0
+       TIMEGRP         "dram_infrastructure |             |            |            |        |            
+  _inst_dram_infrastructure_inst_dram_clk_d |             |            |            |        |            
+  iv_int"         TS_dram_infrastructure_in |             |            |            |        |            
+  st_dram_infrastructure_inst_mem_clk * 0.5 |             |            |            |        |            
+           HIGH 50%                         |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
   TS_dly_clk_n = PERIOD TIMEGRP "dly_clk_n" | MINLOWPULSE |     1.400ns|     3.600ns|       0|           0
    200 MHz HIGH 50%                         |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  NET "chan_512_packet_2_adc_mkid/chan_512_ | MINLOWPULSE |     0.906ns|     3.000ns|       0|           0
-  packet_2_adc_mkid/drdy_clk" PERIOD =      |             |            |            |        |            
-      3.9062 ns HIGH 50%                    |             |            |            |        |            
+  NET "chan_512_packet_adc_mkid/chan_512_pa | MINLOWPULSE |     0.906ns|     3.000ns|       0|           0
+  cket_adc_mkid/drdy_clk" PERIOD =          |             |            |            |        |            
+  3.9062 ns HIGH 50%                        |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
   TS_adcmkid1_DRDY_I_n = PERIOD TIMEGRP "ad | MINLOWPULSE |     0.906ns|     3.000ns|       0|           0
   cmkid1_DRDY_I_n" 3.906 ns HIGH 50%        |             |            |            |        |            
@@ -269,70 +270,69 @@ Asterisk (*) preceding a constraint indicates it was not met.
   TS_adcmkid1_DRDY_I_p = PERIOD TIMEGRP "ad | MINLOWPULSE |     0.906ns|     3.000ns|       0|           0
   cmkid1_DRDY_I_p" 3.906 ns HIGH 50%        |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
+  NET "epb_cs_n_IBUF" MAXDELAY = 4 ns       | MAXDELAY    |     1.168ns|     2.832ns|       0|           0
+----------------------------------------------------------------------------------------------------------
   TS_dram_infrastructure_inst_dram_infrastr | MINLOWPULSE |     1.416ns|     2.334ns|       0|           0
   ucture_inst_mem_clk = PERIOD TIMEGRP      |             |            |            |        |            
       "dram_infrastructure_inst_dram_infras |             |            |            |        |            
   tructure_inst_mem_clk"         TS_dly_clk |             |            |            |        |            
   _n * 1.33333333 HIGH 50%                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  NET "epb_cs_n_IBUF" MAXDELAY = 4 ns       | MAXDELAY    |     1.667ns|     2.333ns|       0|           0
+  TS_chan_512_packet_adc_mkid_chan_512_pack | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
+  et_adc_mkid_dcm_clk = PERIOD TIMEGRP      |             |            |            |        |            
+      "chan_512_packet_adc_mkid_chan_512_pa |             |            |            |        |            
+  cket_adc_mkid_dcm_clk"         TS_adcmkid |             |            |            |        |            
+  1_DRDY_I_p HIGH 50%                       |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_chan_512_packet_2_adc_mkid_chan_512_pa | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
-  cket_2_adc_mkid_dcm_clk = PERIOD          |             |            |            |        |            
-  TIMEGRP         "chan_512_packet_2_adc_mk |             |            |            |        |            
-  id_chan_512_packet_2_adc_mkid_dcm_clk"    |             |            |            |        |            
-        TS_adcmkid1_DRDY_I_p HIGH 50%       |             |            |            |        |            
+  TS_chan_512_packet_adc_mkid_chan_512_pack | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
+  et_adc_mkid_dcm_clk_0 = PERIOD         TI |             |            |            |        |            
+  MEGRP "chan_512_packet_adc_mkid_chan_512_ |             |            |            |        |            
+  packet_adc_mkid_dcm_clk_0"         TS_adc |             |            |            |        |            
+  mkid1_DRDY_I_n HIGH 50%                   |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_chan_512_packet_2_adc_mkid_chan_512_pa | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
-  cket_2_adc_mkid_dcm_clk_0 = PERIOD        |             |            |            |        |            
-    TIMEGRP         "chan_512_packet_2_adc_ |             |            |            |        |            
-  mkid_chan_512_packet_2_adc_mkid_dcm_clk_0 |             |            |            |        |            
-  "         TS_adcmkid1_DRDY_I_n HIGH 50%   |             |            |            |        |            
-----------------------------------------------------------------------------------------------------------
-  TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM | SETUP       |     2.532ns|     7.468ns|       0|           0
-   TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO       | HOLD        |     0.220ns|            |       0|           0
+  TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM | SETUP       |     1.996ns|     8.004ns|       0|           0
+   TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO       | HOLD        |     1.498ns|            |       0|           0
      TIMEGRP "FFS" 10 ns                    |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP | SETUP       |     4.855ns|     5.145ns|       0|           0
-   "TNM_RD_DATA_SEL" TO TIMEGRP "FFS"       | HOLD        |     0.065ns|            |       0|           0
+  TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP | SETUP       |     4.521ns|     5.479ns|       0|           0
+   "TNM_RD_DATA_SEL" TO TIMEGRP "FFS"       | HOLD        |     0.155ns|            |       0|           0
      10 ns                                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGR | SETUP       |     5.976ns|     4.024ns|       0|           0
-  P "TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"     | HOLD        |     0.740ns|            |       0|           0
+  TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGR | SETUP       |     6.389ns|     3.611ns|       0|           0
+  P "TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"     | HOLD        |     0.706ns|            |       0|           0
        10 ns                                |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     6.844ns|     3.156ns|       0|           0
-  NM_RDEN_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     1.093ns|            |       0|           0
-----------------------------------------------------------------------------------------------------------
-  TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.306ns|     2.694ns|       0|           0
-  NM_GATE_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.069ns|            |       0|           0
-----------------------------------------------------------------------------------------------------------
-  TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGR | SETUP       |     8.102ns|     1.898ns|       0|           0
-  P "TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"     | HOLD        |     0.231ns|            |       0|           0
+  TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGR | SETUP       |     7.104ns|     2.896ns|       0|           0
+  P "TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"     | HOLD        |     0.262ns|            |       0|           0
        10 ns                                |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.855ns|     2.145ns|       0|           0
+  NM_RDEN_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.247ns|            |       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.951ns|     2.049ns|       0|           0
+  NM_GATE_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.005ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
   TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FRO | N/A         |         N/A|         N/A|     N/A|         N/A
   M TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO      |             |            |            |        |            
       TIMEGRP "RAMS" 10 ns                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  NET "chan_512_packet_2_adc_mkid/chan_512_ | N/A         |         N/A|         N/A|     N/A|         N/A
-  packet_2_adc_mkid/drdy_clk" PERIOD =      |             |            |            |        |            
-      3.9062 ns HIGH 50%                    |             |            |            |        |            
+  NET "chan_512_packet_adc_mkid/chan_512_pa | N/A         |         N/A|         N/A|     N/A|         N/A
+  cket_adc_mkid/drdy_clk" PERIOD =          |             |            |            |        |            
+  3.9062 ns HIGH 50%                        |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
 
 
 Derived Constraint Report
-Derived Constraints for chan_512_packet_2_adc_mkid/chan_512_packet_2_adc_mkid/drdy_clk
+Derived Constraints for chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 |                               |   Period    |       Actual Period       |      Timing Errors        |      Paths Analyzed       |
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|chan_512_packet_2_adc_mkid/chan|      3.906ns|      3.000ns|      3.881ns|            0|            0|            0|       147240|
-|_512_packet_2_adc_mkid/drdy_clk|             |             |             |             |             |             |             |
-| chan_512_packet_2_adc_mkid/cha|      3.906ns|      3.881ns|          N/A|            0|            0|       147240|            0|
-| n_512_packet_2_adc_mkid/dcm_cl|             |             |             |             |             |             |             |
-| k                             |             |             |             |             |             |             |             |
+|chan_512_packet_adc_mkid/chan_5|      3.906ns|      3.000ns|      3.881ns|            0|            0|            0|       167729|
+|12_packet_adc_mkid/drdy_clk    |             |             |             |             |             |             |             |
+| chan_512_packet_adc_mkid/chan_|      3.906ns|      3.881ns|          N/A|            0|            0|       167729|            0|
+| 512_packet_adc_mkid/dcm_clk   |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 Derived Constraints for TS_dly_clk_n
@@ -341,16 +341,16 @@ Derived Constraints for TS_dly_clk_n
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|TS_dly_clk_n                   |      5.000ns|      3.600ns|      4.992ns|            0|            0|            0|        25093|
-| TS_dram_infrastructure_inst_dr|      3.750ns|      2.334ns|      3.744ns|            0|            0|            0|        25093|
+|TS_dly_clk_n                   |      5.000ns|      3.600ns|      4.967ns|            0|            0|            0|        25093|
+| TS_dram_infrastructure_inst_dr|      3.750ns|      2.334ns|      3.726ns|            0|            0|            0|        25093|
 | am_infrastructure_inst_mem_clk|             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      3.750ns|      3.723ns|          N/A|            0|            0|        10851|            0|
+|  TS_dram_infrastructure_inst_d|      3.750ns|      3.724ns|          N/A|            0|            0|        10851|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_0_int                    |             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      3.750ns|      3.702ns|          N/A|            0|            0|          729|            0|
+|  TS_dram_infrastructure_inst_d|      3.750ns|      3.703ns|          N/A|            0|            0|          729|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_90_int                   |             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      7.500ns|      7.488ns|          N/A|            0|            0|        13513|            0|
+|  TS_dram_infrastructure_inst_d|      7.500ns|      7.451ns|          N/A|            0|            0|        13513|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_div_int                  |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -362,9 +362,8 @@ Derived Constraints for TS_adcmkid1_DRDY_I_p
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 |TS_adcmkid1_DRDY_I_p           |      3.906ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
-| TS_chan_512_packet_2_adc_mkid_|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
-| chan_512_packet_2_adc_mkid_dcm|             |             |             |             |             |             |             |
-| _clk                          |             |             |             |             |             |             |             |
+| TS_chan_512_packet_adc_mkid_ch|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| an_512_packet_adc_mkid_dcm_clk|             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 Derived Constraints for TS_adcmkid1_DRDY_I_n
@@ -374,9 +373,9 @@ Derived Constraints for TS_adcmkid1_DRDY_I_n
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 |TS_adcmkid1_DRDY_I_n           |      3.906ns|      3.000ns|      2.222ns|            0|            0|            0|            0|
-| TS_chan_512_packet_2_adc_mkid_|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
-| chan_512_packet_2_adc_mkid_dcm|             |             |             |             |             |             |             |
-| _clk_0                        |             |             |             |             |             |             |             |
+| TS_chan_512_packet_adc_mkid_ch|      3.906ns|      2.222ns|          N/A|            0|            0|            0|            0|
+| an_512_packet_adc_mkid_dcm_clk|             |             |             |             |             |             |             |
+| _0                            |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 All constraints were met.
@@ -539,10 +538,10 @@ WARNING:ParHelpers:198 - One or more "EXACT" mode Directed Routing constrained n
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[62].u_iob_dq/stg1_out_rise_0s
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[70].u_iob_dq/stg1_out_fall_0s
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[70].u_iob_dq/stg1_out_rise_0s
-Total REAL time to PAR completion: 22 mins 47 secs 
-Total CPU time to PAR completion: 22 mins 47 secs 
+Total REAL time to PAR completion: 18 mins 37 secs 
+Total CPU time to PAR completion: 18 mins 36 secs 
 
-Peak Memory Usage:  1984 MB
+Peak Memory Usage:  2021 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.
