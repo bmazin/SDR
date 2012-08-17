@@ -6,9 +6,9 @@
 ;
 ;***************************************************************************
 
-filename = 'SCI3-ADR-FL2-73mK.txt'
-datapath = '/Users/matt/Documents/mazin/widesweepanalysis/20120730adr/'
-outpath = '/Users/matt/Documents/mazin/widesweepanalysis/20120730adr/'
+filename = 'SCI3-40-FL1-ADR.txt'
+datapath = '/Users/matt/Documents/mazin/widesweepanalysis/20120812adr/'
+outpath = '/Users/matt/Documents/mazin/widesweepanalysis/20120812adr/'
 ;outpath = '/Users/bmazin/Data/ResData/Archive/'
 
 ;have IDL keep responsibility for plot windows because X11 throws BadMatch error
@@ -24,7 +24,7 @@ device,font_size=12,/inches,xsize=7.5,ysize=9,xoffset=.5,yoffset=1
 
 stridx = strsplit(datapath,'/')
 outfn = strmid(datapath,stridx[5],11)
-device,filename = strcompress(outpath + 'SCI3-ADR-FL2-73mK-ws-good.ps',/remove_all)
+device,filename = strcompress(outpath + 'SCI3-40-FL1-ADR-ws-good.ps',/remove_all)
 
 ; load up the widesweep
 
@@ -96,7 +96,7 @@ device,/close
 
 rescount = 0
 
-openw,1, strcompress(outpath + 'SCI3-ADR-FL2-73mK-ws-good.txt',/remove_all)
+openw,1, strcompress(outpath + 'SCI3-40-FL1-ADR-ws-good.txt',/remove_all)
 
 set_plot,'X'
 !p.multi=[0,1,0]
