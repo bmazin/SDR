@@ -1,60 +1,67 @@
 import numpy as np
 import pylab as plt
 
-table = np.loadtxt('20120611adr-FL2-ws.txt')
+NRoaches=4 #number of roaches per feedline
+roachBandwidth=0.550 #GHz, bandwidth that each roach can cover, depends on dac clockrate
 
+#resonant frequency list for the feedline
+dir = '/home/sean/data/20120812adr/'
+table = np.loadtxt(dir+'SCI3-40-FL1-ADR-2-good.txt')
 
 freqs = table[:,2]
 freqs.sort()
 fig = plt.figure()
 ax=fig.add_subplot(111)
 
-lo=freqs.min()
-hi=freqs.max()
-print len(freqs)
-print freqs.min()
-print freqs.min()+0.512
-print freqs.max()-0.512
-print freqs.max()
+fStart=freqs.min()
+fLast=freqs.max()
+print len(freqs), ' total frequencies'
+print 'f_min = ',freqs.min()
+print 'f_max = ',freqs.max()
 
-freq1=freqs[freqs<(lo+0.512)]
-print len(freq1)
-freq2=freqs[freqs>(lo+0.612)]
-freq2=freq2[freq2<(lo+0.612+0.512)]
-print len(freq2)
+#set default freq ranges for each roach
+roachFreqStart = np.array([fStart]*NRoaches)
+roachFreqStart[0] = fStart
+roachFreqStart[1] = roachFreqStart[0]+roachBandwidth
+roachFreqStart[2] = roachFreqStart[1]+roachBandwidth
+roachFreqStart[3] = roachFreqStart[2]+roachBandwidth
 
-freq3=freqs[freqs>(lo+0.512)]
-freq3=freq3[np.logical_or(freq3<(lo+0.612),freq3>(lo+0.612+0.512))]
-print len(freq3)
+#manual tweaks to cover more resonators
+roachFreqStart[1] = 3.6
+roachFreqStart[2] = roachFreqStart[1]+roachBandwidth
+roachFreqStart[3] = roachFreqStart[2]+roachBandwidth
 
-ax.hist(freq1,bins=20,color='red')
-ax.hist(freq2,bins=20,color='blue')
-ax.hist(freq3,bins=40,color='green')
+roachFreqEnd = roachFreqStart+roachBandwidth
+
+
+roachFreqList=[[]]*NRoaches
+outputTable=[[]]*NRoaches
+excludedFreqs = freqs
+
+lo_fid=open(dir+'FL1-lofreqs.txt','w')
+for r in np.arange(0,NRoaches):
+    roachFreqList[r] = freqs[np.logical_and(roachFreqStart[r] <= freqs,freqs < roachFreqEnd[r])]
+    excludedFreqs = excludedFreqs[np.logical_or(excludedFreqs < roachFreqStart[r],roachFreqEnd[r] < excludedFreqs)]
+    print 'roach ',r, ' covers ',len(roachFreqList[r]),' freqs'
+    roachFreqMin = roachFreqList[r].min()
+    roachFreqMax = roachFreqList[r].max()
+    print 'from %.3f to %.3f'%(roachFreqMin,roachFreqMax)
+    roachFreqLO=roachFreqMin+(roachFreqMax-roachFreqMin)/2.0
+    print 'with LO freq at %.3f'%roachFreqLO
+    lo_fid.write('%.3f\n'%roachFreqLO)
+    ax.hist(roachFreqList[r],bins=20)
+    fid = open(dir+'FL1-freqs%d.txt'%r,'w')
+    fid.write('1\t1\t1\t1\n')
+    for freq in roachFreqList[r]:
+        fid.write('%.7f\t0\t0\t1\n'%freq)
+    fid.close()
+
+ax.hist(excludedFreqs,bins=100,color='black')
+print '%d freqs excluded'%len(excludedFreqs)
+lo_fid.close()
+
+
 
 plt.show()
-table1=np.zeros((len(freq1)+1,4))
-table1[0,:]=np.ones((1,4))
-table1[1:,0]=freq1
-table1[1:,3]=[1]*len(freq1)
-print table1[0:5,:]
-table2=np.zeros((len(freq2)+1,4))
-table2[0,:]=np.ones((1,4))
-table2[1:,0]=freq2
-table2[1:,3]=[1]*len(freq2)
-print table2[0:5,:]
-
-f1 = open('freq_list2.txt','w')
-f1.write('1\t1\t1\t1\n')
-for f in freq1:
-	f1.write('%.5f\t0\t0\t1\n'%f)
-
-f1.close()
-
-f2 = open('freq_list3.txt','w')
-f2.write('1\t1\t1\t1\n')
-for f in freq2:
-	f2.write('%.5f\t0\t0\t1\n'%f)
-
-f2.close()
 
 
