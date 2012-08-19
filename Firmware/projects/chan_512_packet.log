@@ -14805,7 +14805,7 @@ WARNING:NgdBuild:452 - logical net 'N212' has no driver
 WARNING:NgdBuild:452 - logical net 'N213' has no driver
 WARNING:NgdBuild:483 - Attribute "INIT" on
    "chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pac
-   ket_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca
+   ket_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca
    1bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_
    sdivider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/in
    v_o" is on the wrong type of object.  Please see the Constraints Guide for
@@ -14823,8 +14823,8 @@ NGDBUILD Design Results Summary:
   Number of warnings: 2775
 
 Writing NGD file "system.ngd" ...
-Total REAL time to NGDBUILD completion: 2 hr 16 min  53 sec
-Total CPU time to NGDBUILD completion:  2 hr 16 min  24 sec
+Total REAL time to NGDBUILD completion: 2 hr 14 min  4 sec
+Total CPU time to NGDBUILD completion:  2 hr 13 min  36 sec
 
 Writing NGDBUILD log file "system.bld"...
 
@@ -17983,385 +17983,385 @@ WARNING:LIT:243 - Logical network
    has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[0].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[1].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[2].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[3].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[4].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[5].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[6].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[7].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[8].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[9].adder_gen.reg_req.adsu_mod/add1
    /no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout.
    q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[10].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[11].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[12].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[13].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[14].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[15].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[16].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[17].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[18].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[19].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[20].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[21].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[22].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[23].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[24].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[25].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[26].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[27].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[28].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[29].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[30].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[31].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[32].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q_c_out.i_simple.add_q_cout
    .q_c_outreg/opt_has_pipe.first_q has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(19) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(18) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(17) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(16) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(15) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(14) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(13) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(12) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(11) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(10) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(9) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(8) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(7) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(6) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(5) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(4) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(3) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(2) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(1) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/div_loop[33].adder_gen.reg_req.adsu_mod/add
    1/no_pipelining.the_addsub/i_lut4.i_lut4_addsub/i_q.i_simple.qreg/opt_has_pip
    e.first_q(0) has no load.
 WARNING:LIT:243 - Logical network
    chan_512_packet_XSG_core_config/chan_512_packet_XSG_core_config/chan_512_pack
-   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_32/dv_gn_v3_0_805feca1
+   et_x0/capture_5e325a8551/parabfit_0464b58b72/divider_z_38/dv_gn_v3_0_805feca1
    bd9c061e_instance/BU2/U0/i_synth_opt.i_nonzero_fract.i_synth/i_algo_r2_nr.i_s
    divider/I_SYNTH_MODEL/divider_blk/reg_quot_out.reg_quot/opt_has_pipe.first_q(
    0) has no load.
@@ -20161,26 +20161,26 @@ WARNING:Timing - DCM chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/CLK_DCM
 INFO:Map:215 - The Interim Design Summary has been generated in the MAP Report
    (.mrp).
 Running timing-driven placement...
-Total REAL time at the beginning of Placer: 3 mins 47 secs 
-Total CPU  time at the beginning of Placer: 3 mins 44 secs 
+Total REAL time at the beginning of Placer: 3 mins 40 secs 
+Total CPU  time at the beginning of Placer: 3 mins 37 secs 
 
 Phase 1.1  Initial Placement Analysis
-Phase 1.1  Initial Placement Analysis (Checksum:5fb769cd) REAL time: 3 mins 57 secs 
+Phase 1.1  Initial Placement Analysis (Checksum:6723e5ef) REAL time: 3 mins 50 secs 
 
 Phase 2.7  Design Feasibility Check
-Phase 2.7  Design Feasibility Check (Checksum:5fb769cd) REAL time: 3 mins 57 secs 
+Phase 2.7  Design Feasibility Check (Checksum:6723e5ef) REAL time: 3 mins 50 secs 
 
 Phase 3.31  Local Placement Optimization
-Phase 3.31  Local Placement Optimization (Checksum:5fb769cd) REAL time: 3 mins 57 secs 
+Phase 3.31  Local Placement Optimization (Checksum:6723e5ef) REAL time: 3 mins 50 secs 
 
 Phase 4.37  Local Placement Optimization
-Phase 4.37  Local Placement Optimization (Checksum:5fb769cd) REAL time: 3 mins 57 secs 
+Phase 4.37  Local Placement Optimization (Checksum:6723e5ef) REAL time: 3 mins 50 secs 
 
 Phase 5.33  Local Placement Optimization
-Phase 5.33  Local Placement Optimization (Checksum:5fb769cd) REAL time: 4 mins 34 secs 
+Phase 5.33  Local Placement Optimization (Checksum:6723e5ef) REAL time: 4 mins 26 secs 
 
 Phase 6.32  Local Placement Optimization
-Phase 6.32  Local Placement Optimization (Checksum:5fb769cd) REAL time: 4 mins 40 secs 
+Phase 6.32  Local Placement Optimization (Checksum:6723e5ef) REAL time: 4 mins 31 secs 
 
 Phase 7.2  Initial Clock and IO Placement
 
@@ -20433,50 +20433,50 @@ AREA_GROUP "CLKAG_dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_ph
 CLOCKREGION_X0Y0;
 
 
-Phase 7.2  Initial Clock and IO Placement (Checksum:4adf587b) REAL time: 4 mins 44 secs 
+Phase 7.2  Initial Clock and IO Placement (Checksum:7f0531b7) REAL time: 4 mins 36 secs 
 
 Phase 8.36  Local Placement Optimization
-Phase 8.36  Local Placement Optimization (Checksum:4adf587b) REAL time: 4 mins 44 secs 
+Phase 8.36  Local Placement Optimization (Checksum:7f0531b7) REAL time: 4 mins 36 secs 
 
 Phase 9.30  Global Clock Region Assignment
-Phase 9.30  Global Clock Region Assignment (Checksum:4adf587b) REAL time: 4 mins 44 secs 
+Phase 9.30  Global Clock Region Assignment (Checksum:7f0531b7) REAL time: 4 mins 36 secs 
 
 Phase 10.3  Local Placement Optimization
-Phase 10.3  Local Placement Optimization (Checksum:4adf587b) REAL time: 4 mins 45 secs 
+Phase 10.3  Local Placement Optimization (Checksum:7f0531b7) REAL time: 4 mins 37 secs 
 
 Phase 11.5  Local Placement Optimization
-Phase 11.5  Local Placement Optimization (Checksum:4adf587b) REAL time: 4 mins 46 secs 
+Phase 11.5  Local Placement Optimization (Checksum:7f0531b7) REAL time: 4 mins 38 secs 
 
 Phase 12.8  Global Placement
-......................................
-.......................................................................................................................
-..................................................................................................
-...............................................................................................................................................
-.........................................................................................................................................
+....................................
+..................................................................................................................................
 ......................................................................................................
+...........................................................................................................
+............................................................................................................
+...............................................................................................
 .............................................................................................
-.....................................................................................
-Phase 12.8  Global Placement (Checksum:db0f8410) REAL time: 40 mins 35 secs 
+............................................................................................
+Phase 12.8  Global Placement (Checksum:320b8bc8) REAL time: 36 mins 48 secs 
 
 Phase 13.29  Local Placement Optimization
-Phase 13.29  Local Placement Optimization (Checksum:db0f8410) REAL time: 40 mins 35 secs 
+Phase 13.29  Local Placement Optimization (Checksum:320b8bc8) REAL time: 36 mins 48 secs 
 
 Phase 14.5  Local Placement Optimization
-Phase 14.5  Local Placement Optimization (Checksum:db0f8410) REAL time: 40 mins 39 secs 
+Phase 14.5  Local Placement Optimization (Checksum:320b8bc8) REAL time: 36 mins 51 secs 
 
 Phase 15.18  Placement Optimization
-Phase 15.18  Placement Optimization (Checksum:5a41faa5) REAL time: 1 hrs 4 mins 22 secs 
+Phase 15.18  Placement Optimization (Checksum:17c80e47) REAL time: 1 hrs 22 secs 
 
 Phase 16.5  Local Placement Optimization
-Phase 16.5  Local Placement Optimization (Checksum:5a41faa5) REAL time: 1 hrs 4 mins 25 secs 
+Phase 16.5  Local Placement Optimization (Checksum:17c80e47) REAL time: 1 hrs 26 secs 
 
 Phase 17.34  Placement Validation
-Phase 17.34  Placement Validation (Checksum:5a41faa5) REAL time: 1 hrs 4 mins 29 secs 
+Phase 17.34  Placement Validation (Checksum:17c80e47) REAL time: 1 hrs 29 secs 
 
-Total REAL time to Placer completion: 1 hrs 4 mins 31 secs 
-Total CPU  time to Placer completion: 1 hrs 4 mins 27 secs 
+Total REAL time to Placer completion: 1 hrs 31 secs 
+Total CPU  time to Placer completion: 1 hrs 27 secs 
 Running physical synthesis...
-.
+...............
 Physical synthesis completed.
 Running post-placement packing...
 Writing output files...
@@ -20485,35 +20485,34 @@ Design Summary:
 Number of errors:      0
 Number of warnings: 1808
 Slice Logic Utilization:
-  Number of Slice Registers:                51,534 out of  58,880   87%
-    Number used as Flip Flops:              51,533
+  Number of Slice Registers:                50,622 out of  58,880   85%
+    Number used as Flip Flops:              50,621
     Number used as Latch-thrus:                  1
-  Number of Slice LUTs:                     36,575 out of  58,880   62%
-    Number used as logic:                   15,068 out of  58,880   25%
-      Number using O6 output only:          13,313
-      Number using O5 output only:             797
-      Number using O5 and O6:                  958
-    Number used as Memory:                  21,387 out of  24,320   87%
+  Number of Slice LUTs:                     35,686 out of  58,880   60%
+    Number used as logic:                   15,084 out of  58,880   25%
+      Number using O6 output only:          13,328
+      Number using O5 output only:             796
+      Number using O5 and O6:                  960
+    Number used as Memory:                  20,483 out of  24,320   84%
       Number used as Dual Port RAM:            162
         Number using O6 output only:            34
         Number using O5 output only:             1
         Number using O5 and O6:                127
-      Number used as Shift Register:        21,225
-        Number using O6 output only:        21,191
-        Number using O5 output only:            34
-    Number used as exclusive route-thru:       120
-  Number of route-thrus:                     1,181
-    Number using O6 output only:               903
-    Number using O5 output only:               276
-    Number using O5 and O6:                      2
+      Number used as Shift Register:        20,321
+        Number using O6 output only:        20,291
+        Number using O5 output only:            30
+    Number used as exclusive route-thru:       119
+  Number of route-thrus:                     1,178
+    Number using O6 output only:               904
+    Number using O5 output only:               274
 
 Slice Logic Distribution:
-  Number of occupied Slices:                14,276 out of  14,720   96%
-  Number of LUT Flip Flop pairs used:       54,495
-    Number with an unused Flip Flop:         2,961 out of  54,495    5%
-    Number with an unused LUT:              17,920 out of  54,495   32%
-    Number of fully used LUT-FF pairs:      33,614 out of  54,495   61%
-    Number of unique control sets:             417
+  Number of occupied Slices:                14,133 out of  14,720   96%
+  Number of LUT Flip Flop pairs used:       53,876
+    Number with an unused Flip Flop:         3,254 out of  53,876    6%
+    Number with an unused LUT:              18,190 out of  53,876   33%
+    Number of fully used LUT-FF pairs:      32,432 out of  53,876   60%
+    Number of unique control sets:             424
     Number of slice register sites lost
       to control set restrictions:             789 out of  58,880    1%
 
@@ -20533,8 +20532,8 @@ IO Utilization:
     IOB Slave Pads:                             36
 
 Specific Feature Utilization:
-  Number of BlockRAM/FIFO:                     116 out of     244   47%
-    Number using BlockRAM only:                112
+  Number of BlockRAM/FIFO:                     115 out of     244   47%
+    Number using BlockRAM only:                111
     Number using FIFO only:                      4
     Total primitives used:
       Number of 36k BlockRAM used:              43
@@ -20550,11 +20549,11 @@ Specific Feature Utilization:
   Number of PLL_ADVs:                            1 out of       6   16%
 
   Number of RPM macros:           74
-Average Fanout of Non-Clock Nets:                1.87
+Average Fanout of Non-Clock Nets:                1.88
 
-Peak Memory Usage:  2417 MB
-Total REAL time to MAP completion:  1 hrs 6 mins 32 secs 
-Total CPU time to MAP completion:   1 hrs 6 mins 28 secs 
+Peak Memory Usage:  2393 MB
+Total REAL time to MAP completion:  1 hrs 2 mins 46 secs 
+Total CPU time to MAP completion:   1 hrs 2 mins 42 secs 
 
 Mapping completed.
 See MAP report file "system_map.mrp" for details.
@@ -20592,9 +20591,9 @@ to function, but you no longer qualify for Xilinx software updates or new releas
 
 ----------------------------------------------------------------------
 WARNING:ConstraintSystem:65 - Constraint <NET "chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk" PERIOD =     
-      3.9062 ns HIGH 50%;> [system.pcf(289050)] overrides constraint <NET
+      3.9062 ns HIGH 50%;> [system.pcf(281786)] overrides constraint <NET
    "chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk" PERIOD =         3.9062 ns HIGH 50%;>
-   [system.pcf(289048)].
+   [system.pcf(281784)].
 
 
 Initializing temperature to 85.000 Celsius. (default - Range: 0.000 to 85.000 Celsius)
@@ -20631,15 +20630,15 @@ Device Utilization Summary:
    Number of IODELAYs                       90 out of 800    11%
    Number of OLOGICs                       178 out of 800    22%
    Number of PLL_ADVs                        1 out of 6      16%
-   Number of RAMB18X2s                      69 out of 244    28%
+   Number of RAMB18X2s                      68 out of 244    27%
    Number of RAMB36_EXPs                    43 out of 244    17%
-   Number of Slice Registers             51534 out of 58880  87%
-      Number used as Flip Flops          51533
+   Number of Slice Registers             50622 out of 58880  85%
+      Number used as Flip Flops          50621
       Number used as Latches                 0
       Number used as LatchThrus              1
 
-   Number of Slice LUTS                  36575 out of 58880  62%
-   Number of Slice LUT-Flip Flop pairs   54495 out of 58880  92%
+   Number of Slice LUTS                  35686 out of 58880  60%
+   Number of Slice LUT-Flip Flop pairs   53876 out of 58880  91%
 
 
 Overall effort level (-ol):   High 
@@ -20657,33 +20656,37 @@ INFO:Route:501 - One or more directed routing (DIRT) constraints generated for a
    that DIRT strings are guaranteed to work only on the same device they were created for. If the DIRT constraints fail,
    verify that the same connectivity is available in the target device for this implementation. 
 
-Wirelength Stats for nets on all pins. NumPins: 141061
+Wirelength Stats for nets on all pins. NumPins: 140103
 
-Phase  1  : 299567 unrouted;      REAL time: 1 mins 58 secs 
+Phase  1  : 293045 unrouted;      REAL time: 1 mins 58 secs 
 
-Phase  2  : 130177 unrouted;      REAL time: 2 mins 36 secs 
+Phase  2  : 129195 unrouted;      REAL time: 2 mins 34 secs 
 
-Phase  3  : 38736 unrouted;      REAL time: 3 mins 22 secs 
+Phase  3  : 36664 unrouted;      REAL time: 3 mins 15 secs 
 
-Phase  4  : 39735 unrouted; (Setup:62480, Hold:1089, Component Switching Limit:0)     REAL time: 5 mins 36 secs 
-
-Updating file: system.ncd with current fully routed design.
-
-Phase  5  : 0 unrouted; (Setup:58375, Hold:922, Component Switching Limit:0)     REAL time: 13 mins 29 secs 
-
-Phase  6  : 0 unrouted; (Setup:57599, Hold:922, Component Switching Limit:0)     REAL time: 20 mins 6 secs 
+Phase  4  : 37115 unrouted; (Setup:41017, Hold:2068, Component Switching Limit:0)     REAL time: 4 mins 4 secs 
 
 Updating file: system.ncd with current fully routed design.
 
-Phase  7  : 0 unrouted; (Setup:0, Hold:922, Component Switching Limit:0)     REAL time: 33 mins 26 secs 
+Phase  5  : 0 unrouted; (Setup:43093, Hold:2068, Component Switching Limit:0)     REAL time: 6 mins 45 secs 
 
-Phase  8  : 0 unrouted; (Setup:0, Hold:922, Component Switching Limit:0)     REAL time: 33 mins 26 secs 
+Phase  6  : 0 unrouted; (Setup:43064, Hold:2068, Component Switching Limit:0)     REAL time: 9 mins 7 secs 
 
-Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 33 mins 40 secs 
+Updating file: system.ncd with current fully routed design.
 
-Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 34 mins 6 secs 
-Total REAL time to Router completion: 34 mins 6 secs 
-Total CPU time to Router completion: 34 mins 5 secs 
+Phase  7  : 0 unrouted; (Setup:43064, Hold:2068, Component Switching Limit:0)     REAL time: 12 mins 25 secs 
+
+Phase  8  : 0 unrouted; (Setup:39640, Hold:2068, Component Switching Limit:0)     REAL time: 15 mins 39 secs 
+
+Updating file: system.ncd with current fully routed design.
+
+Phase  9  : 0 unrouted; (Setup:39640, Hold:2068, Component Switching Limit:0)     REAL time: 34 mins 38 secs 
+
+Phase 10  : 0 unrouted; (Setup:39640, Hold:0, Component Switching Limit:0)     REAL time: 34 mins 52 secs 
+
+Phase 11  : 0 unrouted; (Setup:34549, Hold:0, Component Switching Limit:0)     REAL time: 35 mins 16 secs 
+Total REAL time to Router completion: 35 mins 16 secs 
+Total CPU time to Router completion: 35 mins 16 secs 
 
 Partition Implementation Status
 -------------------------------
@@ -20701,19 +20704,19 @@ Generating Clock Report
 +---------------------+--------------+------+------+------------+-------------+
 |        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
 +---------------------+--------------+------+------+------------+-------------+
-|            adc1_clk | BUFGCTRL_X0Y1| No   |12912 |  0.834     |  2.381      |
+|            adc1_clk | BUFGCTRL_X0Y1| No   |12820 |  0.881     |  2.427      |
 +---------------------+--------------+------+------+------------+-------------+
 |chan_512_packet_avgI |              |      |      |            |             |
 |Q_bram_ramblk_portb_ |              |      |      |            |             |
-|            BRAM_Clk | BUFGCTRL_X0Y0| No   |  901 |  0.771     |  2.296      |
+|            BRAM_Clk | BUFGCTRL_X0Y0| No   |  894 |  0.795     |  2.323      |
 +---------------------+--------------+------+------+------------+-------------+
-| dram_sys_dram_clk_0 |BUFGCTRL_X0Y26| No   |  816 |  0.802     |  2.347      |
+| dram_sys_dram_clk_0 |BUFGCTRL_X0Y26| No   |  812 |  0.815     |  2.355      |
 +---------------------+--------------+------+------+------------+-------------+
 |dram_sys_dram_clk_di |              |      |      |            |             |
-|                   v |BUFGCTRL_X0Y28| No   |  474 |  0.696     |  2.373      |
+|                   v |BUFGCTRL_X0Y28| No   |  473 |  0.628     |  2.373      |
 +---------------------+--------------+------+------+------------+-------------+
 |dram_sys_dram_clk_90 |              |      |      |            |             |
-|                     |BUFGCTRL_X0Y27| No   |  175 |  0.634     |  2.354      |
+|                     |BUFGCTRL_X0Y27| No   |  179 |  0.630     |  2.354      |
 +---------------------+--------------+------+------+------------+-------------+
 |chan_512_packet_dac_ |              |      |      |            |             |
 |mkid/chan_512_packet |              |      |      |            |             |
@@ -20781,7 +20784,24 @@ only delays for the net. Note this is different from Clock Skew which
 is reported in TRCE timing report. Clock Skew is the difference between
 the minimum and maximum path delays which includes logic delays.
 
-Timing Score: 0 (Setup: 0, Hold: 0, Component Switching Limit: 0)
+Timing Score: 34549 (Setup: 34549, Hold: 0, Component Switching Limit: 0)
+
+WARNING:Par:468 - Your design did not meet timing.  The following are some suggestions to assist you to meet timing in
+   your design.
+
+   Review the timing report using Timing Analyzer (In ISE select "Post-Place &
+   Route Static Timing Report"). Go to the failing constraint(s) and evaluate the failing paths for each constraint.
+
+   Try the Design Goal and Strategies for Timing Performance(In ISE select Project -> Design Goals & Strategies) to
+   ensure the best options are set in the tools for timing closure.
+
+   Use the Xilinx "SmartXplorer" script to try special combinations of
+   options known to produce very good results.
+
+   Visit the Xilinx technical support web at http://support.xilinx.com and go to
+   either "Troubleshoot->Tech Tips->Timing & Constraints" or "
+   TechXclusives->Timing Closure" for tips and suggestions for meeting timing
+   in your design.
 
 Number of Timing Constraints that were not applied: 9
 
@@ -20792,37 +20812,37 @@ Asterisk (*) preceding a constraint indicates it was not met.
   Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
                                             |             |    Slack   | Achievable | Errors |    Score   
 ----------------------------------------------------------------------------------------------------------
-  PERIOD analysis for net "chan_512_packet_ | SETUP       |     0.025ns|     3.881ns|       0|           0
-  adc_mkid/chan_512_packet_adc_mkid/dcm_clk | HOLD        |     0.005ns|            |       0|           0
-  " derived from  NET "chan_512_packet_adc_ |             |            |            |        |            
-  mkid/chan_512_packet_adc_mkid/drdy_clk" P |             |            |            |        |            
-  ERIOD =        3.9062 ns HIGH 50%         |             |            |            |        |            
+* TS_dram_infrastructure_inst_dram_infrastr | SETUP       |    -1.595ns|     6.940ns|      25|        9938
+  ucture_inst_dram_clk_90_int = PERIOD      | HOLD        |     0.486ns|            |       0|           0
+      TIMEGRP         "dram_infrastructure_ |             |            |            |        |            
+  inst_dram_infrastructure_inst_dram_clk_90 |             |            |            |        |            
+  _int"         TS_dram_infrastructure_inst |             |            |            |        |            
+  _dram_infrastructure_inst_mem_clk PHASE   |             |            |            |        |            
+         0.938 ns HIGH 50%                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.028ns|     3.722ns|       0|           0
+* TS_dram_infrastructure_inst_dram_infrastr | SETUP       |    -1.020ns|     4.770ns|      73|       21574
   ucture_inst_dram_clk_0_int = PERIOD       | HOLD        |     0.078ns|            |       0|           0
      TIMEGRP         "dram_infrastructure_i |             |            |            |        |            
   nst_dram_infrastructure_inst_dram_clk_0_i |             |            |            |        |            
   nt"         TS_dram_infrastructure_inst_d |             |            |            |        |            
   ram_infrastructure_inst_mem_clk HIGH 50%  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88  | SETUP       |     0.037ns|    11.326ns|       0|           0
-  MHz HIGH 50%                              | HOLD        |     0.275ns|            |       0|           0
+* PERIOD analysis for net "chan_512_packet_ | SETUP       |    -0.713ns|     4.619ns|      18|        2783
+  adc_mkid/chan_512_packet_adc_mkid/dcm_clk | HOLD        |     0.013ns|            |       0|           0
+  " derived from  NET "chan_512_packet_adc_ |             |            |            |        |            
+  mkid/chan_512_packet_adc_mkid/drdy_clk" P |             |            |            |        |            
+  ERIOD =        3.9062 ns HIGH 50%         |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.039ns|     7.461ns|       0|           0
-  ucture_inst_dram_clk_div_int = PERIOD     | HOLD        |     0.204ns|            |       0|           0
+* TS_dram_infrastructure_inst_dram_infrastr | SETUP       |    -0.236ns|     7.972ns|       2|         254
+  ucture_inst_dram_clk_div_int = PERIOD     | HOLD        |     0.221ns|            |       0|           0
        TIMEGRP         "dram_infrastructure |             |            |            |        |            
   _inst_dram_infrastructure_inst_dram_clk_d |             |            |            |        |            
   iv_int"         TS_dram_infrastructure_in |             |            |            |        |            
   st_dram_infrastructure_inst_mem_clk * 0.5 |             |            |            |        |            
            HIGH 50%                         |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_dram_infrastructure_inst_dram_infrastr | SETUP       |     0.051ns|     3.699ns|       0|           0
-  ucture_inst_dram_clk_90_int = PERIOD      | HOLD        |     0.476ns|            |       0|           0
-      TIMEGRP         "dram_infrastructure_ |             |            |            |        |            
-  inst_dram_infrastructure_inst_dram_clk_90 |             |            |            |        |            
-  _int"         TS_dram_infrastructure_inst |             |            |            |        |            
-  _dram_infrastructure_inst_mem_clk PHASE   |             |            |            |        |            
-         0.938 ns HIGH 50%                  |             |            |            |        |            
+  TS_epb_clk = PERIOD TIMEGRP "epb_clk" 88  | SETUP       |     0.036ns|    11.327ns|       0|           0
+  MHz HIGH 50%                              | HOLD        |     0.385ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
   TS_dly_clk_n = PERIOD TIMEGRP "dly_clk_n" | MINLOWPULSE |     1.400ns|     3.600ns|       0|           0
    200 MHz HIGH 50%                         |             |            |            |        |            
@@ -20837,23 +20857,15 @@ Asterisk (*) preceding a constraint indicates it was not met.
   TS_adcmkid1_DRDY_I_p = PERIOD TIMEGRP "ad | MINLOWPULSE |     0.906ns|     3.000ns|       0|           0
   cmkid1_DRDY_I_p" 3.906 ns HIGH 50%        |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
+  TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM | SETUP       |     1.016ns|     8.984ns|       0|           0
+   TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO       | HOLD        |     0.726ns|            |       0|           0
+     TIMEGRP "FFS" 10 ns                    |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
   TS_dram_infrastructure_inst_dram_infrastr | MINLOWPULSE |     1.416ns|     2.334ns|       0|           0
   ucture_inst_mem_clk = PERIOD TIMEGRP      |             |            |            |        |            
       "dram_infrastructure_inst_dram_infras |             |            |            |        |            
   tructure_inst_mem_clk"         TS_dly_clk |             |            |            |        |            
   _n * 1.33333333 HIGH 50%                  |             |            |            |        |            
-----------------------------------------------------------------------------------------------------------
-  NET "epb_cs_n_IBUF" MAXDELAY = 4 ns       | MAXDELAY    |     1.509ns|     2.491ns|       0|           0
-----------------------------------------------------------------------------------------------------------
-  TS_MC_PHY_INIT_DATA_SEL_0 = MAXDELAY FROM | SETUP       |     1.631ns|     8.369ns|       0|           0
-   TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO       | HOLD        |     1.895ns|            |       0|           0
-     TIMEGRP "FFS" 10 ns                    |             |            |            |        |            
-----------------------------------------------------------------------------------------------------------
-  TS_chan_512_packet_adc_mkid_chan_512_pack | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
-  et_adc_mkid_dcm_clk = PERIOD TIMEGRP      |             |            |            |        |            
-      "chan_512_packet_adc_mkid_chan_512_pa |             |            |            |        |            
-  cket_adc_mkid_dcm_clk"         TS_adcmkid |             |            |            |        |            
-  1_DRDY_I_p HIGH 50%                       |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
   TS_chan_512_packet_adc_mkid_chan_512_pack | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
   et_adc_mkid_dcm_clk_0 = PERIOD         TI |             |            |            |        |            
@@ -20861,22 +20873,30 @@ Asterisk (*) preceding a constraint indicates it was not met.
   packet_adc_mkid_dcm_clk_0"         TS_adc |             |            |            |        |            
   mkid1_DRDY_I_n HIGH 50%                   |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP | SETUP       |     3.435ns|     6.565ns|       0|           0
-   "TNM_RD_DATA_SEL" TO TIMEGRP "FFS"       | HOLD        |     0.365ns|            |       0|           0
+  TS_chan_512_packet_adc_mkid_chan_512_pack | MINPERIOD   |     1.684ns|     2.222ns|       0|           0
+  et_adc_mkid_dcm_clk = PERIOD TIMEGRP      |             |            |            |        |            
+      "chan_512_packet_adc_mkid_chan_512_pa |             |            |            |        |            
+  cket_adc_mkid_dcm_clk"         TS_adcmkid |             |            |            |        |            
+  1_DRDY_I_p HIGH 50%                       |             |            |            |        |            
+----------------------------------------------------------------------------------------------------------
+  NET "epb_cs_n_IBUF" MAXDELAY = 4 ns       | MAXDELAY    |     2.366ns|     1.634ns|       0|           0
+----------------------------------------------------------------------------------------------------------
+  TS_MC_RD_DATA_SEL = MAXDELAY FROM TIMEGRP | SETUP       |     4.821ns|     5.179ns|       0|           0
+   "TNM_RD_DATA_SEL" TO TIMEGRP "FFS"       | HOLD        |     0.309ns|            |       0|           0
      10 ns                                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGR | SETUP       |     5.439ns|     4.561ns|       0|           0
-  P "TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"     | HOLD        |     1.241ns|            |       0|           0
+  TS_MC_RDEN_SEL_MUX = MAXDELAY FROM TIMEGR | SETUP       |     6.618ns|     3.382ns|       0|           0
+  P "TNM_RDEN_SEL_MUX" TO TIMEGRP "FFS"     | HOLD        |     1.172ns|            |       0|           0
        10 ns                                |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     5.898ns|     4.102ns|       0|           0
-  NM_GATE_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.079ns|            |       0|           0
+  TS_MC_GATE_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.076ns|     2.924ns|       0|           0
+  NM_GATE_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.014ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     6.455ns|     3.545ns|       0|           0
-  NM_RDEN_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     1.033ns|            |       0|           0
+  TS_MC_RDEN_DLY = MAXDELAY FROM TIMEGRP "T | SETUP       |     7.512ns|     2.488ns|       0|           0
+  NM_RDEN_DLY" TO TIMEGRP "FFS" 10 ns       | HOLD        |     0.485ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGR | SETUP       |     6.606ns|     3.394ns|       0|           0
-  P "TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"     | HOLD        |     1.581ns|            |       0|           0
+  TS_MC_CAL_RDEN_DLY = MAXDELAY FROM TIMEGR | SETUP       |     8.052ns|     1.948ns|       0|           0
+  P "TNM_CAL_RDEN_DLY" TO TIMEGRP "FFS"     | HOLD        |     0.244ns|            |       0|           0
        10 ns                                |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
   TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY FRO | N/A         |         N/A|         N/A|     N/A|         N/A
@@ -20896,9 +20916,9 @@ Derived Constraints for chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_c
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|chan_512_packet_adc_mkid/chan_5|      3.906ns|      3.000ns|      3.881ns|            0|            0|            0|       167179|
+|chan_512_packet_adc_mkid/chan_5|      3.906ns|      3.000ns|      4.619ns|            0|           18|            0|       166267|
 |12_packet_adc_mkid/drdy_clk    |             |             |             |             |             |             |             |
-| chan_512_packet_adc_mkid/chan_|      3.906ns|      3.881ns|          N/A|            0|            0|       167179|            0|
+| chan_512_packet_adc_mkid/chan_|      3.906ns|      4.619ns|          N/A|           18|            0|       166267|            0|
 | 512_packet_adc_mkid/dcm_clk   |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
@@ -20908,16 +20928,16 @@ Derived Constraints for TS_dly_clk_n
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|TS_dly_clk_n                   |      5.000ns|      3.600ns|      4.974ns|            0|            0|            0|        25093|
-| TS_dram_infrastructure_inst_dr|      3.750ns|      2.334ns|      3.731ns|            0|            0|            0|        25093|
+|TS_dly_clk_n                   |      5.000ns|      3.600ns|      9.253ns|            0|          100|            0|        25093|
+| TS_dram_infrastructure_inst_dr|      3.750ns|      2.334ns|      6.940ns|            0|          100|            0|        25093|
 | am_infrastructure_inst_mem_clk|             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      3.750ns|      3.722ns|          N/A|            0|            0|        10851|            0|
+|  TS_dram_infrastructure_inst_d|      3.750ns|      4.770ns|          N/A|           73|            0|        10851|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_0_int                    |             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      3.750ns|      3.699ns|          N/A|            0|            0|          729|            0|
+|  TS_dram_infrastructure_inst_d|      3.750ns|      6.940ns|          N/A|           25|            0|          729|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_90_int                   |             |             |             |             |             |             |             |
-|  TS_dram_infrastructure_inst_d|      7.500ns|      7.461ns|          N/A|            0|            0|        13513|            0|
+|  TS_dram_infrastructure_inst_d|      7.500ns|      7.972ns|          N/A|            2|            0|        13513|            0|
 |  ram_infrastructure_inst_dram_|             |             |             |             |             |             |             |
 |  clk_div_int                  |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
@@ -20945,7 +20965,7 @@ Derived Constraints for TS_adcmkid1_DRDY_I_n
 | _0                            |             |             |             |             |             |             |             |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
-All constraints were met.
+4 constraints not met.
 INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the 
    constraint does not cover any paths or that it has no requested value.
 
@@ -21105,17 +21125,17 @@ WARNING:ParHelpers:198 - One or more "EXACT" mode Directed Routing constrained n
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[62].u_iob_dq/stg1_out_rise_0s
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[70].u_iob_dq/stg1_out_fall_0s
 	Net dram_controller_inst/dram_controller_inst/mem_if_top_inst/u_phy_top/u_phy_io/gen_dq[70].u_iob_dq/stg1_out_rise_0s
-Total REAL time to PAR completion: 34 mins 25 secs 
-Total CPU time to PAR completion: 34 mins 24 secs 
+Total REAL time to PAR completion: 35 mins 35 secs 
+Total CPU time to PAR completion: 35 mins 35 secs 
 
-Peak Memory Usage:  1974 MB
+Peak Memory Usage:  2064 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.
-Timing: Completed - No errors found.
+Timing: Completed - 118 errors found.
 
 Number of error messages: 0
-Number of warning messages: 4
+Number of warning messages: 5
 Number of info messages: 3
 
 Writing design to file system.ncd
@@ -21142,9 +21162,9 @@ Loading device for application Rf_Device from file '5vsx95t.nph' in environment
    "system" is an NCD, version 3.2, device xc5vsx95t, package ff1136, speed -1
 WARNING:ConstraintSystem:65 - Constraint <NET
    "chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk" PERIOD =        
-   3.9062 ns HIGH 50%;> [system.pcf(289050)] overrides constraint <NET
+   3.9062 ns HIGH 50%;> [system.pcf(281786)] overrides constraint <NET
    "chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/drdy_clk" PERIOD =        
-   3.9062 ns HIGH 50%;> [system.pcf(289048)].
+   3.9062 ns HIGH 50%;> [system.pcf(281784)].
 
 WARNING:Timing:3223 - Timing constraint TS_MC_PHY_INIT_DATA_SEL_90 = MAXDELAY
    FROM TIMEGRP "TNM_PHY_INIT_DATA_SEL" TO        TIMEGRP "RAMS" 10 ns; ignored
@@ -21184,23 +21204,23 @@ WARNING:Timing - DCM chan_512_packet_adc_mkid/chan_512_packet_adc_mkid/CLK_DCM
 Timing summary:
 ---------------
 
-Timing errors: 0  Score: 0 (Setup/Max: 0, Hold: 0)
+Timing errors: 118  Score: 34549 (Setup/Max: 34549, Hold: 0)
 
-Constraints cover 603367 paths, 1 nets, and 137855 connections
+Constraints cover 602455 paths, 1 nets, and 136898 connections
 
 Design statistics:
-   Minimum period:  11.326ns (Maximum frequency:  88.292MHz)
-   Maximum path delay from/to any node:   8.369ns
-   Maximum net delay:   2.491ns
+   Minimum period:  11.327ns (Maximum frequency:  88.285MHz)
+   Maximum path delay from/to any node:   8.984ns
+   Maximum net delay:   1.634ns
 
 
-Analysis completed Sat Aug 18 00:53:32 2012
+Analysis completed Sat Aug 18 20:19:24 2012
 --------------------------------------------------------------------------------
 
 Generating Report ...
 
 Number of warnings: 3
 Number of info messages: 3
-Total time: 2 mins 11 secs 
+Total time: 2 mins 10 secs 
 
 
