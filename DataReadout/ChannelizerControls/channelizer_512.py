@@ -208,6 +208,7 @@ class AppForm(QMainWindow):
                     p1[ch].append((raw_data_1%2**12 - 2**11)*scale_to_degrees)
                     timestamp[ch].append(raw_data_0%2**20)
             print total_counts
+        self.roach.write_int('startBuffer', 0)
 
         print channel_count
         ch = int(self.textbox_channel.text())
@@ -380,7 +381,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20120713/freqs.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/20120823adr/ps_freq0-good.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
