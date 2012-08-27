@@ -415,13 +415,13 @@ class StartQt4(QMainWindow):
             #display pixmap
             self.scene = QGraphicsScene()
             self.scene.addPixmap(pix)
-            for i in range(len(self.bad_pix_x)):
+            for i in xrange(len(self.bad_pix_x)):
                 x = self.bad_pix_x[i]
                 y = self.bad_pix_y[i]
                 self.scene.addLine(10*x,10*y,10*x+9,10*y+9,Qt.red)
                 self.scene.addLine(10*x,10*y+9,10*x+9,10*y,Qt.red)
             if len(self.spectrum_pixel_x) != 0:
-                for i in range(len(self.spectrum_pixel_x)):
+                for i in xrange(len(self.spectrum_pixel_x)):
                     x = self.spectrum_pixel_x[i]
                     y = self.spectrum_pixel_y[i]
                     #print x,',',y
@@ -494,8 +494,8 @@ class StartQt4(QMainWindow):
         if self.pix_select_mode == "drag":
             if self.startpix != self.endpix:
                 #get all pix in box
-                allx = range(min(self.startpx,self.endpx),max(self.startpx, self.endpx)+1)
-                ally = range(min(self.startpy,self.endpy),max(self.startpy, self.endpy)+1)
+                allx = xrange(min(self.startpx,self.endpx),max(self.startpx, self.endpx)+1)
+                ally = xrange(min(self.startpy,self.endpy),max(self.startpy, self.endpy)+1)
                 pixx = []
                 pixy = []
                 for x in allx:
@@ -513,8 +513,8 @@ class StartQt4(QMainWindow):
             #print length
             #print 'height: ',
             #print height
-            allx = range(self.startpx-int(ceil(length/2.0)-1),self.startpx+int(floor(length/2.0))+1)
-            ally = range(self.startpy-int(ceil(height/2.0)-1),self.startpy+int(floor(height/2.0))+1)
+            allx = xrange(self.startpx-int(ceil(length/2.0)-1),self.startpx+int(floor(length/2.0))+1)
+            ally = xrange(self.startpy-int(ceil(height/2.0)-1),self.startpy+int(floor(height/2.0))+1)
             self.spectrum_pixel_x = []
             self.spectrum_pixel_y = []
             pixx = []
@@ -531,8 +531,8 @@ class StartQt4(QMainWindow):
             r = self.ui.circ_r_spinBox.value()
             length = 2*r
             height = length
-            allx = range(self.startpx-int(ceil(length/2.0)),self.startpx+int(floor(length/2.0))+1)
-            ally = range(self.startpy-int(ceil(height/2.0)),self.startpy+int(floor(height/2.0))+1)
+            allx = xrange(self.startpx-int(ceil(length/2.0)),self.startpx+int(floor(length/2.0))+1)
+            ally = xrange(self.startpy-int(ceil(height/2.0)),self.startpy+int(floor(height/2.0))+1)
             self.spectrum_pixel_x = []
             self.spectrum_pixel_y = []
             pixx = []
@@ -542,7 +542,7 @@ class StartQt4(QMainWindow):
                     if (abs(x-self.startpx))**2+(abs(y-self.startpy))**2 <= (r)**2:
                         pixx.append(x)
                         pixy.append(y)
-        for i in range(len(pixx)):
+        for i in xrange(len(pixx)):
             x = pixx[i]
             y = pixy[i]
             #print 'x: ',x,' y: ',y
@@ -566,12 +566,12 @@ class StartQt4(QMainWindow):
                 for val in indicesx:
                     spot = where(indicesy == val)[0]
                     if len(spot>0):
-                        for i in range(len(spot)):
+                        for i in xrange(len(spot)):
                             repeats.append(indicesy[spot[i]])
                         #print 'repeats: ',repeats,len(repeats)
                 if len(repeats) > 1:
                     repeats = sort(repeats)
-                    for i in range(len(repeats)):
+                    for i in xrange(len(repeats)):
                         del(self.spectrum_pixel_x[repeats[-(i+1)]])
                         del(self.spectrum_pixel_y[repeats[-(i+1)]])
                         
@@ -593,7 +593,7 @@ class StartQt4(QMainWindow):
         plotcounts = empty(0)
         for t in time:
             counts=0
-            for i in range(len(self.spectrum_pixel_x)):
+            for i in xrange(len(self.spectrum_pixel_x)):
                 #counts += self.rotated_counts[t,(self.spectrum_pixel_y[i]),self.spectrum_pixel_x[i]]
                 counts += self.rotated_counts[t,(self.spectrum_pixel_y[i]),self.spectrum_pixel_x[i]]
                 
@@ -608,7 +608,7 @@ class StartQt4(QMainWindow):
         self.ui.spectra_plot.canvas.draw()
         #if len(self.spectrum_pixel_x) != 0:
         #   self.scene = QGraphicsScene()
-        #   for i in range(len(self.spectrum_pixel_x)):
+        #   for i in xrange(len(self.spectrum_pixel_x)):
         #       x = self.spectrum_pixel_x[i]
         #       y = self.spectrum_pixel_y[i]
         #       print x,',',y
@@ -932,7 +932,7 @@ class image_Worker(QThread):
         self.C8[:] = [x-int(meds[8]) for x in self.C8]
         self.C9[:] = [x-int(meds[9]) for x in self.C9]
     def calc_mean_energy(self):
-        for p in range(self.total_pix):
+        for p in xrange(self.total_pix):
             self.me[p] = ((self.C0[p]*self.E0 + self.C1[p]*self.E1 + self.C2[p]*self.E2 + self.C3[p]*self.E3 \
                         + self.C4[p]*self.E4 + self.C5[p]*self.E5 + self.C6[p]*self.E6 + self.C7[p]*self.E7 \
                         + self.C8[p]*self.E8 + self.C9[p]*self.E9) /self.pc[p])
@@ -943,7 +943,7 @@ class image_Worker(QThread):
         total_n = 0
         self.integrated_SNR = 0
         self.SNR = [0,0,0,0,0,0,0,0,0,0]
-        for i in range(len(medians)):
+        for i in xrange(len(medians)):
             if self.sky_subtraction == True:
                 signal = totalcounts[i]
                 noise = npix*medians[i]
@@ -989,7 +989,7 @@ class image_Worker(QThread):
                 for p in self.spectrum_pixel:
                     counts = [self.C0[p],self.C1[p],self.C2[p],self.C3[p],self.C4[p],self.C5[p],self.C6[p],\
                             self.C7[p],self.C8[p],self.C9[p]]
-                    for i in range(len(counts)):
+                    for i in xrange(len(counts)):
                         totalcounts[i] += counts[i]
                 #calculate SNR
                 self.calculate_SNR(totalcounts, self.medians, len(self.spectrum_pixel))
@@ -1046,7 +1046,7 @@ class image_Worker(QThread):
                 #do sky subtraction from these arrays of counts per pixel in each energy slice
                 if self.sky_subtraction == True:
                     self.subtract_sky(self.medians)
-                for m in range(self.total_pix):
+                for m in xrange(self.total_pix):
                     self.pc[m]=self.C0[m]+self.C1[m]+self.C2[m]+self.C3[m]+self.C4[m]+self.C5[m]+self.C6[m]+\
                         self.C7[m]+self.C8[m]+self.C9[m]
                 self.calc_mean_energy()
@@ -1068,7 +1068,7 @@ class image_Worker(QThread):
                     for p in self.spectrum_pixel:
                         counts = [self.C0[p],self.C1[p],self.C2[p],self.C3[p],self.C4[p],self.C5[p],self.C6[p],\
                                 self.C7[p],self.C8[p],self.C9[p]]
-                        for i in range(len(counts)):
+                        for i in xrange(len(counts)):
                             totalcounts[i] += counts[i]
                     #calculate SNR
                     self.calculate_SNR(totalcounts, self.medians, len(self.spectrum_pixel))
