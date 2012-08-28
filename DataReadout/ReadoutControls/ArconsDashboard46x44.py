@@ -56,8 +56,6 @@ h = 4.13567E-15 #[ev*s]
 numXPixel = 44
 numYPixel = 46
 
-
-
 TCS_on = False
 
 class StartQt4(QMainWindow):
@@ -214,46 +212,47 @@ class StartQt4(QMainWindow):
         '''we will want this function to activate the saving of data.  will need to name,
         open, and begin writing to file.  also activate observation timer if a
         time is given.'''
-        self.image_time = 0
-        self.counts = empty((0,self.nxpix*self.nypix))
-        print self.counts
-        self.rotated_counts = empty((0,self.nypix,self.nxpix))
-        self.observing = True
-        #turn off things we don't want messed with during an exposure
-        self.disable_directory_change()
-        self.ui.start_observation_pushButton.setEnabled(False)
-        self.ui.obs_time_spinBox.setEnabled(False)
-        #call headerGen and give it telescope status/file info
-        basename = "obs_"
-        targname = str(self.ui.target_lineEdit.text())
         self.exptime = self.ui.obs_time_spinBox.value()
-        self.int_time = self.ui.int_time_spinBox.value()
-        self.start_time = int(floor(time.time()))
-        self.get_telescope_position(lt = self.start_time) #returns alt, az, ra, dec, ha, lst, utc, airmass
-        self.get_telescope_status() #returns focus
-        self.get_parallactic()
-        self.dec = float(ephem.degrees(self.dec))
-        self.ra = float(ephem.hours(self.ra))
-        # write lock file
-        #write header to data file and remove lock file to begin data acquisition
-        self.obsname = basename+time.strftime("%Y%m%d-%H%M%S", time.localtime(self.start_time))
-        self.obsfile = str(self.obsname) + '.h5'
-        logfile = 'logs/'+str(self.obsname)+'.log'
-        self.ui.file_name_lineEdit.setText(str(self.obsfile))
-        if os.path.exists(self.bindir) == False:
-            os.mkdir(self.bindir)
-        HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
-        proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
-        proc.wait()
-        self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s > %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
-        print "PacketMaster process started with logfile %s" % logfile
-        print "Header written to data file, beginning observation..."
-        
-        #time.sleep(5) #wait 1 second for Ben's code to create beamimage before activating rebinning
-        self.send_params()
-        self.polling_timer.start(200)
-        #start observation timer
-        if self.exptime != 0:
+        if self.exptime = 0:
+            print "Please enter a desired observation time in seconds"
+        else:        
+            self.image_time = 0
+            self.counts = zeros((self.exptime,self.nxpix*self.nypix),int32)
+            #print self.counts
+            self.rotated_counts = zeros((self.exptime,self.nypix,self.nxpix),int32)
+            self.observing = True
+            #turn off things we don't want messed with during an exposure
+            self.disable_directory_change()
+            self.ui.start_observation_pushButton.setEnabled(False)
+            self.ui.obs_time_spinBox.setEnabled(False)
+            #call headerGen and give it telescope status/file info
+            basename = "obs_"
+            targname = str(self.ui.target_lineEdit.text())
+            self.int_time = self.ui.int_time_spinBox.value()
+            self.start_time = int(floor(time.time()))
+            self.get_telescope_position(lt = self.start_time) #returns alt, az, ra, dec, ha, lst, utc, airmass
+            self.get_telescope_status() #returns focus
+            self.get_parallactic()
+            self.dec = float(ephem.degrees(self.dec))
+            self.ra = float(ephem.hours(self.ra))
+            # write lock file
+            #write header to data file and remove lock file to begin data acquisition
+            self.obsname = basename+time.strftime("%Y%m%d-%H%M%S", time.localtime(self.start_time))
+            self.obsfile = str(self.obsname) + '.h5'
+            logfile = 'logs/'+str(self.obsname)+'.log'
+            self.ui.file_name_lineEdit.setText(str(self.obsfile))
+            if os.path.exists(self.bindir) == False:
+                os.mkdir(self.bindir)
+            HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
+            proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
+            proc.wait()
+            self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s > %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
+            print "PacketMaster process started with logfile %s" % logfile
+            print "Header written to data file, beginning observation..."
+            #time.sleep(5) #wait 1 second for Ben's code to create beamimage before activating rebinning
+            self.send_params()
+            self.polling_timer.start(200)
+            #start observation timer
             self.timer_thread.start_timer(self.exptime)
             
     def stop_observation(self):
@@ -262,13 +261,13 @@ class StartQt4(QMainWindow):
         and re-enable directory change and observations'''
         #send message to kill binning thread until next observation
         #subprocess.Popen("sudo killall PacketMaster",shell=True)
-
+        
         f=open(str(self.bindir)+"/stop.bin", 'wb')
         f.close()
         f=open(str(self.roachdir)+"/stop.sim", 'wb')
         f.close()
         self.observing = False
-        #turn back on the things that were disabled during exposure
+        #turn on the things that were disabled during exposure
         self.enable_directory_change()
         self.ui.start_observation_pushButton.setEnabled(True)
         self.ui.obs_time_spinBox.setEnabled(True)
@@ -342,6 +341,8 @@ class StartQt4(QMainWindow):
 
     def make_image(self):
         rawdata = load(self.binfile)
+        rawshape = shape(rawdata)
+        
         #rawdata=load('/home/sean/Matt/DataReadout/cdata.npy')
         #print 'Rotating data:'
         #print rawdata.shape
@@ -353,24 +354,25 @@ class StartQt4(QMainWindow):
         #print rotated.shape
         #rotated = rot90(rotated)
         #print rotated.shape
-        rotated = reshape(rotated,(1,self.nypix,self.nxpix))
+        #rotated = reshape(rotated,(1,self.nypix,self.nxpix))
         #print rotated.shape
-
-        rawshape = shape(rawdata)
         
         if self.taking_sky == True:
             self.skycount += rotated
         
-        #print 'rawdata shape ', shape(rawdata)
-        newcounts = reshape(rawdata,(1,self.nxpix*self.nypix))
-        self.counts = append(self.counts,newcounts,axis=0)
-        
-        self.rotated_counts = append(self.rotated_counts, rotated, axis=0)
-        
-        #print 'shape of counts', shape(self.counts)
         tf = self.image_time
         self.int_time = self.ui.int_time_spinBox.value()
         ti = tf-self.int_time
+        
+        #print 'rawdata shape ', shape(rawdata)
+        newcounts = reshape(rawdata,(self.nxpix*self.nypix))
+        #self.counts= append(self.counts,newcounts,axis=0)
+        #self.rotated_counts = append(self.rotated_counts, rotated, axis=0)
+
+        self.counts[self.image_time] = newcounts
+        self.rotated_counts[self.image_time] = rotated
+        
+        #print 'shape of counts', shape(self.counts)
         if ti<0:
             ti = 0
         if tf==0 or tf==ti:
