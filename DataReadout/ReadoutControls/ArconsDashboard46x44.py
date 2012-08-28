@@ -48,6 +48,7 @@ from lib.rad2altaz import rad2altaz
 from lib.make_image_v2 import make_image as make_image_import
 from lib.HeaderGen_seth import HeaderGen
 from lib.arcons_basic_gui import Ui_arcons
+from tables import *
 
 c = 3.0E17 #[nm/s]
 h = 4.13567E-15 #[ev*s]
@@ -122,6 +123,9 @@ class StartQt4(QMainWindow):
         
         #create timer thread that controls observation timer
         self.timer_thread = timer_Worker(self)
+
+	#load beam map from default beammap directory
+	self.loadbeammap()
         
         #use mouse to select pixel from tv_image, also triggers a new spectrum to be displayed
         self.ui.tv_image.mousePressEvent = self.start_pixel_select
@@ -166,13 +170,19 @@ class StartQt4(QMainWindow):
         
 
 
-
-
         #signal image thread to restart if bin file is locked when it tries to access it
         #QObject.connect(self.image_thread,SIGNAL("retry_image()"), self.start_image_thread)
         
     #def start_image_thread(self):
         #self.image_thread.start_images(self.bindir)
+        
+    def loadbeammap(self):
+        bmfile = openFile(self.beammapfile, 'r')
+        #read beammap in to memory to create beam image
+        self.bmap = bmfile.root.beammap.beamimage.read()
+        self.bmap = rot90(self.bmap)
+	self.bmap = flipud(self.bmap)
+	bmfile.close()
         
     #turn gui functionality on/off when observations are stopped/running
     def enable_observation(self):
@@ -271,6 +281,7 @@ class StartQt4(QMainWindow):
         newbeamimage = QFileDialog.getOpenFileName(parent=None, caption=QString(str("Choose Beamimage File")),directory = ".",filter=QString(str("H5 (*.h5)")))
         if len(newbeamimage) > 0:
             self.beammapfile = str(newbeamimage)
+            self.loadbeammap()
     
     def choose_bindir(self):
         newbindir = QFileDialog.getExistingDirectory(self, str("Choose Bin Directory"), "",QFileDialog.ShowDirsOnly)
@@ -377,7 +388,7 @@ class StartQt4(QMainWindow):
         self.vmax = indices[0,-1*(brightest)]
 
         photon_count = reshape(image_counts,rawshape)
-        print photon_count.shape
+        #print photon_count.shape
         photon_count = flipud(photon_count)
         #photon_count = rot90(photon_count)
         #photon_count = rot90(photon_count)
@@ -597,10 +608,13 @@ class StartQt4(QMainWindow):
                 #counts += self.rotated_counts[t,(self.spectrum_pixel_y[i]),self.spectrum_pixel_x[i]]
                 counts += self.rotated_counts[t,(self.spectrum_pixel_y[i]),self.spectrum_pixel_x[i]]
                 
-            plotcounts = append(plotcounts,counts)
+        	plotcounts = append(plotcounts,counts)
+
         self.ui.spectra_plot.canvas.ax.clear()
-        self.spectrum_pixel = self.nxpix*(median(self.spectrum_pixel_y))+median(self.spectrum_pixel_x)
-        self.ui.pixel_no_lcd.display(self.spectrum_pixel)
+        self.spectrum_pixel = self.bmap[median(self.spectrum_pixel_x)][(self.nypix-1)-median(self.spectrum_pixel_y)]
+        self.ui.pixelpath.setText(str(self.spectrum_pixel))
+        #self.spectrum_pixel = self.nxpix*(median(self.spectrum_pixel_y))+median(self.spectrum_pixel_x)
+        #self.ui.pixel_no_lcd.display(self.spectrum_pixel)
         #self.ui.integrated_snr_lcd.display(SNR)
         #self.ui.spectra_plot.canvas.ax.plot(bins,counts,'o')
         self.ui.spectra_plot.canvas.ax.plot(time,plotcounts)
@@ -815,7 +829,7 @@ class StartQt4(QMainWindow):
                 #self.stattime = statinfo.st_mtime
                 
     def check_params(self):
-        self.ui.tv_image.setGeometry(QRect(10, 10, 10*self.nxpix+5, 10*self.nypix+5))
+        self.ui.tv_image.setGeometry(QRect(10, 10, 10*(self.nxpix)+4, 10*(self.nypix)+4))
         #self.ui.tv_image.setGeometry(QRect(10, 0, 450, 600))
         # temporary function to allow changing of array size and energy range without dialog and test that these params are passed properly to dataBin and dataSim
         # check if params have changed value using gui controls
