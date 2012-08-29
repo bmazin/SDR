@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
                 perror("Error sending\n");
                 printf("Error sending\n");
                 continue_current_session = 0;
-				no_interrupt = 0;
+				//no_interrupt = 0;
 			}
             ++packet_no;
 			fflush(stdout);
