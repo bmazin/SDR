@@ -383,9 +383,12 @@ class StartQt4(QMainWindow):
 
     def make_image(self):
         rawdata = load(self.binfile)
-        rawshape = shape(rawdata)
         
+        #debug data
         #rawdata=load('/home/sean/Matt/DataReadout/cdata.npy')
+        #rawdata=load('/Users/ourhero/Documents/Mazinlab/cdata.npy')
+        
+        rawshape = shape(rawdata)
         #print 'Rotating data:'
         #print rawdata.shape
         rotated = flipud(rawdata)
@@ -407,7 +410,7 @@ class StartQt4(QMainWindow):
         ti = tf-self.int_time
         
         #print 'rawdata shape ', shape(rawdata)
-        newcounts = reshape(rawdata,(self.nxpix*self.nypix))
+        newcounts = reshape(rawdata,(1,self.nxpix*self.nypix))
         #self.counts= append(self.counts,newcounts,axis=0)
         #self.rotated_counts = append(self.rotated_counts, rotated, axis=0)
 
