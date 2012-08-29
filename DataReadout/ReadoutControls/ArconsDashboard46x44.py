@@ -76,9 +76,9 @@ class StartQt4(QMainWindow):
         self.nypix = self.get_ypix()
         self.int_time = 1 #seconds
         
-        self.rearrange_frames()
-                
-        self.resize(390+20+15+10*self.nxpix,475+20+10*self.nypix)
+        #self.rearrange_frames()
+        self.ui.brightpix.setMaximum(self.nxpix*self.nypix)
+        #self.resize(390+20+15+10*self.nxpix,475+20+10*self.nypix)
 
         self.check_params()
         
@@ -104,6 +104,9 @@ class StartQt4(QMainWindow):
         #default beammap file, can be updated in gui with browse button
         self.beammapfile = os.environ['BEAMMAP_PATH']#"beamimage.h5"
 
+        self.filterfile = os.environ['FILTER_WHEEL_PATH']
+        self.checkfilter()
+
         #set default directory, binning routine directory, and data directory
         self.defaultdir = QDir.currentPath()
         #self.bindir = str(self.defaultdir)+"/bin" # path where dataBin.py is saved and creates binned files
@@ -122,8 +125,8 @@ class StartQt4(QMainWindow):
         #create timer thread that controls observation timer
         self.timer_thread = timer_Worker(self)
 
-	#load beam map from default beammap directory
-	self.loadbeammap()
+        #load beam map from default beammap directory
+        self.loadbeammap()
         
         #use mouse to select pixel from tv_image, also triggers a new spectrum to be displayed
         self.ui.tv_image.mousePressEvent = self.start_pixel_select
@@ -151,6 +154,7 @@ class StartQt4(QMainWindow):
         QObject.connect(self.ui.stop_observation_pushButton,SIGNAL("clicked()"), self.stop_observation)
         #Connect sky exposure button to taking sky count image for later sky subtraction
         QObject.connect(self.ui.takesky, SIGNAL("clicked()"), self.take_sky)
+        QObject.connect(self.ui.filterpos_spinbox, SIGNAL("valueChanged(int)"), self.movefilter)
         
         #create timers to update images and statuses constantly
         self.status_timer = QTimer()
@@ -172,15 +176,53 @@ class StartQt4(QMainWindow):
         #QObject.connect(self.image_thread,SIGNAL("retry_image()"), self.start_image_thread)
         
     #def start_image_thread(self):
-        #self.image_thread.start_images(self.bindir)
-        
+        #self.image_thread.start_images(self.bindir)        
+    
+    def checkfilter(self):
+        if not isfile(self.filterfile):
+            msgbox = QMessageBox()
+            msgbox.setText("No filter position saved to file.\nMOVE FILTER WHEEL TO POSITION 1 BEFORE CONTINUING")
+            msgbox.exec_()
+            self.filterposition = 1
+            self.ui.filterpos_spinbox.setValue(1)
+            f=open(str(self.filterfile),'w') #put file where dataBin is running
+            f.write(str(self.filterposition))
+            f.close()
+        else:
+            f = open(str(self.filterfile),'r')
+            self.filterposition = int(f.read())
+            f.close()
+            print "Filter at position " + str(self.filterposition) +" on startup."
+    
+    def signalfilter(self):
+        pass
+    
+    def movefilter(self):
+        moveto = int(self.ui.filterpos_spinbox.value()) #input from gui
+        if moveto < 1 or moveto >6:
+            print "Please select filter position between 1 and 6"
+        else:
+            while self.filterposition != moveto:
+                self.filterposition +=1
+                if self.filterposition == 7:
+                    self.filterposition = 1
+                self.signalfilter()
+                time.sleep(1)
+                #sent bnc signal to filter
+                print "Filter moved to position "+ str(self.filterposition)
+            #write new position to file
+            f=open(str(self.filterfile),'w') #put file where dataBin is running
+            f.write(str(self.filterposition))
+            f.close()
+            print "Completed filter move"
+            
     def loadbeammap(self):
         bmfile = openFile(self.beammapfile, 'r')
         #read beammap in to memory to create beam image
         self.bmap = bmfile.root.beammap.beamimage.read()
         self.bmap = rot90(self.bmap)
-	self.bmap = flipud(self.bmap)
-	bmfile.close()
+        self.bmap = flipud(self.bmap)
+        bmfile.close()
         
     #turn gui functionality on/off when observations are stopped/running
     def enable_observation(self):
@@ -213,7 +255,7 @@ class StartQt4(QMainWindow):
         open, and begin writing to file.  also activate observation timer if a
         time is given.'''
         self.exptime = self.ui.obs_time_spinBox.value()
-        if self.exptime = 0:
+        if self.exptime == 0:
             print "Please enter a desired observation time in seconds"
         else:        
             self.image_time = 0
@@ -452,9 +494,9 @@ class StartQt4(QMainWindow):
     def expand_window(self):
         #if spectrum options button is clicked resize window to show/hide options
         if self.ui.options_radioButton.isChecked():
-            self.resize(620+20+10*self.nxpix,475+20+10*self.nypix)
+            self.resize(620+20+10*self.nxpix,450+20+10*self.nypix)
         else:
-            self.resize(390+20+15+10*self.nxpix,475+20+10*self.nypix)
+            self.resize(380+20+15+10*self.nxpix,450+20+10*self.nypix)
     
     #def set_plot_mode(self):
         #change between spectra plots and signal to noise ratio plots
@@ -863,7 +905,7 @@ class StartQt4(QMainWindow):
         self.ui.choose_beamimage.setGeometry(QtCore.QRect(420+20+10*self.nxpix, 210, 171, 41))
         self.ui.choose_bindir.setGeometry(QtCore.QRect(420+20+10*self.nxpix, 250, 171, 41))
         self.ui.brightpix.setGeometry(QtCore.QRect(430+20+10*self.nxpix, 300, 57, 25)) #number box for brightpix
-        self.ui.brightpix.setMaximum(self.nxpix*self.nypix)
+        #self.ui.brightpix.setMaximum(self.nxpix*self.nypix)
         self.ui.label_22.setGeometry(QtCore.QRect(491+20+10*self.nxpix, 300, 91, 21))
         self.ui.takesky.setGeometry(QtCore.QRect(420+20+10*self.nxpix, 380, 171, 51))
         
