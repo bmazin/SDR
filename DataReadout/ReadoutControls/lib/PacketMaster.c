@@ -29,9 +29,9 @@
 //max number of characters in all strings
 #define STR_SIZE 80 
 //number of rows in the final quicklook images
-#define BEAM_ROWS 32
+#define BEAM_ROWS 46
 //number of columns in the final quicklook images
-#define BEAM_COLS 32
+#define BEAM_COLS 44
 //number of dimensions in the Variable Length array (VLarray).  
 //There is a 1D array of pointers to variable length arrays, so rank=1
 #define DATA_RANK 1
@@ -44,9 +44,9 @@
 #define TIMESTAMPER 0
 
 //change number of roaches here and adjust hostnames in connect_to_roach()
-#define NROACHES 4
+#define NROACHES 8
 //The number of channels or pixels corresponding to each roach
-#define NPIXELS_PER_ROACH 256
+#define NPIXELS_PER_ROACH 253
 //max number of possible photon counts in a second of data for a pixel 
 #define MAX_EVENTS_PER_SEC 2500
 
@@ -534,7 +534,7 @@ int connect_to_roach(int roachno)
     int portno = 50000;// + roachno;//$$ Change port number for roaches
     req.tv_sec = 0;
     req.tv_nsec = usec * 1000L;
-    char* hostnames[] = {"10.0.0.10","10.0.0.11","10.0.0.12","10.0.0.13"};
+    char* hostnames[] = {"10.0.0.10","10.0.0.11","10.0.0.12","10.0.0.13","10.0.0.14","10.0.0.15","10.0.0.16","10.0.0.17"};
     //char* hostnames[] = {"127.0.0.1"};//$$ Change hostnames
     /* socket: create the socket */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -580,7 +580,7 @@ int write_quicklook_image(char* obs_filepath, uint16_t data[BEAM_ROWS][BEAM_COLS
     char npy_filename[STR_SIZE];
     char obs_path[STR_SIZE];
     char lock_filename[STR_SIZE];
-    char header[] = "\x93NUMPY\x01\x00\x46\x00{'descr': '<i2', 'fortran_order': False, 'shape': (32, 32), }        \n";
+    char header[] = "\x93NUMPY\x01\x00\x46\x00{'descr': '<i2', 'fortran_order': False, 'shape': (46, 44), }        \n";
     FILE* fid;
     FILE* lock_fid;
     const int N_bytes = 2128;
