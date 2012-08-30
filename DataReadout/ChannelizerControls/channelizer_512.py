@@ -122,7 +122,8 @@ class AppForm(QMainWindow):
             bins1 = .5*(bins[1:]+bins[:-1])
             med = bins[self.find_nearest(tot,0.5)]
             thresh = bins[self.find_nearest(tot,0.05)]
-            threshold = int(med-Nsigma*abs(med-thresh))
+            #threshold = int(med-Nsigma*abs(med-thresh))
+            threshold = int(-Nsigma*abs(med-thresh))
             
             scale_to_angle = 360./2**16*4/numpy.pi
             #threshold = int((phase_avg - Nsigma*sigma))
@@ -161,7 +162,8 @@ class AppForm(QMainWindow):
         phase = numpy.array(phase)*360./2**16*4/numpy.pi
 
         self.axes1.clear()
-        self.axes1.plot(phase, '.-', [self.thresholds[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.')
+        #self.axes1.plot(phase, '.-', [self.thresholds[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.')
+        self.axes1.plot(phase, '.-', [self.thresholds[ch_we]+self.medians[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.')
         self.canvas.draw()
 
     def readPulses(self):
@@ -381,7 +383,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20120823adr/ps_freq0-good.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/20120827/ps_freq0.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
