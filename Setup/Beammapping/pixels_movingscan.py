@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-path = '/Users/Paul/Desktop/Schoolwork/UCSB/Research/Sweep_2012-08-15/'
+path = 'data/'
+disk2 = '/media/disk2/20120814_SCI3alpha/'
 
 # Alter pscale, xstart, ystart, and angle to match the grid
 # Set up a scale factor for pixel locations
@@ -36,16 +37,16 @@ attenvals=np.empty(0,dtype='float32')
 
 # Create a list of position files from beam mapping
 infile=[]
-infile.append(path + 'FL1-r0.pos')
-#infile.append(path + 'FL1-r1.pos')
-infile.append(path + 'FL1-r2.pos')
-infile.append(path + 'FL1-r3.pos')
+#infile.append(path + 'FL1-r0.POS')
+#infile.append(path + 'FL1-r1.POS')
+#infile.append(path + 'FL1-r2.POS')
+infile.append(path + 'FL1-r3.POS')
 
 psfile=[]
-psfile.append(path + 'FL1-ps_freq0.txt')
-#psfile.append(path + 'FL1-ps_freq1.txt')
-psfile.append(path + 'FL1-ps_freq2.txt')
-psfile.append(path + 'FL1-ps_freq3.txt')
+#psfile.append(disk2 + 'FL1-ps_freq0.txt')
+#psfile.append(disk2 + 'FL1-ps_freq1.txt')
+#psfile.append(disk2 + 'FL1-ps_freq2.txt')
+psfile.append(disk2 + 'FL1-ps_freq3.txt')
 
 # Create origin and scale factor
 origin=[[xstart,ystart]]*len(infile)
@@ -143,6 +144,7 @@ mask=(np.linspace(0,len(xvals)-1,len(xvals))).astype('int')
 # Clockwise rotation by angle
 xpix=((xvals[mask])*c + (yvals[mask])*s)
 ypix=(-1.*(xvals[mask])*s + (yvals[mask])*c)
+np.savez('grid3.npz',xvals,yvals,s,c,mask)
 
 # Plot the locations of the good pixels
 plt.plot(xvals[mask],yvals[mask],'b+')
@@ -167,7 +169,7 @@ plt.show()
 xsize=5
 ysize=5
 
-goodgrid=np.zeros((32,32))
+goodgrid=np.zeros((46,22))
 idx=freqvals.argsort()
 print len(xpix), len(freqvals)
 f= open('freq_atten_x_y.txt','w')
@@ -179,12 +181,11 @@ for i in range(len(xpix)):
     f.close()
     
     xmin=np.max([0,xpix[i]-xsize])
-    xmax=np.min([32,xpix[i]+xsize])
+    xmax=np.min([46,xpix[i]+xsize])
     ymin=np.max([0,ypix[i]-xsize])
-    ymax=np.min([32,ypix[i]+xsize])
+    ymax=np.min([22,ypix[i]+xsize])
     goodgrid[xmin:xmax,ymin:ymax] += 1
 print goodgrid, np.max(goodgrid)
-
 plt.imshow(goodgrid)
 
 #plt.show()
