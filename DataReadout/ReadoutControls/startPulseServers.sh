@@ -12,13 +12,24 @@ check_status()
     return 0
 }
 
-echo -n "Killing old PulseServer Processes "
+echo -n "Signalling old PulseServer Processes "
 for i in ${ROACHES[*]}
 do
+	ssh root@10.0.0.1$i "touch ~/PulseServer/stopPulseServer.bin"
+	echo -n " ."
+done
+echo " done"
+
+echo -n "Killing any remaining old PulseServer Processes "
+sleep 1
+for i in ${ROACHES[*]}
+do
+	ssh root@10.0.0.1$i "rm ~/PulseServer/stopPulseServer.bin"
 	ssh root@10.0.0.1$i "killall -q PulseServer"
 	echo -n " ."
 done
 echo " done"
+
 
 echo -n "Copying over lastest PulseServer code "
 for i in ${ROACHES[*]}
