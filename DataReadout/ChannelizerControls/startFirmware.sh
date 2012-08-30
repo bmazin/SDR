@@ -1,7 +1,8 @@
 #!/bin/bash
-ROACHES=(3)
-CLK="550"
-BOF="chan_550_clean_2012_Jul_03_0934.bof"
+ROACHES=(0 1 2 3 4 5 6 7)
+CLK="512"
+BOF="chan_dtrig_v2_2012_Aug_28_1956.bof"
+#BOF="chan_if_acc_x_2011_Aug_02_0713.bof"
 
 if [ "$1" == "--help" ]; then
 	echo "Usage: $0 CLOCK_MHZ [BOF_FILE]"
@@ -38,7 +39,7 @@ echo " done"
 echo -n "Copying latest $BOF to roaches "
 for i in ${ROACHES[*]}
 do
-	scp -q ~/SDR/Firmware/boffiles/$BOF root@10.0.0.1$i:/boffiles/
+	scp -q boffiles/$BOF root@10.0.0.1$i:/boffiles/
 	check_status
 	echo -n " ."
 done
