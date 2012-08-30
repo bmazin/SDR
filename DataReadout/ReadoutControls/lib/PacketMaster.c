@@ -67,6 +67,7 @@ void create_datasets(char* obs_filepath,char* pixel_dataset_name,int exptime);
 void update_beammap_names(char* obs_filepath, const char* pixel_dataset_name, char beam_data[BEAM_ROWS][BEAM_COLS][STR_SIZE], int pixel_adr[BEAM_ROWS][BEAM_COLS]);
 int get_exptime(char* obs_filepath);
 void copy_beam_file_tree(char* obs_filepath,char* beammap_path,char beam_data[BEAM_ROWS][BEAM_COLS][STR_SIZE]);
+int check_for_stop();
 
 void write_sec_data(char* obs_filepath,char* pixel_dataset_name,int sec[NROACHES],int ready_roach, uint64_t plist[NROACHES][NPIXELS_PER_ROACH],uint64_t*** photons,int** photon_counts, int pixel_adr[BEAM_ROWS][BEAM_COLS],int exptime);
 int main(int argc, char *argv[])
@@ -210,7 +211,8 @@ int main(int argc, char *argv[])
     update_beammap_names(obs_filepath, pixel_dataset_name, beam_data, pixel_adr);
 
     fflush(stdout);
-    while (bool_all_secs_done == 0)
+    printf("stop %d",check_for_stop());
+    while ((bool_all_secs_done == 0) && (check_for_stop() == 0))
     {
         time_marker=current_time();
         ready_roach = -1;
@@ -885,7 +887,7 @@ void write_sec_data(char* obs_filepath,char* pixel_dataset_name,int sec[NROACHES
     int bool_write_quicklook;
     char full_dataset_name[STR_SIZE];//used in renaming dataset names in obs_file/beammap/beamimage
     int current_sec = sec[ready_roach];
-    uint16_t quicklook_image[BEAM_ROWS][BEAM_COLS];//32x32 image made by number of counts for each pixel
+    uint16_t quicklook_image[BEAM_ROWS][BEAM_COLS];//46x44 image made by number of counts for each pixel
     hsize_t N_VLrows[1];
     N_VLrows[0] = exptime;
     //the VL photon array to be added as one second's data for a single pixel
@@ -944,5 +946,22 @@ void write_sec_data(char* obs_filepath,char* pixel_dataset_name,int sec[NROACHES
     if (status != 0)
     {
         error("ERROR in H5 write");
+    }
+}
+
+int check_for_stop()//Checks for a stop file and returns true if found, else returns 0
+{
+    char stopfilename[] = "stopPacketMaster.bin";
+    FILE* stopfile;
+    stopfile = fopen(stopfilename,"r");
+    if (stopfile == 0) //Don't stop
+    {
+        errno = 0;
+        return 0;
+    }
+    else //Stop file exists, stop
+    {
+        printf("found stop file %d\n",stopfile);
+        return 1;
     }
 }
