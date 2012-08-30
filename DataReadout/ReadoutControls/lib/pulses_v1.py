@@ -75,6 +75,7 @@ class ObsHeader(IsDescription):
     beammapfile = StringCol(80)         # path and filename of beam map file
     version = StringCol(80)
     instrument = StringCol(80)
+    description = StringCol(400)
     telescope = StringCol(80)
     focus = StringCol(80)
     parallactic = Float64Col()
