@@ -122,8 +122,9 @@ class AppForm(QMainWindow):
             bins1 = .5*(bins[1:]+bins[:-1])
             med = bins[self.find_nearest(tot,0.5)]
             thresh = bins[self.find_nearest(tot,0.05)]
-            threshold = int(med-Nsigma*abs(med-thresh))
-            
+            #threshold = int(med-Nsigma*abs(med-thresh))
+            threshold = int(-Nsigma*abs(med-thresh))          
+
             scale_to_angle = 360./2**16*4/numpy.pi
             #threshold = int((phase_avg - Nsigma*sigma))
             # -25736 = -180 degrees
@@ -137,7 +138,10 @@ class AppForm(QMainWindow):
             self.roach.write_int('capture_load_thresh', (ch<<1)+(0<<0))
             print "channel: ", ch, "median: ", scale_to_angle*med, "threshold: ", scale_to_angle*threshold
             #print "channel: ", ch, "avg: ", scale_to_angle*phase_avg, "sigma: ", scale_to_angle*sigma, "threshold: ", scale_to_angle*threshold
-        
+            print "done."
+ 
+
+
     def snapAndPulses(self):
         ch_we = int(self.textbox_channel.text())
         self.roach.write_int('ch_we', ch_we)
@@ -149,7 +153,7 @@ class AppForm(QMainWindow):
             p1[i] = [0]
             timestamp[i] = [0]
             
-        steps = 100
+        steps = 20
         L = 2**10
         bin_data_phase = ''
         self.roach.write_int('startBuffer', 1)
@@ -175,15 +179,80 @@ class AppForm(QMainWindow):
         for m in range(steps*L):
             phase.append(struct.unpack('>h', bin_data_phase[m*4+2:m*4+4])[0])
             phase.append(struct.unpack('>h', bin_data_phase[m*4+0:m*4+2])[0])
+            
         phase = numpy.array(phase)*360./2**16*4/numpy.pi
 
         numpy.savetxt('phase_timestream.txt',phase)
         numpy.save('bin_data_0.npy',bin_data_0)
         numpy.save('bin_data_1.npy',bin_data_1)
         print "DONE"
+
+
+    def snapBaseline(self):
+        L = 2**10
+        #Prime all the snap blocks in ParabFit
+        #by toggling each control off and on
+        self.roach.write_int('capture_Baseline1_sbase',0)
+        self.roach.write_int('capture_Baseline1_base_ctrl',0)
+
+        self.roach.write_int('capture_Baseline1_base_ctrl',1)
+        #Now trigger all the snap blocks
+        self.roach.write_int('capture_Baseline1_sbase',1)
+        #Read the binary data from the brams
+        time.sleep(1)
+        self.roach.write_int('capture_Baseline1_sbase',0)
+        time.sleep(.1)
+        bin_base = self.roach.read('capture_Baseline1_base_bram',4*L)
+        base = []
+        #Parse out the numbers from the binary data
+        for m in range(L):
+            base.append(struct.unpack('>L', bin_base[m*4:m*4+4])[0])
             
+        numpy.savetxt('base.txt',base)
+        print "DONE"
+     
 
+    def snapPara(self):
+        L = 2**10
+        #Prime all the snap blocks in ParabFit
+        #by toggling each control off and on
+        self.roach.write_int('capture_ParabFit_para',0)
+        self.roach.write_int('capture_ParabFit_frac_ctrl',0)
+        self.roach.write_int('capture_ParabFit_divd_ctrl',0)
+        self.roach.write_int('capture_ParabFit_fit_ctrl',0)
+        self.roach.write_int('capture_ParabFit_pt_ctrl',0)
 
+        self.roach.write_int('capture_ParabFit_frac_ctrl',1)
+        self.roach.write_int('capture_ParabFit_divd_ctrl',1)
+        self.roach.write_int('capture_ParabFit_fit_ctrl',1)
+        self.roach.write_int('capture_ParabFit_pt_ctrl',1)
+        #Now trigger all the snap blocks
+        self.roach.write_int('capture_ParabFit_para',1)
+        time.sleep(1)
+        #Read the binary data from the brams
+        self.roach.write_int('capture_ParabFit_para',0)
+        time.sleep(.1)
+        bin_frac = self.roach.read('capture_ParabFit_frac_bram',4*L)
+        bin_divd = self.roach.read('capture_ParabFit_divd_bram',4*L)
+        bin_fit = self.roach.read('capture_ParabFit_fit_bram',4*L)
+        bin_pt = self.roach.read('capture_ParabFit_pt_bram',4*L)
+        frac = []
+        divd = []
+        fit = []
+        pt = []
+        #Parse out the numbers from the binary data
+        for m in range(L):
+            frac.append(struct.unpack('>L', bin_frac[m*4:m*4+4])[0])
+            fit.append(struct.unpack('>L', bin_fit[m*4:m*4+4])[0])
+            pt.append(struct.unpack('>L', bin_pt[m*4:m*4+4])[0])
+            divd.append(struct.unpack('>L', bin_divd[m*4:m*4+4])[0])
+            
+        numpy.savetxt('frac.txt',frac)
+        numpy.savetxt('divd.txt',divd)
+        numpy.savetxt('fit.txt',fit)
+        numpy.savetxt('pt.txt',pt)
+        print "DONE"
+            
         
     def snapshot(self):        
         ch_we = int(self.textbox_channel.text())
@@ -428,7 +497,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20120713/freqs.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/common/sci3alpha_FL2_1.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
@@ -474,11 +543,16 @@ class AppForm(QMainWindow):
         self.button_snapshot.setMaximumWidth(170)
         self.connect(self.button_snapshot, SIGNAL('clicked()'), self.snapshot)            
         
-        # Time snapshot of a single channel
+        # Time snapshot of a single channel at the same time as counting pulses
         self.button_snapAndPulses = QPushButton("pulse timestream")
         self.button_snapAndPulses.setMaximumWidth(170)
         self.connect(self.button_snapAndPulses, SIGNAL('clicked()'), self.snapAndPulses)            
-        
+        self.button_snapPara = QPushButton("snap parabola")
+        self.button_snapPara.setMaximumWidth(170)
+        self.connect(self.button_snapPara, SIGNAL('clicked()'), self.snapPara)            
+        self.button_snapBaseline = QPushButton("snap baseline")
+        self.button_snapBaseline.setMaximumWidth(170)
+        self.connect(self.button_snapBaseline, SIGNAL('clicked()'), self.snapBaseline)            
         # Read pulses
         self.button_readPulses = QPushButton("Read pulses")
         self.button_readPulses.setMaximumWidth(170)
@@ -533,6 +607,10 @@ class AppForm(QMainWindow):
         hbox22 = QHBoxLayout()
         hbox22.addWidget(self.button_snapAndPulses)
         gbox2.addLayout(hbox22)
+        hbox23 = QHBoxLayout()
+        hbox23.addWidget(self.button_snapPara)
+        hbox23.addWidget(self.button_snapBaseline)
+        gbox2.addLayout(hbox23)
 
 
         hbox = QHBoxLayout()
