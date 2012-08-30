@@ -358,6 +358,7 @@ class AppForm(QMainWindow):
             centers_for_file[ch] = [self.iq_centers[ch].real, self.iq_centers[ch].imag]
             
         numpy.savetxt(saveDir+'centers.dat', centers_for_file)
+        print "Translaed loops...done"
 
     def findIQcenters(self, I, Q):
         I_0 = (I.max()+I.min())/2.
@@ -389,6 +390,7 @@ class AppForm(QMainWindow):
             """
         self.toggleDAC()
         self.sweepLO()
+        print "Rotated Loops ... done"
             
     def sweepLO(self):
         atten_in = float(self.textbox_atten_in.text())
@@ -638,7 +640,7 @@ class AppForm(QMainWindow):
         self.connect(self.button_openClient, SIGNAL('clicked()'), self.openClient)
         
         # LO frequency.
-        self.textbox_loFreq = QLineEdit('4.398e9')
+        self.textbox_loFreq = QLineEdit('3.57e9')
         self.textbox_loFreq.setMaximumWidth(100)
         label_loFreq = QLabel('LO frequency:')
 
@@ -675,21 +677,21 @@ class AppForm(QMainWindow):
         label_dds_shift = QLabel('DDS sync. lag:')
 
         # Power sweep range. 
-        self.textbox_powerSweepStart = QLineEdit('16')
+        self.textbox_powerSweepStart = QLineEdit('42')
         self.textbox_powerSweepStart.setMaximumWidth(50)
         label_powerSweepStart = QLabel('Start atten.:')
-        self.textbox_powerSweepStop = QLineEdit('16')
+        self.textbox_powerSweepStop = QLineEdit('42')
         self.textbox_powerSweepStop.setMaximumWidth(50)
         label_powerSweepStop = QLabel('Stop atten:')
 
         # Save directory
-        self.textbox_saveDir = QLineEdit('/home/sean/data/20120802/')
+        self.textbox_saveDir = QLineEdit('/home/sean/data/20120827/')
         self.textbox_saveDir.setMaximumWidth(250)
         label_saveDir = QLabel('Save directory:')
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20120802/freq0.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/20120827/FL1-freq0-optimal.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
