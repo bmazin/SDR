@@ -1,0 +1,4 @@
+Descriptions of the bof firmware files in this folder.
+
+chan_512_varlpf_2012_Aug_23_1008.bof
+This was compiled on bender, with new pfb, fft blocks, and dac_mkid v2 yellow blocks.  The baseline low pass filter's characteristic time is now controlled by the register alpha.  RC=dt((1-alpha)/alpha)

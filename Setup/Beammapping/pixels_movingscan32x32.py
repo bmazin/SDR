@@ -2,26 +2,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-path = '/home/sean/data/20120827/'
+path = 'data/'
+disk2 = '/media/disk2/20120814_SCI3alpha/'
 
 # Alter pscale, xstart, ystart, and angle to match the grid
 # Set up a scale factor for pixel locations
 #pscale=13.7;
-pscale=9.2;
+pscale=1;
 # Pick x position offset
 #xstart=pscale*5.5;
-xstart=pscale*30.5;
+xstart=0;
 # Pick y position offset
 #ystart=pscale*10.8;
-ystart=pscale*11.8;
+ystart=0;
 # Angle of setup
-angle=4.2;
+angle=0;
 # Find the sine and cosine of angle to use for rotations
 s=np.sin(np.pi*angle/180.)
 c=np.cos(np.pi*angle/180.)
 # Size of grid
-xsize=22;
-ysize=46;
+size=32
 
 # Not sure about this
 numfound=0
@@ -37,24 +37,24 @@ attenvals=np.empty(0,dtype='float32')
 
 # Create a list of position files from beam mapping
 infile=[]
-#infile.append(path + '20120828_r4.pos')
-#infile.append(path + '20120828_r5.pos')
-#infile.append(path + '20120828_r6.pos')
-infile.append(path + '20120828_r0.pos')
+#infile.append(path + 'FL1-r0.POS')
+#infile.append(path + 'FL1-r1.POS')
+#infile.append(path + 'FL1-r2.POS')
+infile.append(path + 'FL1-r3.POS')
 
 psfile=[]
-#psfile.append(path + 'ps_freq4.txt')
-#psfile.append(path + 'ps_freq5.txt')
-#psfile.append(path + 'ps_freq6.txt')
-psfile.append(path + 'ps_freq0-good.txt')
+#psfile.append(disk2 + 'FL1-ps_freq0.txt')
+#psfile.append(disk2 + 'FL1-ps_freq1.txt')
+#psfile.append(disk2 + 'FL1-ps_freq2.txt')
+psfile.append(disk2 + 'FL1-ps_freq3.txt')
 
 # Create origin and scale factor
 origin=[[xstart,ystart]]*len(infile)
 scale=[pscale]*len(infile)
-print origin;
+
 # If files need different origins
-origin[0][0] -= 0;
-origin[0][1] += 0;
+origin[0][1] -= 0
+origin[0][1] -= 0
 
 # Extract x position, y position, and flag from input files
 for j in range(len(infile)):
@@ -75,15 +75,9 @@ for j in range(len(infile)):
     xpos /= scale[j]
     ypos -= origin[j][1]
     ypos /= scale[j]
-    if j==0:
-        xpos += 0
-        ypos += 0.5
     if j==2:
-        xpos += 0.3
-        ypos += 0.5
-    if j==3:
-        xpos += 0.2
-        ypos += 0.2
+        xpos -= 2
+        ypos -= 0
     print len(xpos[goodpix]), 'Good Pixels'
 
     #Create a list of good pixel locations
@@ -111,13 +105,13 @@ print 'xmin, xmax =', np.min(xvals), np.max(xvals)
 print 'ymin, ymax =', np.min(yvals), np.max(yvals)
 
 # xstart = [0,1,2,...,32]
-xstart=xsize*np.linspace(0,1,23)
+xstart=size*np.linspace(0,1,33)
 # ystart = [0,0,0,...,0]
-ystart=np.zeros(23)
+ystart=np.zeros(33)
 # xstop = [0,1,2,...,32]
 xstop=xstart
 # ystop = [32,32,32,...,32]
-ystop=ystart+ysize
+ystop=ystart+size
 
 # Transform with 2x2 rotation matrix
 xstart2=xstart*c - ystart*s
@@ -126,13 +120,13 @@ ystart2=xstart*s + ystart*c
 ystop2=xstop*s + ystop*c
 
 # plot square grid with 32x32 boxes, rotated counter-clockwise by angle, vertical lines
-for i in range(23):
-    plt.plot([xstart2[i],xstop2[i]],[ystart2[i],ystop2[i]],'g')
+#for i in range(33):
+    #plt.plot([xstart2[i],xstop2[i]],[ystart2[i],ystop2[i]],'g')
 
-ystart=ysize*np.linspace(0,1,47)
-xstart=np.zeros(47)
+ystart=size*np.linspace(0,1,33)
+xstart=np.zeros(33)
 ystop=ystart
-xstop=xstart+xsize
+xstop=xstart+size
 
 xstart2=xstart*c - ystart*s
 xstop2=xstop*c - ystop*s
@@ -140,8 +134,8 @@ ystart2=xstart*s + ystart*c
 ystop2=xstop*s + ystop*c
 
 # Horizontal lines
-for i in range(47):
-    plt.plot([xstart2[i],xstop2[i]],[ystart2[i],ystop2[i]],'g')
+#for i in range(33):
+    #plt.plot([xstart2[i],xstop2[i]],[ystart2[i],ystop2[i]],'g')
 
 # mask = [0,1,2,...,len(xvals)-1]
 mask=(np.linspace(0,len(xvals)-1,len(xvals))).astype('int')
@@ -150,6 +144,7 @@ mask=(np.linspace(0,len(xvals)-1,len(xvals))).astype('int')
 # Clockwise rotation by angle
 xpix=((xvals[mask])*c + (yvals[mask])*s)
 ypix=(-1.*(xvals[mask])*s + (yvals[mask])*c)
+np.savez('grid3.npz',xvals,yvals,s,c,mask)
 
 # Plot the locations of the good pixels
 plt.plot(xvals[mask],yvals[mask],'b+')
@@ -158,9 +153,9 @@ xpix=xpix.astype('int')
 ypix=ypix.astype('int')
 
 # Count the number of pixels inside the entire grid
-numfound  += len(np.where((xpix < 22)&(xpix>-1)&(ypix > -1)&(ypix<46))[0])
+numfound  += len(np.where((xpix < 32)&(xpix>-1)&(ypix > -1)&(ypix<32))[0])
 # Count the number of pixels inside the left half of the grid
-numfound2 += len(np.where((xpix < 11)&(xpix>-1)&(ypix > -1)&(ypix<46))[0])
+numfound2 += len(np.where((xpix < 16)&(xpix>-1)&(ypix > -1)&(ypix<32))[0])
 
 print numfound, 'pixels in grid'
 print numfound2, 'pixels in left half of grid'
@@ -174,24 +169,24 @@ plt.show()
 xsize=5
 ysize=5
 
-goodgrid=np.zeros((22,46))
+goodgrid=np.zeros((46,22))
 idx=freqvals.argsort()
 print len(xpix), len(freqvals)
-f= open(path+'20120829_FL2_freq_atten_x_y.txt','w')
+f= open('freq_atten_x_y.txt','w')
 for i in range(len(xpix)):
 #    print freqvals[idx[i]], xpix[idx[i]], ypix[idx[i]]
     
-    f= open(path+'20120829_FL2_freq_atten_x_y.txt','a')
+    f= open('freq_atten_x_y.txt','a')
     f.write(str(freqvals[idx[i]]) + '\t' + str(int(attenvals[idx[i]])) +'\t' + str(xpix[idx[i]]) + '\t' + str(ypix[idx[i]]) +'\n')
     f.close()
     
     xmin=np.max([0,xpix[i]-xsize])
-    xmax=np.min([22,xpix[i]+xsize])
+    xmax=np.min([46,xpix[i]+xsize])
     ymin=np.max([0,ypix[i]-xsize])
-    ymax=np.min([46,ypix[i]+xsize])
+    ymax=np.min([22,ypix[i]+xsize])
     goodgrid[xmin:xmax,ymin:ymax] += 1
 print goodgrid, np.max(goodgrid)
-
 plt.imshow(goodgrid)
 
 #plt.show()
+
