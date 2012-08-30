@@ -46,7 +46,7 @@ import ephem
 #import my functions
 from lib.rad2altaz import rad2altaz
 from lib.make_image_v2 import make_image as make_image_import
-from lib.HeaderGen_seth import HeaderGen
+from lib.HeaderGen import HeaderGen
 from lib.arcons_basic_gui import Ui_arcons
 
 c = 3.0E17 #[nm/s]
