@@ -47,7 +47,9 @@ import ephem
 from lib.rad2altaz import rad2altaz
 from lib.make_image_v2 import make_image as make_image_import
 from lib.HeaderGen import HeaderGen
+import lib.pulses_v1 as pulses
 from lib.arcons_basic_gui import Ui_arcons
+from tables import *
 
 c = 3.0E17 #[nm/s]
 h = 4.13567E-15 #[ev*s]
@@ -55,9 +57,8 @@ h = 4.13567E-15 #[ev*s]
 numXPixel = 44
 numYPixel = 46
 
-
-
-TCS_on = False
+observatory = "Lick"
+filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
 class StartQt4(QMainWindow):
     def __init__(self,parent=None):
@@ -77,9 +78,9 @@ class StartQt4(QMainWindow):
         self.nypix = self.get_ypix()
         self.int_time = 1 #seconds
         
-        self.rearrange_frames()
-                
-        self.resize(390+20+15+10*self.nxpix,475+20+10*self.nypix)
+        #self.rearrange_frames()
+        self.ui.brightpix.setMaximum(self.nxpix*self.nypix)
+        #self.resize(390+20+15+10*self.nxpix,475+20+10*self.nypix)
 
         self.check_params()
         
@@ -105,6 +106,9 @@ class StartQt4(QMainWindow):
         #default beammap file, can be updated in gui with browse button
         self.beammapfile = os.environ['BEAMMAP_PATH']#"beamimage.h5"
 
+        self.filterfile = os.environ['FILTER_WHEEL_PATH']
+        self.checkfilter()
+
         #set default directory, binning routine directory, and data directory
         self.defaultdir = QDir.currentPath()
         #self.bindir = str(self.defaultdir)+"/bin" # path where dataBin.py is saved and creates binned files
@@ -122,6 +126,9 @@ class StartQt4(QMainWindow):
         
         #create timer thread that controls observation timer
         self.timer_thread = timer_Worker(self)
+
+        #load beam map from default beammap directory
+        self.loadbeammap()
         
         #use mouse to select pixel from tv_image, also triggers a new spectrum to be displayed
         self.ui.tv_image.mousePressEvent = self.start_pixel_select
@@ -149,6 +156,9 @@ class StartQt4(QMainWindow):
         QObject.connect(self.ui.stop_observation_pushButton,SIGNAL("clicked()"), self.stop_observation)
         #Connect sky exposure button to taking sky count image for later sky subtraction
         QObject.connect(self.ui.takesky, SIGNAL("clicked()"), self.take_sky)
+        QObject.connect(self.ui.filterpos_spinbox, SIGNAL("valueChanged(int)"), self.movefilter)
+        QObject.connect(self.ui.update_description, SIGNAL("clicked()"), self.update_description)
+        
         
         #create timers to update images and statuses constantly
         self.status_timer = QTimer()
@@ -163,16 +173,58 @@ class StartQt4(QMainWindow):
         self.polling_timer = QTimer()
         QObject.connect(self.polling_timer,SIGNAL("timeout()"), self.check_files)
         #self.polling_timer.start(200) #moved to start_observation
-        
-
-
-
 
         #signal image thread to restart if bin file is locked when it tries to access it
         #QObject.connect(self.image_thread,SIGNAL("retry_image()"), self.start_image_thread)
         
     #def start_image_thread(self):
-        #self.image_thread.start_images(self.bindir)
+        #self.image_thread.start_images(self.bindir)        
+    
+    def checkfilter(self):
+        if not isfile(self.filterfile):
+            msgbox = QMessageBox()
+            msgbox.setText("No filter position saved to file.\nMOVE FILTER WHEEL TO POSITION 1 BEFORE CONTINUING")
+            msgbox.exec_()
+            self.filterposition = 1
+            self.ui.filterpos_spinbox.setValue(1)
+            f=open(str(self.filterfile),'w') #put file where dataBin is running
+            f.write(str(self.filterposition))
+            f.close()
+        else:
+            f = open(str(self.filterfile),'r')
+            self.filterposition = int(f.read())
+            f.close()
+            print "Filter at position " + str(self.filterposition) +" on startup."
+    
+    def signalfilter(self):
+        pass
+    
+    def movefilter(self):
+        moveto = int(self.ui.filterpos_spinbox.value()) #input from gui
+        if moveto < 1 or moveto >6:
+            print "Please select filter position between 1 and 6"
+        else:
+            while self.filterposition != moveto:
+                self.filterposition +=1
+                if self.filterposition == 7:
+                    self.filterposition = 1
+                self.signalfilter()
+                time.sleep(1)
+                #sent bnc signal to filter
+                print "Filter moved to position "+ str(self.filterposition)
+            #write new position to file
+            f=open(str(self.filterfile),'w') #put file where dataBin is running
+            f.write(str(self.filterposition))
+            f.close()
+            print "Completed filter move"
+            
+    def loadbeammap(self):
+        bmfile = openFile(self.beammapfile, 'r')
+        #read beammap in to memory to create beam image
+        self.bmap = bmfile.root.beammap.beamimage.read()
+        self.bmap = rot90(self.bmap)
+        self.bmap = flipud(self.bmap)
+        bmfile.close()
         
     #turn gui functionality on/off when observations are stopped/running
     def enable_observation(self):
@@ -204,46 +256,47 @@ class StartQt4(QMainWindow):
         '''we will want this function to activate the saving of data.  will need to name,
         open, and begin writing to file.  also activate observation timer if a
         time is given.'''
-        self.image_time = 0
-        self.counts = empty((0,self.nxpix*self.nypix))
-        print self.counts
-        self.rotated_counts = empty((0,self.nypix,self.nxpix))
-        self.observing = True
-        #turn off things we don't want messed with during an exposure
-        self.disable_directory_change()
-        self.ui.start_observation_pushButton.setEnabled(False)
-        self.ui.obs_time_spinBox.setEnabled(False)
-        #call headerGen and give it telescope status/file info
-        basename = "obs_"
-        targname = str(self.ui.target_lineEdit.text())
         self.exptime = self.ui.obs_time_spinBox.value()
-        self.int_time = self.ui.int_time_spinBox.value()
-        self.start_time = int(floor(time.time()))
-        self.get_telescope_position(lt = self.start_time) #returns alt, az, ra, dec, ha, lst, utc, airmass
-        self.get_telescope_status() #returns focus
-        self.get_parallactic()
-        self.dec = float(ephem.degrees(self.dec))
-        self.ra = float(ephem.hours(self.ra))
-        # write lock file
-        #write header to data file and remove lock file to begin data acquisition
-        self.obsname = basename+time.strftime("%Y%m%d-%H%M%S", time.localtime(self.start_time))
-        self.obsfile = str(self.obsname) + '.h5'
-        logfile = 'logs/'+str(self.obsname)+'.log'
-        self.ui.file_name_lineEdit.setText(str(self.obsfile))
-        if os.path.exists(self.bindir) == False:
-            os.mkdir(self.bindir)
-        HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
-        proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
-        proc.wait()
-        self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s > %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
-        print "PacketMaster process started with logfile %s" % logfile
-        print "Header written to data file, beginning observation..."
-        
-        #time.sleep(5) #wait 1 second for Ben's code to create beamimage before activating rebinning
-        self.send_params()
-        self.polling_timer.start(200)
-        #start observation timer
-        if self.exptime != 0:
+        if self.exptime == 0:
+            print "Please enter a desired observation time in seconds"
+        else:        
+            self.image_time = 0
+            self.counts = zeros((self.exptime,self.nxpix*self.nypix),int32)
+            #print self.counts
+            self.rotated_counts = zeros((self.exptime,self.nypix,self.nxpix),int32)
+            self.observing = True
+            #turn off things we don't want messed with during an exposure
+            self.disable_directory_change()
+            self.ui.update_description.setEnabled(False)
+            self.ui.start_observation_pushButton.setEnabled(False)
+            self.ui.obs_time_spinBox.setEnabled(False)
+            #call headerGen and give it telescope status/file info
+            basename = "obs_"
+            targname = str(self.ui.target_lineEdit.text())
+            self.int_time = self.ui.int_time_spinBox.value()
+            self.start_time = int(floor(time.time()))
+            self.get_telescope_position(lt = self.start_time) #returns alt, az, ra, dec, ha, lst, utc, airmass
+            self.get_telescope_status() #only returns focus
+            self.get_parallactic()
+            #convert ra and dec from ra:ra:ra, dec:dec:dec to floats
+            self.dec = float(ephem.degrees(self.dec))
+            self.ra = float(ephem.hours(self.ra))
+            self.obsname = basename+time.strftime("%Y%m%d-%H%M%S", time.localtime(self.start_time))
+            self.obsfile = str(self.obsname) + '.h5'
+            logfile = 'logs/'+str(self.obsname)+'.log'
+            self.ui.file_name_lineEdit.setText(str(self.obsfile))
+            if os.path.exists(self.bindir) == False:
+                os.mkdir(self.bindir)
+            HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
+            proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
+            proc.wait()
+            self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s > %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
+            print "PacketMaster process started with logfile %s" % logfile
+            print "Header written to data file, beginning observation..."
+            #time.sleep(5) #wait 1 second for Ben's code to create beamimage before activating rebinning
+            self.send_params()
+            self.polling_timer.start(200)
+            #start observation timer
             self.timer_thread.start_timer(self.exptime)
             
     def stop_observation(self):
@@ -252,25 +305,44 @@ class StartQt4(QMainWindow):
         and re-enable directory change and observations'''
         #send message to kill binning thread until next observation
         #subprocess.Popen("sudo killall PacketMaster",shell=True)
-
+        
         f=open(str(self.bindir)+"/stop.bin", 'wb')
         f.close()
         f=open(str(self.roachdir)+"/stop.sim", 'wb')
         f.close()
         self.observing = False
-        #turn back on the things that were disabled during exposure
+        #turn on the things that were disabled during exposure
         self.enable_directory_change()
+        self.ui.update_description.setEnabled(True)
         self.ui.start_observation_pushButton.setEnabled(True)
         self.ui.obs_time_spinBox.setEnabled(True)
         #turn off observation timer and reset
         if self.timer_thread.isRunning():
             self.timer_thread.stop()
         #self.image_thread.reset()
+    
+    def update_description(self):
+        #updates the description section in the header info with whatever is in the description box on the dashboard. Activated by clicking "update description" button after data taking is complete.
+        h5file = openFile(str(self.datadir)+'/'+str(self.obsfile), mode='a')
+        hdrtable = h5file.root.header.header.read()
+        newdesc = str(self.ui.textEdit.toPlainText())
+        hdrtable['description'] = newdesc
+        h5file.removeNode('/header',recursive=True)
+        h5file.flush()
+        hdrgrp = h5file.createGroup('/','header','Group containing observation description')
+        h5table = h5file.createTable(hdrgrp, 'header', pulses.ObsHeader, "Header",filters=filt1)
+        #hdrtable = h5table.row
+        #hdrtable = h5file.createTable('/header', header, "Header",filters=filt1)
+        h5table.append(hdrtable)
+        h5file.flush()
+        h5file.close()
+        print "Updated description in header of " + str(self.obsfile)
         
     def choose_beamimage(self):
         newbeamimage = QFileDialog.getOpenFileName(parent=None, caption=QString(str("Choose Beamimage File")),directory = ".",filter=QString(str("H5 (*.h5)")))
         if len(newbeamimage) > 0:
             self.beammapfile = str(newbeamimage)
+            self.loadbeammap()
     
     def choose_bindir(self):
         newbindir = QFileDialog.getExistingDirectory(self, str("Choose Bin Directory"), "",QFileDialog.ShowDirsOnly)
@@ -337,7 +409,6 @@ class StartQt4(QMainWindow):
         #rawdata=load('/Users/ourhero/Documents/Mazinlab/cdata.npy')
         
         rawshape = shape(rawdata)
-        #rawdata=load('/home/sean/Matt/DataReadout/cdata.npy')
         #print 'Rotating data:'
         #print rawdata.shape
         rotated = flipud(rawdata)
@@ -348,13 +419,15 @@ class StartQt4(QMainWindow):
         #print rotated.shape
         #rotated = rot90(rotated)
         #print rotated.shape
-        rotated = reshape(rotated,(1,self.nypix,self.nxpix))
+        #rotated = reshape(rotated,(1,self.nypix,self.nxpix))
         #print rotated.shape
-
-        rawshape = shape(rawdata)
         
         if self.taking_sky == True:
             self.skycount += rotated
+        
+        tf = self.image_time
+        self.int_time = self.ui.int_time_spinBox.value()
+        ti = tf-self.int_time
         
         #print 'rawdata shape ', shape(rawdata)
         newcounts = reshape(rawdata,(1,self.nxpix*self.nypix))
@@ -365,9 +438,6 @@ class StartQt4(QMainWindow):
         self.rotated_counts[self.image_time] = rotated
         
         #print 'shape of counts', shape(self.counts)
-        tf = self.image_time
-        self.int_time = self.ui.int_time_spinBox.value()
-        ti = tf-self.int_time
         if ti<0:
             ti = 0
         if tf==0 or tf==ti:
@@ -385,7 +455,7 @@ class StartQt4(QMainWindow):
         self.vmax = indices[0,-1*(brightest)]
 
         photon_count = reshape(image_counts,rawshape)
-        print photon_count.shape
+        #print photon_count.shape
         photon_count = flipud(photon_count)
         #photon_count = rot90(photon_count)
         #photon_count = rot90(photon_count)
@@ -447,9 +517,9 @@ class StartQt4(QMainWindow):
     def expand_window(self):
         #if spectrum options button is clicked resize window to show/hide options
         if self.ui.options_radioButton.isChecked():
-            self.resize(620+20+10*self.nxpix,475+20+10*self.nypix)
+            self.resize(620+20+10*self.nxpix,450+20+10*self.nypix)
         else:
-            self.resize(390+20+15+10*self.nxpix,475+20+10*self.nypix)
+            self.resize(380+20+15+10*self.nxpix,450+20+10*self.nypix)
     
     #def set_plot_mode(self):
         #change between spectra plots and signal to noise ratio plots
@@ -605,10 +675,13 @@ class StartQt4(QMainWindow):
                 #counts += self.rotated_counts[t,(self.spectrum_pixel_y[i]),self.spectrum_pixel_x[i]]
                 counts += self.rotated_counts[t,(self.spectrum_pixel_y[i]),self.spectrum_pixel_x[i]]
                 
-            plotcounts = append(plotcounts,counts)
+        	plotcounts = append(plotcounts,counts)
+
         self.ui.spectra_plot.canvas.ax.clear()
-        self.spectrum_pixel = self.nxpix*(median(self.spectrum_pixel_y))+median(self.spectrum_pixel_x)
-        self.ui.pixel_no_lcd.display(self.spectrum_pixel)
+        self.spectrum_pixel = self.bmap[median(self.spectrum_pixel_x)][(self.nypix-1)-median(self.spectrum_pixel_y)]
+        self.ui.pixelpath.setText(str(self.spectrum_pixel))
+        #self.spectrum_pixel = self.nxpix*(median(self.spectrum_pixel_y))+median(self.spectrum_pixel_x)
+        #self.ui.pixel_no_lcd.display(self.spectrum_pixel)
         #self.ui.integrated_snr_lcd.display(SNR)
         #self.ui.spectra_plot.canvas.ax.plot(bins,counts,'o')
         self.ui.spectra_plot.canvas.ax.plot(time,plotcounts)
@@ -651,7 +724,7 @@ class StartQt4(QMainWindow):
         self.ui.compass_graphicsView.show()
         
     def get_parallactic(self):
-        if TCS_on == True:
+        if observatory == "Palomar":
             try:
                 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
@@ -666,11 +739,11 @@ class StartQt4(QMainWindow):
             title, par_value = parallactic[0].split('= ')
             self.parallactic = float(par_value)
         else:
-            self.parallactic = 0.0
+            self.parallactic = nan
             
         
     def get_telescope_status(self):
-        if TCS_on == True:
+        if observatory == "Palomar":
             try:
                 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
@@ -684,20 +757,21 @@ class StartQt4(QMainWindow):
             utc, line2, line3, line4, cass_angle = response.split('\n')
             id, focus, tubelength = line2.split(', ')
             focus_title, focus_val = focus.split('= ')
-            self.focus = focus_val
+            self.focus = focus_val 
         else:
-            self.focus = 0.0
+            self.focus = nan
 
     def get_telescope_position(self, lt=0):
-        #Palomar's location
-        self.lat = 33.0 + 21.0/60.0 + 21.6/3600.0
-        self.lon = 116.0 + 51.0/60.0 + 46.8/3600.0
         
-        #send status request to TCS system
-        #client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #client.connect(("198.202.125.194", 49200)) #connecting remotely to Palomar
+        if observatory == "Palomar":
+            #Palomar's location
+            self.lat = 33.0 + 21.0/60.0 + 21.6/3600.0
+            self.lon = 116.0 + 51.0/60.0 + 46.8/3600.0
+            
+            #send status request to TCS system
+            #client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            #client.connect(("198.202.125.194", 49200)) #connecting remotely to Palomar
         
-        if TCS_on == True:      
             try:
                 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
@@ -755,7 +829,51 @@ class StartQt4(QMainWindow):
             
             #print float(ephem.degrees(self.alt))
             #print float(ephem.degrees(self.az))
+        
+        elif observatory == "Lick":
+            #Lick's location
+            self.lat = 37.0 + 20.0/60.0 + 24.6/3600.0
+            self.lon = -1.*(121.0 +  38.0/60.0 + 43.80/3600.0)
+            try:
+                client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                client.connect(("shard",2345))
+                client.send('telinfo airmass dec ha sid ut_date ut_time ra\r')
+                response = client.recv(256)
+                client.close()
+            except:
+                print "Connection to TCS failed on get_telescope_position"
+                return
+            
+            #split response into status fields
+            airmass, junk, dec, junk, ha, junk, sid, ut_date, junk, utc_time, junk, ra, junk= response.split(' ')
+                
+            self.utc = utc_time
+            self.lst = sid
+            self.ra = ra
+            self.dec = dec
+            self.ha = ha
+            self.airmass = float(airmass)
+            
+            #calculate alt and az of current target
+            targname = str(self.ui.target_lineEdit.text())
+            target = ephem.readdb(str(targname)+',f|L,'+str(ra)+','+str(dec)+',2000')
+            
+            if lt==0:
+                lt = time.time()
+            dt = datetime.datetime.utcfromtimestamp(lt)
+    
+            lick = ephem.Observer()
+            lick.long, lick.lat = '-121:38:43.80', '37:20:24.6'
+            lick.date = ephem.Date(dt)
+            lick.elevation = 1283.0
+            target.compute(lick)
+            self.alt, self.az = target.alt*(180./math.pi), target.az*(180/math.pi)
+            
         else:
+            #UCSB Broida Hall's location from Google Earth
+            self.lat = 34.414243
+            self.lon = -119.843009
+   
             ###Code for dummy status setting
             self.ra = float(self.ui.RA_lineEdit.text())
             self.dec = float(self.ui.Dec_lineEdit.text())
@@ -765,7 +883,8 @@ class StartQt4(QMainWindow):
             #Calculate alt, az, and airmass(X)
             self.alt, self.az, self.lst, self.ha = rad2altaz(self.ra, self.dec, self.lon, self.lat, self.utc)
             self.airmass = 1./cos((pi/180)*(90-self.alt))
-            self.parallactic = 0.0
+            #self.parallactic = 0.0
+        
         
     def set_telescope_status(self):
         self.get_telescope_position()
@@ -823,7 +942,7 @@ class StartQt4(QMainWindow):
                 #self.stattime = statinfo.st_mtime
                 
     def check_params(self):
-        self.ui.tv_image.setGeometry(QRect(10, 10, 10*self.nxpix+5, 10*self.nypix+5))
+        self.ui.tv_image.setGeometry(QRect(10, 10, 10*(self.nxpix)+4, 10*(self.nypix)+4))
         #self.ui.tv_image.setGeometry(QRect(10, 0, 450, 600))
         # temporary function to allow changing of array size and energy range without dialog and test that these params are passed properly to dataBin and dataSim
         # check if params have changed value using gui controls
@@ -855,7 +974,7 @@ class StartQt4(QMainWindow):
         self.ui.choose_beamimage.setGeometry(QtCore.QRect(420+20+10*self.nxpix, 210, 171, 41))
         self.ui.choose_bindir.setGeometry(QtCore.QRect(420+20+10*self.nxpix, 250, 171, 41))
         self.ui.brightpix.setGeometry(QtCore.QRect(430+20+10*self.nxpix, 300, 57, 25)) #number box for brightpix
-        self.ui.brightpix.setMaximum(self.nxpix*self.nypix)
+        #self.ui.brightpix.setMaximum(self.nxpix*self.nypix)
         self.ui.label_22.setGeometry(QtCore.QRect(491+20+10*self.nxpix, 300, 91, 21))
         self.ui.takesky.setGeometry(QtCore.QRect(420+20+10*self.nxpix, 380, 171, 51))
         

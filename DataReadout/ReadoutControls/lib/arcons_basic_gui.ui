@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../../../python/MazinLab/Arcons/Archon.png</normaloff>../../../../../python/MazinLab/Arcons/Archon.png</iconset>
+    <normaloff>lib/Archon.png</normaloff>lib/Archon.png</iconset>
   </property>
   <property name="windowFilePath">
    <string/>
@@ -1066,7 +1066,7 @@ Tune-up</string>
        <x>10</x>
        <y>250</y>
        <width>371</width>
-       <height>131</height>
+       <height>101</height>
       </rect>
      </property>
     </widget>
@@ -1081,6 +1081,19 @@ Tune-up</string>
      </property>
      <property name="text">
       <string>Additional Header Info:</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="update_description">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>351</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Update in Header</string>
      </property>
     </widget>
    </widget>

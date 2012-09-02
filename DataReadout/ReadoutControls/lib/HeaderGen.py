@@ -14,6 +14,7 @@ Modified by Seth Meeker on 2011-06-02
 
 import pulses_v1 as pulses
 import time,datetime,os,ephem
+import numpy as np
 from tables import *
 
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
@@ -41,7 +42,7 @@ def BeamImage(obsfile, beammapfile, timestamp):
     carray = ca.read() 
     h5file.close()
 
-def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,dir="./",target="Target",equinox=2000.0,epoch=2011.0,focus=0, parallactic=0):
+def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,dir="./",target="Target",equinox=2000.0,epoch=2011.0,focus=np.nan, parallactic=np.nan):
     #lt = time.time() #passed in call to HeaderGen
     dt = datetime.datetime.utcfromtimestamp(lt)
           
@@ -57,18 +58,27 @@ def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,dir="./"
     w['instrument'] = 'ARCONS v2.0 - 2024 pixel (46x44) array, 8 ROACH readout.'
     w['description'] = '' 
     
-    w['telescope'] = 'Palomar 200 in.'
-    w['focus'] = focus
-    w['parallactic'] = parallactic
+    w['telescope'] = 'Lick 36 inch Shane Telescope'
+    
+    if focus != np.nan:
+        w['focus'] = focus
+    if parallactic != np.nan:
+        w['parallactic'] = parallactic
 
     #crab = ephem.readdb("Crab Pulsar,f|L,5:34:31.97,22:00:52.1,16.5,2000")
 
     w['airmass'] = airmass
     w['equinox'] = equinox
     w['epoch'] = epoch
-    w['obslat'] = 33.0 + 21.0/60.0 + 21.6/3600.0
-    w['obslong'] = -1.*(116.0 +  51.0/60.0 + 46.80/3600.0)
-    w['obsalt'] = 1706.0
+    
+    #w['obslat'] = 33.0 + 21.0/60.0 + 21.6/3600.0 #Palomar
+    #w['obslong'] = -1.*(116.0 +  51.0/60.0 + 46.80/3600.0) #Palomar
+    #w['obsalt'] = 1706.0 #Palomar
+    
+    w['obslat'] = 37.0 + 20.0/60.0 + 24.6/3600.0 #Lick
+    w['obslong'] = -1.*(121.0 +  38.0/60.0 + 43.80/3600.0) #Lick
+    w['obsalt'] = 1283.0 #Lick
+    
     w['timezone'] = time.altzone/3600.0
     w['localtime'] = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime(lt))
     w['ut'] = lt
@@ -103,6 +113,6 @@ def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,dir="./"
     print str(dir)+'/'+str(filename)
     test = h5f.root.header.header.read()
     print 'exptime written is ',test['exptime'][0]
-    
+    h5f.close()
     #BeamImage(dir+'/'+str(filename), beammapfile, lt)
     
