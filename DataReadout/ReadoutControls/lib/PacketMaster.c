@@ -68,8 +68,6 @@ void update_beammap_names(char* obs_filepath, const char* pixel_dataset_name, ch
 int get_exptime(char* obs_filepath);
 void copy_beam_file_tree(char* obs_filepath,char* beammap_path,char beam_data[BEAM_ROWS][BEAM_COLS][STR_SIZE]);
 int check_for_stop();
-void wait_for_new_sec();
-void write_obstime(char*,double);
 
 void write_sec_data(char* obs_filepath,char* pixel_dataset_name,int sec[NROACHES],int ready_roach, uint64_t plist[NROACHES][NPIXELS_PER_ROACH],uint64_t*** photons,int** photon_counts, int pixel_adr[BEAM_ROWS][BEAM_COLS],int exptime);
 int main(int argc, char *argv[])
@@ -137,7 +135,6 @@ int main(int argc, char *argv[])
     double start_time = 0;
     double current = 0;
     double time_diff = 0;
-    //Only start taking data if we are between min_time_from_sec and max_time_from_sec after a new second
     sem_t* h5file_mutex;
     int rtrn_status = 0;
     int bool_write_quicklook = 0;
@@ -206,10 +203,7 @@ int main(int argc, char *argv[])
     }
     if (errno != 0)
         error("Error before main loop");
-    
-    wait_for_new_sec();
-    obs_time = time(NULL)+1;//New data will begin when roaches receive the next pulse per second (PPS)
-    write_obstime(obs_filepath,(double)(obs_time));
+    obs_time = time(NULL);
     sprintf(pixel_dataset_name,"%s%d",dataset_name_base,obs_time);
     copy_beam_file_tree(obs_filepath,beammap_path,beam_data);
 
@@ -588,14 +582,13 @@ int write_quicklook_image(char* obs_filepath, uint16_t data[BEAM_ROWS][BEAM_COLS
     char npy_filename[STR_SIZE];
     char obs_path[STR_SIZE];
     char lock_filename[STR_SIZE];
-    char header[STR_SIZE];
+    char header[] = "\x93NUMPY\x01\x00\x46\x00{'descr': '<i2', 'fortran_order': False, 'shape': (46, 44), }        \n";
     FILE* fid;
     FILE* lock_fid;
     const int N_bytes = 2128;
     int i = 0;
     int j = 0;
     int success = 0;
-    sprintf(header,"\x93NUMPY\x01\x00\x46\x00{'descr': '<i2', 'fortran_order': False, 'shape': (%d, %d), }        \n",BEAM_ROWS,BEAM_COLS);
     get_obs_path(obs_path,obs_filename,obs_filepath);
     sscanf(obs_filename,"%[^.].h5",obs_filename_root);
     sprintf(npy_filename,"%s_%d.npy",obs_filename_root,sec);
@@ -784,28 +777,6 @@ int get_exptime(char* obs_filepath)
 
 }
 
-void write_obstime(char* obs_filepath,double obs_time)
-{
-    hid_t obs_file;//The file handle for the H5 file containing initial header data and will contain all observation data
-     //items used for reading header info.  The header is itself one record of a complex H5 type
-    //so when reading...
-    hsize_t write_start = 0; //start with the first and only record
-    hsize_t write_nrecords = 1;//and read data from exactly one record
-    size_t write_offset[] = {0};
-    size_t obstime_sizes[] = {sizeof(double)};//used to read exptime from header
-    herr_t  status;//The return status of H5 functions, -1 indicates an error
-    obs_file = H5Fopen(obs_filepath, H5F_ACC_RDWR, H5P_DEFAULT);
-    if (obs_file < 0)
-    {
-        fprintf(stderr,"Error opening obs file %s",obs_filepath);
-        error("");
-    }
-    status = H5TBwrite_fields_name(obs_file,"/header/header","ut",write_start,write_nrecords,sizeof(double),write_offset,obstime_sizes,&obs_time);
-    if (status < 0)
-        error("Error writing ut to obs file header");
-    status = H5Fclose(obs_file);
-}
-
 void update_beammap_names(char* obs_filepath, const char* pixel_dataset_name, char beam_data[BEAM_ROWS][BEAM_COLS][STR_SIZE], int pixel_adr[BEAM_ROWS][BEAM_COLS])
 {
     char full_dataset_name[STR_SIZE];//used in renaming dataset names in obs_file/beammap/beamimage
@@ -992,19 +963,5 @@ int check_for_stop()//Checks for a stop file and returns true if found, else ret
     {
         printf("found stop file %d\n",stopfile);
         return 1;
-    }
-}
-
-void wait_for_new_sec()//sleeps until unix time passes a little past a new second
-{
-    double time_from_sec = 0;
-    double min_time_from_sec = 0.05;
-    double max_time_from_sec = 0.15;
-    time_from_sec = current_time()-(int)(current_time());
-    while (((time_from_sec > min_time_from_sec) && (time_from_sec < max_time_from_sec)) == 0 && check_for_stop() == 0)
-    //Wait until we are just after a new second, and we haven't been stopped
-    {
-        usleep(1000);//sleep for a millisecond
-        time_from_sec = current_time()-(int)(current_time());
     }
 }
