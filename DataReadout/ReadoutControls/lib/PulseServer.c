@@ -31,6 +31,7 @@ int make_connection(int server);
 int start_server();
 int get_process_id();
 int send_packet(char* path_low_order_data,char* path_high_order_data,int client, int first_half_file);
+double current_time();
 //void sighandler(int sig);
 
 int main(int argc, char* argv[])
@@ -63,9 +64,11 @@ int main(int argc, char* argv[])
         printf("Waiting for connection...\n");
 		fflush(stdout);
         client = make_connection(server);
-		printf("Connection made\n");
+		printf("Connection made at %d\n",current_time());
 		fflush(stdout);
 
+        toggle_trigger(path_triggerfile,0);
+        usleep(100);
         toggle_trigger(path_triggerfile,1);
         //start_time = wait_for_write_position(path_ptrfile,1,&first_half_file);
         continue_current_session = 1;
@@ -87,7 +90,7 @@ int main(int argc, char* argv[])
                 perror("Error sending\n");
                 printf("Error sending\n");
                 continue_current_session = 0;
-				no_interrupt = 0;
+				//no_interrupt = 0;
 			}
             ++packet_no;
 			fflush(stdout);
@@ -334,5 +337,12 @@ int send_packet(char* path_low_order_data,char* path_high_order_data,int client,
     end_time = end_tv.tv_sec+end_tv.tv_usec*1e-6;
     printf("pixel %x at %.3f took %.3f\n",high_order_buffer[0],start_time,end_time-start_time);
     return N_bytes_sent;
+}
+
+double current_time()
+{
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec+tv.tv_usec*1e-6;
 }
 
