@@ -31,7 +31,6 @@ int make_connection(int server);
 int start_server();
 int get_process_id();
 int send_packet(char* path_low_order_data,char* path_high_order_data,int client, int first_half_file);
-int check_for_stop();
 //void sighandler(int sig);
 
 int main(int argc, char* argv[])
@@ -48,8 +47,6 @@ int main(int argc, char* argv[])
     int no_interrupt = 1;
     int server,client;
 	int first_half_file = 1;
-
-    printf("Starting PulseServer\n");
 
     signal(SIGPIPE,SIG_IGN);
     process_id = get_process_id();
@@ -74,45 +71,32 @@ int main(int argc, char* argv[])
         continue_current_session = 1;
 		printf("Waiting for data to send\n");
 		fflush(stdout);
-        if (check_for_stop() == 1)
-        {
-            printf("Stopping before checking for data\n");
-            continue_current_session = 0;
-        }
         while (continue_current_session == 1)
         {
-            if (wait_for_write_position(path_ptrfile,0,&first_half_file) < 0)
-                continue_current_session = 0;
-            if (continue_current_session == 1)
+            wait_for_write_position(path_ptrfile,0,&first_half_file);
+            printf("packet %d ",packet_no);
+            if (send_packet(path_datafile0,path_datafile1,client,first_half_file) < 0 && errno == ECONNRESET)
             {
-                printf("packet %d ",packet_no);
-                if (send_packet(path_datafile0,path_datafile1,client,first_half_file) < 0 && (errno == ECONNRESET || errno == EPIPE))
-                {
-                    perror("\nTCP connection reset by peer\n");
-                    printf("\nTCP connection reset by peer\n");
-                    continue_current_session = 0;
-                    errno = 0;
-                }
-                if (errno != 0)
-                {
-                    perror("Error sending\n");
-                    printf("Error sending, errno=%d\n",errno);
-                    continue_current_session = 0;
-                    //no_interrupt = 0;
-                }
-                ++packet_no;
-                fflush(stdout);
-                fflush(stderr);
+                perror("\nTCP connection reset by peer\n");
+                printf("\nTCP connection reset by peer\n");
+                continue_current_session = 0;
+                errno = 0;
             }
+            if (errno != 0)
+			{
+                perror("Error sending\n");
+                printf("Error sending\n");
+                continue_current_session = 0;
+				no_interrupt = 0;
+			}
+            ++packet_no;
+			fflush(stdout);
+			fflush(stderr);
         }
         toggle_trigger(path_triggerfile,0);
         close(client);
         client = 0;
         printf("Session closed\n");
-        if (check_for_stop() == 1)
-        {
-            no_interrupt = 0;
-        }
     }
     printf("Cleaning up\n");
     close(server);
@@ -147,7 +131,6 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
     const long FIRST_HALF_ENDPTR = 8500;
     const long SECOND_HALF_ENDPTR = 300;
     FILE* ptrfile;
-
     struct timeval finish_tv;
     double finish_time;
     ptrfile = fopen(path_ptrfile,"rb");
@@ -178,11 +161,6 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
     while (time_to_stop == 0)
     {
         usleep(100);
-        if (check_for_stop() == 1)
-        {
-            printf("stoppping in wait\n");
-            return -1;
-        }
         ptrfile = fopen(path_ptrfile,"rb");
 		if (ptrfile < 0)
 			error("ERROR opening ptrfile");
@@ -358,19 +336,3 @@ int send_packet(char* path_low_order_data,char* path_high_order_data,int client,
     return N_bytes_sent;
 }
 
-int check_for_stop()//Checks for a stop file and returns true if found, else returns 0
-{
-    char stopfilename[] = "stopPulseServer.bin";
-    FILE* stopfile;
-    stopfile = fopen(stopfilename,"r");
-    if (stopfile == 0) //Don't stop
-    {
-        errno = 0;
-        return 0;
-    }
-    else //Stop file exists, stop
-    {
-        printf("found stop file %d\n",stopfile);
-        return 1;
-    }
-}
