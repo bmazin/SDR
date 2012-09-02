@@ -10,6 +10,8 @@ from matplotlib.figure import Figure
 from tables import *
 from lib import iqsweep
 
+MAX_ATTEN = 99
+
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
@@ -198,7 +200,7 @@ class AppForm(QMainWindow):
         PHASE = 1
         R = 1
         power = 3
-        print "aux Power = 0"
+        #print "aux Power = 0"
         aux_power = 3
         MUX = 3
         LOCK_DETECT = 1
@@ -350,7 +352,7 @@ class AppForm(QMainWindow):
     
     def write_LUTs(self):
         if self.dacStatus == 'off':
-            self.roach.write_int('startDAC', 0)
+            self.roach.write_int('startDAC', 0)		#make sure it's actually off
         else:
             self.toggleDAC()
             
@@ -621,6 +623,16 @@ class AppForm(QMainWindow):
     def loadFreqsAttens(self):
         f_base = float(self.textbox_loFreq.text())
         freqFile =str(self.textbox_freqFile.text())
+        #print freqFile
+        newFreqFile = freqFile[:-4] + '_NEW.txt'
+        #print newFreqFile
+        try:
+            numpy.loadtxt(newFreqFile)
+            freqFile = newFreqFile
+            print 'Loaded', freqFile, 'instead'
+            self.textbox_freqFile.setText(freqFile)
+        except IOError:
+            pass
 
         try:
             x = numpy.loadtxt(freqFile) 
@@ -657,6 +669,18 @@ class AppForm(QMainWindow):
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
         self.canvas.draw()
+
+        
+        freqFile =str(self.textbox_freqFile.text())
+        #ch = int(self.textbox_channel.text())
+        try:
+            x = numpy.loadtxt(freqFile)
+            self.textbox_freq.setText(str(x[ch+1,0]))
+            self.spinbox_attenuation.setValue(int(x[ch+1,3]))
+        except IOError:
+            pass
+            #print 'No such file or directory:',freqFile
+            #self.status_text.setText('IOError')
         
     def channelIncDown(self):
         ch = int(self.textbox_channel.text())
@@ -669,6 +693,15 @@ class AppForm(QMainWindow):
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
         self.canvas.draw()
 
+
+        freqFile =str(self.textbox_freqFile.text())
+        try:
+            x = numpy.loadtxt(freqFile)
+            self.textbox_freq.setText(str(x[ch+1,0]))
+            self.spinbox_attenuation.setValue(int(x[ch+1,3]))
+        except IOError:
+            pass
+
     def changeCenter(self, event):
         I = event.xdata
         Q = event.ydata
@@ -678,6 +711,42 @@ class AppForm(QMainWindow):
         self.iq_centers.imag[ch] = Q
         self.axes1.plot(I, Q, '.')
         self.canvas.draw()
+
+
+    def updateResonator(self,atten=-1):
+        freqFile =str(self.textbox_freqFile.text())
+        ch = int(self.textbox_channel.text())
+        try:
+            x = numpy.loadtxt(freqFile)
+            x[ch+1,0]=float(self.textbox_freq.text())
+            if atten == -1:
+                atten=self.spinbox_attenuation.value()
+            x[ch+1,3]=atten
+            #print 'Freq: ', x[ch,0], 'Atten: ',x[ch,3]
+     
+            if freqFile[-8:]!='_NEW.txt':
+                freqFile=freqFile[:-4] + '_NEW.txt'
+            
+            f=open(freqFile,'w')
+            f.write(str(float(x[0,0]))+'\t'+str(float(x[0,1]))+'\t'+str(float(x[0,2]))+'\t'+str(float(x[0,3]))+'\n')
+            for arr in x[1:,:]:
+                f.write(str(float(arr[0]))+'\t'+str(int(arr[1]))+'\t'+str(int(arr[2]))+'\t'+str(int(arr[3]))+'\n')
+            f.close()
+
+            #numpy.savetxt(freqFile,x,fmt=('%.12f','%d','%d','%d'),delimiter='\t')
+            print 'Saved resonator changes to', freqFile
+            print 'ch:',ch,'freq:',self.textbox_freq.text(),'atten:',atten
+            print 'Reload freq/atten to implement changes'
+        except IOError:
+            print 'No such file or directory:',freqFile
+            self.status_text.setText('IOError')
+
+    def deleteResonator(self):
+        self.updateResonator(MAX_ATTEN)
+        print 'Set attenuation on ch',self.textbox_channel.text(),'really high'
+        #print 'removed resonator by flagging attenuation as -1'
+
+
  
     def create_main_frame(self):
         self.main_frame = QWidget()
@@ -758,13 +827,13 @@ class AppForm(QMainWindow):
         label_powerSweepStop = QLabel('Stop atten:')
 
         # Save directory
-        self.textbox_saveDir = QLineEdit('/home/sean/data/20120827/')
+        self.textbox_saveDir = QLineEdit('/home/sean/data/LICK2012/20120901/r0/')
         self.textbox_saveDir.setMaximumWidth(250)
         label_saveDir = QLabel('Save directory:')
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20120827/ps_freq0.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/LICK2012/20120901/test_freq0.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
@@ -822,6 +891,27 @@ class AppForm(QMainWindow):
         self.textbox_channel.setMaximumWidth(40)
         label_channel = QLabel('Ch:')
         label_channel.setMaximumWidth(50)
+
+        #Spinbox adjustment of Attenuation of current resonater
+        self.spinbox_attenuation = QSpinBox()
+        self.spinbox_attenuation.setMaximum(MAX_ATTEN)
+        label_attenuation = QLabel('Atten:')
+        
+        #textbox for adjusting frequency
+        self.textbox_freq = QLineEdit('0')
+        self.textbox_freq.setMaximumWidth(130)
+        label_freq = QLabel('Freq (GHz):')
+        
+        #button to submit frequency and attenuation changes
+        self.button_updateResonator = QPushButton("Submit")
+        self.button_updateResonator.setMaximumWidth(170)
+        self.connect(self.button_updateResonator, SIGNAL('clicked()'), self.updateResonator)
+ 
+        #button to 'delete' resonator by setting attenuation really high
+        self.button_deleteResonator = QPushButton('Remove Resonator')
+        self.button_deleteResonator.setMaximumWidth(170)
+        self.connect(self.button_deleteResonator, SIGNAL('clicked()'), self.deleteResonator)
+        
         
         # Add widgets to window.
         gbox0 = QVBoxLayout()
@@ -885,9 +975,19 @@ class AppForm(QMainWindow):
         hbox22.addWidget(self.button_channelIncUp)
         gbox2.addLayout(hbox22)
         hbox23 = QHBoxLayout()
-        hbox23.addWidget(self.button_rotateLoops)
-        hbox23.addWidget(self.button_translateLoops)
+        hbox23.addWidget(label_attenuation)
+        hbox23.addWidget(self.spinbox_attenuation)
+        hbox23.addWidget(label_freq)
+        hbox23.addWidget(self.textbox_freq)
+        hbox23.addWidget(self.button_updateResonator)
         gbox2.addLayout(hbox23)
+        hbox24 = QHBoxLayout()
+        hbox24.addWidget(self.button_deleteResonator)
+        gbox2.addLayout(hbox24)
+        hbox25 = QHBoxLayout()
+        hbox25.addWidget(self.button_rotateLoops)
+        hbox25.addWidget(self.button_translateLoops)
+        gbox2.addLayout(hbox25)
  
         hbox = QHBoxLayout()
         hbox.addLayout(gbox0)
