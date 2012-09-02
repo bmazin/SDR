@@ -48,6 +48,7 @@ from lib.rad2altaz import rad2altaz
 from lib.make_image_v2 import make_image as make_image_import
 from lib.HeaderGen import HeaderGen
 import lib.pulses_v1 as pulses
+#from lib.SignalFilterWheel import SignalFilterWheel
 from lib.arcons_basic_gui import Ui_arcons
 from tables import *
 
@@ -59,6 +60,8 @@ numYPixel = 46
 
 observatory = "Lick"
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
+
+filters = ['Dark','Filter','Open','Open','Open','Closed']
 
 class StartQt4(QMainWindow):
     def __init__(self,parent=None):
@@ -134,6 +137,14 @@ class StartQt4(QMainWindow):
         self.ui.tv_image.mousePressEvent = self.start_pixel_select
         self.ui.tv_image.mouseReleaseEvent = self.end_pixel_select
         
+        #Label filters
+        self.ui.filt1label.setText("1) "+str(filters[0]))
+        self.ui.filt2label.setText("2) "+str(filters[1]))
+        self.ui.filt3label.setText("3) "+str(filters[2]))
+        self.ui.filt4label.setText("4) "+str(filters[3]))
+        self.ui.filt5label.setText("5) "+str(filters[4]))
+        self.ui.filt6label.setText("6) "+str(filters[5]))
+        
         #signal from image thread to make spectrum
         #QObject.connect(self.image_thread,SIGNAL("new_spectrum"),self.display_spectra)
         #button signals
@@ -188,13 +199,16 @@ class StartQt4(QMainWindow):
             self.filterposition = 1
             self.ui.filterpos_spinbox.setValue(1)
             f=open(str(self.filterfile),'w') #put file where dataBin is running
-            f.write(str(self.filterposition))
+            f.write(str(self.filterposition)+' '+str(filters[self.filterposition-1]))
             f.close()
         else:
             f = open(str(self.filterfile),'r')
-            self.filterposition = int(f.read())
+            text = f.read()
+            self.filterposition,self.startfilter = text.split(' ')
+            self.filterposition = int(self.filterposition)
             f.close()
-            print "Filter at position " + str(self.filterposition) +" on startup."
+            print "Filter at position " + str(self.filterposition) + " ("+str(self.startfilter)+") on startup."
+            self.ui.filterpos_spinbox.setValue(self.filterposition)
     
     def signalfilter(self):
         pass
@@ -208,13 +222,14 @@ class StartQt4(QMainWindow):
                 self.filterposition +=1
                 if self.filterposition == 7:
                     self.filterposition = 1
-                self.signalfilter()
-                time.sleep(1)
+                filtproc = subprocess.Popen("python lib/SignalFilterWheel.py",shell=True)
+                filtproc.wait()
+                time.sleep(1) #wait 1 second for filter to complete move.  Should not send more than 1 signal every 2 seconds.
                 #sent bnc signal to filter
-                print "Filter moved to position "+ str(self.filterposition)
+                print "Filter moved to position "+ str(self.filterposition) +" ("+str(filters[self.filterposition-1])+")"
             #write new position to file
             f=open(str(self.filterfile),'w') #put file where dataBin is running
-            f.write(str(self.filterposition))
+            f.write(str(self.filterposition)+' '+str(filters[self.filterposition-1]))
             f.close()
             print "Completed filter move"
             
@@ -517,7 +532,7 @@ class StartQt4(QMainWindow):
     def expand_window(self):
         #if spectrum options button is clicked resize window to show/hide options
         if self.ui.options_radioButton.isChecked():
-            self.resize(620+20+10*self.nxpix,450+20+10*self.nypix)
+            self.resize(590+20+10*self.nxpix,450+20+10*self.nypix)
         else:
             self.resize(380+20+15+10*self.nxpix,450+20+10*self.nypix)
     

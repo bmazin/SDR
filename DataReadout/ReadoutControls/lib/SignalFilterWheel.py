@@ -7,30 +7,31 @@
 
 import u3, time, sys
 
-#u3.listAll(3)
+def SignalFilterWheel():
+    
+    basevoltage = 4.5
+    triggervoltage = 0.0
+    
+    # Open the LabJack
+    d = u3.U3()
+    
+    # Configure
+    d.configU3()
+    
+    DAC1_REGISTER = 5002
+    d.writeRegister(DAC1_REGISTER, basevoltage)
+    #print "Switched voltage to " + str(basevoltage)
+    time.sleep(0.5)
+    
+    d.writeRegister(DAC1_REGISTER, triggervoltage)
+    #print "Switched voltage to " + str(triggervoltage)
+    time.sleep(0.5)
+    
+    d.writeRegister(DAC1_REGISTER,basevoltage)
+    #print "Switched voltage to " + str(basevoltage)
+    #time.sleep(0.5)
+    
+    d.close
 
-# Open the LabJack
-#d = u3.U3(debug = True)
-d = u3.U3()
-
-# Configure
-d.configU3()
-
-DAC1_REGISTER = 5002
-d.writeRegister(DAC1_REGISTER, 3.0)
-time.sleep(0.4)
-
-d.writeRegister(DAC1_REGISTER, 0)
-time.sleep(0.1)
-
-d.writeRegister(DAC1_REGISTER,3.0)
-time.sleep(0.4)
-
-#print d.configU3()
-#print d.configIO()
-
-#d.getFeedback( u3.Timer0Config(TimerMode = 0, Value = int(baseValue*dutyCycle)) )
-#d.getFeedback(u3.DAC16(Dac=1, Value = 0x0))
-
-# Close the device
-d.close
+if __name__ == '__main__':
+    SignalFilterWheel()
