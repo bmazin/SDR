@@ -210,9 +210,6 @@ class StartQt4(QMainWindow):
             print "Filter at position " + str(self.filterposition) + " ("+str(self.startfilter)+") on startup."
             self.ui.filterpos_spinbox.setValue(self.filterposition)
     
-    def signalfilter(self):
-        pass
-    
     def movefilter(self):
         moveto = int(self.ui.filterpos_spinbox.value()) #input from gui
         if moveto < 1 or moveto >6:
@@ -222,7 +219,7 @@ class StartQt4(QMainWindow):
                 self.filterposition +=1
                 if self.filterposition == 7:
                     self.filterposition = 1
-                filtproc = subprocess.Popen("python lib/SignalFilterWheel.py",shell=True)
+                filtproc = subprocess.Popen("sudo nice -n -10 python lib/SignalFilterWheel.py",shell=True)
                 filtproc.wait()
                 time.sleep(1) #wait 1 second for filter to complete move.  Should not send more than 1 signal every 2 seconds.
                 #sent bnc signal to filter
@@ -577,9 +574,7 @@ class StartQt4(QMainWindow):
         #print 'x: ',
         #print self.endrawx,
         #print 'y: ',
-        #print self.endrawy
-                
-
+        #print self.endraw
         self.pixel_list()
         
     def pixel_list(self):
@@ -860,8 +855,19 @@ class StartQt4(QMainWindow):
                 return
             
             #split response into status fields
-            airmass, junk, dec, junk, ha, junk, sid, ut_date, junk, utc_time, junk, ra, junk= response.split(' ')
-                
+            a = response.split(' ')
+            b = []
+            for i in xrange(len(a)):
+                if a[i] != '':
+                    b.append(a[i])
+            airmass = b[0]
+            dec = b[1]
+            ha = b[2]
+            sid = b[3]
+            utc_date = b[4]
+            utc_time = b[5]
+            ra = b[6]
+            
             self.utc = utc_time
             self.lst = sid
             self.ra = ra
@@ -914,7 +920,7 @@ class StartQt4(QMainWindow):
         self.lt = time.localtime()
         self.ui.local_time_label.setText(str(self.lt.tm_hour)+":"+str(self.lt.tm_min)+":"+str(self.lt.tm_sec))
         #send coordinates to compass to it can point toward positive ra and dec
-        self.make_compass(float(self.az))
+        #self.make_compass(float(self.az))
 
     def update_remaining_time(self):
         try: self.timer_thread and self.timer_thread.isRunning()
