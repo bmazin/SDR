@@ -860,8 +860,19 @@ class StartQt4(QMainWindow):
                 return
             
             #split response into status fields
-            airmass, junk, dec, junk, ha, junk, sid, ut_date, junk, utc_time, junk, ra, junk= response.split(' ')
-                
+            a = response.split(' ')
+            b = []
+            for i in xrange(len(a)):
+                if a[i] != '':
+                    b.append(a[i])
+            airmass = b[0]
+            dec = b[1]
+            ha = b[2]
+            sid = b[3]
+            utc_date = b[4]
+            utc_time = b[5]
+            ra = b[6]
+            
             self.utc = utc_time
             self.lst = sid
             self.ra = ra
