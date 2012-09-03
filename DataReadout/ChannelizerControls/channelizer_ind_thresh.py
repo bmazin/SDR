@@ -11,6 +11,13 @@ from matplotlib.figure import Figure
 from tables import *
 from lib import iqsweep
 
+#Things to update:
+#make filename_NEW.txt only hold information for channel that is changed
+#Do not add custom threshold when zooming or panning plot
+#roughly calculate baseline from snapshot data and show on plot
+#show originally calculated median/threshold as faded line
+
+
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
@@ -28,8 +35,8 @@ class AppForm(QMainWindow):
         self.sampleRate = 512e6
         self.zeroChannels = [0]*256
         #writing threshold to register
-        self.customThresholds = numpy.array([360.]*256)
         self.thresholds, self.medians = numpy.array([0.]*256), numpy.array([0.]*256)
+        self.customThresholds = numpy.array([360.]*256)
         
     def openClient(self):
         self.roach = corr.katcp_wrapper.FpgaClient(self.textbox_roachIP.text(),7147)
@@ -89,6 +96,23 @@ class AppForm(QMainWindow):
         idx=(numpy.abs(array-value)).argmin()
         return idx
 
+    def loadCustomThresholds(self):
+        freqFile =str(self.textbox_freqFile.text())
+        if freqFile[-8:] == '_NEW.txt':
+            freqFile=freqFile[:-8]+'_THRESHOLD.txt'
+        else:
+            freqFile=freqFile[:-4]+'_THRESHOLD.txt'
+        try:
+            x=numpy.loadtxt(freqFile)
+            self.customThresholds = numpy.array([360.]*256)
+            for arr in x:
+                self.customThresholds[arr[0]]=arr[1]
+            print 'Custom Thresholds loaded from',freqFile
+        except IOError:
+            #No custom thresholds to load
+            pass
+
+
     def rmCustomThreshold(self):
         ch = int(self.textbox_channel.text())
         if self.customThresholds[ch] != 360.0:
@@ -100,6 +124,24 @@ class AppForm(QMainWindow):
             self.roach.write_int('capture_load_thresh', (ch<<1)+(1<<0))
             self.roach.write_int('capture_load_thresh', (ch<<1)+(0<<0))
             print "Old threshold updated to roach"
+
+            freqFile =str(self.textbox_freqFile.text())
+            if freqFile[-8:] == '_NEW.txt':
+                freqFile=freqFile[:-8]+'_THRESHOLD.txt'
+            else:
+                freqFile=freqFile[:-4]+'_THRESHOLD.txt'
+            try:
+                x=numpy.loadtxt(freqFile)
+                f=open(freqFile,'w')
+                for arr in x:
+                    #print 'arr',arr
+                    if arr[0]!=ch:
+                        f.write(str(int(arr[0]))+'\t'+str(float(arr[1]))+'\n')
+                print "Removed Custom Threshold on channel ",ch," from ",freqFile
+                self.status_text.setText("Removed Custom Threshold on channel "+str(ch)+" from "+str(freqFile))
+                f.close()
+            except IOError:
+                print 'Unable to remove custom threshold from channel',ch
         else:
             print "No custom threshold set for channel",ch
 
@@ -109,23 +151,37 @@ class AppForm(QMainWindow):
         ch = int(self.textbox_channel.text())
         newThreshold = event.ydata
         #print "Threshold selected:",newThreshold
-        self.loadSingleThreshold(ch)				#resets median
-        newThreshold = newThreshold - self.medians[ch]		#for threshold adjusting firmware only!
-        self.customThresholds[ch] = newThreshold
-        newThreshold = int(newThreshold/scale_to_angle)
-        #print "writing threshold to register:",newThreshold
-        #print "median for channel ",ch,": ",self.medians[ch]
-        #self.customThresholds[ch] = newThreshold
+        if event.ydata != None:
+            self.loadSingleThreshold(ch)				#resets median
+            newThreshold = newThreshold - self.medians[ch]		#for threshold adjusting firmware only!
+            self.customThresholds[ch] = newThreshold
+            newThreshold = int(newThreshold/scale_to_angle)
+            #print "writing threshold to register:",newThreshold
+            #print "median for channel ",ch,": ",self.medians[ch]
+            #self.customThresholds[ch] = newThreshold
         
-        print "new threshold: ",newThreshold
-        print "old threshold: ",self.thresholds[ch]/scale_to_angle
+            #print "new threshold: ",newThreshold
+            #print "old threshold: ",self.thresholds[ch]/scale_to_angle
         
-        self.roach.write_int('capture_threshold', newThreshold)
-        self.roach.write_int('capture_load_thresh', (ch<<1)+(1<<0))
-        self.roach.write_int('capture_load_thresh', (ch<<1)+(0<<0))
-        print "channel: ", ch, "median: ", self.medians[ch], "new threshold: ", scale_to_angle*newThreshold
-        #print self.customThresholds[ch]
-        #self.loadSingleThreshold(ch)
+            self.roach.write_int('capture_threshold', newThreshold)
+            self.roach.write_int('capture_load_thresh', (ch<<1)+(1<<0))
+            self.roach.write_int('capture_load_thresh', (ch<<1)+(0<<0))
+            print "channel: ", ch, "median: ", self.medians[ch], "new threshold: ", scale_to_angle*newThreshold
+            #print self.customThresholds[ch]
+            #self.loadSingleThreshold(ch)
+
+            freqFile =str(self.textbox_freqFile.text())
+            if freqFile[-8:] == '_NEW.txt':
+                freqFile=freqFile[:-8]+'_THRESHOLD.txt'
+            else:
+                freqFile=freqFile[:-4]+'_THRESHOLD.txt'
+            try:
+                f=open(freqFile,'a')
+                f.write(str(int(ch))+'\t'+str(float(self.customThresholds[ch]))+'\n')
+                f.close()
+                print 'Saved custom threshold to',freqFile
+            except IOError:
+                print 'ERROR: There was a problem saving thresholds to',freqFile
 
     def loadThresholds(self):
         """    Takes two time streams and concatenates together for a longer sample.
@@ -252,6 +308,7 @@ class AppForm(QMainWindow):
         #print "channel: ", ch, "avg: ", scale_to_angle*phase_avg, "sigma: ", scale_to_angle*sigma, "threshold: ", scale_to_angle*threshold
         
     def snapshot(self):        
+        self.displayResonatorProperties()
         ch_we = int(self.textbox_channel.text())
         self.roach.write_int('ch_we', ch_we)
         #print self.roach.read_int('ch_we')
@@ -442,25 +499,52 @@ class AppForm(QMainWindow):
    
     def importFreqs(self):
         freqFile =str(self.textbox_freqFile.text())
-        x = numpy.loadtxt(freqFile) 
-        x_string = ''
+        newFreqFile = freqFile[:-4] + '_NEW.txt'
+        try:
+            numpy.loadtxt(newFreqFile)
+            freqFile = newFreqFile
+            print 'Loaded', freqFile, 'instead'
+            self.textbox_freqFile.setText(freqFile)
+        except IOError:
+            pass
+        try:
+            x = numpy.loadtxt(freqFile) 
+            x_string = ''
         
-        self.previous_scale_factor = x[0,0] 
-        N_freqs = len(x[1:,0])
-        for l in x[1:,0]:
-            x_string = x_string + str(l*1e9) + '\n'
+            self.previous_scale_factor = x[0,0] 
+            N_freqs = len(x[1:,0])
+            for l in x[1:,0]:
+                x_string = x_string + str(l*1e9) + '\n'
             
-        self.iq_centers = numpy.array([0.+0j]*256)
-        for n in range(N_freqs):
-            #for n in range(256):
-            self.iq_centers[n] = complex(x[n+1,1], x[n+1,2])
+            self.iq_centers = numpy.array([0.+0j]*256)
+            for n in range(N_freqs):
+                #for n in range(256):
+                self.iq_centers[n] = complex(x[n+1,1], x[n+1,2])
             
-        self.attens = x[1:,3]
-        self.textedit_DACfreqs.setText(x_string)
+            self.attens = x[1:,3]
+            self.textedit_DACfreqs.setText(x_string)
+            self.zeroChannels = [0]*256
+            print 'Freq/Atten loaded from',freqFile
+            self.status_text.setText('Freq/Atten loaded')
+            
+            self.loadCustomThresholds()
+        except IOError:
+            print 'No such file or directory:',freqFile
+            self.status_text.setText('IOError')
 
-        self.zeroChannels = [0]*256
-        print 'freqs loaded'
-        self.status_text.setText('Freqs Loaded.')
+    def displayResonatorProperties(self):
+        ch=int(self.textbox_channel.text())
+        freqFile =str(self.textbox_freqFile.text())
+        x = numpy.loadtxt(freqFile)
+        #print 'atten: '+str(x[ch,3])
+        self.label_attenuation.setText('attenuation: ' + str(int(x[ch+1,3])))
+        self.label_frequency.setText('freq (GHz): ' + str(float(x[ch+1,0])))
+        self.label_median.setText('median: '+str(self.medians[ch]))
+        if self.customThresholds[ch] != 360.0:
+            self.label_threshold.setText('threshold: '+str(self.customThresholds[ch]))
+        else:
+            self.label_threshold.setText('threshold: '+str(self.thresholds[ch]))
+
         
     def importFIRcoeffs(self):
         coeffsFile =str(self.textbox_coeffsFile.text())
@@ -507,7 +591,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20120823adr/ps_freq0-good.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/LICK2012/20120901/ps_freq0.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
@@ -571,6 +655,22 @@ class AppForm(QMainWindow):
         self.textbox_timeLengths = QLineEdit('10')
         self.textbox_timeLengths.setMaximumWidth(50)
         label_timeLengths = QLabel('mSeconds       ')
+
+        #median
+        self.label_median = QLabel('median: 0.0000')
+        self.label_median.setMaximumWidth(170)
+
+        #threshold
+        self.label_threshold = QLabel('threshold: 0.0000')
+        self.label_threshold.setMaximumWidth(170)
+
+        #attenuation
+        self.label_attenuation = QLabel('attenuation: 0')
+        self.label_attenuation.setMaximumWidth(170)
+
+        #frequency
+        self.label_frequency = QLabel('freq (GHz): 0.0000')
+        self.label_frequency.setMaximumWidth(170)
         
         # Add widgets to window.
         gbox0 = QVBoxLayout()
@@ -611,11 +711,17 @@ class AppForm(QMainWindow):
         hbox21.addWidget(self.button_readPulses)
         gbox2.addLayout(hbox21)
 
+        gbox3 = QVBoxLayout()
+        gbox3.addWidget(self.label_median)
+        gbox3.addWidget(self.label_threshold)
+        gbox3.addWidget(self.label_attenuation)
+        gbox3.addWidget(self.label_frequency)
 
         hbox = QHBoxLayout()
         hbox.addLayout(gbox0)
         hbox.addLayout(gbox1)     
         hbox.addLayout(gbox2)
+        hbox.addLayout(gbox3)
         
         vbox = QVBoxLayout()
         vbox.addWidget(self.canvas)
