@@ -67,7 +67,7 @@ void create_datasets(char* obs_filepath,char* pixel_dataset_name,int exptime);
 void update_beammap_names(char* obs_filepath, const char* pixel_dataset_name, char beam_data[BEAM_ROWS][BEAM_COLS][STR_SIZE], int pixel_adr[BEAM_ROWS][BEAM_COLS]);
 int get_exptime(char* obs_filepath);
 void copy_beam_file_tree(char* obs_filepath,char* beammap_path,char beam_data[BEAM_ROWS][BEAM_COLS][STR_SIZE]);
-int check_for_stop();
+int need_to_stop();
 
 void write_sec_data(char* obs_filepath,char* pixel_dataset_name,int sec[NROACHES],int ready_roach, uint64_t plist[NROACHES][NPIXELS_PER_ROACH],uint64_t*** photons,int** photon_counts, int pixel_adr[BEAM_ROWS][BEAM_COLS],int exptime);
 void wait_for_new_sec();//sleeps until unix time passes a little past a new second
@@ -180,10 +180,8 @@ int main(int argc, char *argv[])
             photon_counts[i][j] = 0;
         }
     }
-    for(r=0;r<NROACHES;++r)
+    for (r=0;r<NROACHES;++r)
     {
-        socket_id[r] = connect_to_roach(r);
-        printf("successfully connected to %d\n",r);
         sec[r] = 0;
         roach_counts[r] = 0;
         old_packet[r] = (uint64_t)(-1);
@@ -205,9 +203,15 @@ int main(int argc, char *argv[])
             plist[r][i] = 0;
         }
     }
-    if (errno != 0)
-        error("Error before main loop");
+    printf("Waiting for new second\n");
     wait_for_new_sec();
+    printf("Connecting to roaches\n");
+    for(r=0;r<NROACHES;++r)
+    {
+        socket_id[r] = connect_to_roach(r);
+        printf("successfully connected to %d\n",r);
+    }
+    fflush(stdout);
     obs_time = time(NULL)+1;//New data will begin when roaches receive the next pulse per second (PPS)
     write_obstime(obs_filepath,(double)(obs_time));
     sprintf(pixel_dataset_name,"%s%d",dataset_name_base,obs_time);
@@ -216,9 +220,12 @@ int main(int argc, char *argv[])
     create_datasets(obs_filepath,pixel_dataset_name,exptime);
     update_beammap_names(obs_filepath, pixel_dataset_name, beam_data, pixel_adr);
 
+
+    printf("need to stop?: %d\n",need_to_stop());
+    if (errno != 0)
+        error("Error before main loop");
     fflush(stdout);
-    printf("stop %d",check_for_stop());
-    while ((bool_all_secs_done == 0) && (check_for_stop() == 0))
+    while ((bool_all_secs_done == 0) && (need_to_stop() == 0))
     {
         time_marker=current_time();
         ready_roach = -1;
@@ -955,7 +962,7 @@ void write_sec_data(char* obs_filepath,char* pixel_dataset_name,int sec[NROACHES
     }
 }
 
-int check_for_stop()//Checks for a stop file and returns true if found, else returns 0
+int need_to_stop()//Checks for a stop file and returns true if found, else returns 0
 {
     char stopfilename[] = "stopPacketMaster.bin";
     FILE* stopfile;
@@ -978,7 +985,7 @@ void wait_for_new_sec()//sleeps until unix time passes a little past a new secon
     double min_time_from_sec = 0.05;
     double max_time_from_sec = 0.15;
     time_from_sec = current_time()-(int)(current_time());
-    while (((time_from_sec > min_time_from_sec) && (time_from_sec < max_time_from_sec)) == 0 && check_for_stop() == 0)
+    while (((time_from_sec > min_time_from_sec) && (time_from_sec < max_time_from_sec)) == 0 && need_to_stop() == 0)
     //Wait until we are just after a new second, and we haven't been stopped    
     {
         usleep(1000);//sleep for a millisecond
