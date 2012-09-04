@@ -12,10 +12,11 @@ from tables import *
 from lib import iqsweep
 
 #Things to update:
-#make filename_NEW.txt only hold information for channel that is changed
-#Do not add custom threshold when zooming or panning plot
-#roughly calculate baseline from snapshot data and show on plot
-#show originally calculated median/threshold as faded line
+#DONE...make filename_NEW.txt only hold information for channel that is changed
+#DONE...delete resonator (change FIR?)
+#DONE...Do not add custom threshold when zooming or panning plot
+#DONE...roughly calculate baseline from snapshot data and show on plot
+#WORKING...show originally calculated median/threshold as faded line
 
 
 class AppForm(QMainWindow):
@@ -29,6 +30,7 @@ class AppForm(QMainWindow):
         self.dramStatus = 'off'
         self.tapStatus = 'off'
         self.socketStatus = 'off'
+        self.numFreqs=0
         self.ch_all = []
         self.attens = numpy.array([1. for i in range(256)])
         self.freqRes = 7812.5
@@ -37,6 +39,7 @@ class AppForm(QMainWindow):
         #writing threshold to register
         self.thresholds, self.medians = numpy.array([0.]*256), numpy.array([0.]*256)
         self.customThresholds = numpy.array([360.]*256)
+        self.customResonators=numpy.array([[0.0,-1]]*256)	#customResonator[ch]=[freq,atten]
         
     def openClient(self):
         self.roach = corr.katcp_wrapper.FpgaClient(self.textbox_roachIP.text(),7147)
@@ -50,17 +53,18 @@ class AppForm(QMainWindow):
         taps = 26
         
         for ch in range(N_freqs):
-            # If the dark count rate is very high, the channel will be zeroed.
+            # If the resonator's attenuation is >=99 then its FIR should be zeroed
             if self.zeroChannels[ch]:
                 lpf = numpy.array([0.]*taps)*(2**11-1)
+                print 'deleted ch ',ch
             else:
                 print ch
                 #lpf = numpy.array([1.]+[0]*(taps-1))*(2**11-1)
 		#    26 tap, 25 us matched fir
-		#lpf = numpy.array([0.0875788844768 , 0.0840583257978 , 0.0810527406206 , 0.0779008825067 , 0.075106964962 , 0.0721712998256 , 0.0689723729398 , 0.066450095496 , 0.0638302570705 , 0.0613005685486 , 0.0589247737004 , 0.0565981917436 , 0.0544878914297 , 0.0524710948658 , 0.0503447054014 , 0.0483170854189 , 0.0463121066637 , 0.044504238059 , 0.0428469827102 , 0.0410615366471 , 0.0395570640218 , 0.0380071830756 , 0.0364836787854 , 0.034960959124 , 0.033456372241 , 0.0321854467182])*(2**11-1)
+		lpf = numpy.array([0.0875788844768 , 0.0840583257978 , 0.0810527406206 , 0.0779008825067 , 0.075106964962 , 0.0721712998256 , 0.0689723729398 , 0.066450095496 , 0.0638302570705 , 0.0613005685486 , 0.0589247737004 , 0.0565981917436 , 0.0544878914297 , 0.0524710948658 , 0.0503447054014 , 0.0483170854189 , 0.0463121066637 , 0.044504238059 , 0.0428469827102 , 0.0410615366471 , 0.0395570640218 , 0.0380071830756 , 0.0364836787854 , 0.034960959124 , 0.033456372241 , 0.0321854467182])*(2**11-1)
                 #lpf = lpf[::-1]
                 #    26 tap, lpf, 250 kHz,
-                lpf = numpy.array([-0 , 0.000166959420533 , 0.00173811663844 , 0.00420937801998 , 0.00333739357391 , -0.0056305703275 , -0.0212738104942 , -0.0318529375832 , -0.0193635986879 , 0.0285916612022 , 0.106763943766 , 0.18981814328 , 0.243495321192 , 0.243495321192 , 0.18981814328 , 0.106763943766 , 0.0285916612022 , -0.0193635986879 , -0.0318529375832 , -0.0212738104942 , -0.0056305703275 , 0.00333739357391 , 0.00420937801998 , 0.00173811663844 , 0.000166959420533 , -0])*(2**11-1)
+                #lpf = numpy.array([-0 , 0.000166959420533 , 0.00173811663844 , 0.00420937801998 , 0.00333739357391 , -0.0056305703275 , -0.0212738104942 , -0.0318529375832 , -0.0193635986879 , 0.0285916612022 , 0.106763943766 , 0.18981814328 , 0.243495321192 , 0.243495321192 , 0.18981814328 , 0.106763943766 , 0.0285916612022 , -0.0193635986879 , -0.0318529375832 , -0.0212738104942 , -0.0056305703275 , 0.00333739357391 , 0.00420937801998 , 0.00173811663844 , 0.000166959420533 , -0])*(2**11-1)
                 #    26 tap, lpf, 125 kHz.
                 #lpf = numpy.array([0 , -0.000431898216436 , -0.00157886921107 , -0.00255492263971 , -0.00171727439076 , 0.00289724121972 , 0.0129123447233 , 0.0289345497995 , 0.0500906370566 , 0.0739622085341 , 0.0969821586979 , 0.115211955161 , 0.125291869266 , 0.125291869266 , 0.115211955161 , 0.0969821586979 , 0.0739622085341 , 0.0500906370566 , 0.0289345497995 , 0.0129123447233 , 0.00289724121972 , -0.00171727439076 , -0.00255492263971 , -0.00157886921107 , -0.000431898216436 , -0])*(2**11-1)
                 #    Generic 40 tap matched filter for 25 us lifetime pulse
@@ -105,8 +109,11 @@ class AppForm(QMainWindow):
         try:
             x=numpy.loadtxt(freqFile)
             self.customThresholds = numpy.array([360.]*256)
-            for arr in x:
-                self.customThresholds[arr[0]]=arr[1]
+            if type(x[0]) == numpy.ndarray:
+                for arr in x:
+                    self.customThresholds[int(arr[0])]=arr[1]
+            else:
+                self.customThresholds[int(x[0])]=x[1]
             print 'Custom Thresholds loaded from',freqFile
         except IOError:
             #No custom thresholds to load
@@ -133,10 +140,14 @@ class AppForm(QMainWindow):
             try:
                 x=numpy.loadtxt(freqFile)
                 f=open(freqFile,'w')
-                for arr in x:
-                    #print 'arr',arr
-                    if arr[0]!=ch:
-                        f.write(str(int(arr[0]))+'\t'+str(float(arr[1]))+'\n')
+                if type(x[0]) == numpy.ndarray:
+                    for arr in x:
+                        #print 'arr',arr
+                        if arr[0]!=ch:
+                            f.write(str(int(arr[0]))+'\t'+str(float(arr[1]))+'\n')
+                else:
+                    if x[0]!=ch:
+                        f.write(str(int(x[0]))+'\t'+str(float(x[1]))+'\n')
                 print "Removed Custom Threshold on channel ",ch," from ",freqFile
                 self.status_text.setText("Removed Custom Threshold on channel "+str(ch)+" from "+str(freqFile))
                 f.close()
@@ -151,7 +162,7 @@ class AppForm(QMainWindow):
         ch = int(self.textbox_channel.text())
         newThreshold = event.ydata
         #print "Threshold selected:",newThreshold
-        if event.ydata != None:
+        if event.ydata != None and self.mpl_toolbar.mode == '':
             self.loadSingleThreshold(ch)				#resets median
             newThreshold = newThreshold - self.medians[ch]		#for threshold adjusting firmware only!
             self.customThresholds[ch] = newThreshold
@@ -333,13 +344,31 @@ class AppForm(QMainWindow):
         self.axes1.clear()
         #self.axes1.plot(phase, '.-', [self.thresholds[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.')
 
-        print "Channel: ",ch_we," median: " ,self.medians[ch_we], 
+        self.axes1.plot(phase,'.-')
+
+        med=numpy.median(phase)
+        
+        print 'ch:',ch_we,'median:',med,
+        thresh=self.thresholds[ch_we]
+
         if self.customThresholds[ch_we] != 360.0:
-            self.axes1.plot(phase, '.-', [self.customThresholds[ch_we]+self.medians[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.')
-            print "Custom Threshold: ",self.customThresholds[ch_we]," Threshold: ",self.thresholds[ch_we]
-        else:
-           self.axes1.plot(phase, '.-', [self.thresholds[ch_we]+self.medians[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.')
-           print "Threshold: ",self.thresholds[ch_we]
+            thresh=self.customThresholds[ch_we]
+            print "Custom Threshold: ", thresh,
+
+        
+        self.axes1.plot([thresh+med]*2*L*steps,'r.',[med]*2*L*steps,'g.',alpha=1)
+
+        med=self.medians[ch_we]
+        self.axes1.plot([thresh+med]*2*L*steps,'y.',[med]*2*L*steps,'y.',alpha=0.2)
+        print "Threshold: ",self.thresholds[ch_we]
+
+        #print "Channel: ",ch_we," median: " ,self.medians[ch_we], 
+        #if self.customThresholds[ch_we] != 360.0:
+        #    self.axes1.plot(phase, '.-', [self.customThresholds[ch_we]+self.medians[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.',alpha=0.3)
+        #    print "Custom Threshold: ",self.customThresholds[ch_we]," Threshold: ",self.thresholds[ch_we]
+        #else:
+        #   self.axes1.plot(phase, '.-', [self.thresholds[ch_we]+self.medians[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.',alpha=0)
+        #   print "Threshold: ",self.thresholds[ch_we]
         #print " "
 
         self.canvas.draw()
@@ -409,6 +438,8 @@ class AppForm(QMainWindow):
     def channelInc(self):
         ch_we = int(self.textbox_channel.text())
         ch_we = ch_we + 1
+        if ch_we >=self.numFreqs:
+            ch_we=0
         self.textbox_channel.setText(str(ch_we))
         
     def toggleDAC(self):
@@ -499,20 +530,18 @@ class AppForm(QMainWindow):
    
     def importFreqs(self):
         freqFile =str(self.textbox_freqFile.text())
-        newFreqFile = freqFile[:-4] + '_NEW.txt'
-        try:
-            numpy.loadtxt(newFreqFile)
-            freqFile = newFreqFile
-            print 'Loaded', freqFile, 'instead'
-            self.textbox_freqFile.setText(freqFile)
-        except IOError:
-            pass
+        self.loadCustomAtten()
         try:
             x = numpy.loadtxt(freqFile) 
             x_string = ''
+            for i in range(len(self.customResonators)):
+                if self.customResonators[i][1]!=-1:
+                    x[i+1,0]=self.customResonators[i][0]
+                    x[i+1,3]=self.customResonators[i][1]
         
             self.previous_scale_factor = x[0,0] 
             N_freqs = len(x[1:,0])
+            self.numFreqs=N_freqs
             for l in x[1:,0]:
                 x_string = x_string + str(l*1e9) + '\n'
             
@@ -523,7 +552,7 @@ class AppForm(QMainWindow):
             
             self.attens = x[1:,3]
             self.textedit_DACfreqs.setText(x_string)
-            self.zeroChannels = [0]*256
+            self.findDeletedResonators()
             print 'Freq/Atten loaded from',freqFile
             self.status_text.setText('Freq/Atten loaded')
             
@@ -532,10 +561,38 @@ class AppForm(QMainWindow):
             print 'No such file or directory:',freqFile
             self.status_text.setText('IOError')
 
+    def findDeletedResonators(self):
+        for i in range(len(self.customResonators)):
+            if self.customResonators[i][1] >=99:
+                self.zeroChannels[i] = 1
+            else:
+                self.zeroChannels[i] = 0 #needed so you can undelete resonators
+
+    def loadCustomAtten(self):
+        freqFile =str(self.textbox_freqFile.text())
+        newFreqFile = freqFile[:-4] + '_NEW.txt'
+        try:
+            y=numpy.loadtxt(newFreqFile)
+            self.customResonators=numpy.array([[0.0,-1]]*256)
+            if type(y[0]) == numpy.ndarray:
+                for arr in y:
+                    self.customResonators[int(arr[0])]=arr[1:3]
+            else:
+                self.customResonators[int(y[0])]=y[1:3]
+            print 'Loaded custom resonator freq/atten from',newFreqFile
+        except IOError:
+            pass
+
     def displayResonatorProperties(self):
         ch=int(self.textbox_channel.text())
         freqFile =str(self.textbox_freqFile.text())
         x = numpy.loadtxt(freqFile)
+        #self.loadCustomAtten()
+        for i in range(len(self.customResonators)):
+            if self.customResonators[i][1]!=-1:
+                x[i+1,0]=self.customResonators[i][0]
+                x[i+1,3]=self.customResonators[i][1]
+        
         #print 'atten: '+str(x[ch,3])
         self.label_attenuation.setText('attenuation: ' + str(int(x[ch+1,3])))
         self.label_frequency.setText('freq (GHz): ' + str(float(x[ch+1,0])))
@@ -591,7 +648,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/LICK2012/20120901/ps_freq0.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/LICK2012/20120903/ps_freq0.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
