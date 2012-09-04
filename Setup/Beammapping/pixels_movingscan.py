@@ -2,20 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-path = '/home/sean/data/20120827/'
+path = '/media/disk2/sci3gamma/20120901/'
 
 # Alter pscale, xstart, ystart, and angle to match the grid
 # Set up a scale factor for pixel locations
 #pscale=13.7;
-pscale=9.2;
+pscale=8.82;
 # Pick x position offset
 #xstart=pscale*5.5;
-xstart=pscale*30.5;
+xstart=pscale*18.2;
 # Pick y position offset
 #ystart=pscale*10.8;
-ystart=pscale*11.8;
+ystart=pscale*7.55;
 # Angle of setup
-angle=4.2;
+angle=3.2;
 # Find the sine and cosine of angle to use for rotations
 s=np.sin(np.pi*angle/180.)
 c=np.cos(np.pi*angle/180.)
@@ -37,16 +37,17 @@ attenvals=np.empty(0,dtype='float32')
 
 # Create a list of position files from beam mapping
 infile=[]
-#infile.append(path + '20120828_r4.pos')
-#infile.append(path + '20120828_r5.pos')
-#infile.append(path + '20120828_r6.pos')
-infile.append(path + '20120828_r0.pos')
+infile.append(path + '20120902_r4.pos')
+infile.append(path + '20120902_r5.pos')
+infile.append(path + '20120902_r6.pos')
+infile.append(path + '20120902_r7.pos')
 
 psfile=[]
-#psfile.append(path + 'ps_freq4.txt')
-#psfile.append(path + 'ps_freq5.txt')
-#psfile.append(path + 'ps_freq6.txt')
-psfile.append(path + 'ps_freq0-good.txt')
+psfile.append(path + 'ps_freq4.txt')
+psfile.append(path + 'ps_freq5.txt')
+psfile.append(path + 'ps_freq6.txt')
+psfile.append(path + 'ps_freq7.txt')
+
 
 # Create origin and scale factor
 origin=[[xstart,ystart]]*len(infile)
@@ -77,13 +78,16 @@ for j in range(len(infile)):
     ypos /= scale[j]
     if j==0:
         xpos += 0
-        ypos += 0.5
+        ypos += 0
+    if j==1:
+        xpos += 3.1
+        ypos -= 0.2
     if j==2:
-        xpos += 0.3
-        ypos += 0.5
+        xpos += 3
+        ypos += 0
     if j==3:
-        xpos += 0.2
-        ypos += 0.2
+        xpos -= 3.85
+        ypos -= 0.95
     print len(xpos[goodpix]), 'Good Pixels'
 
     #Create a list of good pixel locations
@@ -177,11 +181,11 @@ ysize=5
 goodgrid=np.zeros((22,46))
 idx=freqvals.argsort()
 print len(xpix), len(freqvals)
-f= open(path+'20120829_FL2_freq_atten_x_y.txt','w')
+f= open(path+'FL2_20120902_freq_atten_x_y.txt','w')
 for i in range(len(xpix)):
 #    print freqvals[idx[i]], xpix[idx[i]], ypix[idx[i]]
     
-    f= open(path+'20120829_FL2_freq_atten_x_y.txt','a')
+    f= open(path+'FL2_20120902_freq_atten_x_y.txt','a')
     f.write(str(freqvals[idx[i]]) + '\t' + str(int(attenvals[idx[i]])) +'\t' + str(xpix[idx[i]]) + '\t' + str(ypix[idx[i]]) +'\n')
     f.close()
     
