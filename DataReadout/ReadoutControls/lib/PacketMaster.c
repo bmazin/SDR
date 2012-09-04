@@ -70,6 +70,10 @@ void copy_beam_file_tree(char* obs_filepath,char* beammap_path,char beam_data[BE
 int check_for_stop();
 
 void write_sec_data(char* obs_filepath,char* pixel_dataset_name,int sec[NROACHES],int ready_roach, uint64_t plist[NROACHES][NPIXELS_PER_ROACH],uint64_t*** photons,int** photon_counts, int pixel_adr[BEAM_ROWS][BEAM_COLS],int exptime);
+void wait_for_new_sec();//sleeps until unix time passes a little past a new second
+void write_obstime(char* obs_filepath,double obs_time);
+
+
 int main(int argc, char *argv[])
 {
     char path[STR_SIZE];//directory path where obs_test.h5 and beammap.h5 are
@@ -203,7 +207,9 @@ int main(int argc, char *argv[])
     }
     if (errno != 0)
         error("Error before main loop");
-    obs_time = time(NULL);
+    wait_for_new_sec();
+    obs_time = time(NULL)+1;//New data will begin when roaches receive the next pulse per second (PPS)
+    write_obstime(obs_filepath,(double)(obs_time));
     sprintf(pixel_dataset_name,"%s%d",dataset_name_base,obs_time);
     copy_beam_file_tree(obs_filepath,beammap_path,beam_data);
 
@@ -964,4 +970,39 @@ int check_for_stop()//Checks for a stop file and returns true if found, else ret
         printf("found stop file %d\n",stopfile);
         return 1;
     }
+}
+
+void wait_for_new_sec()//sleeps until unix time passes a little past a new second
+{
+    double time_from_sec = 0; 
+    double min_time_from_sec = 0.05;
+    double max_time_from_sec = 0.15;
+    time_from_sec = current_time()-(int)(current_time());
+    while (((time_from_sec > min_time_from_sec) && (time_from_sec < max_time_from_sec)) == 0 && check_for_stop() == 0)
+    //Wait until we are just after a new second, and we haven't been stopped    
+    {
+        usleep(1000);//sleep for a millisecond
+        time_from_sec = current_time()-(int)(current_time());
+    }        
+    return;
+}
+
+void write_obstime(char* obs_filepath,double obs_time)
+{
+    hid_t obs_file;//The file handle for the H5 file containing initial header data and will contain all observation data
+     //items used for reading header info.  The header is itself one record of a complex H5 type    //so when reading...
+    hsize_t write_start = 0; //start with the first and only record
+    hsize_t write_nrecords = 1;//and read data from exactly one record    
+    size_t write_offset[] = {0};
+    size_t obstime_sizes[] = {sizeof(double)};//used to read exptime from header
+    herr_t  status;//The return status of H5 functions, -1 indicates an error
+    obs_file = H5Fopen(obs_filepath, H5F_ACC_RDWR, H5P_DEFAULT);
+    if (obs_file < 0)
+    {        fprintf(stderr,"Error opening obs file %s",obs_filepath);
+        error("");
+    }
+    status = H5TBwrite_fields_name(obs_file,"/header/header","ut",write_start,write_nrecords,sizeof(double),write_offset,obstime_sizes,&obs_time);
+    if (status < 0)
+        error("Error writing ut to obs file header");
+    status = H5Fclose(obs_file);
 }
