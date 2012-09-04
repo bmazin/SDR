@@ -32,7 +32,7 @@ int make_connection(int server);
 int start_server();
 int get_process_id();
 int send_packet(char* path_low_order_data,char* path_high_order_data,int client, int first_half_file);
-int need_to_stop();
+int need_to_restart();
 double current_time();
 //void sighandler(int sig);
 
@@ -83,6 +83,7 @@ int main(int argc, char* argv[])
             printf("Stopping before checking for data\n");
             fflush(stdout);
             continue_current_session = 0;
+            no_interrupt = 0;
         }
         while (continue_current_session == 1)
         {
@@ -118,7 +119,7 @@ int main(int argc, char* argv[])
         printf("Session closed\n");
         if (need_to_stop() == 1)
         {
-            printf("Stopping after session closed\n");
+            printf("Found stop file after session closed\n");
             no_interrupt = 0;
         }
     }
@@ -145,7 +146,7 @@ void error(char *msg)
 
 double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_first_half)
 {
-    int time_to_stop = 0;
+    int time_to_restart = 0;
     uint32_t data_writing_ptr = -1;
 	uint32_t data_writing_ptr_last = -1;
     uint32_t start_ptr = -1;
@@ -183,12 +184,12 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
         end_ptr = start_ptr;
     }
 	data_writing_ptr_last = start_ptr;
-    while (time_to_stop == 0)
+    while (time_to_restart == 0)
     {
         usleep(100);
-        if (need_to_stop() == 1)
+        if (need_to_restart() == 1)
         {
-            printf("stoppping in wait\n");
+            printf("restartpping in wait\n");
             fflush(stdout);
             return -1;
         }
@@ -209,7 +210,7 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
         if (data_writing_ptr > end_ptr)
         {
             if (require_wrap == 0 || data_writing_ptr < FIRST_HALF)
-                time_to_stop = 1;
+                time_to_restart = 1;
         }
         
     }
@@ -365,6 +366,29 @@ int send_packet(char* path_low_order_data,char* path_high_order_data,int client,
     end_time = end_tv.tv_sec+end_tv.tv_usec*1e-6;
     printf("pixel %x at %.3f took %.3f\n",high_order_buffer[0],start_time,end_time-start_time);
     return N_bytes_sent;
+}
+
+int need_to_restart()//Checks for a restart file and returns true if found, else returns 0
+{
+    char restartfilename[] = "restartPulseServer.bin";
+    FILE* restartfile;
+    restartfile = fopen(restartfilename,"r");
+    if (restartfile == 0) //Don't restart
+    {
+        if (DEBUG == 1)
+        {
+            printf("No restart file found\n");
+            fflush(stdout);
+        }
+        errno = 0;
+        return 0;
+    }
+    else //Stop file exists, restart
+    {
+        printf("found restart file %d\n",restartfile);
+        fflush(stdout);
+        return 1;
+    }
 }
 
 int need_to_stop()//Checks for a stop file and returns true if found, else returns 0
