@@ -61,7 +61,7 @@ numYPixel = 46
 observatory = "Lick"
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
-filters = ['Dark','Filter','Open','Open','Open','Closed']
+filters = ['I-band','KG5','Open','405','546','Closed']
 
 class StartQt4(QMainWindow):
     def __init__(self,parent=None):
