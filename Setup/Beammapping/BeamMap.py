@@ -61,10 +61,10 @@ def fitgaussian(data,x):
 
 
 # Specify input/output directory and files
-path = '/media/disk2/20120814_SCI3alpha/'
-xsweep = 'bm_X_FL2.h5'
-ysweep = 'bm_Y_FL2.h5'
-f=open('FL2_out.pos','w')
+path = '/media/disk2/sci3gamma/20120901/'
+xsweep = 'bmX_20120901-225959.h5'
+ysweep = 'bmY_20120901-231313.h5'
+f=open('OutputFiles/FL1-2_out.pos','w')
 
 # Load the input files
 # X sweep data
@@ -145,7 +145,7 @@ for i in xrange(0,1023):
         if(response == 'a'):
             print 'Response: ', response
             plt.close()
-            f=open(path+'FL2_out.pos','a')
+            f=open(path+'OutputFiles/FL1-2_out.pos','a')
             f.write(str(map.peakpos[0,i])+'\t'+str(map.peakpos[1,i])+'\t'+str(int(map.flag[i]))+'\n')
             f.close()
             break
@@ -156,7 +156,7 @@ for i in xrange(0,1023):
             map.peakpos[1,i]=0
             map.flag[i] = -1*i
             plt.close()
-            f=open(path+'FL2_out.pos','a')
+            f=open(path+'OutputFiles/FL1-2_out.pos','a')
             f.write(str(map.peakpos[0,i])+'\t'+str(map.peakpos[1,i])+'\t'+str(int(map.flag[i]))+'\n')
             f.close()
             break
