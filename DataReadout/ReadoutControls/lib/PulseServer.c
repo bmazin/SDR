@@ -66,6 +66,7 @@ int main(int argc, char* argv[])
     {
         packet_no = 0;
         printf("Waiting for connection...\n");
+        perror("PulseServer is ready ");
 		fflush(stdout);
         client = make_connection(server);
 		printf("Connection made at %f\n",current_time());
@@ -94,7 +95,7 @@ int main(int argc, char* argv[])
                 printf("packet %d ",packet_no);
                 if (send_packet(path_datafile0,path_datafile1,client,first_half_file) < 0 && (errno == ECONNRESET || errno == EPIPE))
                 {
-                    perror("\nTCP connection reset by peer\n");
+                    perror("\nTCP connection reset by peer");
                     printf("\nTCP connection reset by peer\n");
                     fflush(stdout);
                     continue_current_session = 0;
@@ -102,7 +103,7 @@ int main(int argc, char* argv[])
                 }
                 if (errno != 0)
                 {
-                    perror("Error sending\n");
+                    perror("\nError sending ");
                     printf("Error sending, errno=%d\n",errno);
                     fflush(stdout);
                     continue_current_session = 0;
@@ -189,7 +190,7 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
         usleep(100);
         if (need_to_restart() == 1)
         {
-            printf("restartpping in wait\n");
+            printf("restarting in wait\n");
             fflush(stdout);
             return -1;
         }
@@ -385,7 +386,8 @@ int need_to_restart()//Checks for a restart file and returns true if found, else
     }
     else //Stop file exists, restart
     {
-        printf("found restart file %d\n",restartfile);
+        printf("Received Restart signal\n");
+        perror("\nRecieved Restart signal :");
         fflush(stdout);
         return 1;
     }
@@ -409,6 +411,7 @@ int need_to_stop()//Checks for a stop file and returns true if found, else retur
     else //Stop file exists, stop
     {
         printf("found stop file %d\n",stopfile);
+        perror("\nReceived Stop Signal");
         fflush(stdout);
         return 1;
     }

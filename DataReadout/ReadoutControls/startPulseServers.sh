@@ -15,18 +15,15 @@ check_status()
 echo -n "Signalling old PulseServer Processes "
 for i in ${ROACHES[*]}
 do
-    ssh root@10.0.0.1$i "touch ~/PulseServer/stopPulseServer.bin"
-    ssh root@10.0.0.1$i "touch ~/PulseServer/restartPulseServer.bin"
-    ssh root@10.0.0.1$i "rm ~/PulseServer/restartPulseServer.bin"
-    ssh root@10.0.0.1$i "rm ~/PulseServer/stopPulseServer.bin"
+    ssh root@10.0.0.1$i "touch ~/PulseServer/stopPulseServer.bin; touch ~/PulseServer/restartPulseServer.bin; sleep 0.5; rm ~/PulseServer/restartPulseServer.bin; rm ~/PulseServer/stopPulseServer.bin"
     echo -n " ."
 done
+echo " done"
 
 echo -n "Killing any remaining old PulseServer Processes "
 sleep 1
 for i in ${ROACHES[*]}
 do
-	ssh root@10.0.0.1$i "rm ~/PulseServer/stopPulseServer.bin"
 	ssh root@10.0.0.1$i "killall -q PulseServer"
 	echo -n " ."
 done
@@ -54,13 +51,13 @@ do
 done
 echo " done"
 
-echo -n "Starting PulseServer processes "
+echo  "Starting PulseServer processes "
 for i in ${ROACHES[*]}
 do
 	 ssh -n -f root@10.0.0.1$i "cd PulseServer;nohup ./PulseServer > $LOGNAME &"
 	 check_status
-	 echo -n " ."
 done
+sleep 0.5
 echo " done"
 echo "Roaches will save logs in ~/PulseServer/$LOGNAME"
 echo "DONE"

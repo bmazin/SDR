@@ -163,7 +163,7 @@ class StartQt4(QMainWindow):
         #update binning routine's integration time if it is changed during an observation
         QObject.connect(self.ui.int_time_spinBox, SIGNAL("valueChanged(int)"), self.send_params)
         #Connect obs timer and stop button to their functionality of ending observation
-        QObject.connect(self.timer_thread,SIGNAL("timeout()"), self.stop_observation)
+        QObject.connect(self.timer_thread,SIGNAL("timeout()"), self.finish_observation)
         QObject.connect(self.ui.stop_observation_pushButton,SIGNAL("clicked()"), self.stop_observation)
         #Connect sky exposure button to taking sky count image for later sky subtraction
         QObject.connect(self.ui.takesky, SIGNAL("clicked()"), self.take_sky)
@@ -315,8 +315,15 @@ class StartQt4(QMainWindow):
         '''what happens when you click the "stop observation" button.
         will need to clear and reset timer, close and save any data files
         and re-enable directory change and observations'''
+        print "Calling stopPacketMaster.sh"
+        subprocess.Popen("./stopPacketMaster.sh",shell=True)
+        self.finish_observation()
+        
+    def finish_observation(self):
+        '''what happens when you click the "stop observation" button.
+        will need to clear and reset timer, close and save any data files
+        and re-enable directory change and observations'''
         #send message to kill binning thread until next observation
-        #subprocess.Popen("sudo killall PacketMaster",shell=True)
         
         f=open(str(self.bindir)+"/stop.bin", 'wb')
         f.close()
