@@ -15,10 +15,12 @@ check_status()
 echo -n "Signalling old PulseServer Processes "
 for i in ${ROACHES[*]}
 do
-	ssh root@10.0.0.1$i "touch ~/PulseServer/stopPulseServer.bin"
-	echo -n " ."
+    ssh root@10.0.0.1$i "touch ~/PulseServer/stopPulseServer.bin"
+    ssh root@10.0.0.1$i "touch ~/PulseServer/restartPulseServer.bin"
+    ssh root@10.0.0.1$i "rm ~/PulseServer/restartPulseServer.bin"
+    ssh root@10.0.0.1$i "rm ~/PulseServer/stopPulseServer.bin"
+    echo -n " ."
 done
-echo " done"
 
 echo -n "Killing any remaining old PulseServer Processes "
 sleep 1
