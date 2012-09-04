@@ -21,7 +21,8 @@
 
 #define STR_SIZE 100
 #define TIMESTAMPER 0
-#define DEBUG 1
+#define DEBUG 0
+#define SHOW_PROGRESS 1
 
 void construct_path(const char*,int,char*);
 void error(char*);
@@ -31,7 +32,8 @@ int make_connection(int server);
 int start_server();
 int get_process_id();
 int send_packet(char* path_low_order_data,char* path_high_order_data,int client, int first_half_file);
-int check_for_stop();
+int need_to_stop();
+double current_time();
 //void sighandler(int sig);
 
 int main(int argc, char* argv[])
@@ -66,22 +68,25 @@ int main(int argc, char* argv[])
         printf("Waiting for connection...\n");
 		fflush(stdout);
         client = make_connection(server);
-		printf("Connection made\n");
+		printf("Connection made at %f\n",current_time());
 		fflush(stdout);
 
+        toggle_trigger(path_triggerfile,0);
+        usleep(100);
         toggle_trigger(path_triggerfile,1);
         //start_time = wait_for_write_position(path_ptrfile,1,&first_half_file);
         continue_current_session = 1;
 		printf("Waiting for data to send\n");
 		fflush(stdout);
-        if (check_for_stop() == 1)
+        if (need_to_stop() == 1)
         {
             printf("Stopping before checking for data\n");
+            fflush(stdout);
             continue_current_session = 0;
         }
         while (continue_current_session == 1)
         {
-            if (wait_for_write_position(path_ptrfile,0,&first_half_file) < 0)
+            if (wait_for_write_position(path_ptrfile,0,&first_half_file) == -1)
                 continue_current_session = 0;
             if (continue_current_session == 1)
             {
@@ -90,6 +95,7 @@ int main(int argc, char* argv[])
                 {
                     perror("\nTCP connection reset by peer\n");
                     printf("\nTCP connection reset by peer\n");
+                    fflush(stdout);
                     continue_current_session = 0;
                     errno = 0;
                 }
@@ -97,6 +103,7 @@ int main(int argc, char* argv[])
                 {
                     perror("Error sending\n");
                     printf("Error sending, errno=%d\n",errno);
+                    fflush(stdout);
                     continue_current_session = 0;
                     //no_interrupt = 0;
                 }
@@ -109,8 +116,9 @@ int main(int argc, char* argv[])
         close(client);
         client = 0;
         printf("Session closed\n");
-        if (check_for_stop() == 1)
+        if (need_to_stop() == 1)
         {
+            printf("Stopping after session closed\n");
             no_interrupt = 0;
         }
     }
@@ -178,9 +186,10 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
     while (time_to_stop == 0)
     {
         usleep(100);
-        if (check_for_stop() == 1)
+        if (need_to_stop() == 1)
         {
             printf("stoppping in wait\n");
+            fflush(stdout);
             return -1;
         }
         ptrfile = fopen(path_ptrfile,"rb");
@@ -191,7 +200,7 @@ double wait_for_write_position(char* path_ptrfile,int wait_for_start,int* bool_f
         if (fread(&data_writing_ptr,sizeof(uint32_t),1,ptrfile) < 0)
 			error("ERROR reading ptrfile");
         fclose(ptrfile);
-		if (DEBUG == 1 && data_writing_ptr-data_writing_ptr_last > 10)
+		if (SHOW_PROGRESS == 1 && data_writing_ptr-data_writing_ptr_last > 10)
 		{
 			data_writing_ptr_last = data_writing_ptr;
 			printf("Accumulating file %d/8500\n",data_writing_ptr);
@@ -358,19 +367,33 @@ int send_packet(char* path_low_order_data,char* path_high_order_data,int client,
     return N_bytes_sent;
 }
 
-int check_for_stop()//Checks for a stop file and returns true if found, else returns 0
+int need_to_stop()//Checks for a stop file and returns true if found, else returns 0
 {
     char stopfilename[] = "stopPulseServer.bin";
     FILE* stopfile;
     stopfile = fopen(stopfilename,"r");
     if (stopfile == 0) //Don't stop
     {
+        if (DEBUG == 1)
+        {
+            printf("No stop file found\n");
+            fflush(stdout);
+        }
         errno = 0;
         return 0;
     }
     else //Stop file exists, stop
     {
         printf("found stop file %d\n",stopfile);
+        fflush(stdout);
         return 1;
     }
 }
+
+double current_time()
+{
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec+tv.tv_usec*1e-6;
+}
+

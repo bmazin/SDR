@@ -10,6 +10,18 @@ from matplotlib.figure import Figure
 from tables import *
 from lib import iqsweep
 
+
+#Things to update:
+#DONE...make filename_NEW.txt only hold information for channel that is changed
+#DONE...delete resonator (change FIR?)
+#custom set center
+
+
+
+
+
+MAX_ATTEN = 99
+
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
@@ -29,6 +41,7 @@ class AppForm(QMainWindow):
         N_lut_entries = 2**16
         self.freqRes = self.sampleRate/N_lut_entries
         #self.iq_centers = numpy.array([0.+0j]*256)
+        self.customResonators=numpy.array([[0.0,-1]]*256)	#customResonator[ch]=[freq,atten]
         
     def openClient(self):
         self.status_text.setText('connecting...')
@@ -198,7 +211,7 @@ class AppForm(QMainWindow):
         PHASE = 1
         R = 1
         power = 3
-        print "aux Power = 0"
+        #print "aux Power = 0"
         aux_power = 3
         MUX = 3
         LOCK_DETECT = 1
@@ -350,7 +363,7 @@ class AppForm(QMainWindow):
     
     def write_LUTs(self):
         if self.dacStatus == 'off':
-            self.roach.write_int('startDAC', 0)
+            self.roach.write_int('startDAC', 0)		#make sure it's actually off
         else:
             self.toggleDAC()
             
@@ -617,14 +630,35 @@ class AppForm(QMainWindow):
             self.square_DACindicate.setFrameShadow(QtGui.QFrame.Raised)
             self.square_DACindicate.setText('off')       
 
+    def loadCustomAtten(self):
+        freqFile =str(self.textbox_freqFile.text())
+        newFreqFile = freqFile[:-4] + '_NEW.txt'
+        try:
+            y=numpy.loadtxt(newFreqFile)
+            if type(y[0]) == numpy.ndarray:
+                for arr in y:
+                    self.customResonators[int(arr[0])]=arr[1:3]
+            else:
+                self.customResonators[int(y[0])]=y[1:3]
+            print 'Loaded custom resonator freq/atten from',newFreqFile
+        except IOError:
+            pass
 
     def loadFreqsAttens(self):
         f_base = float(self.textbox_loFreq.text())
         freqFile =str(self.textbox_freqFile.text())
+        #print freqFile
+        #newFreqFile = freqFile[:-4] + '_NEW.txt'
+        #print newFreqFile
+        self.loadCustomAtten()
 
         try:
             x = numpy.loadtxt(freqFile) 
             x_string = ''
+            for i in range(len(self.customResonators)):
+                if self.customResonators[i][1]!=-1:
+                    x[i+1,0]=self.customResonators[i][0]
+                    x[i+1,3]=self.customResonators[i][1]
         
             self.previous_scale_factor = x[0,0] 
             N_freqs = len(x[1:,0])
@@ -638,6 +672,8 @@ class AppForm(QMainWindow):
                 self.iq_centers[n] = complex(x[n+1,1], x[n+1,2])
             
             self.attens = x[1:,3]
+            #print 'attens list',self.attens
+            #print self.attens[4]
             self.minimumAttenuation = numpy.array(x[1:,3]).min()
             self.textedit_DACfreqs.setText(x_string)
             print 'Freq/Atten loaded from',freqFile
@@ -657,6 +693,17 @@ class AppForm(QMainWindow):
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
         self.canvas.draw()
+
+        
+        freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
+        freq=freqs[ch]/10**9
+        atten=self.attens[ch]
+        
+        if self.customResonators[ch][1]!=-1:
+            freq=self.customResonators[ch][0]
+            atten=self.customResonators[ch][1]
+        self.textbox_freq.setText(str(freq))
+        self.spinbox_attenuation.setValue(int(atten))
         
     def channelIncDown(self):
         ch = int(self.textbox_channel.text())
@@ -669,6 +716,15 @@ class AppForm(QMainWindow):
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
         self.canvas.draw()
 
+        freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
+        freq=freqs[ch]/10**9
+        atten=self.attens[ch]
+        if self.customResonators[ch][1]!=-1:
+            freq=self.customResonators[ch][0]
+            atten=self.customResonators[ch][1]
+        self.textbox_freq.setText(str(freq))
+        self.spinbox_attenuation.setValue(int(atten))
+
     def changeCenter(self, event):
         I = event.xdata
         Q = event.ydata
@@ -678,6 +734,33 @@ class AppForm(QMainWindow):
         self.iq_centers.imag[ch] = Q
         self.axes1.plot(I, Q, '.')
         self.canvas.draw()
+
+
+    def updateResonator(self,atten=-1):
+        freqFile =str(self.textbox_freqFile.text())
+        freqFile=freqFile[:-4] + '_NEW.txt'
+        ch = int(self.textbox_channel.text())
+        try:
+            
+            f=open(freqFile,'a')
+            if atten == -1:
+                atten=self.spinbox_attenuation.value()
+            freq=float(self.textbox_freq.text())
+            f.write(str(int(ch))+'\t'+str(freq)+'\t'+str(atten)+'\n')
+            f.close()
+
+            self.customResonators[ch]=[freq,atten]
+            print 'ch:',ch,'freq:',freq,'atten:',atten
+        except IOError:
+            print 'IOERROR! Trouble opening',freqFile
+
+
+    def deleteResonator(self):
+        self.updateResonator(MAX_ATTEN)
+        print 'Set attenuation on ch',self.textbox_channel.text(),'really high'
+        #print 'removed resonator by flagging attenuation as -1'
+
+
  
     def create_main_frame(self):
         self.main_frame = QWidget()
@@ -758,13 +841,13 @@ class AppForm(QMainWindow):
         label_powerSweepStop = QLabel('Stop atten:')
 
         # Save directory
-        self.textbox_saveDir = QLineEdit('/home/sean/data/20120827/')
+        self.textbox_saveDir = QLineEdit('/home/sean/data/LICK2012/20120901/r0/')
         self.textbox_saveDir.setMaximumWidth(250)
         label_saveDir = QLabel('Save directory:')
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20120827/ps_freq0.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/LICK2012/20120901/test_freq0.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
@@ -822,6 +905,27 @@ class AppForm(QMainWindow):
         self.textbox_channel.setMaximumWidth(40)
         label_channel = QLabel('Ch:')
         label_channel.setMaximumWidth(50)
+
+        #Spinbox adjustment of Attenuation of current resonater
+        self.spinbox_attenuation = QSpinBox()
+        self.spinbox_attenuation.setMaximum(MAX_ATTEN)
+        label_attenuation = QLabel('Atten:')
+        
+        #textbox for adjusting frequency
+        self.textbox_freq = QLineEdit('0')
+        self.textbox_freq.setMaximumWidth(130)
+        label_freq = QLabel('Freq (GHz):')
+        
+        #button to submit frequency and attenuation changes
+        self.button_updateResonator = QPushButton("Submit")
+        self.button_updateResonator.setMaximumWidth(170)
+        self.connect(self.button_updateResonator, SIGNAL('clicked()'), self.updateResonator)
+ 
+        #button to 'delete' resonator by setting attenuation really high
+        self.button_deleteResonator = QPushButton('Remove Resonator')
+        self.button_deleteResonator.setMaximumWidth(170)
+        self.connect(self.button_deleteResonator, SIGNAL('clicked()'), self.deleteResonator)
+        
         
         # Add widgets to window.
         gbox0 = QVBoxLayout()
@@ -885,9 +989,19 @@ class AppForm(QMainWindow):
         hbox22.addWidget(self.button_channelIncUp)
         gbox2.addLayout(hbox22)
         hbox23 = QHBoxLayout()
-        hbox23.addWidget(self.button_rotateLoops)
-        hbox23.addWidget(self.button_translateLoops)
+        hbox23.addWidget(label_attenuation)
+        hbox23.addWidget(self.spinbox_attenuation)
+        hbox23.addWidget(label_freq)
+        hbox23.addWidget(self.textbox_freq)
+        hbox23.addWidget(self.button_updateResonator)
         gbox2.addLayout(hbox23)
+        hbox24 = QHBoxLayout()
+        hbox24.addWidget(self.button_deleteResonator)
+        gbox2.addLayout(hbox24)
+        hbox25 = QHBoxLayout()
+        hbox25.addWidget(self.button_rotateLoops)
+        hbox25.addWidget(self.button_translateLoops)
+        gbox2.addLayout(hbox25)
  
         hbox = QHBoxLayout()
         hbox.addLayout(gbox0)
@@ -962,7 +1076,7 @@ class AppForm(QMainWindow):
             self.statusBar().showMessage('Saved to %s' % path, 2000)
     
     def on_about(self):
-        msg = """ Message to user goes here.
+        msg = """ I'm cool, but not as cool as High Templar will be
         """
         QMessageBox.about(self, "MKID-ROACH software demo", msg.strip())
 
