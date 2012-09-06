@@ -1664,8 +1664,11 @@ Tune-up</string>
      <property name="text">
       <string>Filter 1</string>
      </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
      <attribute name="buttonGroup">
-      <string>buttonGroup</string>
+      <string>filter_buttonGroup</string>
      </attribute>
     </widget>
     <widget class="QRadioButton" name="filter2">
@@ -1680,8 +1683,11 @@ Tune-up</string>
      <property name="text">
       <string>Filter 2</string>
      </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
      <attribute name="buttonGroup">
-      <string>buttonGroup</string>
+      <string>filter_buttonGroup</string>
      </attribute>
     </widget>
     <widget class="QRadioButton" name="filter3">
@@ -1696,8 +1702,11 @@ Tune-up</string>
      <property name="text">
       <string>Filter 3</string>
      </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
      <attribute name="buttonGroup">
-      <string>buttonGroup</string>
+      <string>filter_buttonGroup</string>
      </attribute>
     </widget>
     <widget class="QRadioButton" name="filter4">
@@ -1712,8 +1721,11 @@ Tune-up</string>
      <property name="text">
       <string>Filter 4</string>
      </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
      <attribute name="buttonGroup">
-      <string>buttonGroup</string>
+      <string>filter_buttonGroup</string>
      </attribute>
     </widget>
     <widget class="QRadioButton" name="filter5">
@@ -1728,8 +1740,11 @@ Tune-up</string>
      <property name="text">
       <string>Filter 5</string>
      </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
      <attribute name="buttonGroup">
-      <string>buttonGroup</string>
+      <string>filter_buttonGroup</string>
      </attribute>
     </widget>
     <widget class="QRadioButton" name="filter6">
@@ -1744,8 +1759,14 @@ Tune-up</string>
      <property name="text">
       <string>Filter 6</string>
      </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <property name="autoExclusive">
+      <bool>false</bool>
+     </property>
      <attribute name="buttonGroup">
-      <string>buttonGroup</string>
+      <string>filter_buttonGroup</string>
      </attribute>
     </widget>
    </widget>
@@ -1862,6 +1883,6 @@ Tune-up</string>
  </connections>
  <buttongroups>
   <buttongroup name="mode_buttonGroup"/>
-  <buttongroup name="buttonGroup"/>
+  <buttongroup name="filter_buttonGroup"/>
  </buttongroups>
 </ui>
