@@ -63,6 +63,9 @@ filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
 filters = ['I-band','KG5','Open','405','546','Closed']
 
+#path to labjack routines
+ljpath = '/home/sean/SDR/DataReadout/ReadoutControls/lib/LabJackPython-8-26-2011/src/'
+
 class StartQt4(QMainWindow):
     def __init__(self,parent=None):
         QWidget.__init__(self, parent)
@@ -105,7 +108,7 @@ class StartQt4(QMainWindow):
         self.pix_select_mode = "rect"
         self.sky_subtraction = False
         self.taking_sky = False
-
+        self.calibrating = False
         #default beammap file, can be updated in gui with browse button
         self.beammapfile = os.environ['BEAMMAP_PATH']#"beamimage.h5"
 
@@ -159,6 +162,8 @@ class StartQt4(QMainWindow):
         QObject.connect(self.ui.choose_beamimage, SIGNAL("clicked()"), self.choose_beamimage)
         QObject.connect(self.ui.choose_bindir, SIGNAL("clicked()"), self.choose_bindir)
         
+        QObject.connect(self.ui.laser_toggle, SIGNAL("clicked(bool)"), self.toggle_laser)
+
         QObject.connect(self.ui.start_observation_pushButton, SIGNAL("clicked()"), self.start_observation)
         #update binning routine's integration time if it is changed during an observation
         QObject.connect(self.ui.int_time_spinBox, SIGNAL("valueChanged(int)"), self.send_params)
@@ -167,17 +172,22 @@ class StartQt4(QMainWindow):
         QObject.connect(self.ui.stop_observation_pushButton,SIGNAL("clicked()"), self.stop_observation)
         #Connect sky exposure button to taking sky count image for later sky subtraction
         QObject.connect(self.ui.takesky, SIGNAL("clicked()"), self.take_sky)
+        #Connect filter wheel movement
         QObject.connect(self.ui.filterpos_spinbox, SIGNAL("valueChanged(int)"), self.movefilter)
+        #Connect button to update description in header
         QObject.connect(self.ui.update_description, SIGNAL("clicked()"), self.update_description)
-        
+        #Connect calibration arm functions
+        QObject.connect(self.ui.do_cal_button, SIGNAL("clicked()"), self.do_cal)
+        QObject.connect(self.ui.go_home_button, SIGNAL("clicked()"), self.go_home)
+        QObject.connect(self.ui.goto_button, SIGNAL("clicked()"), self.goto_angle)
         
         #create timers to update images and statuses constantly
         self.status_timer = QTimer()
         QObject.connect(self.status_timer,SIGNAL("timeout()"),self.update_status)
         self.status_timer.start(1000)
         self.update_timer = QTimer()
-        QObject.connect(self.update_timer,SIGNAL("timeout()"),self.update_image)
-        self.update_timer.start(100)
+        QObject.connect(self.update_timer,SIGNAL("timeout()"),self.update_remaining_time)
+        self.update_timer.start(200)
         
         #create timer to poll path for changes to org file
         self.stattime = 0 #bin file creation time that is checked by check_files
@@ -190,14 +200,47 @@ class StartQt4(QMainWindow):
         
     #def start_image_thread(self):
         #self.image_thread.start_images(self.bindir)        
+
+    def toggle_laser(self):
+        if self.ui.laser_toggle.isChecked():
+            laseronproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s"%(ljpath,'on'),shell=True)
+            laseronproc.wait()
+            self.ui.laser_label.setText("ON")
+        else:
+            laseroffproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s"%(ljpath,'off'),shell=True)
+            laseroffproc.wait()
+            self.ui.laser_label.setText("OFF")
+
+    def go_home(self):
+        homeproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoHome.py"%(ljpath),shell=True)
+        homeproc.wait()
+        print "Moved calibration arm to HOME"
     
+    def goto_angle(self):
+        angle = self.ui.goto_angle.value()
+        angleproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoToAngle.py %f"%(ljpath,angle),shell=True)
+        angleproc.wait()
+        print "Moved calibration arm to angle %i"%(angle)
+    
+    def do_cal(self):
+        caltime = self.ui.cal_time.value()
+        calangle = self.ui.cal_angle.value()
+        print "Running calibration observation for %i seconds"%(caltime)
+        self.calibrating = True
+        calproc = subprocess.Popen("sudo nice -n -5 python %smirrorServo.py %f %i"%(ljpath,calangle,caltime),shell=True)
+        self.ui.laser_label.setText("ON")
+        self.ui.laser_toggle.setChecked(True)
+        self.start_observation()
+        #calproc.wait()
+        #print "FINISHED CALIBRATION"
+
     def checkfilter(self):
         if not isfile(self.filterfile):
             msgbox = QMessageBox()
-            msgbox.setText("No filter position saved to file.\nMOVE FILTER WHEEL TO POSITION 1 BEFORE CONTINUING")
+            msgbox.setText("No filter position saved to file.\nMOVE FILTER WHEEL TO POSITION 6 (DARK) BEFORE CONTINUING")
             msgbox.exec_()
-            self.filterposition = 1
-            self.ui.filterpos_spinbox.setValue(1)
+            self.filterposition = 6
+            self.ui.filterpos_spinbox.setValue(6)
             f=open(str(self.filterfile),'w') #put file where dataBin is running
             f.write(str(self.filterposition)+' '+str(filters[self.filterposition-1]))
             f.close()
@@ -219,7 +262,7 @@ class StartQt4(QMainWindow):
                 self.filterposition +=1
                 if self.filterposition == 7:
                     self.filterposition = 1
-                filtproc = subprocess.Popen("sudo nice -n -10 python lib/SignalFilterWheel.py",shell=True)
+                filtproc = subprocess.Popen("sudo nice -n -5 python %sSignalFilterWheel.py"%(ljpath),shell=True)
                 filtproc.wait()
                 time.sleep(1) #wait 1 second for filter to complete move.  Should not send more than 1 signal every 2 seconds.
                 #sent bnc signal to filter
@@ -268,7 +311,10 @@ class StartQt4(QMainWindow):
         '''we will want this function to activate the saving of data.  will need to name,
         open, and begin writing to file.  also activate observation timer if a
         time is given.'''
-        self.exptime = self.ui.obs_time_spinBox.value()
+        if self.calibrating == True:
+            self.exptime = self.ui.cal_time.value()
+        else:
+            self.exptime = self.ui.obs_time_spinBox.value()
         if self.exptime == 0:
             print "Please enter a desired observation time in seconds"
         else:        
@@ -283,7 +329,10 @@ class StartQt4(QMainWindow):
             self.ui.start_observation_pushButton.setEnabled(False)
             self.ui.obs_time_spinBox.setEnabled(False)
             #call headerGen and give it telescope status/file info
-            basename = "obs_"
+            if self.calibrating == True:
+                basename = "cal_"
+            else:
+                basename = "obs_"
             targname = str(self.ui.target_lineEdit.text())
             self.int_time = self.ui.int_time_spinBox.value()
             self.start_time = int(floor(time.time()))
@@ -293,13 +342,14 @@ class StartQt4(QMainWindow):
             #convert ra and dec from ra:ra:ra, dec:dec:dec to floats
             self.dec = float(ephem.degrees(self.dec))
             self.ra = float(ephem.hours(self.ra))
+            filthead = str(filters[self.filterposition-1])
             self.obsname = basename+time.strftime("%Y%m%d-%H%M%S", time.localtime(self.start_time))
             self.obsfile = str(self.obsname) + '.h5'
             logfile = 'logs/'+str(self.obsname)+'.log'
             self.ui.file_name_lineEdit.setText(str(self.obsfile))
             if os.path.exists(self.bindir) == False:
                 os.mkdir(self.bindir)
-            HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
+            HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,filthead,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
             proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
             proc.wait()
             self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s > %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
@@ -339,6 +389,11 @@ class StartQt4(QMainWindow):
         if self.timer_thread.isRunning():
             self.timer_thread.stop()
         #self.image_thread.reset()
+        if self.calibrating == True:
+            print "FINISHED CALIBRATION"
+            self.ui.laser_label.setText("OFF")
+            self.ui.laser_toggle.setChecked(False)
+            self.calibrating = False
     
     def update_description(self):
         #updates the description section in the header info with whatever is in the description box on the dashboard. Activated by clicking "update description" button after data taking is complete.
@@ -486,6 +541,7 @@ class StartQt4(QMainWindow):
         plt.savefig("Arcons_frame.png", pad_inches=0)
         print "Generated image ",tf
         self.image_time+=1
+        self.update_image()
         if self.taking_sky == True:
             if self.image_time == self.skytime:
                 self.taking_sky = False
@@ -674,8 +730,9 @@ class StartQt4(QMainWindow):
             #self.image_thread.update_spectrum(self.bindir)
             if hasattr(self, 'image_time'):
                 self.display_timestream()
+                self.display_image()
             else:
-                print "'StartQt4' object has no attribute 'image_time'"
+                print "'StartQt4' object has no attribute 'image_time'; cannot make plot"
 
 
     def display_timestream(self):
@@ -940,15 +997,17 @@ class StartQt4(QMainWindow):
         self.set_telescope_status()
         
     def update_image(self):
-        self.display_image()
-        if len(self.spectrum_pixel_x) != 0:
-            if hasattr(self, 'image_time'):
-                self.display_timestream()
-            #else:
-                #print "'StartQt4' object has no attribute 'image_time'"
-        #if self.image_thread.spectrum_pixel != None:
-            #self.display_spectra()
-        self.update_remaining_time()
+        if self.image_time == self.exptime:
+            pass
+        else:            self.display_image()
+            if len(self.spectrum_pixel_x) != 0:
+                if hasattr(self, 'image_time'):
+                    self.display_timestream()
+                #else:
+            	    #print "'StartQt4' object has no attribute 'image_time'"
+            #if self.image_thread.spectrum_pixel != None:
+        	    #self.display_spectra()
+            #self.update_remaining_time()
         
     def check_files(self):
         #if self.observing == True:
