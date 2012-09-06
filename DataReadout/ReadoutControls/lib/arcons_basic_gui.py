@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'arcons_basic_gui.ui'
 #
-# Created: Wed Sep 05 17:17:58 2012
+# Created: Wed Sep 05 18:16:04 2012
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -520,15 +520,15 @@ class Ui_arcons(object):
         self.label_37.setGeometry(QtCore.QRect(90, 220, 62, 17))
         self.label_37.setObjectName(_fromUtf8("label_37"))
         self.label_38 = QtGui.QLabel(self.frame_7)
-        self.label_38.setGeometry(QtCore.QRect(20, 150, 51, 31))
+        self.label_38.setGeometry(QtCore.QRect(20, 160, 51, 21))
         font = QtGui.QFont()
-        font.setPointSize(11)
+        font.setPointSize(10)
         self.label_38.setFont(font)
         self.label_38.setObjectName(_fromUtf8("label_38"))
         self.label_39 = QtGui.QLabel(self.frame_7)
-        self.label_39.setGeometry(QtCore.QRect(90, 150, 61, 31))
+        self.label_39.setGeometry(QtCore.QRect(90, 160, 61, 21))
         font = QtGui.QFont()
-        font.setPointSize(11)
+        font.setPointSize(10)
         self.label_39.setFont(font)
         self.label_39.setObjectName(_fromUtf8("label_39"))
         self.do_cal_button = QtGui.QPushButton(self.frame_7)
