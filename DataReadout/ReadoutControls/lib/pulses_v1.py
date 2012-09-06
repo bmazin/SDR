@@ -77,6 +77,7 @@ class ObsHeader(IsDescription):
     instrument = StringCol(80)
     description = StringCol(400)
     telescope = StringCol(80)
+    filt = StringCol(80)
     focus = StringCol(80)
     parallactic = Float64Col()
     ra = Float64Col()

@@ -42,7 +42,7 @@ def BeamImage(obsfile, beammapfile, timestamp):
     carray = ca.read() 
     h5file.close()
 
-def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,dir="./",target="Target",equinox=2000.0,epoch=2011.0,focus=np.nan, parallactic=np.nan):
+def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,passedfilt,dir="./",target="Target",equinox=2000.0,epoch=2011.0,focus=np.nan, parallactic=np.nan):
     #lt = time.time() #passed in call to HeaderGen
     dt = datetime.datetime.utcfromtimestamp(lt)
           
@@ -56,7 +56,8 @@ def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,dir="./"
     w['beammapfile'] = beammapfile #passed in call to HeaderGen
     w['version'] = 'ARCONS Observation v2.0'
     w['instrument'] = 'ARCONS v2.0 - 2024 pixel (46x44) array, 8 ROACH readout.'
-    w['description'] = '' 
+    w['description'] = ''
+    w['filt'] = passedfilt
     
     w['telescope'] = 'Lick 36 inch Shane Telescope'
     
