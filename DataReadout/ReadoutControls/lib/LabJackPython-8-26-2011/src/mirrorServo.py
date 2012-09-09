@@ -30,6 +30,7 @@ center = 0.62891 # corresponds to 1.52ms "on"/high
 rangeOfServo = 145.  # degrees
 maxTime = 5. * 60.   # 5 minutes
 
+
 if (len(sys.argv) < 3):
     print "Syntax is:  >>> python mirrorServo.py <angle [degrees]> <time [s]>"
     sys.exit(1)
@@ -45,6 +46,15 @@ if (angleReq < 0.):
 
 dutyReq = ((endpt-home)/rangeOfServo)*angleReq + home
 #print dutyReq
+
+
+#**************hardcoding "home" which may *****************************
+#      not = 0 depending on telescope config => fix!!!
+
+newhomeang = 40
+newhomeReq = ((endpt-home)/rangeOfServo)*newhomeang + home
+home = newhomeReq
+
 
 waitTime = 1
 calObsTime = float(sys.argv[2])
