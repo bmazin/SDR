@@ -141,12 +141,12 @@ class StartQt4(QMainWindow):
         self.ui.tv_image.mouseReleaseEvent = self.end_pixel_select
         
         #Label filters
-        self.ui.filt1label.setText("1) "+str(filters[0]))
-        self.ui.filt2label.setText("2) "+str(filters[1]))
-        self.ui.filt3label.setText("3) "+str(filters[2]))
-        self.ui.filt4label.setText("4) "+str(filters[3]))
-        self.ui.filt5label.setText("5) "+str(filters[4]))
-        self.ui.filt6label.setText("6) "+str(filters[5]))
+        self.ui.filter1.setText("1) "+str(filters[0]))
+        self.ui.filter2.setText("2) "+str(filters[1]))
+        self.ui.filter3.setText("3) "+str(filters[2]))
+        self.ui.filter4.setText("4) "+str(filters[3]))
+        self.ui.filter5.setText("5) "+str(filters[4]))
+        self.ui.filter6.setText("6) "+str(filters[5]))
         
         #signal from image thread to make spectrum
         #QObject.connect(self.image_thread,SIGNAL("new_spectrum"),self.display_spectra)
@@ -173,7 +173,7 @@ class StartQt4(QMainWindow):
         #Connect sky exposure button to taking sky count image for later sky subtraction
         QObject.connect(self.ui.takesky, SIGNAL("clicked()"), self.take_sky)
         #Connect filter wheel movement
-        QObject.connect(self.ui.filterpos_spinbox, SIGNAL("valueChanged(int)"), self.movefilter)
+        QObject.connect(self.ui.filter_buttonGroup, SIGNAL("buttonClicked(int)"), self.movefilter)
         #Connect button to update description in header
         QObject.connect(self.ui.update_description, SIGNAL("clicked()"), self.update_description)
         #Connect calibration arm functions
@@ -240,7 +240,7 @@ class StartQt4(QMainWindow):
             msgbox.setText("No filter position saved to file.\nMOVE FILTER WHEEL TO POSITION 6 (DARK) BEFORE CONTINUING")
             msgbox.exec_()
             self.filterposition = 6
-            self.ui.filterpos_spinbox.setValue(6)
+            self.ui.filter6.setChecked(True)
             f=open(str(self.filterfile),'w') #put file where dataBin is running
             f.write(str(self.filterposition)+' '+str(filters[self.filterposition-1]))
             f.close()
@@ -251,10 +251,33 @@ class StartQt4(QMainWindow):
             self.filterposition = int(self.filterposition)
             f.close()
             print "Filter at position " + str(self.filterposition) + " ("+str(self.startfilter)+") on startup."
-            self.ui.filterpos_spinbox.setValue(self.filterposition)
+            if self.filterposition == 1:
+                self.ui.filter1.setChecked(True)
+            elif self.filterposition == 2:
+                self.ui.filter2.setChecked(True)
+            elif self.filterposition == 3:
+                self.ui.filter3.setChecked(True)
+            elif self.filterposition == 4:
+                self.ui.filter4.setChecked(True)
+            elif self.filterposition == 5:
+                self.ui.filter5.setChecked(True)
+            elif self.filterposition == 6:
+                self.ui.filter6.setChecked(True)
     
     def movefilter(self):
-        moveto = int(self.ui.filterpos_spinbox.value()) #input from gui
+        if self.ui.filter1.isChecked():
+            moveto = 1
+        elif self.ui.filter2.isChecked():
+            moveto = 2
+        elif self.ui.filter3.isChecked():
+            moveto = 3
+        elif self.ui.filter4.isChecked():
+            moveto = 4
+        elif self.ui.filter5.isChecked():
+            moveto = 5
+        elif self.ui.filter6.isChecked():
+            moveto = 6
+        #moveto = int(self.ui.filterpos_spinbox.value()) #input from gui
         if moveto < 1 or moveto >6:
             print "Please select filter position between 1 and 6"
         else:
@@ -523,20 +546,24 @@ class StartQt4(QMainWindow):
         if self.sky_subtraction == True:
             image_counts = image_counts-reshape(self.skyrate*(tf-ti),(1,self.nxpix*self.nypix))
 
-        indices = sort(image_counts)
-        
-        brightest = self.ui.brightpix.value()
-        self.vmax = indices[0,-1*(brightest)]
-
         photon_count = reshape(image_counts,rawshape)
         #print photon_count.shape
         photon_count = flipud(photon_count)
         #photon_count = rot90(photon_count)
         #photon_count = rot90(photon_count)
         #photon_count = rot90(photon_count)
+
+        if self.ui.contrast_mode.isChecked():
+            self.vmin = self.ui.vmin.value()
+            self.vmax = self.ui.vmax.value()
+        else:
+            indices = sort(image_counts)
+            brightest = self.ui.brightpix.value()
+            self.vmin = 0
+            self.vmax = indices[0,-1*(brightest)]
         
         fig = plt.figure(figsize=(.44,.46), dpi=100, frameon=False)
-        im = plt.figimage(photon_count, cmap='gray', vmax = self.vmax)
+        im = plt.figimage(photon_count, cmap='gray',vmin = self.vmin, vmax = self.vmax)
         #im = plt.figimage(rawdata, cmap='gray')
         plt.savefig("Arcons_frame.png", pad_inches=0)
         print "Generated image ",tf
