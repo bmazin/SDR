@@ -61,7 +61,7 @@ numYPixel = 46
 observatory = "Lick"
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
-filters = ['I-band','KG5','Open','405','546','Closed']
+filters = ['V-band','R-band','Open','405','546','Closed']
 
 #path to labjack routines
 ljpath = '/home/sean/SDR/DataReadout/ReadoutControls/lib/LabJackPython-8-26-2011/src/'
