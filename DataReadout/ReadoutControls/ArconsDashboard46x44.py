@@ -366,7 +366,7 @@ class StartQt4(QMainWindow):
             self.dec = float(ephem.degrees(self.dec))
             self.ra = float(ephem.hours(self.ra))
             filthead = str(filters[self.filterposition-1])
-            self.obsname = basename+time.strftime("%Y%m%d-%H%M%S", time.localtime(self.start_time))
+            self.obsname = basename+time.strftime("%Y%m%d-%H%M%S", time.gmtime(self.start_time))
             self.obsfile = str(self.obsname) + '.h5'
             logfile = 'logs/'+str(self.obsname)+'.log'
             self.ui.file_name_lineEdit.setText(str(self.obsfile))
@@ -564,6 +564,13 @@ class StartQt4(QMainWindow):
         
         fig = plt.figure(figsize=(.44,.46), dpi=100, frameon=False)
         im = plt.figimage(photon_count, cmap='gray',vmin = self.vmin, vmax = self.vmax)
+        
+        if tf==ti:
+            self.redpix = where(photon_count > 2000)
+        else:
+            self.redpix = where(photon_count > 2000*(tf-ti))
+        #print self.redpix               
+
         #im = plt.figimage(rawdata, cmap='gray')
         plt.savefig("Arcons_frame.png", pad_inches=0)
         print "Generated image ",tf
@@ -595,6 +602,11 @@ class StartQt4(QMainWindow):
             #display pixmap
             self.scene = QGraphicsScene()
             self.scene.addPixmap(pix)
+            if len(self.redpix)> 0:  
+                for i in xrange(len(self.redpix[0])):
+                    x = self.redpix[1][i]
+                    y = self.redpix[0][i]
+                    self.scene.addRect(10*(x),10*(y),9,9, Qt.red, Qt.red) #make 'hot' pixels red
             for i in xrange(len(self.bad_pix_x)):
                 x = self.bad_pix_x[i]
                 y = self.bad_pix_y[i]
