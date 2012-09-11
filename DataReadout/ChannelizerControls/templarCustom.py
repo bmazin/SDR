@@ -380,7 +380,8 @@ class AppForm(QMainWindow):
             q_dds_1 = struct.pack('>h', self.Q_dds[2*n+1])
             binaryData = binaryData + q_dds_1 + q_dds_0 + q_dac_1 + q_dac_0 + i_dds_1 + i_dds_0 + i_dac_1 + i_dac_0
         self.roach.write('dram_memory', binaryData)
-        
+
+
         # Write LUTs to file.
         saveDir = str(self.textbox_saveDir.text())
         f = open(saveDir + 'luts.dat', 'w')
@@ -490,7 +491,7 @@ class AppForm(QMainWindow):
     def sweepLOready(self):
         atten_in = float(self.textbox_atten_in.text())
         saveDir = str(self.textbox_saveDir.text())
-        savefile = saveDir + 'ps_' + time.strftime("%Y%m%d-%H%M%S",time.localtime()) + '.h5'
+        savefile = saveDir + 'ps_' + time.strftime("%Y%m%d-%H%M%S",time.localtime()) + str(self.textbox_roachIP.text())+'.h5'
         dac_freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
         self.N_freqs = len(dac_freqs)
         f_base = float(self.textbox_loFreq.text())
@@ -590,7 +591,7 @@ class AppForm(QMainWindow):
                 w.Qsd = Q_std[n*steps:(n+1)*steps]
                 w.time = time.time()
                 w.savenoise = 0
-                w.Save(savefile,'r0', 'a')
+                #w.Save(savefile,'r0', 'a')
             
             
         self.axes0.clear()
@@ -634,9 +635,10 @@ class AppForm(QMainWindow):
     def loadCustomAtten(self):
         freqFile =str(self.textbox_freqFile.text())
         newFreqFile = freqFile[:-4] + '_NEW.txt'
+        self.customResonators=numpy.array([[0.0,-1]]*256)
         try:
             y=numpy.loadtxt(newFreqFile)
-            self.customResonators=numpy.array([[0.0,-1]]*256)
+            #self.customResonators=numpy.array([[0.0,-1]]*256)
             if type(y[0]) == numpy.ndarray:
                 for arr in y:
                     self.customResonators[int(arr[0])]=arr[1:3]
@@ -828,6 +830,8 @@ class AppForm(QMainWindow):
         label_offset = QLabel('DAC sync. lag:')
 
         # offset in lut
+        #self.textbox_dds_shift = QLineEdit('140')	#chan_512_packet_2012_Aug_20_1207.bof
+        #self.textbox_dds_shift = QLineEdit('149')	#chan_512_nodead_2012_Sep_05_1346.bof
         #self.textbox_dds_shift = QLineEdit('147')	#chan_if_acc_x_2011_Aug_02_0713.bof
         #self.textbox_dds_shift = QLineEdit('153')	#chan_dtrig_2012_Aug_28_1204.bof
         self.textbox_dds_shift = QLineEdit('151')       #chan_dtrig_v2_2012_Aug_28_1956.bof
@@ -843,13 +847,13 @@ class AppForm(QMainWindow):
         label_powerSweepStop = QLabel('Stop atten:')
 
         # Save directory
-        self.textbox_saveDir = QLineEdit('/home/sean/data/LICK2012/20120903/')
+        self.textbox_saveDir = QLineEdit('/home/sean/data/LICK2012/20120905/')
         self.textbox_saveDir.setMaximumWidth(250)
         label_saveDir = QLabel('Save directory:')
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/LICK2012/20120903/ps_freq0.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/LICK2012/20120905/ps_freq0.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
