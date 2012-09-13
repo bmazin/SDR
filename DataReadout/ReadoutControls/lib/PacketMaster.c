@@ -1008,7 +1008,7 @@ void write_obstime(char* obs_filepath,double obs_time)
     {        fprintf(stderr,"Error opening obs file %s",obs_filepath);
         error("");
     }
-    status = H5TBwrite_fields_name(obs_file,"/header/header","ut",write_start,write_nrecords,sizeof(double),write_offset,obstime_sizes,&obs_time);
+    status = H5TBwrite_fields_name(obs_file,"/header/header","unixtime",write_start,write_nrecords,sizeof(double),write_offset,obstime_sizes,&obs_time);
     if (status < 0)
         error("Error writing ut to obs file header");
     status = H5Fclose(obs_file);
