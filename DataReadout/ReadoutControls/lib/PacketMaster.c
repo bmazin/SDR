@@ -45,7 +45,7 @@
 
 //change number of roaches here and adjust hostnames in connect_to_roach()
 #define NROACHES 8
-//The number of channels or pixels corresponding to each roach
+//The number of pixels in a beammap corresponding to each roach
 #define NPIXELS_PER_ROACH 253
 //max number of possible photon counts in a second of data for a pixel 
 #define MAX_EVENTS_PER_SEC 2500
@@ -349,13 +349,18 @@ int main(int argc, char *argv[])
                         //add photon to table, increment photon counts
                         //the old number of photons for this pixel plist[ready_roach][adr]
                         //is the index where this photon must go
-                        photon_index = plist[ready_roach][adr];
-                        photons[ready_roach][adr][photon_index] = packet;
-                        if (plist[ready_roach][adr] < (MAX_EVENTS_PER_SEC - 1))
+                        if (adr < NPIXELS_PER_ROACH)
                         {
+                            photon_index = plist[ready_roach][adr];
+                            photons[ready_roach][adr][photon_index] = packet;
                             ++plist[ready_roach][adr];
                             absolute_pixel_adr = ready_roach*NPIXELS_PER_ROACH+adr;
                             ++photon_counts[sec[ready_roach]][absolute_pixel_adr];
+                        }
+                        else
+                        {
+                            printf("Photon from non-pixel, roach: %d, adr:%d, packet:%llx\n",ready_roach,adr,packet);
+                            perror("Photon from non-pixel channel!");
                         }
                     }
                 }
