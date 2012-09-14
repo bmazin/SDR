@@ -45,7 +45,7 @@
 
 //change number of roaches here and adjust hostnames in connect_to_roach()
 #define NROACHES 8
-//The number of pixels in a beammap corresponding to each roach
+//The number of channels or pixels corresponding to each roach
 #define NPIXELS_PER_ROACH 253
 //max number of possible photon counts in a second of data for a pixel 
 #define MAX_EVENTS_PER_SEC 2500
@@ -280,7 +280,7 @@ int main(int argc, char *argv[])
             time_between_packets = current- old_current_time;
             relative_time = current-start_time; 
 
-            printf("packet %d %llu, pixel %d roach %d took %.3f total, %.3f to read, at %.3f %.3f\n",roach_counts[ready_roach],packet ,adr,ready_roach,time_between_packets,time_diff,relative_time,current_time);
+            printf("bundle %d starting with %llu, pixel %d roach %d took %.3f total, %.3f to read, at %.3f %.3f\n",roach_counts[ready_roach],packet ,adr,ready_roach,time_between_packets,time_diff,relative_time,current_time);
             old_current_time = current;
     
             // extract data from packet
@@ -306,8 +306,6 @@ int main(int argc, char *argv[])
 //              {
 //                  printf("********************************************\n");
 //              }
-                if (packet != (uint64_t)(-1))
-                    old_packet[ready_roach] = packet;   
                 //packet = (((uint64_t) p1[j])<<32) | (uint64_t) p0[j];
 
                 if (sec[ready_roach] < exptime)
@@ -323,11 +321,11 @@ int main(int argc, char *argv[])
                             usleep(1);
                             rtrn_status = sem_wait(h5file_mutex);
                             usleep(1);
-                            time_marker=current_time();
+                            //time_marker=current_time();
                             write_sec_data(obs_filepath,pixel_dataset_name,sec,ready_roach,plist,photons,photon_counts,pixel_adr,exptime);
 
                             sem_post(h5file_mutex);
-                            printf("time to write for sec %d for roach %d: %.3f s at %.3f\n",sec[ready_roach],ready_roach,current_time()-time_marker);
+                            //printf("time to write for sec %d for roach %d: %.3f s at %.3f\n",sec[ready_roach],ready_roach,current_time()-time_marker);
                             _exit(0);//Exit the data writing child created by fork
                         }
                         //reset counts
@@ -346,24 +344,31 @@ int main(int argc, char *argv[])
                     else
                     {
                         adr = ntohl(high_order_block[j])>>24;
-                        //add photon to table, increment photon counts
-                        //the old number of photons for this pixel plist[ready_roach][adr]
-                        //is the index where this photon must go
                         if (adr < NPIXELS_PER_ROACH)
                         {
                             photon_index = plist[ready_roach][adr];
                             photons[ready_roach][adr][photon_index] = packet;
-                            ++plist[ready_roach][adr];
-                            absolute_pixel_adr = ready_roach*NPIXELS_PER_ROACH+adr;
-                            ++photon_counts[sec[ready_roach]][absolute_pixel_adr];
+                            if (plist[ready_roach][adr] < (MAX_EVENTS_PER_SEC - 1))
+                            {
+                                ++plist[ready_roach][adr];
+                                absolute_pixel_adr = ready_roach*NPIXELS_PER_ROACH+adr;
+                                ++photon_counts[sec[ready_roach]][absolute_pixel_adr];
+                            }
                         }
                         else
                         {
-                            printf("Photon from non-pixel, roach: %d, adr:%d, packet:%llx\n",ready_roach,adr,packet);
+                            printf("Photon from non-pixel, time: %f, roach: %d, adr:%d, last_packet:%llx, packet:%llx\n",current_time(),ready_roach,adr,old_packet[ready_roach],packet);
                             perror("Photon from non-pixel channel!");
                         }
+                        //add photon to table, increment photon counts
+                        //the old number of photons for this pixel plist[ready_roach][adr]
+                        //is the index where this photon must go
+                        
                     }
                 }
+
+                if (packet != (uint64_t)(-1))
+                    old_packet[ready_roach] = packet;   
     
             }
             
