@@ -19,11 +19,16 @@ check_status()
     return 0
 }
 
-echo -n "Signalling old PulseServer Processes "
+stopOnePulseServer()
+{
+    ssh root@10.0.0.1$1 "touch ~/PulseServer/restartPulseServer.bin; sleep 0.5; rm ~/PulseServer/restartPulseServer.bin"
+    echo " $1"
+}
+
+echo  "Signalling old PulseServer Processes "
 for i in ${ROACHES[*]}
 do
-	ssh root@10.0.0.1$i "touch ~/PulseServer/restartPulseServer.bin; sleep 0.5; rm ~/PulseServer/restartPulseServer.bin"
-	echo -n " ."
+    stopOnePulseServer $i &
 done
-echo " DONE"
+
 
