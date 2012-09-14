@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'arcons_basic_gui.ui'
 #
-# Created: Fri Sep 14 05:06:22 2012
+# Created: Fri Sep 14 05:34:13 2012
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -389,7 +389,7 @@ class Ui_arcons(object):
         self.update_description.setGeometry(QtCore.QRect(10, 360, 141, 31))
         self.update_description.setObjectName(_fromUtf8("update_description"))
         self.continuous = QtGui.QCheckBox(self.frame_3)
-        self.continuous.setGeometry(QtCore.QRect(20, 130, 341, 41))
+        self.continuous.setGeometry(QtCore.QRect(20, 130, 181, 41))
         self.continuous.setObjectName(_fromUtf8("continuous"))
         self.frame_4 = QtGui.QFrame(self.centralwidget)
         self.frame_4.setGeometry(QtCore.QRect(390, 180, 471, 491))
