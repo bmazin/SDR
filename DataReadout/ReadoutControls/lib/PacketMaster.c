@@ -287,6 +287,7 @@ int main(int argc, char *argv[])
             for (j=0; j < BUFSIZE_INTS; j++) 
             {
                 packet = (((uint64_t) ntohl(high_order_block[j]))<<32) | (uint64_t) ntohl(low_order_block[j]);
+                adr = ntohl(high_order_block[j])>>24;
                 //When the roaches are running timestamp.bof, the following can be used to check if all packets get through
                 if (TIMESTAMPER == 1)
                 {
@@ -310,8 +311,13 @@ int main(int argc, char *argv[])
 
                 if (sec[ready_roach] < exptime)
                 {
-                    if (packet == (uint64_t)(-1))
+                    if (adr == 255)
                     {   
+                        if (packet != (uint64_t)(-1))
+                        {
+                            printf("Corrupted EOS!, time: %f, roach: %d, sec: %d, packet:%llx\n",current_time(),ready_roach,sec[ready_roach],packet);
+                            perror("Corrupted EOS!");
+                        }
                         printf("second %d of %d for roach %d at %.3f \n",sec[ready_roach],exptime-1,ready_roach,current_time());
                         if (errno != 0)
                             error("Error before forking");
@@ -343,7 +349,6 @@ int main(int argc, char *argv[])
                     }
                     else
                     {
-                        adr = ntohl(high_order_block[j])>>24;
                         if (adr < NPIXELS_PER_ROACH)
                         {
                             photon_index = plist[ready_roach][adr];
