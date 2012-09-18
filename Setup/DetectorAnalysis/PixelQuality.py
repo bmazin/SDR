@@ -10,7 +10,7 @@ from PixelQualityfunc import *
 
 closefcutoff=.0007   #when the program compares the approximate freq in frequency files to the accurate frequency in the fit file, it will accept a difference of the closefcutoff (GHz)
 
-bmaptitle='/home/sean/data/20120828/beam/beamimage2.h5'
+bmaptitle='/media/disk2/sci3gamma/beamimage_sci3gamma.h5'
 
 #for feedline 1
 title1=title2='20120827/ps_freq'
@@ -18,6 +18,8 @@ titlefits1='20120823adr/20120823_FL1_100mK_gold0-fits.txt'
 #for feedline 2
 titlefits2='20120823adr/20120823_FL2_100mK_gold0-fits.txt'
 
+pdftitle='/home/sean/data/fitshist/20120912PixelQuality.pdf'
+dithertitle='/home/sean/data/fitshist/20120912PixelQualitydither.pdf'
 sqDimOpt=30  
 #This is the dimension of pixel area in the center of the area that we are evaluating to find the optimal dither position 
 
@@ -124,8 +126,8 @@ for ind in optimalIndTotal[dim-2]:
 #print problem	
 
 ax.text(-0.7, 1.02, 'Each box represents a pixel. Green means the pixel is working.\npixelnumber, f0(GHz), Q(k), and pixel location are inside each box.', bbox=dict(facecolor='white', alpha=1), size=10)
-plt.title('Pixel Quality and Characteristics for 20120828 Detector', size=24, position=(.5,1.01))
-fig.savefig('/home/sean/data/fitshist/20120828PixelQuality.pdf')
+plt.title('Pixel Quality and Characteristics for 20120912 Detector', size=24, position=(.5,1.01))
+fig.savefig(pdftitle)
 plt.show()
 plt.close()
 
@@ -264,6 +266,8 @@ while Allfilledin==1:
             if boxsum[len(boxsum)-1][0]==boxsum[x][0]:
                 optimalIndices.append([boxsum[x][1],boxsum[x][2]])
                 x=x-1
+                if x<0:
+                    stillmax=0
             else:
                 stillmax=0
     optimalIndTotal.append(optimalIndices)
@@ -284,6 +288,6 @@ for ind in optimalIndTotal[dim-2]:
 
 ax1.set_title('%dx%d middle section of array'%(sqDimOpt,sqDimOpt))
 ax2.set_title('%dx%d section of array with 4 dithers in rect. formation'%(sqDimOpt,sqDimOpt))
-fig2.savefig('/home/sean/data/fitshist/20120828PixelQualitydither.pdf')
+fig2.savefig(dithertitle)
 plt.show()
 plt.close()
