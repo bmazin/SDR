@@ -114,6 +114,8 @@ class StartQt4(QMainWindow):
 
         self.filterfile = os.environ['FILTER_WHEEL_PATH']
         self.checkfilter()
+        self.mirrorfile = os.environ['MIRROR_ANGLE_PATH']
+        self.checkmirror()
 
         #set default directory, binning routine directory, and data directory
         self.defaultdir = QDir.currentPath()
@@ -212,27 +214,58 @@ class StartQt4(QMainWindow):
             self.ui.laser_label.setText("OFF")
 
     def go_home(self):
-        homeproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoHome.py"%(ljpath),shell=True)
-        homeproc.wait()
+        self.ui.goto_angle.setValue(40)
+        self.goto_angle()
         print "Moved calibration arm to HOME"
     
     def goto_angle(self):
         angle = self.ui.goto_angle.value()
-        angleproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoToAngle.py %f"%(ljpath,angle),shell=True)
-        angleproc.wait()
+        while self.mirrorposition != angle:
+            if self.mirrorposition < angle:
+                self.mirrorposition+=1
+                gotoproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoToAngle.py %i"%(ljpath, self.mirrorposition),shell=True)
+                gotoproc.wait()
+            else:
+                self.mirrorposition-=1                
+                gotoproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoToAngle.py %i"%(ljpath, self.mirrorposition+1),shell=True)
+                gotoproc.wait()
+        f=open(str(self.mirrorfile),'w') #put file where dataBin is running
+        f.write(str(self.mirrorposition))
+        f.close()
         print "Moved calibration arm to angle %i"%(angle)
     
     def do_cal(self):
         caltime = self.ui.cal_time.value()
         calangle = self.ui.cal_angle.value()
+        self.ui.goto_angle.setValue(calangle)
         print "Running calibration observation for %i seconds"%(caltime)
         self.calibrating = True
-        calproc = subprocess.Popen("sudo nice -n -5 python %smirrorServo.py %f %i"%(ljpath,calangle,caltime),shell=True)
+        self.goto_angle()
         self.ui.laser_label.setText("ON")
         self.ui.laser_toggle.setChecked(True)
+        self.toggle_laser()
         self.start_observation()
         #calproc.wait()
         #print "FINISHED CALIBRATION"
+
+    def checkmirror(self):
+        if not isfile(self.mirrorfile):
+            msgbox = QMessageBox()
+            msgbox.setText("No mirror position saved to file.\nHOMING MIRROR TO 40 DEGREES")
+            msgbox.exec_()
+            homeproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoToAngle.py %i"%(ljpath, 40),shell=True)
+            homeproc.wait()
+            self.mirrorposition = 40
+            self.ui.goto_angle.setValue(self.mirrorposition)
+            f=open(str(self.mirrorfile),'w') #put file where dataBin is running
+            f.write(str(self.mirrorposition))
+            f.close()
+        else:
+            f = open(str(self.mirrorfile),'r')
+            self.mirrorposition = f.read()
+            self.mirrorposition = int(self.mirrorposition)
+            f.close()
+            print "Mirror at angle " + str(self.mirrorposition)+" on startup."
 
     def checkfilter(self):
         if not isfile(self.filterfile):
@@ -379,7 +412,7 @@ class StartQt4(QMainWindow):
             print "PacketMaster process started with logfile %s" % logfile
             print "Header written to data file, beginning observation..."
             #time.sleep(5) #wait 1 second for Ben's code to create beamimage before activating rebinning
-            self.send_params()
+            #self.send_params()
             self.polling_timer.start(200)
             #start observation timer
             self.timer_thread.start_timer(self.exptime)
@@ -388,20 +421,16 @@ class StartQt4(QMainWindow):
         '''what happens when you click the "stop observation" button.
         will need to clear and reset timer, close and save any data files
         and re-enable directory change and observations'''
+        self.ui.continuous.setChecked(False) #turn off continuous observing so packet master can reset
         print "Calling stopPacketMaster.sh"
         subprocess.Popen("./stopPacketMaster.sh",shell=True)
         self.finish_observation()
         
     def finish_observation(self):
-        '''what happens when you click the "stop observation" button.
-        will need to clear and reset timer, close and save any data files
-        and re-enable directory change and observations'''
-        #send message to kill binning thread until next observation
-        
-        f=open(str(self.bindir)+"/stop.bin", 'wb')
-        f.close()
-        f=open(str(self.roachdir)+"/stop.sim", 'wb')
-        f.close()
+        #f=open(str(self.bindir)+"/stop.bin", 'wb')
+        #f.close()
+        #f=open(str(self.roachdir)+"/stop.sim", 'wb')
+        #f.close()
         self.observing = False
         #turn on the things that were disabled during exposure
         self.enable_directory_change()
@@ -414,9 +443,14 @@ class StartQt4(QMainWindow):
         #self.image_thread.reset()
         if self.calibrating == True:
             print "FINISHED CALIBRATION"
+            self.go_home()
             self.ui.laser_label.setText("OFF")
             self.ui.laser_toggle.setChecked(False)
+            self.toggle_laser()
             self.calibrating = False
+        if self.ui.continuous.isChecked():
+             self.pulseMasterProc.wait() #wait for packet master to finish and start a new observation automatically
+             self.start_observation()
     
     def update_description(self):
         #updates the description section in the header info with whatever is in the description box on the dashboard. Activated by clicking "update description" button after data taking is complete.
@@ -494,8 +528,8 @@ class StartQt4(QMainWindow):
     def take_sky(self):
         self.taking_sky = True
         self.skytime = self.ui.int_time_spinBox.value()
-        self.skycount = zeros((1,self.nxpix,self.nypix))
-        self.skyrate = zeros((1,self.nxpix,self.nypix))
+        self.skycount = zeros((1,self.nypix,self.nxpix))
+        self.skyrate = zeros((1,self.nypix,self.nxpix))
         self.start_observation()
 
     def make_image(self):
@@ -569,11 +603,13 @@ class StartQt4(QMainWindow):
             self.redpix = where(photon_count > 2000)
         else:
             self.redpix = where(photon_count > 2000*(tf-ti))
-        #print self.redpix               
-
         #im = plt.figimage(rawdata, cmap='gray')
         plt.savefig("Arcons_frame.png", pad_inches=0)
         print "Generated image ",tf
+        try:
+            print '# redpix= ',len(self.redpix[0])
+        except:
+            print '# redpix= 0'
         self.image_time+=1
         self.update_image()
         if self.taking_sky == True:
@@ -606,7 +642,9 @@ class StartQt4(QMainWindow):
                 for i in xrange(len(self.redpix[0])):
                     x = self.redpix[1][i]
                     y = self.redpix[0][i]
-                    self.scene.addRect(10*(x),10*(y),9,9, Qt.red, Qt.red) #make 'hot' pixels red
+                    darkDarkRed = QColor(60,0,0)
+                    self.scene.addRect(10*(x),10*(y),9,9, darkDarkRed, darkDarkRed)
+                    #self.scene.addRect(10*(x),10*(y),9,9, Qt.darkRed, Qt.darkRed) #make 'hot' pixels red
             for i in xrange(len(self.bad_pix_x)):
                 x = self.bad_pix_x[i]
                 y = self.bad_pix_y[i]
@@ -777,19 +815,18 @@ class StartQt4(QMainWindow):
     def display_timestream(self):
         #plots spectra directly from bin file data passed from image thread
         time1 = self.image_time
-        time0 = 0#time1-100
+        time0 = 0 #time1-100
         if time0<0:
             time0 = 0
         time = arange(time0,time1)
-        plotcounts = empty(0)
+        plotcounts = zeros(len(time))
+        #plotcounts = empty(0)
         for t in time:
             counts=0
             for i in xrange(len(self.spectrum_pixel_x)):
-                #counts += self.rotated_counts[t,(self.spectrum_pixel_y[i]),self.spectrum_pixel_x[i]]
-                counts += self.rotated_counts[t,(self.spectrum_pixel_y[i]),self.spectrum_pixel_x[i]]
-                
-        	plotcounts = append(plotcounts,counts)
-
+                counts += int(self.rotated_counts[t,self.spectrum_pixel_y[i],self.spectrum_pixel_x[i]])
+            plotcounts[t] += counts
+            #plotcounts = append(plotcounts,counts)
         self.ui.spectra_plot.canvas.ax.clear()
         self.spectrum_pixel = self.bmap[median(self.spectrum_pixel_x)][(self.nypix-1)-median(self.spectrum_pixel_y)]
         self.ui.pixelpath.setText(str(self.spectrum_pixel))
@@ -797,6 +834,10 @@ class StartQt4(QMainWindow):
         #self.ui.pixel_no_lcd.display(self.spectrum_pixel)
         #self.ui.integrated_snr_lcd.display(SNR)
         #self.ui.spectra_plot.canvas.ax.plot(bins,counts,'o')
+        #print len(time)
+        #print len(plotcounts)
+        #print shape(time)
+        #print shape(plotcounts)
         self.ui.spectra_plot.canvas.ax.plot(time,plotcounts)
         self.ui.spectra_plot.canvas.format_labels()
         self.ui.spectra_plot.canvas.draw()
