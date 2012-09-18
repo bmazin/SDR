@@ -684,7 +684,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/LICK2012/20120910/ps_freq0.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/sci3gamma/ps_freq0.txt')
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
