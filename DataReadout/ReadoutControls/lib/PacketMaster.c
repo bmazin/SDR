@@ -315,12 +315,14 @@ int main(int argc, char *argv[])
                     {   
                         if (packet != (uint64_t)(-1))
                         {
-                            printf("Corrupted EOS!, time: %f, roach: %d, sec: %d, packet:%llx\n",current_time(),ready_roach,sec[ready_roach],packet);
-                            perror("Corrupted EOS!");
+                            printf("Corrupted EOS!, time: %.3f, roach: %d, sec: %d, packet:%llx\n",current_time(),ready_roach,sec[ready_roach],packet);
+                            fprintf(stderr,"Corrupted EOS!");
                         }
                         printf("second %d of %d for roach %d at %.3f \n",sec[ready_roach],exptime-1,ready_roach,current_time());
                         if (errno != 0)
+                        {
                             error("Error before forking");
+                        }
 
                         if (fork() == 0)//create a child process to write to the H5 data file
                         {
@@ -363,7 +365,7 @@ int main(int argc, char *argv[])
                         else
                         {
                             printf("Photon from non-pixel, time: %f, roach: %d, adr:%d, last_packet:%llx, packet:%llx\n",current_time(),ready_roach,adr,old_packet[ready_roach],packet);
-                            perror("Photon from non-pixel channel!");
+                            fprintf(stderr,"Photon from non-pixel channel!");
                         }
                         //add photon to table, increment photon counts
                         //the old number of photons for this pixel plist[ready_roach][adr]
