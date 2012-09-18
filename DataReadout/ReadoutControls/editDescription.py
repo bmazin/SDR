@@ -62,6 +62,7 @@ print 'Local time: ',hdr['localtime'][0]
 print 'UTC: ',hdr['utc'][0]
 print 'Description: ',hdr['description'][0]
 print 'Filter: ',hdr['filt'][0]
+print 'Exposure Time: ',hdr['exptime'][0]
 print ''
 if confirm('Update target?') == True:
     newDesc = raw_input('Enter new target then hit Enter: ')
