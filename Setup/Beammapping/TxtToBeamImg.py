@@ -4,99 +4,110 @@
 TxtToBeamImg.py
 
 Converts a text file to a beamimage h5 file
-
-Created by Ben Mazin on 2011-07-17.
-Copyright (c) 2011 . All rights reserved.
 """
 
 import numpy as np
+import random
 from tables import *
 
-path = '/Users/Paul/Desktop/Schoolwork/UCSB/Research/Sweep_2012-08-15/'
-outfile = path + 'beamimage.h5'
-
-'''
-txtfile0 = path + 'pos_freq0.txt'
-txtfile1 = path + 'pos_freq1.txt'
-txtfile2 = path + 'pos_freq2.txt'
-txtfile3 = path + 'pos_freq3.txt'
-'''
-
-#numpy.fromfile(txtfile,dtype='float32',count=-1,sep=' ')
+path = '/media/disk2/sci3gamma/20120904/'
+freqpath = path
+outfile = path + 'PositionKnownOnlybeamimage_double_refined_20120904.h5'
 
 # make beamap group 
 h5file = openFile(outfile, mode = "w")
 bgroup = h5file.createGroup('/','beammap','Beam Map of Array')
 
+
 # make beammap array - this is a 2d array (top left is 0,0.  first index is column, second is row) containing a string with the name of the group holding the photon data
-filt1 = Filters(complevel=0, complib='blosc', fletcher32=False)      # without minimal compression the files sizes are ridiculous...
-ca = h5file.createCArray(bgroup, 'beamimage', StringAtom(itemsize=40), (32,32), filters=filt1)  
-resfreq = h5file.createCArray(bgroup, 'resfreq', Float32Atom(), (32,32), filters=filt1)  
-atten = h5file.createCArray(bgroup, 'atten', Float32Atom(), (32,32), filters=filt1)  
+filt1 = Filters(complevel=0, complib='zlib', fletcher32=False)      # without minimal compression the files sizes are ridiculous...
+ca = h5file.createCArray(bgroup, 'beamimage', StringAtom(itemsize=40), (46,44), filters=filt1)  
+resfreq = h5file.createCArray(bgroup, 'resfreq', Float32Atom(), (46,44), filters=filt1)  
+atten = h5file.createCArray(bgroup, 'atten', Float32Atom(), (46,44), filters=filt1)  
 
 # load of the text file with resonator data in it and use it to make the beamimage
 
-for roachno in xrange(1):
+noloc = []
+overlaps = 0
+nPixelsPerRoach = 253
+fThreshold = 0.000001
+posList = np.loadtxt(path+'New-refined-median-all.txt')
+posFreqList = posList[:,0]
+posAttenList = posList[:,1]
+xList = np.round(posList[:,2])
+yList = np.round(posList[:,3])
+
+for roachno in xrange(8):
+    feedline=roachno/4+1
     count = 0
-    noloc = []
-    f = open(path + 'freq_atten_x_y.txt')
-    
-    for lines in f:
-        numbers = lines.split()
-        print numbers
-        f0 = float(numbers[0])
-        attenval = int(numbers[1])
-        x = int(numbers[2])
-        y = int(numbers[3])    
+    completeFreqList = np.loadtxt(freqpath + 'ps_freq%d.txt'%roachno,skiprows=1,usecols=[0])
+    nFreqs = len(completeFreqList)
+
+    for iFreq,freq in enumerate(completeFreqList):
+        pixelName = '/r%d/p%d/'%(roachno,iFreq)
+        iPos = np.where(abs(posFreqList-freq) < fThreshold)
+        sizePos = np.size(iPos)
+        if sizePos > 1:
+            print iPos,posFreqList[iPos],freq,fThreshold,posFreqList[iPos]-freq
+            print 'fThreshold too high'
+            if feedline == 1:
+                iPos = iPos[0][0]
+                print iPos
+                sizePos = 1
+            else:
+                print len(iPos)
+                iPos = iPos[0][1]
+                print iPos
+                sizePos = 1
+
+            #exit(-1)
+        if sizePos == 0:
+            noloc.append(pixelName)
+        if sizePos == 1:
+            x = xList[iPos]
+            y = yList[iPos]
+            #if feedline == 2:
+                #x += 22
+            attenval = posAttenList[iPos]
+            print x,y,pixelName
+            if x >= 0 and y >= 0 and x < 44 and y <46:
+                if ca[y,x] != '':
+                    print 'overlapping pixel!'
+                    overlaps += 1
+                    noloc.append(pixelName)
+                else:
+                    ca[y,x] = pixelName
+                    atten[y,x] = attenval
+                    resfreq[y,x] = freq
+                    h5file.flush()
+            else:
+                print 'Pixel location out of bounds'
+                noloc.append(pixelName)
+    for iFreq in range(nFreqs,nPixelsPerRoach):
+        pixelName = '/r%d/p%d/'%(roachno,iFreq)
+        noloc.append(pixelName)
         
-        # if the pixel has a location put it in ca
-        if x >= 0 and y >= 0:
-            ca[x,y] = '/r%d/p%d/' % (roachno,count)
-            resfreq[x,y] = f0
-            atten[x,y] = attenval
-            h5file.flush()
-        # if no location put it in the list of no locs
-        else:
-            noloc.append(count)        
-        count +=1        
-    f.close()
+        
+        
+print len(noloc),'Randomly placed pixels'
+print overlaps, 'Overlapping pixels'
+print 46*44-len(noloc), 'Good pixels'
 
-# roach0: 16 <= x <= 31,  0 <= y <= 15
-# roach1: 16 <= x <= 31, 16 <= y <= 31
-# roach2:  0 <= x <= 15,  0 <= y <= 15
-# roach3:  0 <= x <= 15, 16 <= y <= 31
+#fill the rest in randomly
+for iEmptyPix,pixelName in enumerate(noloc):
+    row = random.randint(0,45)
+    col = random.randint(0,43)
+    while (ca[row,col] != ''):
+        row = random.randint(0,45)
+        col = random.randint(0,43)
+    ca[row,col] = pixelName
+        
     
-    # now slot the ones with no location in randomly
-    print len(noloc),' resonators without a location.'
-    for i in xrange(len(noloc)):
-        bf=0
-        for j in xrange(16):
-            for k in xrange(16):
-                if ca[31-j-16*(roachno/2),k+16*(roachno%2)] == '':
-                    ca[31-j-16*(roachno/2),k+16*(roachno%2)] = '/r%d/p%d/' % (roachno,noloc[i])
-#                    resfreq[x,y] = f0
-#                    atten[x,y] = attenval
-                    h5file.flush()
-                    bf=1
-                    break
-            if bf==1:
-                break      
-    # now go though and point the remaining empty slots at the first open slow
-    for i in xrange(256-count):
-        bf=0
-        for j in xrange(16):
-            for k in xrange(16):
-                if ca[31-j-16*(roachno/2),k+16*(roachno%2)] == '':
-                    ca[31-j-16*(roachno/2),k+16*(roachno%2)] = '/r%d/p%d/' % (roachno,i+count)
-                    h5file.flush()
-                    bf=1
-                    break
-            if bf==1:
-                break      
-'''
-for i in xrange(16):
-    print ca[i,31]
-'''
-    
-
+#iEmptyPix = 0
+#for row in xrange(46):
+#    for col in xrange(44):
+#        if ca[row,col] == '':
+#            ca[row,col] = noloc[iEmptyPix]
+#            iEmptyPix += 1
+#h5file.flush()
 h5file.close()
