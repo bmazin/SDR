@@ -12,7 +12,7 @@ from tables import *
 
 path = '/media/disk2/sci3gamma/20120904/'
 freqpath = path
-outfile = path + 'beamimage_refined_20120904.h5'
+outfile = path + 'PositionKnownOnlybeamimage_double_refined_20120904.h5'
 
 # make beamap group 
 h5file = openFile(outfile, mode = "w")
@@ -31,7 +31,7 @@ noloc = []
 overlaps = 0
 nPixelsPerRoach = 253
 fThreshold = 0.000001
-posList = np.loadtxt(path+'refined_x_y.txt')
+posList = np.loadtxt(path+'New-refined-median-all.txt')
 posFreqList = posList[:,0]
 posAttenList = posList[:,1]
 xList = np.round(posList[:,2])
@@ -44,7 +44,7 @@ for roachno in xrange(8):
     nFreqs = len(completeFreqList)
 
     for iFreq,freq in enumerate(completeFreqList):
-        pixelName = 'r%d/p%d/'%(roachno,iFreq)
+        pixelName = '/r%d/p%d/'%(roachno,iFreq)
         iPos = np.where(abs(posFreqList-freq) < fThreshold)
         sizePos = np.size(iPos)
         if sizePos > 1:
@@ -84,12 +84,12 @@ for roachno in xrange(8):
                 print 'Pixel location out of bounds'
                 noloc.append(pixelName)
     for iFreq in range(nFreqs,nPixelsPerRoach):
-        pixelName = 'r%d/p%d/'%(roachno,iFreq)
+        pixelName = '/r%d/p%d/'%(roachno,iFreq)
         noloc.append(pixelName)
         
         
         
-print len(noloc),'Empty pixels'
+print len(noloc),'Randomly placed pixels'
 print overlaps, 'Overlapping pixels'
 print 46*44-len(noloc), 'Good pixels'
 
@@ -97,8 +97,10 @@ print 46*44-len(noloc), 'Good pixels'
 for iEmptyPix,pixelName in enumerate(noloc):
     row = random.randint(0,45)
     col = random.randint(0,43)
-    if ca[row,col] == '':
-        ca[row,col] = pixelName
+    while (ca[row,col] != ''):
+        row = random.randint(0,45)
+        col = random.randint(0,43)
+    ca[row,col] = pixelName
         
     
 #iEmptyPix = 0

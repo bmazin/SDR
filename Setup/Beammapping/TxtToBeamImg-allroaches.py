@@ -14,7 +14,6 @@ from tables import *
 
 path = '/home/sean/data/20120828/beam/'
 outfile = path + 'beamimage2.h5'
-outfilePosKnown = path + 'posknownbeamimage.h5'
 
 '''
 #txtfile0 = path + 'pos_freq0.txt'
@@ -29,18 +28,12 @@ outfilePosKnown = path + 'posknownbeamimage.h5'
 h5file = openFile(outfile, mode = "w")
 bgroup = h5file.createGroup('/','beammap','Beam Map of Array')
 
-Knownh5file = openFile(outfilePosKnown, mode = "w")
-kbgroup = Knownh5file.createGroup('/','beammap','Beam Map of Array')
-
 # make beammap array - this is a 2d array (top left is 0,0.  first index is column, second is row) containing a string with the name of the group holding the photon data
 filt1 = Filters(complevel=0, complib='zlib', fletcher32=False)      # without minimal compression the files sizes are ridiculous...
 ca = h5file.createCArray(bgroup, 'beamimage', StringAtom(itemsize=40), (46,44), filters=filt1)  
 resfreq = h5file.createCArray(bgroup, 'resfreq', Float32Atom(), (46,44), filters=filt1)  
 atten = h5file.createCArray(bgroup, 'atten', Float32Atom(), (46,44), filters=filt1)  
 
-kca = Knownh5file.createCArray(kbgroup, 'beamimage', StringAtom(itemsize=40), (46,44), filters=filt1)  
-kresfreq = Knownh5file.createCArray(kbgroup, 'resfreq', Float32Atom(), (46,44), filters=filt1)  
-katten = Knownh5file.createCArray(kbgroup, 'atten', Float32Atom(), (46,44), filters=filt1) 
 # load of the text file with resonator data in it and use it to make the beamimage
 
 noloc = []
@@ -70,11 +63,11 @@ for roachno in xrange(8):
                 overlaps += 1
                 noloc.append(pixelName)
             else:
-                kca[y,x] = ca[y,x] = pixelName
-                kresfreq[y,x] = resfreq[y,x] = f0
-                katten[y,x] = atten[y,x] = attenval
+                ca[y,x] = pixelName
+                resfreq[y,x] = f0
+                atten[y,x] = attenval
                 h5file.flush()
-                Knownh5file.flush()
+
         else:
             noloc.append(pixelName)
         # if no location put it in the list of no locs
@@ -107,9 +100,6 @@ for roachno in xrange(8):
 #            if bf==1:
 #                break      
     # now go though and point the remaining empty slots at the first open slow
-
-Knownh5file.flush()
-Knownh5file.close()
     
 print len(noloc),'Empty pixels'
 print overlaps, 'Overlapping pixels'
