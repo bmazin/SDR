@@ -136,7 +136,7 @@ class AppForm(QMainWindow):
             self.roach.write_int('capture_threshold', threshold)
             self.roach.write_int('capture_load_thresh', (ch<<1)+(1<<0))
             self.roach.write_int('capture_load_thresh', (ch<<1)+(0<<0))
-            print "channel: ", ch, "median: ", scale_to_angle*med, "threshold: ", scale_to_angle*threshold
+            print "channel: ", ch, "median: ", scale_to_angle*med,med, "threshold: ", scale_to_angle*threshold,threshold
             #print "channel: ", ch, "avg: ", scale_to_angle*phase_avg, "sigma: ", scale_to_angle*sigma, "threshold: ", scale_to_angle*threshold
             print "done."
  
