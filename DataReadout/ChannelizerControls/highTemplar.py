@@ -28,15 +28,28 @@ class RoachThread(QtCore.QThread):
         self.roach.setStatus(0)
         time.sleep(random.randint(1,5))
         
-        if self.com=='connect':
+        if self.com==RoachState.connect:
             self.roach.connect()
             self.emit(QtCore.SIGNAL("connectedRoach()"))
-        if self.com=='loadFreq':
+        elif self.com==RoachState.loadFreq:
             self.roach.loadFreq()
             self.emit(QtCore.SIGNAL("loadedFrequency()"))
-        #else:		#gives errors
-        #    self.roach.setStatus(1)
-        #    print 'No such command here'
+        elif self.com ==RoachState.defineLUT:
+            self.roach.defineLUT()
+        elif self.com == RoachState.sweep:
+            self.roach.sweep()
+        elif self.com == RoachState.rotate:
+            self.roach.rotate()
+        elif self.com == RoachState.center:
+            self.roach.center()
+        elif self.com == RoachState.loadFIR:
+            self.roach.loadFIR
+        elif self.com == RoachState.loadThreshold:
+            self.roach.loadThreshold
+        else:		#gives errors
+            #self.roach.setStatus(1)
+            print 'No such command here'
+            #self.terminate()
         return
 
 
@@ -72,7 +85,7 @@ class highTemplar(QMainWindow):
         print 'Connecting Roches...'
         self.numThreadsRunning=8
         for roach in self.roaches:
-            self.threadPool.append(RoachThread(roach,'connect'))
+            self.threadPool.append(RoachThread(roach,RoachState.connect))
         for thread in self.threadPool:
             self.connect(thread,QtCore.SIGNAL("connectedRoach()"),self.catchRoachConnectionSignal)
             thread.start()    
@@ -118,7 +131,7 @@ class highTemplar(QMainWindow):
             self.status=0
             for i in source.roach:
                 #print 'i:',i
-                self.threadPool.append(RoachThread(self.roaches[i],'loadFreq'))
+                self.threadPool.append(RoachThread(self.roaches[i],RoachState.loadFreq))
                 self.connect(self.threadPool[len(self.threadPool)-1],QtCore.SIGNAL("loadedFrequency()"),self.catchRoachLoadFreqSignal)
                 self.threadPool[len(self.threadPool)-1].start()
                 self.numThreadsRunning+=1
