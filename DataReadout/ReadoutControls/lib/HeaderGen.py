@@ -82,7 +82,8 @@ def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,passedfi
     
     w['timezone'] = time.altzone/3600.0
     w['localtime'] = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime(lt))
-    w['ut'] = lt
+    w['unixtime'] = lt
+    w['utc'] = time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime(lt))
 
     #palomar = ephem.Observer()
     #palomar.long, palomar.lat = '116.0:51.0:46.80', '33.0:21.0:21.6'
