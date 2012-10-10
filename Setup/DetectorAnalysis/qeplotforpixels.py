@@ -10,8 +10,8 @@ from qeforpixelsfunc import *
 qeDataFilename= '/media/disk2/sci3gamma/qe_20120824-230828.h5' 
 qeObsTime=1345874908
 
-roach=7
-pixlist=[37,68,30,43,28]
+roach=4
+pixlist=[93,54]
 
 ini=100
 peakw=14.7
@@ -46,5 +46,5 @@ ax.legend()
 #plt.savefig(saveFilename)
 plt.show()
 plt.close()
-#print 'The decimal quantum efficiency of the ADR for 400-1050 wvls are:'
-#print qeresults
+print 'The decimal quantum efficiency of the ADR for 400-1050 wvls are:'
+print qeresults

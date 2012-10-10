@@ -7,8 +7,8 @@ import itertools
 #Use this program to view the overall histogram of photons seen by a single roach.  From that plot, pick a time interval to plug into FindGoodPix.py to find the best pixels.  Use that plot to tell you about when the first peak starts (since the first peak is typically too small to be detected by this program).
 #This program outputs a matrix of indices along with peakw and troughw. Use this information to input the initial start value (ini), peakw (pk), and troughw (tr) into qeplotforpixels.py
 
-qeDataFilename= '/media/disk2/sci3gamma/qe_20120824-230828.h5' 
-qeObsTime=1345874908
+qeDataFilename= '/home/sean/data/20121010/obs_20121010-215637.h5'
+qeObsTime=1349906199
 
 NPixels=253
 NSec=1800

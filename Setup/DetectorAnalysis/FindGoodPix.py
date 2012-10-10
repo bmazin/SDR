@@ -8,7 +8,7 @@ import math
 qeDataFilename= '/media/disk2/sci3gamma/qe_20120824-230828.h5' 
 qeObsTime=1345874908
 
-roach=7
+roach=4
 
 
 NPixels=253
@@ -19,7 +19,7 @@ fid = tables.openFile(qeDataFilename,mode='r')
 for pix in xrange(0,NPixels):
 	temp=[]
 	dataset=fid.getNode('/r%d/p%d/t%d'%(roach,pix,qeObsTime))
-	for t in xrange(335,345):	
+	for t in xrange(260,270):	
 		temp.append(len(dataset[t])) 
 	finish.append([int(np.average(temp)),pix])
 print sorted(finish)

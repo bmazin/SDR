@@ -4,8 +4,8 @@ from matplotlib import pyplot as plt
 
 #Plots Histogram of f, Q, and Distance of f to nearest neighbor, Q vs f, Dist to neigh vs f and saves it to a pdf.  You need to change the File and pdftitle (and possibly the text position in line 79
 
-File= '20120823adr/20120823_FL2_100mK_gold0-fits.txt'
-pdftitle='/home/sean/data/fitshist/20120823_FL2_100mK_gold0-fits-hist.pdf'
+File= '20121006/20121006-SCI4-DF-FL1-fits.txt'
+pdftitle='/home/sean/data/fitshist/20121006-SCI4-DF-FL1-fits-hist.pdf'
 autofit=np.loadtxt('/home/sean/data/%s'%File)
 
 freqs=autofit[:,1]
@@ -75,7 +75,7 @@ ax5.set_ylabel('Distance of f to Nearest Neighbor (MHz)', size=8)
 ax5.set_title('Nearest Neighbor vs f0', size=9)
 ax5.tick_params(labelsize=8)
 ax5.set_ylim(0,20)
-ax5.text(2.1,-15,'file name=\n%s\nnumber of resonators = %d'%(File, nres), size=8.5)
+ax5.text(2.8,-15,'file name=\n%s\nnumber of resonators = %d'%(File, nres), size=8.5)
 
 
 fig.savefig(pdftitle)
