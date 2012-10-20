@@ -7,15 +7,17 @@ import itertools
 #Use this program to view the overall histogram of photons seen by a single roach.  From that plot, pick a time interval to plug into FindGoodPix.py to find the best pixels.  Use that plot to tell you about when the first peak starts (since the first peak is typically too small to be detected by this program).
 #This program outputs a matrix of indices along with peakw and troughw. Use this information to input the initial start value (ini), peakw (pk), and troughw (tr) into qeplotforpixels.py
 
-qeDataFilename= '/home/sean/data/20121010/obs_20121010-215637.h5'
-qeObsTime=1349906199
+#qeDataFilename= '/home/sean/data/20121010/obs_20121010-215637.h5'
+qeDataFilename= '/home/sean/data/20121018/obs_20121019-044657.h5'
+#qeObsTime=1349906199
+qeObsTime=1350622020
 
 NPixels=253
 NSec=1800
 ncutoff=100    
 # This is the value of the derivative that defines a pulse.  The horizontal lines in the plot of the derivative are set at this height
 
-roach=4
+roach=5
 
 def peakfit(y1,y2,y3):
     y4=y2-0.125*((y3-y1)**2)/(y3+y1-2*y2)
@@ -32,8 +34,8 @@ pulseMask = int(12*'1',2)#bitmask of 12 ones
 fid = tables.openFile(qeDataFilename,mode='r')
 pulseh=[[] for x in xrange(NSec)]
 
-#for pix in xrange(0,NPixels):
-for pix in [16]:
+for pix in xrange(0,NPixels):
+#for pix in [16]:
       dataset=fid.getNode('/r%d/p%d/t%d'%(roach,pix,qeObsTime))
       for ind, sec in enumerate(dataset):
           for packet in sec:

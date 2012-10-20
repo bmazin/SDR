@@ -84,11 +84,11 @@ def NumPhotonInWVLPulses(qeDataFilename, qeObsTime, roach, pixlist, initial, pea
         tpeak=[]
         for i in xrange(0,len(peaks)/2):
             pk=np.average(photonSec[peaks[2*i]:peaks[2*i+1]])
-            #		dk=np.average(photonSec[darkflux[2*i]:darkflux[2*i+1]]+photonSec[darkflux[2*i+2]:darkflux[2*i+3]])
-            #		net=pk-dk
-            #		fin.append(net)
+            dk=np.average(photonSec[darkflux[2*i]:darkflux[2*i+1]]+photonSec[darkflux[2*i+2]:darkflux[2*i+3]])
+            net=pk-dk
+            fin.append(net)
             tpeak.append(np.average([peaks[2*i],peaks[2*i+1]]))
-            fin.append(pk)
+#            fin.append(pk)
         NPulses.append(fin)
 
         # photonSec has the total number of photons per second, 
@@ -105,9 +105,6 @@ def NumPhotonInWVLPulses(qeDataFilename, qeObsTime, roach, pixlist, initial, pea
             plt.grid(True)
             plt.show()
             plt.close()
-
-
-
 
     fid.close()
     return NPulses

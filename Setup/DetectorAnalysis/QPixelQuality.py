@@ -11,15 +11,17 @@ from PixelQualityfunc import *
 
 closefcutoff=.0007   #when the program compares the approximate freq in frequency files to the accurate frequency in the fit file, it will accept a difference of the closefcutoff (GHz)
 
-bmaptitle='/media/disk2/sci3gamma/20120904/PositionKnownOnlybeamimage_double_refined_20120904.h5'
+#bmaptitle='/media/disk2/sci3gamma/20120904/PositionKnownOnlybeamimage_double_refined_20120904.h5'
+bmaptitle='/home/sean/data/20121010/beamimage_sci4_20121010.h5'
 
 #for feedline 1
-title1=title2='20120827/ps_freq'
-titlefits1='20120823adr/20120823_FL1_100mK_gold0-fits.txt'
+title1=title2='20121006/ps_freq'
+titlefits1='20121006/20121006-SCI4-ADR-FL1-fits.txt'
 #for feedline 2
-titlefits2='20120823adr/20120823_FL2_100mK_gold0-fits.txt'
+titlefits2='20121006/20121006-SCI4-ADR-FL2-fits.txt'
 
-title='/home/sean/data/fitshist/20120912QPixelQuality.fits'
+outTitle='/home/sean/data/fitshist/20121011_Qi_PixelQuality.fits'
+freqOutTitle='/home/sean/data/fitshist/20121011_freqMap.fits'
  
 
 #--Get an accurate array with roach,pixel,f,Q in the correct position--
@@ -31,6 +33,7 @@ b=fid.root.beammap.beamimage
 
 
 pixarray = [[-1 for col in range(44)] for row in range(46)]
+freqarray = [[-1 for col in range(44)] for row in range(46)]
 pixlist = []
 for row in xrange(0,46):
     for column in xrange(0,44):
@@ -42,6 +45,7 @@ for row in xrange(0,46):
             if roachNum <8:
                 if pixelNum<len(accuratefQ[roachNum]):
     	            pixarray[row][column]=(accuratefQ[roachNum][pixelNum][1]/1000)
+    	            freqarray[row][column]=(accuratefQ[roachNum][pixelNum][0]/1000)
 
 #            else:
 #               print roachNum,pixelNum
@@ -52,7 +56,10 @@ fid.close()
 
 #--Plot what the detector looks like with the f,Q, and position written inside each 'pixel'--
 pixarray=np.array(pixarray)
+freqarray=np.array(freqarray)
 
 
 hdu = pyfits.PrimaryHDU(pixarray)
-hdu.writeto(title,clobber=True)
+hdu2 = pyfits.PrimaryHDU(freqarray)
+hdu.writeto(outTitle,clobber=True)
+hdu2.writeto(freqOutTitle,clobber=True)
