@@ -1,13 +1,18 @@
 import numpy as np
 import pylab as plt
+import sys
+
+if len(sys.argv) != 2:
+    print 'Usage: ',sys.argv[0],' feedlineNo'
+    exit(1)
 
 NRoaches=4 #number of roaches per feedline
 roachBandwidth=0.512 #GHz, bandwidth that each roach can cover, depends on dac clockrate
 
 #resonant frequency list for the feedline
-dir = '/home/sean/data/LICK2012/20120901/'
-feedline=2
-datafilename=dir+'Lick-FL%d-good.txt'%feedline
+dir = '/home/sean/data/20121006/'
+feedline=int(sys.argv[1])
+datafilename=dir+'20121006-SCI4-ADR-FL%d-good.txt'%feedline
 table = np.loadtxt(datafilename)
 
 freqs = table[:,2]
@@ -27,17 +32,17 @@ totalSpread=fLast-fStart
 #set default freq ranges for each roach or manually tweak them
 roachFreqStart = np.array([fStart]*NRoaches)
 roachLOFreq = np.array([fStart]*NRoaches)
-if feedline == 1:
-    roachLOFreq[0] = 3.6757238
-    roachLOFreq[1] = 4.3383665
-    roachLOFreq[2] = 4.9063277
-    roachLOFreq[3] = 5.5724130
-else:
-    roachLOFreq[0] = 3.6536534
-    roachLOFreq[1] = 4.3752050
-    roachLOFreq[2] = 4.9094138
-    roachLOFreq[3] = 5.6137981
 
+if feedline == 1:
+    roachLOFreq[0] = fStart+roachBandwidth/2.0+.01
+    roachLOFreq[1] = roachLOFreq[0]+roachBandwidth+.13
+    roachLOFreq[2] = roachLOFreq[1]+roachBandwidth+.05
+    roachLOFreq[3] = roachLOFreq[2]+roachBandwidth+.11
+else:
+    roachLOFreq[0] = fStart+roachBandwidth/2.0
+    roachLOFreq[1] = roachLOFreq[0]+roachBandwidth+.05
+    roachLOFreq[2] = roachLOFreq[1]+roachBandwidth+.1
+    roachLOFreq[3] = 5.4
     
 #roachFreqStart[0] = fStart
 #roachFreqStart[1] = roachFreqStart[0]+roachBandwidth
@@ -65,7 +70,7 @@ for iRoach in np.arange(0,NRoaches):
     print 'with LO freq at %.3f'%roachLOFreq[iRoach]
     lo_fid.write('%.5f\n'%roachLOFreq[iRoach])
     ax.hist(roachFreqList[iRoach],bins=20)
-    fid = open(dir+'freq%d.txt'%(feedline,r),'w')
+    fid = open(dir+'freq%d.txt'%r,'w')
     fid.write('1\t1\t1\t1\n')
     for freq in roachFreqList[iRoach]:
         fid.write('%.7f\t0\t0\t1\n'%freq)
