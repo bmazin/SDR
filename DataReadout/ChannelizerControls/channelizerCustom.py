@@ -19,6 +19,11 @@ from lib import iqsweep
 #WORKING...show originally calculated median/threshold as faded line
 
 
+if len(sys.argv)!= 2:
+    print 'Usage: ',sys.argv[0],' roachNum'
+    exit(1)
+roachNum = int(sys.argv[1])
+
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
@@ -668,7 +673,7 @@ class AppForm(QMainWindow):
         self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
         
         # Roach board's IP address
-        self.textbox_roachIP = QLineEdit('10.0.0.10')
+        self.textbox_roachIP = QLineEdit('10.0.0.1%d'%roachNum)
         self.textbox_roachIP.setMaximumWidth(200)
         label_roachIP = QLabel('Roach IP Address:')
 
@@ -684,7 +689,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/sci3gamma/ps_freq0.txt')
+        self.textbox_freqFile = QLineEdit('/home/sean/data/20121006/ps_freq%d.txt'%roachNum)
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
