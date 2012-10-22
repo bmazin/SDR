@@ -202,17 +202,23 @@ class StartQt4(QMainWindow):
             #self.ui.plot_1.canvas.draw()
             
             self.ui.plot_2.canvas.ax.clear()
-            self.ui.plot_2.canvas.ax.plot(self.Res1.freq[:-1],self.res1_iq_vel,'.-')
+            self.ui.plot_2.canvas.ax.plot(self.Res1.freq[:-1],self.res1_iq_vel,'b.-')
+            if self.iAtten > 0:
+                self.ui.plot_2.canvas.ax.plot(self.Res1.freq[:-1],self.res1_iq_vels[self.iAtten-1],'g.-')
+                self.ui.plot_2.canvas.ax.lines[-1].set_alpha(.7)
+            if self.iAtten > 1:
+                self.ui.plot_2.canvas.ax.plot(self.Res1.freq[:-1],self.res1_iq_vels[self.iAtten-2],'g.-')
+                self.ui.plot_2.canvas.ax.lines[-1].set_alpha(.3)
             cid=self.ui.plot_2.canvas.mpl_connect('button_press_event', self.on_press)
             self.ui.plot_2.canvas.draw()
 
             self.ui.plot_3.canvas.ax.clear()
             if self.iAtten >0:
                 self.ui.plot_3.canvas.ax.plot(self.Res1.Is[self.iAtten-1],self.Res1.Qs[self.iAtten-1],'g.-')
-                self.ui.plot_3.canvas.ax.lines[0].set_alpha(.5)
-            if self.iAtten < self.NAttens-1:
-                self.ui.plot_3.canvas.ax.plot(self.Res1.Is[self.iAtten+1],self.Res1.Qs[self.iAtten+1],'k.-')
-                self.ui.plot_3.canvas.ax.lines[-1].set_alpha(.5)
+                self.ui.plot_3.canvas.ax.lines[0].set_alpha(.6)
+            if self.iAtten > 1:
+                self.ui.plot_3.canvas.ax.plot(self.Res1.Is[self.iAtten-2],self.Res1.Qs[self.iAtten-2],'g.-')
+                self.ui.plot_3.canvas.ax.lines[-1].set_alpha(.3)
             self.ui.plot_3.canvas.ax.plot(self.Res1.I,self.Res1.Q,'.-')
             #self.ui.plot_3.canvas.format_labels()
             print 'makeplots'
