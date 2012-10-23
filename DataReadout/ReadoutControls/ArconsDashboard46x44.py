@@ -58,7 +58,7 @@ h = 4.13567E-15 #[ev*s]
 numXPixel = 44
 numYPixel = 46
 
-observatory = "Lick"
+observatory = "Broida"
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
 filters = ['V-band','R-band','Open','405','546','Closed']
