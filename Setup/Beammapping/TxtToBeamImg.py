@@ -93,6 +93,7 @@ print len(noloc),'Randomly placed pixels'
 print overlaps, 'Overlapping pixels'
 print 46*44-len(noloc), 'Good pixels'
 
+placeUnbeammappedPixels = 1
 #fill the rest in randomly
 for iEmptyPix,pixelName in enumerate(noloc):
     row = random.randint(0,45)
@@ -100,6 +101,8 @@ for iEmptyPix,pixelName in enumerate(noloc):
     while (ca[row,col] != ''):
         row = random.randint(0,45)
         col = random.randint(0,43)
+    if placeUnbeammappedPixels == 0:
+        pixelName = '/r0/p250/'
     ca[row,col] = pixelName
         
     
