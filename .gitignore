@@ -1,0 +1,6 @@
+*.sim
+*.o
+*.pyc
+*.so
+*.exe
+*.dll
