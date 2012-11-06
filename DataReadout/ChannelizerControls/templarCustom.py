@@ -25,7 +25,7 @@ if len(sys.argv) != 2:
     exit(1)
 roachNo = int(sys.argv[1])
 
-datadir = '/home/sean/data/20121006/'
+datadir = '/home/sean/data/20121105adr/'
 defaultLOFreqs = numpy.loadtxt(datadir+'lofreqs.txt')
 defaultLOFreq = defaultLOFreqs[roachNo]
 
@@ -856,13 +856,13 @@ class AppForm(QMainWindow):
         label_powerSweepStop = QLabel('Stop atten:')
 
         # Save directory
-        self.textbox_saveDir = QLineEdit('/home/sean/data/20121006/')
+        self.textbox_saveDir = QLineEdit(datadir)
         self.textbox_saveDir.setMaximumWidth(250)
         label_saveDir = QLabel('Save directory:')
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20121006/ps_freq%d.txt'%roachNo)
+        self.textbox_freqFile = QLineEdit(datadir+'freq%d.txt'%roachNo)
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
