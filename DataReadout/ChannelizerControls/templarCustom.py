@@ -19,17 +19,20 @@ from lib import iqsweep
 
 
 
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print 'Usage: ',sys.argv[0],' roachNo'
+        exit(1)
+    roachNo = int(sys.argv[1])
+    datadir = os.environ['FREQ_PATH']#'/home/sean/data/20121105adr/'
+    configFile = numpy.loadtxt(os.path.join(datadir,'roachConfig.txt'))
+    defaultLOFreqs = configFile[:,0]
+    defaultAttens = configFile[:,1]
+    defaultLOFreq = defaultLOFreqs[roachNo]
+    defaultAtten = int(defaultAttens[roachNo])
 
-if len(sys.argv) != 2:
-    print 'Usage: ',sys.argv[0],' roachNo'
-    exit(1)
-roachNo = int(sys.argv[1])
 
-datadir = '/home/sean/data/20121105adr/'
-defaultLOFreqs = numpy.loadtxt(datadir+'lofreqs.txt')
-defaultLOFreq = defaultLOFreqs[roachNo]
-
-MAX_ATTEN = 99
+    MAX_ATTEN = 99
 
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
@@ -575,6 +578,13 @@ class AppForm(QMainWindow):
             
             
             N = steps*self.N_freqs
+            #calculate IQ velocities (distances between points in IQ loop)
+            self.IQ_vels = numpy.zeros([self.N_freqs,steps-1])
+            for ch in range(self.N_freqs):
+                for iFreq,freq in enumerate(self.f_span[ch][0:-1]):
+                    dI = self.I[ch][iFreq]-self.I[ch][iFreq+1]
+                    dQ = self.Q[ch][iFreq]-self.Q[ch][iFreq+1]
+                    self.IQ_vels[ch][iFreq] = numpy.sqrt(dI**2+dQ**2)
 	
             if len(attens) > 1:
                 for n in range(self.N_freqs):
@@ -704,6 +714,7 @@ class AppForm(QMainWindow):
         self.axes0.clear()
         self.axes1.clear()
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
+        self.axes0.semilogy(self.f_span[ch][0:-1], self.IQ_vels[ch],'g.-')
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
         self.canvas.draw()
 
@@ -726,6 +737,7 @@ class AppForm(QMainWindow):
         self.axes0.clear()
         self.axes1.clear()
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
+        self.axes0.semilogy(self.f_span[ch][0:-1], self.IQ_vels[ch],'g.-')
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
         self.canvas.draw()
 
@@ -748,6 +760,13 @@ class AppForm(QMainWindow):
         self.axes1.plot(I, Q, '.')
         self.canvas.draw()
 
+    def snapResFreq(self):
+        ch = int(self.textbox_channel.text())
+
+        iNewResFreq = numpy.argmax(self.IQ_vels[ch])+1
+        newFreq = self.f_span[ch][iNewResFreq]
+        newFreq = newFreq/1e9
+        self.textbox_freq.setText(str(newFreq))
 
     def updateResonator(self,atten=-1):
         freqFile =str(self.textbox_freqFile.text())
@@ -848,10 +867,10 @@ class AppForm(QMainWindow):
         label_dds_shift = QLabel('DDS sync. lag:')
 
         # Power sweep range. 
-        self.textbox_powerSweepStart = QLineEdit('8')
+        self.textbox_powerSweepStart = QLineEdit(str(defaultAtten))
         self.textbox_powerSweepStart.setMaximumWidth(50)
         label_powerSweepStart = QLabel('Start atten.:')
-        self.textbox_powerSweepStop = QLineEdit('8')
+        self.textbox_powerSweepStop = QLineEdit(str(defaultAtten))
         self.textbox_powerSweepStop.setMaximumWidth(50)
         label_powerSweepStop = QLabel('Stop atten:')
 
@@ -862,7 +881,7 @@ class AppForm(QMainWindow):
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit(datadir+'freq%d.txt'%roachNo)
+        self.textbox_freqFile = QLineEdit(datadir+'ps_freq%d.txt'%roachNo)
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
@@ -931,10 +950,15 @@ class AppForm(QMainWindow):
         self.textbox_freq.setMaximumWidth(130)
         label_freq = QLabel('Freq (GHz):')
         
+        #button to snap resonant frequency to peak IQ velocity
+        self.button_autoFreq = QPushButton("Auto")
+        self.button_autoFreq.setMaximumWidth(170)
+        self.connect(self.button_autoFreq, SIGNAL('clicked()'), self.snapResFreq)
         #button to submit frequency and attenuation changes
         self.button_updateResonator = QPushButton("Submit")
         self.button_updateResonator.setMaximumWidth(170)
         self.connect(self.button_updateResonator, SIGNAL('clicked()'), self.updateResonator)
+        
  
         #button to 'delete' resonator by setting attenuation really high
         self.button_deleteResonator = QPushButton('Remove Resonator')
@@ -1008,6 +1032,7 @@ class AppForm(QMainWindow):
         hbox23.addWidget(self.spinbox_attenuation)
         hbox23.addWidget(label_freq)
         hbox23.addWidget(self.textbox_freq)
+        hbox23.addWidget(self.button_autoFreq)
         hbox23.addWidget(self.button_updateResonator)
         gbox2.addLayout(hbox23)
         hbox24 = QHBoxLayout()
