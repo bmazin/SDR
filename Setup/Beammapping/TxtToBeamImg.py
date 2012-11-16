@@ -9,10 +9,11 @@ Converts a text file to a beamimage h5 file
 import numpy as np
 import random
 from tables import *
+import os
 
-path = '/media/disk2/sci3gamma/20120904/'
-freqpath = path
-outfile = path + 'PositionKnownOnlybeamimage_double_refined_20120904.h5'
+path = '/home/sean/data/20121106/'
+freqpath = os.environ['FREQ_PATH']
+outfile = path + 'sci4a_beammap.h5'
 
 # make beamap group 
 h5file = openFile(outfile, mode = "w")
@@ -30,8 +31,8 @@ atten = h5file.createCArray(bgroup, 'atten', Float32Atom(), (46,44), filters=fil
 noloc = []
 overlaps = 0
 nPixelsPerRoach = 253
-fThreshold = 0.000001
-posList = np.loadtxt(path+'New-refined-median-all.txt')
+fThreshold = 0.0000001
+posList = np.loadtxt(path+'freq_atten_x_y_1109.txt',usecols=[0,1,2,3])
 posFreqList = posList[:,0]
 posAttenList = posList[:,1]
 xList = np.round(posList[:,2])
@@ -93,7 +94,7 @@ print len(noloc),'Randomly placed pixels'
 print overlaps, 'Overlapping pixels'
 print 46*44-len(noloc), 'Good pixels'
 
-placeUnbeammappedPixels = 1
+placeUnbeammappedPixels = 0
 #fill the rest in randomly
 for iEmptyPix,pixelName in enumerate(noloc):
     row = random.randint(0,45)
