@@ -54,6 +54,19 @@ class AppForm(QMainWindow):
         self.freqRes = self.sampleRate/N_lut_entries
         #self.iq_centers = numpy.array([0.+0j]*256)
         self.customResonators=numpy.array([[0.0,-1]]*256)	#customResonator[ch]=[freq,atten]
+        self.last_I_on_res = None
+        self.last_Q_on_res = None
+        self.last_I = None
+        self.last_Q = None
+        self.last_iq_centers = None
+        self.last_IQ_vels = None
+        self.I = None
+        self.Q = None
+        self.I_on_res = None
+        self.Q_on_res = None
+        self.iq_centers = None
+        self.IQ_vels = None
+
         
     def openClient(self):
         self.status_text.setText('connecting...')
@@ -539,6 +552,13 @@ class AppForm(QMainWindow):
                 f_span = f_span + [f-0.5*steps*df+n*df for n in range(steps)]
                 self.f_span[l] = [f-0.5*steps*df+n*df for n in range(steps)]
                 l = l + 1
+
+            if self.I != None:
+               self.last_I = numpy.array(self.I) 
+               self.last_Q = numpy.array(self.Q) 
+               self.last_I_on_res = numpy.array(self.I_on_res) 
+               self.last_Q_on_res = numpy.array(self.Q_on_res) 
+               self.last_iq_centers = numpy.array(self.iq_centers) 
             I = numpy.zeros(self.N_freqs*steps, dtype='float32')
             Q = numpy.zeros(self.N_freqs*steps, dtype='float32')
             I_std = numpy.zeros(self.N_freqs*steps, dtype='float32')
@@ -579,6 +599,8 @@ class AppForm(QMainWindow):
             
             N = steps*self.N_freqs
             #calculate IQ velocities (distances between points in IQ loop)
+            if self.IQ_vels != None:
+                self.last_IQ_vels = self.IQ_vels
             self.IQ_vels = numpy.zeros([self.N_freqs,steps-1])
             for ch in range(self.N_freqs):
                 for iFreq,freq in enumerate(self.f_span[ch][0:-1]):
@@ -586,7 +608,8 @@ class AppForm(QMainWindow):
                     dQ = self.Q[ch][iFreq]-self.Q[ch][iFreq+1]
                     self.IQ_vels[ch][iFreq] = numpy.sqrt(dI**2+dQ**2)
 	
-            if len(attens) > 1:
+            #if len(attens) > 1:
+            if True:
                 for n in range(self.N_freqs):
                     w = iqsweep.IQsweep()
                     w.f0 = dac_freqs[n]/1e9
@@ -715,7 +738,11 @@ class AppForm(QMainWindow):
         self.axes1.clear()
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
         self.axes0.semilogy(self.f_span[ch][0:-1], self.IQ_vels[ch],'g.-')
+        if self.last_IQ_vels != None:
+            self.axes0.semilogy(self.f_span[ch][0:-1], self.last_IQ_vels[ch],'c.-',alpha=0.5)
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
+        if self.last_I != None:
+            self.axes1.plot(self.last_I[ch], self.last_Q[ch], 'c.-', self.last_iq_centers.real[ch], self.last_iq_centers.imag[ch], '.', self.last_I_on_res[ch], self.last_Q_on_res[ch], '.',alpha=0.5)
         self.canvas.draw()
 
         
@@ -739,6 +766,8 @@ class AppForm(QMainWindow):
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
         self.axes0.semilogy(self.f_span[ch][0:-1], self.IQ_vels[ch],'g.-')
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
+        if self.last_I != None:
+            self.axes1.plot(self.last_I[ch], self.last_Q[ch], 'c.-', self.last_iq_centers.real[ch], self.last_iq_centers.imag[ch], '.', self.last_I_on_res[ch], self.last_Q_on_res[ch], '.')
         self.canvas.draw()
 
         freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
