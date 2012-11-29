@@ -104,17 +104,20 @@ class StartQt4(QMainWindow):
         self.res1_max2_vels /= numpy.max(self.res1_max2_vels)
         #self.res1_relative_max_vels /= numpy.max(self.res1_relative_max_vels)
         self.ui.plot_1.canvas.ax.clear()
-        self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,self.res1_max_vels,'b.-')
+        self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,self.res1_max_vels,'b.-',label='Max IQ velocity')
         #self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,max_neighbors,'r.-')
-        self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,self.res1_max_ratio,'k.-')
+        self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,self.res1_max_ratio,'k.-',label='Ratio (Max Vel)/(2nd Max Vel)')
+        self.ui.plot_1.canvas.ax.legend()
+        self.ui.plot_1.canvas.ax.set_xlabel('attenuation')
+        
         #self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,self.res1_max2_vels-1,'b.-')
         #self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,max2_neighbors-1,'b.-')
         #self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,self.res1_max2_ratio-1,'g.-')
         cid=self.ui.plot_1.canvas.mpl_connect('button_press_event', self.click_plot_1)
-        self.ui.plot_1.canvas.format_labels()
+        #self.ui.plot_1.canvas.format_labels()
         self.ui.plot_1.canvas.draw()
 
-        max_ratio_threshold = 1.5
+        max_ratio_threshold = 1.2
         guess_atten_idx = where(self.res1_max_ratio < max_ratio_threshold)
         rule_of_thumb_offset = 1
         if size(guess_atten_idx) >= 1:
@@ -202,6 +205,8 @@ class StartQt4(QMainWindow):
             #self.ui.plot_1.canvas.draw()
             
             self.ui.plot_2.canvas.ax.clear()
+            self.ui.plot_2.canvas.ax.set_xlabel('frequency (GHz)')
+            self.ui.plot_2.canvas.ax.set_ylabel('IQ velocity')
             self.ui.plot_2.canvas.ax.plot(self.Res1.freq[:-1],self.res1_iq_vel,'b.-')
             if self.iAtten > 0:
                 self.ui.plot_2.canvas.ax.plot(self.Res1.freq[:-1],self.res1_iq_vels[self.iAtten-1],'g.-')

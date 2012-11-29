@@ -19,10 +19,12 @@ from lib import iqsweep
 #WORKING...show originally calculated median/threshold as faded line
 
 
-if len(sys.argv)!= 2:
-    print 'Usage: ',sys.argv[0],' roachNum'
-    exit(1)
-roachNum = int(sys.argv[1])
+if __name__=='__main__':
+    if len(sys.argv)!= 2:
+        print 'Usage: ',sys.argv[0],' roachNum'
+        exit(1)
+    roachNum = int(sys.argv[1])
+    datadir = os.environ['FREQ_PATH']
 
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
@@ -689,7 +691,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/20121006/ps_freq%d.txt'%roachNum)
+        self.textbox_freqFile = QLineEdit(datadir+'ps_freq%d.txt'%roachNum)
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
@@ -698,7 +700,7 @@ class AppForm(QMainWindow):
         self.connect(self.button_importFreqs, SIGNAL('clicked()'), self.importFreqs)   
 
         # File with FIR coefficients
-        self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/matched_r4p46.txt')
+        self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/lpf_250kHz.txt')
         self.textbox_coeffsFile.setMaximumWidth(200)
 
         # Import FIR coefficients from file.
