@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'arcons_basic_gui.ui'
 #
-# Created: Fri Sep 14 05:34:13 2012
+# Created: Tue Dec 11 17:40:34 2012
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -353,15 +353,16 @@ class Ui_arcons(object):
         self.subtract_sky_radioButton.setChecked(False)
         self.subtract_sky_radioButton.setAutoExclusive(False)
         self.subtract_sky_radioButton.setObjectName(_fromUtf8("subtract_sky_radioButton"))
-        self.image_color_radioButton = QtGui.QRadioButton(self.frame_6)
-        self.image_color_radioButton.setEnabled(False)
-        self.image_color_radioButton.setGeometry(QtCore.QRect(20, 20, 111, 31))
+        self.flat_field_radioButton = QtGui.QRadioButton(self.frame_6)
+        self.flat_field_radioButton.setEnabled(True)
+        self.flat_field_radioButton.setGeometry(QtCore.QRect(20, 20, 111, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.image_color_radioButton.setFont(font)
-        self.image_color_radioButton.setChecked(False)
-        self.image_color_radioButton.setAutoExclusive(False)
-        self.image_color_radioButton.setObjectName(_fromUtf8("image_color_radioButton"))
+        self.flat_field_radioButton.setFont(font)
+        self.flat_field_radioButton.setCheckable(True)
+        self.flat_field_radioButton.setChecked(False)
+        self.flat_field_radioButton.setAutoExclusive(False)
+        self.flat_field_radioButton.setObjectName(_fromUtf8("flat_field_radioButton"))
         self.int_time_spinBox = QtGui.QSpinBox(self.frame_6)
         self.int_time_spinBox.setGeometry(QtCore.QRect(10, 50, 51, 22))
         self.int_time_spinBox.setMaximum(9999)
@@ -429,6 +430,22 @@ class Ui_arcons(object):
         self.pixelpath.setFrameShape(QtGui.QFrame.Box)
         self.pixelpath.setText(_fromUtf8(""))
         self.pixelpath.setObjectName(_fromUtf8("pixelpath"))
+        self.row = QtGui.QLabel(self.frame_5)
+        self.row.setGeometry(QtCore.QRect(40, 150, 61, 31))
+        self.row.setFrameShape(QtGui.QFrame.Box)
+        self.row.setText(_fromUtf8(""))
+        self.row.setObjectName(_fromUtf8("row"))
+        self.label_32 = QtGui.QLabel(self.frame_5)
+        self.label_32.setGeometry(QtCore.QRect(40, 130, 61, 16))
+        self.label_32.setObjectName(_fromUtf8("label_32"))
+        self.col = QtGui.QLabel(self.frame_5)
+        self.col.setGeometry(QtCore.QRect(130, 150, 61, 31))
+        self.col.setFrameShape(QtGui.QFrame.Box)
+        self.col.setText(_fromUtf8(""))
+        self.col.setObjectName(_fromUtf8("col"))
+        self.label_34 = QtGui.QLabel(self.frame_5)
+        self.label_34.setGeometry(QtCore.QRect(130, 130, 61, 16))
+        self.label_34.setObjectName(_fromUtf8("label_34"))
         self.groupBox = QtGui.QGroupBox(self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(870, 10, 171, 191))
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
@@ -691,7 +708,7 @@ class Ui_arcons(object):
         self.label_20.setText(QtGui.QApplication.translate("arcons", "File name:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_21.setText(QtGui.QApplication.translate("arcons", "Target name:", None, QtGui.QApplication.UnicodeUTF8))
         self.subtract_sky_radioButton.setText(QtGui.QApplication.translate("arcons", "Subtract Sky", None, QtGui.QApplication.UnicodeUTF8))
-        self.image_color_radioButton.setText(QtGui.QApplication.translate("arcons", "Image Color", None, QtGui.QApplication.UnicodeUTF8))
+        self.flat_field_radioButton.setText(QtGui.QApplication.translate("arcons", "Flat Field", None, QtGui.QApplication.UnicodeUTF8))
         self.label_19.setText(QtGui.QApplication.translate("arcons", " Integration (s)", None, QtGui.QApplication.UnicodeUTF8))
         self.options_radioButton.setText(QtGui.QApplication.translate("arcons", "Expand Controls-->", None, QtGui.QApplication.UnicodeUTF8))
         self.label_27.setText(QtGui.QApplication.translate("arcons", "Additional Header Info:", None, QtGui.QApplication.UnicodeUTF8))
@@ -699,6 +716,8 @@ class Ui_arcons(object):
         self.continuous.setText(QtGui.QApplication.translate("arcons", "  Continuous Observing", None, QtGui.QApplication.UnicodeUTF8))
         self.pixel_number_label.setText(QtGui.QApplication.translate("arcons", "Displaying Plot for\n"
 " Pixel Number:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_32.setText(QtGui.QApplication.translate("arcons", "Row:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_34.setText(QtGui.QApplication.translate("arcons", "Col:", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("arcons", "Pixel Selection Mode", None, QtGui.QApplication.UnicodeUTF8))
         self.drag_select_radioButton.setText(QtGui.QApplication.translate("arcons", "Click && Drag", None, QtGui.QApplication.UnicodeUTF8))
         self.rect_select_radioButton.setText(QtGui.QApplication.translate("arcons", "Single Click Rectangle", None, QtGui.QApplication.UnicodeUTF8))
