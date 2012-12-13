@@ -5,7 +5,7 @@ import sys
 import os
 import glob
 obsPath = sys.argv[1]
-for obs in sorted(glob.glob(os.path.join(obsPath,'obs*.h5'))):
+for obs in sorted(glob.glob(os.path.join(obsPath,'obs*.h5'))+glob.glob(os.path.join(obsPath,'cal*.h5'))):
     f=tables.openFile(obs,'r')
     try:
         hdrNode = f.getNode('/header/header')
