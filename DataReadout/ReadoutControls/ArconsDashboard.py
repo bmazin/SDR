@@ -30,6 +30,7 @@ import time
 import datetime
 import struct
 import socket
+from telnetlib import Telnet
 import os
 import subprocess
 from os.path import isfile
@@ -58,7 +59,9 @@ h = 4.13567E-15 #[ev*s]
 numXPixel = 44
 numYPixel = 46
 
-observatory = "Broida"
+EMERGENCY_LASER = True #used only at Palomar if wti ips-400 switch is needed to turn on laser box
+
+observatory = "Palomar" # "Broida", "Palomar", or "Lick"
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
 filters = ['V-band','R-band','Open','405','546','Closed']
@@ -137,6 +140,9 @@ class StartQt4(QMainWindow):
 
         #load beam map from default beammap directory
         self.loadbeammap()
+
+        #load flat factors
+        self.loadFlatFactors()
         
         #use mouse to select pixel from tv_image, also triggers a new spectrum to be displayed
         self.ui.tv_image.mousePressEvent = self.start_pixel_select
@@ -204,14 +210,54 @@ class StartQt4(QMainWindow):
         #self.image_thread.start_images(self.bindir)        
 
     def toggle_laser(self):
-        if self.ui.laser_toggle.isChecked():
-            laseronproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s"%(ljpath,'on'),shell=True)
-            laseronproc.wait()
-            self.ui.laser_label.setText("ON")
+        if EMERGENCY_LASER == True:
+            if self.ui.laser_toggle.isChecked():
+                try:
+                    #client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    #client.connect(("198.202.125.153", 23)) #connecting to ethernet power switch
+                    #client.send("/on 1")
+                    #response = client.recv(1024)
+                    #print repr(response)
+                    client = Telnet("198.202.125.153", 23)
+                    client.read_until("IPS>",1)
+                    client.write("/on 1\r")
+                    print "sent command to telnet"
+                    #print client.read_all()
+                    client.read_until("IPS>",1)
+                    client.write("/x\r")
+                    client.close()
+                    self.ui.laser_label.setText("ON")
+                except:
+                    print "Could not reach laser switch and turn laser ON"
+                    return
+            else:
+                try:
+                    #client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    #client.connect(("198.202.125.153", 23)) #connecting to ethernet power switch
+                    #client.send("/off 1")
+                    #response = client.recv(1024)
+                    #print repr(response)
+                    client = Telnet("198.202.125.153", 23)
+                    client.read_until("IPS>",1)
+                    client.write("/off 1\r")
+                    print "sent command to telnet"
+                    #print client.read_all()
+                    client.read_until("IPS>",1)
+                    client.write("/x\r")
+                    client.close()
+                    self.ui.laser_label.setText("OFF")
+                except:
+                    print "Could not reach laser switch and turn laser OFF"
+                    return
         else:
-            laseroffproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s"%(ljpath,'off'),shell=True)
-            laseroffproc.wait()
-            self.ui.laser_label.setText("OFF")
+            if self.ui.laser_toggle.isChecked():
+                laseronproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s"%(ljpath,'on'),shell=True)
+                laseronproc.wait()
+                self.ui.laser_label.setText("ON")
+            else:
+                laseroffproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s"%(ljpath,'off'),shell=True)
+                laseroffproc.wait()
+                self.ui.laser_label.setText("OFF")
 
     def go_home(self):
         self.ui.goto_angle.setValue(40)
@@ -336,7 +382,15 @@ class StartQt4(QMainWindow):
         self.bmap = rot90(self.bmap)
         self.bmap = flipud(self.bmap)
         bmfile.close()
-        
+
+    def loadFlatFactors(self):
+        try:
+            self.flatFactors = load('/home/sean/data/common/intensityFactors.npy')
+            self.flatFactors = flipud(self.flatFactors)
+        except:
+            print "Unable to load flat factors, flat fielding will not work"
+            self.ui.flat_field_radioButton.setEnabled(False)    
+
     #turn gui functionality on/off when observations are stopped/running
     def enable_observation(self):
         self.ui.start_observation_pushButton.setEnabled(True)
@@ -405,7 +459,7 @@ class StartQt4(QMainWindow):
             self.ui.file_name_lineEdit.setText(str(self.obsfile))
             if os.path.exists(self.bindir) == False:
                 os.mkdir(self.bindir)
-            HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,filthead,dir=str(self.datadir),target=targname, focus=self.focus, parallactic = self.parallactic)
+            HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,filthead,dir=str(self.datadir), telescope = observatory, target=targname, focus=self.focus, parallactic = self.parallactic)
             proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
             proc.wait()
             self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s > %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
@@ -586,6 +640,9 @@ class StartQt4(QMainWindow):
         #photon_count = rot90(photon_count)
         #photon_count = rot90(photon_count)
         #photon_count = rot90(photon_count)
+
+        if self.ui.flat_field_radioButton.isChecked():
+            photon_count *= self.flatFactors
 
         if self.ui.contrast_mode.isChecked():
             self.vmin = self.ui.vmin.value()
@@ -830,6 +887,8 @@ class StartQt4(QMainWindow):
         self.ui.spectra_plot.canvas.ax.clear()
         self.spectrum_pixel = self.bmap[median(self.spectrum_pixel_x)][(self.nypix-1)-median(self.spectrum_pixel_y)]
         self.ui.pixelpath.setText(str(self.spectrum_pixel))
+        self.ui.row.setText(str(median(self.spectrum_pixel_y)))
+        self.ui.col.setText(str(median(self.spectrum_pixel_x)))
         #self.spectrum_pixel = self.nxpix*(median(self.spectrum_pixel_y))+median(self.spectrum_pixel_x)
         #self.ui.pixel_no_lcd.display(self.spectrum_pixel)
         #self.ui.integrated_snr_lcd.display(SNR)
@@ -881,7 +940,8 @@ class StartQt4(QMainWindow):
         if observatory == "Palomar":
             try:
                 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
+                client.connect(("198.202.125.194", 5004)) #connecting directly at Palomar
+                #client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
                 client.send('?PARALLACTIC\r')
                 response = client.recv(1024)
                 client.close()
@@ -900,7 +960,8 @@ class StartQt4(QMainWindow):
         if observatory == "Palomar":
             try:
                 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
+                client.connect(("198.202.125.194", 5004))
+                #client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
                 client.send('REQSTAT\r')
                 response = client.recv(1024)
                 client.close()
@@ -908,6 +969,7 @@ class StartQt4(QMainWindow):
                 print "Connection to TCS failed on get_telescope_status"
                 return
             
+            print response
             utc, line2, line3, line4, cass_angle = response.split('\n')
             id, focus, tubelength = line2.split(', ')
             focus_title, focus_val = focus.split('= ')
@@ -928,7 +990,8 @@ class StartQt4(QMainWindow):
         
             try:
                 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
+                client.connect(("198.202.125.194", 5004))                
+                #client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
                 client.send('REQPOS\r')
                 response = client.recv(1024)
                 client.close()
@@ -1043,10 +1106,11 @@ class StartQt4(QMainWindow):
             self.ra = float(self.ui.RA_lineEdit.text())
             self.dec = float(self.ui.Dec_lineEdit.text())
             #get utc and local times
-            self.utc = time.gmtime()
+            self.t = time.gmtime()
+            self.utc = time.strftime("%H:%M:%S",self.t)
             self.lt = time.localtime()
             #Calculate alt, az, and airmass(X)
-            self.alt, self.az, self.lst, self.ha = rad2altaz(self.ra, self.dec, self.lon, self.lat, self.utc)
+            self.alt, self.az, self.lst, self.ha = rad2altaz(self.ra, self.dec, self.lon, self.lat, self.t)
             self.airmass = 1./cos((pi/180)*(90-self.alt))
             #self.parallactic = 0.0
         
@@ -1196,6 +1260,7 @@ class image_Worker(QThread):
         self.E8 = self.E7+self.dE
         self.E9 = self.E8+self.dE
         self.pc = ndarray(self.total_pix, int)
+
     def update_params(self, nxpix, nypix, Emin, Emax):
         self.nxpix, self.nypix, self.Emin, self.Emax = nxpix, nypix, Emin, Emax
         self.setup_thread() #remake arrays for imaging
