@@ -566,7 +566,7 @@ int connect_to_roach(int roachno)
     int portno = 50000;// + roachno;//$$ Change port number for roaches
     req.tv_sec = 0;
     req.tv_nsec = usec * 1000L;
-    char* hostnames[] = {"10.0.0.10","10.0.0.11","10.0.0.12","10.0.0.13","10.0.0.14","10.0.0.15","10.0.0.16","10.0.0.17"};
+    char* hostnames[] = {"10.0.0.10","10.0.0.11","10.0.0.12","10.0.0.13","10.0.0.14","10.0.0.15","10.0.0.17","10.0.0.16"};
     //char* hostnames[] = {"127.0.0.1"};//$$ Change hostnames
     /* socket: create the socket */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
