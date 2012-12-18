@@ -11,8 +11,10 @@ import random
 from tables import *
 import os
 
-path = '/home/sean/data/20121115/'
-outfile = path + 'sci4_beammap_left.h5'
+#path = '/home/sean/data/20121202/'
+path='/home/sean/SDR/Projects/BestBeammap/'
+outfile = path + 'sci4_beammap_palomar.h5'
+placeUnbeammappedPixels = 0
 
 # make beamap group 
 h5file = openFile(outfile, mode = "w")
@@ -34,11 +36,16 @@ overlaps = 0
 nRoach = 8
 nPixel = 253
 nPixelsPerRoach = 253
-posList = np.recfromtxt(path+'freq_atten_x_y-refined.txt')
-posFreqList = posList['f0']
-posAttenList = posList['f1']
-xList = np.round(posList['f2'])
-yList = np.round(posList['f3'])
+posList = np.recfromtxt(path+'freq_atten_x_y_swap-Sorted.txt')
+posListRefined = np.loadtxt(path+'freq_atten_x_y-PalSwap.txt')
+#posFreqList = posList['f0']
+#posAttenList = posList['f1']
+#xList = np.round(posList['f2'])
+#yList = np.round(posList['f3'])
+posFreqList = posListRefined[:,0]
+posAttenList = posListRefined[:,1]
+xList = posListRefined[:,2]
+yList = posListRefined[:,3]
 pixelNames = posList['f4']
 
 completePixelList = ['/r%d/p%d/'%(iRoach,iPixel) for iRoach in range(nRoach) for iPixel in range(nPixel)]
@@ -65,7 +72,6 @@ for iPos,pixelName in enumerate(pixelNames):
         
 ca.flush()
 
-placeUnbeammappedPixels = 1
 #fill the rest in randomly
 print len(pixelNames),'good pixels'
 
@@ -81,7 +87,7 @@ for iEmptyPix,pixelName in enumerate(noloc):
         
 h5file.flush()
 h5file.close()
-print len(noloc),'Randomly placed pixels'
+print len(noloc),'Unplaced pixels'
 print overlaps, 'Overlapping pixels'
     
 #iEmptyPix = 0
