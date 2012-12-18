@@ -8,20 +8,22 @@ import collections
 import scipy
 import pyfits
 from PixelQualityfunc import *
+import os
 
 closefcutoff=.0007   #when the program compares the approximate freq in frequency files to the accurate frequency in the fit file, it will accept a difference of the closefcutoff (GHz)
 
 #bmaptitle='/media/disk2/sci3gamma/20120904/PositionKnownOnlybeamimage_double_refined_20120904.h5'
-bmaptitle='/home/sean/data/20121010/beamimage_sci4_20121010.h5'
+bmaptitle='/home/sean/data/20121106/sci4a_beammap.h5'
 
 #for feedline 1
-title1=title2='20121006/ps_freq'
-titlefits1='20121006/20121006-SCI4-ADR-FL1-fits.txt'
+title1=title2='20121105adr/ps_freq'
+titlefits1='20121105adr/FL1-adr-sci4a-higherTc-good-fits.txt'
 #for feedline 2
-titlefits2='20121006/20121006-SCI4-ADR-FL2-fits.txt'
+#titlefits2='20121006/20121006-SCI4-ADR-FL2-fits.txt'
+titlefits2='20121105adr/FL2-adr-sci4a-higherTc-all-fits.txt'
 
-outTitle='/home/sean/data/fitshist/20121011_Qi_PixelQuality.fits'
-freqOutTitle='/home/sean/data/fitshist/20121011_freqMap.fits'
+outTitle='/home/sean/data/fitshist/20121106_Q_PixelQuality.fits'
+freqOutTitle='/home/sean/data/fitshist/20121106_freqMap.fits'
  
 
 #--Get an accurate array with roach,pixel,f,Q in the correct position--
@@ -57,6 +59,16 @@ fid.close()
 #--Plot what the detector looks like with the f,Q, and position written inside each 'pixel'--
 pixarray=np.array(pixarray)
 freqarray=np.array(freqarray)
+
+print np.shape(pixarray)
+scale_nstds = 3
+scale_max=np.mean(pixarray[:][:])+scale_nstds*np.std(pixarray[:][:])
+plt.matshow(pixarray[:][:],vmin=0,vmax=scale_max)
+plt.title('Q')
+plt.xlabel('Col')
+plt.ylabel('Row')
+plt.colorbar()
+plt.show()
 
 
 hdu = pyfits.PrimaryHDU(pixarray)
