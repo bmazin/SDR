@@ -4,8 +4,8 @@ from matplotlib import pyplot as plt
 
 #Plots Histogram of f, Q, and Distance of f to nearest neighbor, Q vs f, Dist to neigh vs f and saves it to a pdf.  You need to change the File and pdftitle (and possibly the text position in line 79
 
-File= '20121006/20121006-SCI4-DF-FL1-fits.txt'
-pdftitle='/home/sean/data/fitshist/20121006-SCI4-DF-FL1-fits-hist.pdf'
+File= '20121116/FL1-sci4a-DF-good-fits.txt'
+pdftitle='/home/sean/data/fitshist/FL1-sci4a-DF-good.pdf'
 autofit=np.loadtxt('/home/sean/data/%s'%File)
 
 freqs=autofit[:,1]
