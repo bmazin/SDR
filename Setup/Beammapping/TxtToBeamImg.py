@@ -38,6 +38,7 @@ nPixel = 253
 nPixelsPerRoach = 253
 posList = np.recfromtxt(path+'freq_atten_x_y_swap-Sorted.txt')
 posListRefined = np.loadtxt(path+'freq_atten_x_y-PalSwap.txt')
+#posList = posList[np.logical_or(np.array([name[2] for name in pixelNames])=='0', np.array([name[2] for name in pixelNames])=='1')]#pick out positions for roach 4
 #posFreqList = posList['f0']
 #posAttenList = posList['f1']
 #xList = np.round(posList['f2'])
