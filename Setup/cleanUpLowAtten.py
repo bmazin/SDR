@@ -12,7 +12,7 @@ if len(sys.argv) != 2:
     exit(1)
 roachNum = int(sys.argv[1])
 
-path='/home/sean/data/20121006/'
+path='/home/sean/data/sci4alpha/'
 filename = 'ps_freq%d'%roachNum
 outfilename = filename + '-old'
 
