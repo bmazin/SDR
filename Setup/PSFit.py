@@ -117,24 +117,30 @@ class StartQt4(QMainWindow):
         #self.ui.plot_1.canvas.format_labels()
         self.ui.plot_1.canvas.draw()
 
-        max_ratio_threshold = 1.2
+        max_ratio_threshold = 1.5
         guess_atten_idx = where(self.res1_max_ratio < max_ratio_threshold)
-        rule_of_thumb_offset = 1
+        rule_of_thumb_offset = 2
         if size(guess_atten_idx) >= 1:
-            guess_atten = self.Res1.atten1s[guess_atten_idx[0][0]+rule_of_thumb_offset]
+            if guess_atten_idx[0][0]+rule_of_thumb_offset < len(self.Res1.atten1s):
+                guess_atten_idx[0][0] += rule_of_thumb_offset
+            guess_atten = self.Res1.atten1s[guess_atten_idx[0][0]]
             print 'Guessing attenuation is ',guess_atten
             self.select_atten(guess_atten)
         else:
             print 'Defaulting guess attenuation to center'
             self.select_atten(self.Res1.atten1s[self.NAttens/2])
-        self.guess_res_freq()
-
 
     def guess_res_freq(self):
         guess_idx = argmax(self.res1_iq_vels[self.iAtten])
-        if guess_idx >0:
-            guess_idx-=1
-        guess = self.Res1.freq[guess_idx]
+        #The longest edge is identified, choose which vertex of the edge
+        #is the resonant frequency by checking the neighboring edges            
+        #len(IQ_vels[ch]) == len(f_span)-1, so guess_idx is the index
+        #of the lower frequency vertex of the longest edge            
+        if guess_idx-1 < 0 or self.res1_iq_vel[guess_idx-1] < self.res1_iq_vel[guess_idx+1]:
+            iNewResFreq = guess_idx
+        else:
+            iNewResFreq = guess_idx-1
+        guess = self.Res1.freq[iNewResFreq]
         print 'Guessing resonant freq at ',guess
         self.select_freq(guess)
 
