@@ -60,12 +60,14 @@ class AppForm(QMainWindow):
         self.last_Q = None
         self.last_iq_centers = None
         self.last_IQ_vels = None
+        self.last_f_span = None
         self.I = None
         self.Q = None
         self.I_on_res = None
         self.Q_on_res = None
         self.iq_centers = None
         self.IQ_vels = None
+        self.f_span = None
 
         
     def openClient(self):
@@ -545,6 +547,8 @@ class AppForm(QMainWindow):
             print a
             self.programAttenuators(atten_in, a)
             time.sleep(0.5)
+            if self.f_span != None:
+                self.last_f_span = self.f_span
             f_span = []
             l = 0
             self.f_span = [[0]*steps]*self.N_freqs
@@ -608,8 +612,7 @@ class AppForm(QMainWindow):
                     dQ = self.Q[ch][iFreq]-self.Q[ch][iFreq+1]
                     self.IQ_vels[ch][iFreq] = numpy.sqrt(dI**2+dQ**2)
 	
-            #if len(attens) > 1:
-            if True:
+            if len(attens) > 1:
                 for n in range(self.N_freqs):
                     w = iqsweep.IQsweep()
                     w.f0 = dac_freqs[n]/1e9
@@ -654,6 +657,7 @@ class AppForm(QMainWindow):
                     self.roach.write_int('startDAC', 1)
                     time.sleep(1)
                     print ".",
+                    sys.stdout.flush()
                 print "done."
                 self.button_startDAC.setText('Stop DAC')
                 self.dacStatus = 'on'
@@ -734,12 +738,17 @@ class AppForm(QMainWindow):
         ch = ch + 1
         ch = ch%self.N_freqs
         self.textbox_channel.setText(str(ch))
+        self.showChannel(ch)
+
+    def showChannel(self,ch=None):
+        if ch == None:
+            ch = int(self.textbox_channel.text())
         self.axes0.clear()
         self.axes1.clear()
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
         self.axes0.semilogy(self.f_span[ch][0:-1], self.IQ_vels[ch],'g.-')
         if self.last_IQ_vels != None:
-            self.axes0.semilogy(self.f_span[ch][0:-1], self.last_IQ_vels[ch],'c.-',alpha=0.5)
+            self.axes0.semilogy(self.last_f_span[ch][0:-1], self.last_IQ_vels[ch],'c.-',alpha=0.5)
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
         if self.last_I != None:
             self.axes1.plot(self.last_I[ch], self.last_Q[ch], 'c.-', self.last_iq_centers.real[ch], self.last_iq_centers.imag[ch], '.', self.last_I_on_res[ch], self.last_Q_on_res[ch], '.',alpha=0.5)
@@ -755,29 +764,13 @@ class AppForm(QMainWindow):
             atten=self.customResonators[ch][1]
         self.textbox_freq.setText(str(freq))
         self.spinbox_attenuation.setValue(int(atten))
-        
+
     def channelIncDown(self):
         ch = int(self.textbox_channel.text())
         ch = ch - 1
         ch = ch%self.N_freqs
         self.textbox_channel.setText(str(ch))
-        self.axes0.clear()
-        self.axes1.clear()
-        self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
-        self.axes0.semilogy(self.f_span[ch][0:-1], self.IQ_vels[ch],'g.-')
-        self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
-        if self.last_I != None:
-            self.axes1.plot(self.last_I[ch], self.last_Q[ch], 'c.-', self.last_iq_centers.real[ch], self.last_iq_centers.imag[ch], '.', self.last_I_on_res[ch], self.last_Q_on_res[ch], '.')
-        self.canvas.draw()
-
-        freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
-        freq=freqs[ch]/10**9
-        atten=self.attens[ch]
-        if self.customResonators[ch][1]!=-1:
-            #freq=self.customResonators[ch][0]
-            atten=self.customResonators[ch][1]
-        self.textbox_freq.setText(str(freq))
-        self.spinbox_attenuation.setValue(int(atten))
+        self.showChannel(ch)
 
     def changeCenter(self, event):
         I = event.xdata
@@ -791,25 +784,54 @@ class AppForm(QMainWindow):
 
     def snapResFreq(self):
         ch = int(self.textbox_channel.text())
+        for ch in range(self.N_freqs):
+            iMaxIQVel = numpy.argmax(self.IQ_vels[ch])
+            #The longest edge is identified, choose which vertex of the edge
+            #is the resonant frequency by checking the neighboring edges
+            #len(IQ_vels[ch]) == len(f_span)-1, so iMaxIQVel is the index
+            #of the lower frequency vertex of the longest edge
+            if iMaxIQVel+1 < len(self.IQ_vels[ch]) and self.IQ_vels[ch][iMaxIQVel-1] < self.IQ_vels[ch][iMaxIQVel+1]:
+                iNewResFreq = iMaxIQVel+1
+            else:
+                iNewResFreq = iMaxIQVel
 
-        iNewResFreq = numpy.argmax(self.IQ_vels[ch])+1
-        newFreq = self.f_span[ch][iNewResFreq]
-        newFreq = newFreq/1e9
-        self.textbox_freq.setText(str(newFreq))
+            maxJump = 5e-5# don't jump further than 50kHz
+            freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
+            currentFreq=freqs[ch]/10**9
+            newFreq = self.f_span[ch][iNewResFreq]
+            newFreq = newFreq/1e9
+            if (abs(newFreq-currentFreq) <= maxJump):
+                self.updateResFreq(ch=ch,freq=newFreq)
 
-    def updateResonator(self,atten=-1):
+    def updateResFreq(self,ch,freq):
         freqFile =str(self.textbox_freqFile.text())
         freqFile=freqFile[:-4] + '_NEW.txt'
-        ch = int(self.textbox_channel.text())
+        try:
+            f=open(freqFile,'a')
+            atten = self.attens[ch]
+            f.write(str(int(ch))+'\t'+str(freq)+'\t'+str(atten)+'\n')
+            f.close()
+
+            self.customResonators[ch]=[freq,atten]
+            print 'ch:',ch,'freq:',freq,'atten:',atten
+        except IOError:
+            print 'IOERROR! Trouble opening',freqFile
+
+    def updateResonator(self,atten=-1,ch=None):
+        freqFile =str(self.textbox_freqFile.text())
+        freqFile=freqFile[:-4] + '_NEW.txt'
+        if ch == None:
+            ch = int(self.textbox_channel.text())
         try:
             
             f=open(freqFile,'a')
             if atten == -1:
                 atten=self.spinbox_attenuation.value()
             freq=float(self.textbox_freq.text())
+            if atten == -1:
+                atten=self.spinbox_attenuation.value()
             f.write(str(int(ch))+'\t'+str(freq)+'\t'+str(atten)+'\n')
             f.close()
-
             self.customResonators[ch]=[freq,atten]
             print 'ch:',ch,'freq:',freq,'atten:',atten
         except IOError:
@@ -840,7 +862,12 @@ class AppForm(QMainWindow):
         self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
         
         # Roach board's IP address
-        self.textbox_roachIP = QLineEdit('10.0.0.1%d'%roachNo)
+        roachIP = roachNo
+        if roachNo == 6:
+            roachIP = 7
+        elif roachNo == 7:
+            roachIP = 6
+        self.textbox_roachIP = QLineEdit('10.0.0.1%d'%roachIP)
         self.textbox_roachIP.setMaximumWidth(200)
         label_roachIP = QLabel('Roach IP Address:')
 
@@ -1095,6 +1122,7 @@ class AppForm(QMainWindow):
         self.file_menu = self.menuBar().addMenu("&File")
         
         load_file_action = self.create_action("&Save plot",
+
             shortcut="Ctrl+S", slot=self.save_plot, 
             tip="Save the plot")
         quit_action = self.create_action("&Quit", slot=self.close, 
