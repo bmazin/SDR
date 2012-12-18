@@ -19,12 +19,7 @@ from lib import iqsweep
 #WORKING...show originally calculated median/threshold as faded line
 
 
-if __name__=='__main__':
-    if len(sys.argv)!= 2:
-        print 'Usage: ',sys.argv[0],' roachNum'
-        exit(1)
-    roachNum = int(sys.argv[1])
-    datadir = os.environ['FREQ_PATH']
+
 
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
@@ -47,6 +42,8 @@ class AppForm(QMainWindow):
         self.thresholds, self.medians = numpy.array([0.]*256), numpy.array([0.]*256)
         self.customThresholds = numpy.array([360.]*256)
         self.customResonators=numpy.array([[0.0,-1]]*256)   #customResonator[ch]=[freq,atten]
+        self.lastNoiseFFT = None
+        self.lastNoiseFFTFreqs = None
         
     def openClient(self):
         self.roach = corr.katcp_wrapper.FpgaClient(self.textbox_roachIP.text(),7147)
@@ -62,32 +59,36 @@ class AppForm(QMainWindow):
         for ch in range(N_freqs):
             # If the resonator's attenuation is >=99 then its FIR should be zeroed
             if self.zeroChannels[ch]:
-                lpf = numpy.array([0.]*taps)*(2**11-1)
+                fir = numpy.array([0.]*taps)*(2**11-1)
                 print 'deleted ch ',ch
             else:
-                lpf = numpy.array(self.fir)*(2**11-1)
+                if numpy.ndim(self.fir) == 1:
+                    fir = numpy.array(self.fir)*(2**11-1)
+                else:
+                    fir = numpy.array(self.fir[ch])*(2**11-1)
+
                 print ch
-                #lpf = numpy.array([1.]+[0]*(taps-1))*(2**11-1)
+                #fir = numpy.array([1.]+[0]*(taps-1))*(2**11-1)
         #    26 tap, 25 us matched fir
-                #lpf = numpy.array([0.0875788844768 , 0.0840583257978 , 0.0810527406206 , 0.0779008825067 , 0.075106964962 , 0.0721712998256 , 0.0689723729398 , 0.066450095496 , 0.0638302570705 , 0.0613005685486 , 0.0589247737004 , 0.0565981917436 , 0.0544878914297 , 0.0524710948658 , 0.0503447054014 , 0.0483170854189 , 0.0463121066637 , 0.044504238059 , 0.0428469827102 , 0.0410615366471 , 0.0395570640218 , 0.0380071830756 , 0.0364836787854 , 0.034960959124 , 0.033456372241 , 0.0321854467182])*(2**11-1)
+                #fir = numpy.array([0.0875788844768 , 0.0840583257978 , 0.0810527406206 , 0.0779008825067 , 0.075106964962 , 0.0721712998256 , 0.0689723729398 , 0.066450095496 , 0.0638302570705 , 0.0613005685486 , 0.0589247737004 , 0.0565981917436 , 0.0544878914297 , 0.0524710948658 , 0.0503447054014 , 0.0483170854189 , 0.0463121066637 , 0.044504238059 , 0.0428469827102 , 0.0410615366471 , 0.0395570640218 , 0.0380071830756 , 0.0364836787854 , 0.034960959124 , 0.033456372241 , 0.0321854467182])*(2**11-1)
                 #26 tap, 20 us matched fir
-                #lpf = numpy.array([ 0.102806030245 , 0.097570344415 , 0.0928789946181 , 0.0885800360545 , 0.0841898850361 , 0.079995145104 , 0.0761649967857 , 0.0724892663141 , 0.0689470889358 , 0.0657584886557 , 0.0627766233242 , 0.0595952531565 , 0.0566356208278 , 0.053835736579 , 0.0510331408751 , 0.048623806127 , 0.0461240096904 , 0.0438134132285 , 0.0418265743203 , 0.0397546477453 , 0.0377809254888 , 0.0358044897245 , 0.0338686929847 , 0.0321034547839 , 0.0306255734188 , 0.0291036235859 ])*(2**11-1)
+                #fir = numpy.array([ 0.102806030245 , 0.097570344415 , 0.0928789946181 , 0.0885800360545 , 0.0841898850361 , 0.079995145104 , 0.0761649967857 , 0.0724892663141 , 0.0689470889358 , 0.0657584886557 , 0.0627766233242 , 0.0595952531565 , 0.0566356208278 , 0.053835736579 , 0.0510331408751 , 0.048623806127 , 0.0461240096904 , 0.0438134132285 , 0.0418265743203 , 0.0397546477453 , 0.0377809254888 , 0.0358044897245 , 0.0338686929847 , 0.0321034547839 , 0.0306255734188 , 0.0291036235859 ])*(2**11-1)
                 #26 tap, 30 us matched fir
-                #lpf = numpy.array([ 0.0781747107378 , 0.0757060398243 , 0.0732917718492 , 0.0708317694778 , 0.0686092845217 , 0.0665286923521 , 0.0643467681477 , 0.0621985982971 , 0.0600681642401 , 0.058054873199 , 0.0562486467178 , 0.0542955553149 , 0.0527148880657 , 0.05096365681 , 0.0491121116212 , 0.0474936094733 , 0.0458638771941 , 0.0443219286645 , 0.0429290438102 , 0.0415003391096 , 0.0401174498302 , 0.0386957715665 , 0.0374064708747 , 0.0362454802408 , 0.0350170176804 , 0.033873302383 ])*(2**11-1)
-                #lpf = lpf[::-1]
-                #    26 tap, lpf, 250 kHz,
-                #lpf = numpy.array([-0 , 0.000166959420533 , 0.00173811663844 , 0.00420937801998 , 0.00333739357391 , -0.0056305703275 , -0.0212738104942 , -0.0318529375832 , -0.0193635986879 , 0.0285916612022 , 0.106763943766 , 0.18981814328 , 0.243495321192 , 0.243495321192 , 0.18981814328 , 0.106763943766 , 0.0285916612022 , -0.0193635986879 , -0.0318529375832 , -0.0212738104942 , -0.0056305703275 , 0.00333739357391 , 0.00420937801998 , 0.00173811663844 , 0.000166959420533 , -0])*(2**11-1)
-                #    26 tap, lpf, 125 kHz.
-                #lpf = numpy.array([0 , -0.000431898216436 , -0.00157886921107 , -0.00255492263971 , -0.00171727439076 , 0.00289724121972 , 0.0129123447233 , 0.0289345497995 , 0.0500906370566 , 0.0739622085341 , 0.0969821586979 , 0.115211955161 , 0.125291869266 , 0.125291869266 , 0.115211955161 , 0.0969821586979 , 0.0739622085341 , 0.0500906370566 , 0.0289345497995 , 0.0129123447233 , 0.00289724121972 , -0.00171727439076 , -0.00255492263971 , -0.00157886921107 , -0.000431898216436 , -0])*(2**11-1)
+                #fir = numpy.array([ 0.0781747107378 , 0.0757060398243 , 0.0732917718492 , 0.0708317694778 , 0.0686092845217 , 0.0665286923521 , 0.0643467681477 , 0.0621985982971 , 0.0600681642401 , 0.058054873199 , 0.0562486467178 , 0.0542955553149 , 0.0527148880657 , 0.05096365681 , 0.0491121116212 , 0.0474936094733 , 0.0458638771941 , 0.0443219286645 , 0.0429290438102 , 0.0415003391096 , 0.0401174498302 , 0.0386957715665 , 0.0374064708747 , 0.0362454802408 , 0.0350170176804 , 0.033873302383 ])*(2**11-1)
+                #fir = fir[::-1]
+                #    26 tap, fir, 250 kHz,
+                #fir = numpy.array([-0 , 0.000166959420533 , 0.00173811663844 , 0.00420937801998 , 0.00333739357391 , -0.0056305703275 , -0.0212738104942 , -0.0318529375832 , -0.0193635986879 , 0.0285916612022 , 0.106763943766 , 0.18981814328 , 0.243495321192 , 0.243495321192 , 0.18981814328 , 0.106763943766 , 0.0285916612022 , -0.0193635986879 , -0.0318529375832 , -0.0212738104942 , -0.0056305703275 , 0.00333739357391 , 0.00420937801998 , 0.00173811663844 , 0.000166959420533 , -0])*(2**11-1)
+                #    26 tap, fir, 125 kHz.
+                #fir = numpy.array([0 , -0.000431898216436 , -0.00157886921107 , -0.00255492263971 , -0.00171727439076 , 0.00289724121972 , 0.0129123447233 , 0.0289345497995 , 0.0500906370566 , 0.0739622085341 , 0.0969821586979 , 0.115211955161 , 0.125291869266 , 0.125291869266 , 0.115211955161 , 0.0969821586979 , 0.0739622085341 , 0.0500906370566 , 0.0289345497995 , 0.0129123447233 , 0.00289724121972 , -0.00171727439076 , -0.00255492263971 , -0.00157886921107 , -0.000431898216436 , -0])*(2**11-1)
                 #    Generic 40 tap matched filter for 25 us lifetime pulse
-                #lpf = numpy.array([0.153725595011 , 0.141052390733 , 0.129753816201 , 0.119528429291 , 0.110045314901 , 0.101336838027 , 0.0933265803805 , 0.0862038188673 , 0.0794067694409 , 0.0729543134914 , 0.0674101836798 , 0.0618283869464 , 0.0567253144676 , 0.0519730940444 , 0.047978953698 , 0.043791412767 , 0.0404560656757 , 0.0372466775252 , 0.0345000956808 , 0.0319243455811 , 0.0293425115323 , 0.0268372778298 , 0.0245216835234 , 0.0226817116475 , 0.0208024488535 , 0.0189575043357 , 0.0174290665862 , 0.0158791788119 , 0.0144611054123 , 0.0132599563305 , 0.0121083419203 , 0.0109003580368 , 0.0100328742978 , 0.00939328253743 , 0.00842247241585 , 0.00789304712484 , 0.00725494259117 , 0.00664528407122 , 0.00606688645845 , 0.00552041438208])*(2**11-1)                
-                #lpf = lpf[::-1]
+                #fir = numpy.array([0.153725595011 , 0.141052390733 , 0.129753816201 , 0.119528429291 , 0.110045314901 , 0.101336838027 , 0.0933265803805 , 0.0862038188673 , 0.0794067694409 , 0.0729543134914 , 0.0674101836798 , 0.0618283869464 , 0.0567253144676 , 0.0519730940444 , 0.047978953698 , 0.043791412767 , 0.0404560656757 , 0.0372466775252 , 0.0345000956808 , 0.0319243455811 , 0.0293425115323 , 0.0268372778298 , 0.0245216835234 , 0.0226817116475 , 0.0208024488535 , 0.0189575043357 , 0.0174290665862 , 0.0158791788119 , 0.0144611054123 , 0.0132599563305 , 0.0121083419203 , 0.0109003580368 , 0.0100328742978 , 0.00939328253743 , 0.00842247241585 , 0.00789304712484 , 0.00725494259117 , 0.00664528407122 , 0.00606688645845 , 0.00552041438208])*(2**11-1)                
+                #fir = fir[::-1]
 
             for n in range(taps/2):
-                coeff0 = int(lpf[2*n])
-                coeff1 = int(lpf[2*n+1])
-                coeff0 = numpy.binary_repr(int(lpf[2*n]), 12)
-                coeff1 = numpy.binary_repr(int(lpf[2*n+1]), 12)
+                coeff0 = int(fir[2*n])
+                coeff1 = int(fir[2*n+1])
+                coeff0 = numpy.binary_repr(int(fir[2*n]), 12)
+                coeff1 = numpy.binary_repr(int(fir[2*n+1]), 12)
                 coeffs = int(coeff1+coeff0, 2)
                 coeffs_bin = struct.pack('>l', coeffs)
                 register_name = 'FIR_b' + str(2*n) + 'b' + str(2*n+1)
@@ -96,11 +97,12 @@ class AppForm(QMainWindow):
                 self.roach.write_int('FIR_load_coeff', (ch<<1) + (0<<0))
         
         # Inactive channels will also be zeroed.
-        lpf = numpy.array([0.]*taps)
+        fir = numpy.array([0.]*taps)
         for ch in range(N_freqs, 256):
+            print ch,'deleted'
             for n in range(taps/2):
-                #coeffs = struct.pack('>h', lpf[2*n]) + struct.pack('>h', lpf[2*n+1])
-                coeffs = struct.pack('>h', lpf[2*n+1]) + struct.pack('>h', lpf[2*n])
+                #coeffs = struct.pack('>h', fir[2*n]) + struct.pack('>h', fir[2*n+1])
+                coeffs = struct.pack('>h', fir[2*n+1]) + struct.pack('>h', fir[2*n])
                 register_name = 'FIR_b' + str(2*n) + 'b' + str(2*n+1)
                 self.roach.write(register_name, coeffs)
                 self.roach.write_int('FIR_load_coeff', (ch<<1) + (1<<0))
@@ -331,13 +333,12 @@ class AppForm(QMainWindow):
         print "channel: ", ch, "median: ", scale_to_angle*med, "threshold: ", scale_to_angle*threshold
         #print "channel: ", ch, "avg: ", scale_to_angle*phase_avg, "sigma: ", scale_to_angle*sigma, "threshold: ", scale_to_angle*threshold
         
-    def snapshot(self):        
+    def snapshot(self):       
         self.displayResonatorProperties()
         ch_we = int(self.textbox_channel.text())
         self.roach.write_int('ch_we', ch_we)
         #print self.roach.read_int('ch_we')
-        
-        steps = int(self.textbox_timeLengths.text())
+        steps = int(self.textbox_snapSteps.text())
         L = 2**10
         bin_data_phase = ''
         for n in range(steps):
@@ -356,16 +357,12 @@ class AppForm(QMainWindow):
 
         self.axes1.clear()
         #self.axes1.plot(phase, '.-', [self.thresholds[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.')
-        saveDir = str('')
-        if saveDir != '':
-            phasefilename = saveDir + 'snapshot_'+time.strftime("%Y%m%d-%H%M%S",time.localtime()) + str(self.textbox_roachIP.text())+'.txt'
-            numpy.savetxt(phasefilename,phase,fmt='%.8e')
 
         if steps <= 1000:
             self.axes1.plot(phase,'.-')
 
         med=numpy.median(phase)
-        
+
         print 'ch:',ch_we,'median:',med,
         thresh=self.thresholds[ch_we]
 
@@ -373,12 +370,14 @@ class AppForm(QMainWindow):
             thresh=self.customThresholds[ch_we]
             print "Custom Threshold: ", thresh,
 
-        
         self.axes1.plot([thresh+med]*2*L*steps,'r.',[med]*2*L*steps,'g.',alpha=1)
 
         med=self.medians[ch_we]
         self.axes1.plot([thresh+med]*2*L*steps,'y.',[med]*2*L*steps,'y.',alpha=0.2)
         print "Threshold: ",self.thresholds[ch_we]
+        if numpy.ndim(self.fir) == 2:
+            self.axes0.clear()
+            self.axes0.plot(self.fir[ch_we])
 
         #print "Channel: ",ch_we," median: " ,self.medians[ch_we], 
         #if self.customThresholds[ch_we] != 360.0:
@@ -391,6 +390,103 @@ class AppForm(QMainWindow):
 
         self.canvas.draw()
         print "snapshot taken"
+
+    def longsnapshot(self):        
+        self.displayResonatorProperties()
+        ch_we = int(self.textbox_channel.text())
+        self.roach.write_int('ch_we', ch_we)
+        #print self.roach.read_int('ch_we')
+        
+        steps = int(self.textbox_longsnapSteps.text())
+        L = 2**10
+        numQDRSamples=2**19
+        numBytesPerSample=4
+        nLongsnapSamples = numQDRSamples*2*steps # 2 16-bit samples per 32-bit QDR word
+        bin_data_phase = ''
+        qdr_data_str = ''
+        for n in range(steps):
+            print 'starting sec snap'
+            self.roach.write_int('snapPhase_ctrl', 0)
+            self.roach.write_int('snapqdr_ctrl',0)
+            self.roach.write_int('startSnap', 0)
+            self.roach.write_int('snapqdr_ctrl',1)
+            self.roach.write_int('snapPhase_ctrl', 1)
+            self.roach.write_int('startSnap', 1)
+            time.sleep(2)
+            bin_data_phase = bin_data_phase + self.roach.read('snapPhase_bram', 4*L)    
+            qdr_data_str = qdr_data_str + self.roach.read('qdr0_memory',numQDRSamples*numBytesPerSample)
+            print '1 sec read'
+            
+        self.roach.write_int('snapPhase_ctrl', 0)
+        self.roach.write_int('snapqdr_ctrl',0)
+        self.roach.write_int('startSnap', 0)
+        phase = []
+        for m in range(steps*L):
+            phase.append(struct.unpack('>h', bin_data_phase[m*4+2:m*4+4])[0])
+            phase.append(struct.unpack('>h', bin_data_phase[m*4+0:m*4+2])[0])
+        if steps > 1:
+            dir = os.environ['MKID_DATA_DIR']
+            fname =os.path.join(dir,'ch_snap_r%dp%d_%dsecs.dat'%(roachNum,ch_we,steps))
+            file = open(fname,'w') 
+            file.write(qdr_data_str)
+            print 'raw values saved to',fname
+#            qdr_values = struct.unpack('>%dh'%(nLongsnapSamples),qdr_data_str)
+#
+#            fname =os.path.join(dir,'ch_snap_r%dp%d_%dsecs.bin'%(roachNum,ch_we,steps))
+#            numpy.savetxt(fname,qdr_values,fmt='%u')
+#            print 'unpacked values saved to',fname
+#            qdr_phase_values = numpy.array(qdr_values)*360./2**16*4/numpy.pi
+#            fname =os.path.join(dir,'ch_snap_r%dp%d_%dsecs.txt'%(roachNum,ch_we,steps))
+#            numpy.savetxt(fname,qdr_phase_values,fmt='%f')
+#            print 'phase values saved to',fname
+
+        if steps < 2:
+            print 'unpacking'
+            qdr_values = struct.unpack('>%dh'%(nLongsnapSamples),qdr_data_str)
+            print 'unpacked'
+            if steps < 2:
+                qdr_phase_values = numpy.array(qdr_values,dtype=numpy.float32)*360./2**16*4/numpy.pi
+            phase = numpy.array(phase)*360./2**16*4/numpy.pi
+            self.axes1.clear()
+            #self.axes1.plot(phase, '.-', [self.thresholds[ch_we]]*2*L*steps, 'r.', [self.medians[ch_we]]*2*L*steps, 'g.')
+
+            med=numpy.median(phase)
+            
+            print 'ch:',ch_we,'median:',med,
+            thresh=self.thresholds[ch_we]
+
+            if self.customThresholds[ch_we] != 360.0:
+                thresh=self.customThresholds[ch_we]
+                print "Custom Threshold: ", thresh,
+            print "Threshold: ",self.thresholds[ch_we]
+
+            self.axes1.plot(qdr_phase_values,'b-')
+            self.axes1.plot([thresh+med]*2*numQDRSamples*steps,'r-',[med]*2*numQDRSamples*steps,'g-',alpha=1)
+            med=self.medians[ch_we]
+            self.axes1.plot([thresh+med]*2*numQDRSamples*steps,'y-',[med]*2*numQDRSamples*steps,'y-',alpha=0.2)
+
+            nFFTAverages = 100
+            nSamplesPerFFT = nLongsnapSamples/nFFTAverages
+            noiseFFT = numpy.zeros(nSamplesPerFFT)
+            noiseFFTFreqs = numpy.fft.fftfreq(nSamplesPerFFT)
+            for iAvg in xrange(nFFTAverages):
+                noise = numpy.fft.fft(qdr_phase_values[iAvg*nSamplesPerFFT:(iAvg+1)*nSamplesPerFFT])
+                noise = numpy.abs(noise)**2
+                noiseFFT += noise
+            noiseFFT /= nFFTAverages
+            self.axes0.clear()
+            nFFTfreqs = len(noiseFFTFreqs)/2
+            noiseFFTFreqs *= 1e6 #convert MHz to Hz
+            self.axes0.loglog(noiseFFTFreqs[1:nFFTfreqs],noiseFFT[1:nFFTfreqs])
+            if (self.lastNoiseFFT != None):
+                self.axes0.loglog(self.lastNoiseFFTFreqs[1:nFFTfreqs],self.lastNoiseFFT[1:nFFTfreqs],'c',alpha=0.6)
+            self.lastNoiseFFTFreqs = noiseFFTFreqs
+            self.lastNoiseFFT = noiseFFT
+            self.axes0.set_xlabel('Freq (Hz)')
+            self.axes0.set_ylabel('FFT of snapshot, nAverages=%d'%nFFTAverages)
+            self.canvas.draw()
+
+        print "longsnapshot taken"
 
     def readPulses(self):
         scale_to_degrees = 360./2**12*4/numpy.pi
@@ -598,7 +694,7 @@ class AppForm(QMainWindow):
             print 'Freq/Atten loaded from',freqFile
             self.status_text.setText('Freq/Atten loaded')
             
-            self.loadCustomThresholds()
+            #self.loadCustomThresholds()
         except IOError:
             print 'No such file or directory:',freqFile
             self.status_text.setText('IOError')
@@ -691,7 +787,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit(datadir+'ps_freq%d.txt'%roachNum)
+        self.textbox_freqFile = QLineEdit(os.path.join(datadir,'ps_freq%d.txt'%roachNum))
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Import freqs from file.
@@ -700,7 +796,9 @@ class AppForm(QMainWindow):
         self.connect(self.button_importFreqs, SIGNAL('clicked()'), self.importFreqs)   
 
         # File with FIR coefficients
-        self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/lpf_250kHz.txt')
+        self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched_30us.txt')
+        #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched20121204r%d.txt'%roachNum)
+        #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched20121128r%d.txt'%roachNum)
         self.textbox_coeffsFile.setMaximumWidth(200)
 
         # Import FIR coefficients from file.
@@ -741,6 +839,11 @@ class AppForm(QMainWindow):
         self.button_snapshot = QPushButton("snapshot")
         self.button_snapshot.setMaximumWidth(170)
         self.connect(self.button_snapshot, SIGNAL('clicked()'), self.snapshot)            
+
+        # Long time snapshot of a single channel
+        self.button_longsnapshot = QPushButton("longsnapshot")
+        self.button_longsnapshot.setMaximumWidth(170)
+        self.connect(self.button_longsnapshot, SIGNAL('clicked()'), self.longsnapshot)            
         
         # Read pulses
         self.button_readPulses = QPushButton("Read pulses")
@@ -751,10 +854,21 @@ class AppForm(QMainWindow):
         self.textbox_seconds = QLineEdit('1')
         self.textbox_seconds.setMaximumWidth(50)
         
-        # lengths of 1 ms for defining thresholds.
+        # lengths of 2 ms for defining thresholds.
         self.textbox_timeLengths = QLineEdit('10')
         self.textbox_timeLengths.setMaximumWidth(50)
         label_timeLengths = QLabel('* 2 msec       ')
+
+
+        # lengths of 2 ms steps to combine in a snapshot.
+        self.textbox_snapSteps = QLineEdit('10')
+        self.textbox_snapSteps.setMaximumWidth(50)
+        label_snapSteps = QLabel('* 2 msec')
+
+        # lengths of 2 ms steps to combine in a snapshot.
+        self.textbox_longsnapSteps = QLineEdit('1')
+        self.textbox_longsnapSteps.setMaximumWidth(50)
+        label_longsnapSteps = QLabel('* sec')
 
         #median
         self.label_median = QLabel('median: 0.0000')
@@ -804,12 +918,21 @@ class AppForm(QMainWindow):
         hbox20.addWidget(self.textbox_channel)
         hbox20.addWidget(self.button_channelInc)
         gbox2.addLayout(hbox20)
-        gbox2.addWidget(self.button_snapshot)
-        gbox2.addWidget(self.button_rmCustomThreshold)
         hbox21 = QHBoxLayout()
-        hbox21.addWidget(self.textbox_seconds)
-        hbox21.addWidget(self.button_readPulses)
+        hbox21.addWidget(self.button_snapshot)
+        hbox21.addWidget(self.textbox_snapSteps)
+        hbox21.addWidget(label_snapSteps)
         gbox2.addLayout(hbox21)
+        hbox22 = QHBoxLayout()
+        hbox22.addWidget(self.button_longsnapshot)
+        hbox22.addWidget(self.textbox_longsnapSteps)
+        hbox22.addWidget(label_longsnapSteps)
+        gbox2.addLayout(hbox22)
+        gbox2.addWidget(self.button_rmCustomThreshold)
+        hbox23 = QHBoxLayout()
+        hbox23.addWidget(self.textbox_seconds)
+        hbox23.addWidget(self.button_readPulses)
+        gbox2.addLayout(hbox23)
 
         gbox3 = QVBoxLayout()
         gbox3.addWidget(self.label_median)
@@ -886,12 +1009,18 @@ class AppForm(QMainWindow):
    
 
 
+
 def main():
     app = QApplication(sys.argv)
     form = AppForm()
     form.show()
     app.exec_()
 
-
-if __name__ == "__main__":
+if __name__=='__main__':
+    if len(sys.argv)!= 2:
+        print 'Usage: ',sys.argv[0],' roachNum'
+        exit(1)
+    roachNum = int(sys.argv[1])
+    datadir = os.environ['FREQ_PATH']
     main()
+
