@@ -64,14 +64,14 @@ def detectPulses(sample,threshold):
     peakBaselines = baselines[peakIndices]
     return peakIndices,peakHeights,peakBaselines
 
-roachNum = 0
-pixelNum = 134
-steps=5
-folder = '/Scratch/newArrayData/20130220/'
+roachNum = 4
+pixelNum = 102
+steps=50
+folder = '/Scratch/filterData/20121204/'
 cps=300
 
 
-phaseFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs_%dcps.dat'%(roachNum,pixelNum,steps,cps))
+phaseFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs.dat'%(roachNum,pixelNum,steps))
 phaseFile = open(phaseFilename,'r')
 phase = phaseFile.read()
 numQDRSamples=2**19
@@ -89,28 +89,31 @@ offset = 3
 sampleStart = 0
 nSamples = 80000
 thresholdLength = 2000
-thresholdSigma = 3.
+thresholdSigma = 2.5
 
+filter= np.loadtxt('/Scratch/filterData/fir/template20121207r4.txt')[pixelNum,:]
+print filter
 sample=qdr_values[sampleStart:nSamples]
-filtered = np.array(sample)
+#filtered = np.array(sample)
+filtered = np.correlate(filter,sample,mode='same')[::-1]
 baselines=np.array([IIR(filtered,t) for t in xrange(len(filtered))])
 threshold = calcThreshold(filtered[0:thresholdLength],Nsigma=thresholdSigma)
 ax=fig.add_subplot(NAxes,1,iAxes)
-ax.plot(filtered,'y',label='phase')
-ax.plot(baselines,'b',label='lpf baseline')
+ax.plot(filtered,'b',label='phase')
+ax.plot(baselines,'y',label='lpf baseline')
 #ax.plot(baselines+template26Threshold)
-#ax.plot([0,len(sample)-1],[threshold,threshold])
-idx,peaks,bases = detectPulses(sample,threshold)
+#ax.plot([0,len(filtered)-1],[threshold,threshold])
+idx,peaks,bases = detectPulses(filtered,threshold)
 idx+=sampleStart
-ax.plot(idx,peaks+bases,'k.',label='detected peak')
-ax.plot(idx,bases,'r.',label='detected baseline')
+ax.plot(idx,peaks+bases,'ro',label='detected peak')
+ax.plot(idx,bases,'go',label='detected baseline')
 ax.set_xlabel('time (us)')
 ax.set_ylabel('phase (16-bit adu)')
-ax.set_title('detected peaks and baseline for ~%d cps, pixel /r%d/p%d'%(cps,roachNum,pixelNum))
+#ax.set_title('detected peaks and baseline for ~%d cps, pixel /r%d/p%d'%(cps,roachNum,pixelNum))
 ax.legend(loc='lower left')
 iAxes+=1
 outFilename = os.path.splitext(phaseFilename)[0]+'.png'
-plt.savefig(outFilename)
+#plt.savefig(outFilename)
 
 plt.show()
 
