@@ -80,24 +80,30 @@ def detectPulses(sample,threshold):
     peakBaselines = baselines[peakIndices]
     return peakIndices,peakHeights,peakBaselines
 
-roachNum = 4
-pixelNum = 102
-steps=50
-folder = '/Scratch/filterData/20121204/'
-cps=300
+roachNum = 0
+pixelNum = 136
+secs=5
+#folder = '/Scratch/filterData/20121204/'
+folder = '/Scratch/newArrayData/20130220/'
+cps=200
+bFiltered = True
 
 
-phaseFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs.dat'%(roachNum,pixelNum,steps))
+phaseFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs_%dcps.dat'%(roachNum,pixelNum,secs,cps))
 phaseFile = open(phaseFilename,'r')
 phase = phaseFile.read()
 numQDRSamples=2**19
 numBytesPerSample=4
-nLongsnapSamples = numQDRSamples*2*steps
+nLongsnapSamples = numQDRSamples*2*secs
 qdr_values = struct.unpack('>%dh'%(nLongsnapSamples),phase)
-qdr_phase_values = np.array(qdr_values,dtype=np.float32)*360./2**16*4/np.pi
+qdr_phase_values = np.array(qdr_values,dtype=np.float32)*360./2**16*4/np.pi #convert from adc units to degrees
+print len(qdr_phase_values),'us'
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(qdr_phase_values)
 
 fig = plt.figure()
-NAxes = 2
+NAxes = 1
 iAxes = 1
 size=26
 offset = 3
@@ -107,20 +113,23 @@ nSamples = 20000
 thresholdLength = 2000
 thresholdSigma = 2.5
 
-filter= np.loadtxt('/Scratch/filterData/fir/template20121207r4.txt')[pixelNum,:]
-lpf250kHz= np.loadtxt('/Scratch/filterData/fir/lpf_250kHz.txt')
-sample=qdr_values[sampleStart:sampleStart+nSamples]
-unfiltered = np.array(sample,dtype=np.float32)*360./2**16*4/np.pi
-filtered = np.correlate(filter,unfiltered,mode='same')[::-1]
-lpffiltered = np.correlate(lpf250kHz,unfiltered,mode='same')[::-1]
+sample=qdr_phase_values[sampleStart:sampleStart+nSamples]
+unfiltered = np.array(sample)
+if bFiltered == False:
+    filter= np.loadtxt('/Scratch/filterData/fir/template20121207r%d.txt'%roachNum)[pixelNum,:]
+    lpf250kHz= np.loadtxt('/Scratch/filterData/fir/lpf_250kHz.txt')
+    filtered = np.correlate(filter,unfiltered,mode='same')[::-1]
+    lpffiltered = np.correlate(lpf250kHz,unfiltered,mode='same')[::-1]
+else:
+    filtered = np.array(unfiltered)
 baselines=np.array([IIR(filtered,t) for t in xrange(len(filtered))])
 threshold = calcThreshold(filtered[0:thresholdLength],Nsigma=thresholdSigma)
 
-ax=fig.add_subplot(NAxes,1,iAxes)
-ax.plot(unfiltered,'k.-',label='unfiltered phase')
-ax.set_ylabel('unfiltered phase (${}^{\circ}$)')
-ax.set_xlim([5000,15000])
-iAxes+=1
+#ax=fig.add_subplot(NAxes,1,iAxes)
+#ax.plot(unfiltered,'k.-',label='unfiltered phase')
+#ax.set_ylabel('unfiltered phase (${}^{\circ}$)')
+#ax.set_xlim([5000,15000])
+#iAxes+=1
 
 #ax=fig.add_subplot(NAxes,1,iAxes)
 #ax.plot(lpffiltered,'k',label='250kHz lpf filtered phase')
@@ -131,8 +140,7 @@ iAxes+=1
 ax=fig.add_subplot(NAxes,1,iAxes)
 ax.plot(filtered,'k.-',label='optimal filtered phase')
 ax.plot(baselines,'b',label='lpf baseline')
-#ax.plot(baselines+template26Threshold)
-#ax.plot([0,len(filtered)-1],[threshold,threshold])
+ax.plot(baselines+threshold,'y--',label='threshold')
 idx,peaks,bases = detectPulses(filtered,threshold)
 idx+=sampleStart
 ax.plot(idx-sampleStart,peaks+bases,'ro',label='detected peak')
