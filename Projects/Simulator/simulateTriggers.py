@@ -1,9 +1,25 @@
-import numpy as np
+from matplotlib import rcParams, rc
+
+# common setup for matplotlib
+params = {'savefig.dpi': 300, # save figures to 300 dpi
+          'axes.labelsize': 14,
+          'text.fontsize': 14,
+          'legend.fontsize': 14,
+          'xtick.labelsize': 14,
+          'ytick.major.pad': 6,
+          'xtick.major.pad': 6,
+          'ytick.labelsize': 14}
+# use of Sans Serif also in math mode
+rc('text.latex', preamble='\usepackage{sfmath}')
+
+rcParams.update(params)
+
 import matplotlib.pyplot as plt
+import numpy as np
 import os
 import struct
 
-def calcThreshold(phase,Nsigma=1.5):
+def calcThreshold(phase,Nsigma=2.5):
     n,bins= np.histogram(phase,bins=100)
     n = np.array(n,dtype='float32')/np.sum(n)
     tot = np.zeros(len(bins))
@@ -32,9 +48,10 @@ def tryFilter(filter,sample,fig=None,NAxes=1,iAxes=1,label=''):
         ax.plot([0,len(sample)-1],[threshold,threshold])
         ax.set_title(label)
 
-def detectPulses(filter,sample):
-    filtered = np.correlate(filter,sample,mode='same')[::-1]
-    threshold = calcThreshold(filtered[0:2000])
+def detectPulses(sample,threshold):
+    filtered = np.array(sample)
+
+    #threshold = calcThreshold(filtered[0:2000])
     baselines=np.array([IIR(filtered,t) for t in xrange(len(filtered))])
     filtered -= baselines
     derivative = np.diff(filtered)
@@ -60,74 +77,75 @@ def detectPulses(filter,sample):
         
         
     peakHeights = filtered[peakIndices]
-    return peakIndices,peakHeights
+    peakBaselines = baselines[peakIndices]
+    return peakIndices,peakHeights,peakBaselines
 
 roachNum = 4
-pixelNum = 0
-steps=20
-folder = '/Scratch/filterData/'
-noisefile = '/Scratch/filterData/20121123/r%dp%dNoiseSpectra.dat'%(roachNum,pixelNum)
+pixelNum = 102
+steps=50
+folder = '/Scratch/filterData/20121204/'
+cps=300
 
 
-phaseFilename = os.path.join(folder,'20121123/ch_snap_r%dp%d_%dsecs.dat'%(roachNum,pixelNum,steps))
+phaseFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs.dat'%(roachNum,pixelNum,steps))
 phaseFile = open(phaseFilename,'r')
 phase = phaseFile.read()
 numQDRSamples=2**19
 numBytesPerSample=4
 nLongsnapSamples = numQDRSamples*2*steps
 qdr_values = struct.unpack('>%dh'%(nLongsnapSamples),phase)
-#qdr_phase_values = np.array(qdr_values,dtype=np.float32)*360./2**16*4/np.pi
-
+qdr_phase_values = np.array(qdr_values,dtype=np.float32)*360./2**16*4/np.pi
 
 fig = plt.figure()
-fig.canvas.manager.set_window_title('r%dp%d'%(roachNum,pixelNum)) 
-NAxes = 5
+NAxes = 2
 iAxes = 1
 size=26
 offset = 3
 
-sample=qdr_values[0:10000]
-tryFilter(np.array([1]),sample,fig,NAxes,iAxes,label='raw phase')
+sampleStart = 5000
+nSamples = 20000
+thresholdLength = 2000
+thresholdSigma = 2.5
+
+filter= np.loadtxt('/Scratch/filterData/fir/template20121207r4.txt')[pixelNum,:]
+lpf250kHz= np.loadtxt('/Scratch/filterData/fir/lpf_250kHz.txt')
+sample=qdr_values[sampleStart:sampleStart+nSamples]
+unfiltered = np.array(sample,dtype=np.float32)*360./2**16*4/np.pi
+filtered = np.correlate(filter,unfiltered,mode='same')[::-1]
+lpffiltered = np.correlate(lpf250kHz,unfiltered,mode='same')[::-1]
+baselines=np.array([IIR(filtered,t) for t in xrange(len(filtered))])
+threshold = calcThreshold(filtered[0:thresholdLength],Nsigma=thresholdSigma)
+
+ax=fig.add_subplot(NAxes,1,iAxes)
+ax.plot(unfiltered,'k.-',label='unfiltered phase')
+ax.set_ylabel('unfiltered phase (${}^{\circ}$)')
+ax.set_xlim([5000,15000])
 iAxes+=1
 
-lpf = np.loadtxt(os.path.join(folder,'fir/lpf_250kHz.txt'))
-tryFilter(lpf,sample,fig,NAxes,iAxes,label='26pt lpf 250kHz')
+#ax=fig.add_subplot(NAxes,1,iAxes)
+#ax.plot(lpffiltered,'k',label='250kHz lpf filtered phase')
+#ax.set_ylabel('250kHz lpf phase (${}^{\circ}$)')
+#ax.set_xlim([5000,15000])
+#iAxes+=1
+
+ax=fig.add_subplot(NAxes,1,iAxes)
+ax.plot(filtered,'k.-',label='optimal filtered phase')
+ax.plot(baselines,'b',label='lpf baseline')
+#ax.plot(baselines+template26Threshold)
+#ax.plot([0,len(filtered)-1],[threshold,threshold])
+idx,peaks,bases = detectPulses(filtered,threshold)
+idx+=sampleStart
+ax.plot(idx-sampleStart,peaks+bases,'ro',label='detected peak')
+ax.plot(idx-sampleStart,bases,'go',label='detected baseline')
+ax.set_xlabel('time (us)')
+ax.set_ylabel('phase (${}^{\circ}$)')
+ax.set_xlim([5000,15000])
+#ax.set_title('detected peaks and baseline for ~%d cps, pixel /r%d/p%d'%(cps,roachNum,pixelNum))
+ax.legend(loc='lower right')
 iAxes+=1
+outFilename = os.path.splitext(phaseFilename)[0]+'.png'
+#plt.savefig(outFilename)
 
-oldMatched26 = np.loadtxt(os.path.join(folder,'fir/matched_r4p46.txt'))
-oldMatched26/=np.sum(oldMatched26)
-tryFilter(oldMatched26,sample,fig,NAxes,iAxes,label='26pt old matched')
-iAxes+=1
-
-optimal800 = np.loadtxt(os.path.join(folder,'fir/matched20121123.txt'))
-
-matched26 = optimal800[100-offset:100-offset+size]
-matched26/=np.sum(matched26)
-tryFilter(matched26,sample,fig,NAxes,iAxes,label='26pt custom matched')
-iAxes+=1
-
-template800 = np.loadtxt(os.path.join(folder,'20121123/r%dp%dTemplate-2pass-new.dat'%(roachNum,pixelNum)))[:,1]
-template26 = template800[1000-offset:1000-offset+size]
-tryFilter(template26,sample,fig,NAxes,iAxes,label='26pt custom template')
-iAxes+=1
-
-idx,peaks=detectPulses(oldMatched26,sample)
-print len(peaks)
-
+print 'done'
 plt.show()
 
-fig = plt.figure()
-idx,peaks=detectPulses(oldMatched26,qdr_values)
-print 'oldMatch26 count',len(peaks)
-counts,bins = np.histogram(peaks,bins=100)
-plt.plot(bins[0:-1],counts,label='26pt old match')
-
-idx,peaks=detectPulses(optimal800,qdr_values)
-print 'optimal800 count',len(peaks)
-counts,bins = np.histogram(peaks,bins=100)
-print counts
-plt.plot(bins[0:-1],counts,label='800pt custom match')
-
-plt.title('old vs custom matched filter, energy hist')
-fig.savefig('r%dp%d_oldVsOptimal800.png'%(roachNum,pixelNum))
-plt.show()
