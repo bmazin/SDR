@@ -5,7 +5,7 @@ import mpfit
 import scipy.stats
 import scipy.interpolate
 
-def smoothBaseline(baselines,nPtsInMode=200):
+def smoothBaseline(baselines,nPtsInMode=50):
     modBases = np.array(baselines)
     for i in range(len(modBases)):
         startIdx = i-nPtsInMode//2
@@ -20,9 +20,9 @@ def smoothBaseline(baselines,nPtsInMode=200):
 
 def fitR(energies):
 
-    nBins=200
-    energyHist,energyHistBinEdges = np.histogram(energies,bins=nBins)
-    amplitude = np.max(energyHist)
+    nBins=100
+    energyHist,energyHistBinEdges = np.histogram(energies,bins=nBins,density=True)
+    amplitude = 0.9*np.max(energyHist)
     #x_offset = np.median(phasebins[ind_left:ind_right])
     #sigma = 50.
     x_offset = energyHistBinEdges[np.argmax(energyHist)]
@@ -62,7 +62,9 @@ def fitR(energies):
     resolution = np.abs(x_offset/(2.355*sigma))
     return {'gaussfit':gaussfit,'resolution':resolution,'sigma':sigma,'x_offset':x_offset,'amplitude':amplitude,'y_offset':y_offset,'energyHist':energyHist,'energyHistBinEdges':energyHistBinEdges}
 
-npz = np.load('detectedRed.npz')
+roachNum=4
+pixelNum=0
+npz = np.load('detected1500.npz')
 bases=npz['bases']
 peaks=npz['peaks']+bases
 energies=npz['energies']
@@ -73,8 +75,9 @@ qdrValues=npz['qdrValues']
 filtered=npz['filtered']
 
 timeSpacing = np.diff(idx)
+timeSpacing = np.append(2000,timeSpacing)
 spacingMask = timeSpacing > 1000 #us
-spacingMask = np.append(spacingMask,False)
+#spacingMask = np.append(spacingMask,False)
 
 print 'sufficently spaced photons:',np.sum(spacingMask)
 
@@ -88,30 +91,28 @@ goodBases = np.array(bases)
 smoothBases = smoothBaseline(goodBases)
 
 
+closeSpacingMask = timeSpacing < 100
+
 modEnergies = peaks-smoothBases
-tau=50.
-#expBases = peaks[0:-1]*np.exp(-timeSpacing/tau)+smoothBases[0:-1]
+tau=30.
+expTails = modEnergies*np.exp(-timeSpacing/tau)
+expPeaks = expTails+smoothBases
 
 sampleStart=5000
 fig = plt.figure()
 ax = fig.add_subplot(111)
-filteredIdx = np.array(np.arange(1.35e7,1.365e7),dtype=np.int)
+filteredIdx = np.array(np.arange(10000,20000),dtype=np.int)
 ax.plot(filteredIdx,filtered[filteredIdx],'y-')
-ax.plot(idx-sampleStart,peaks,'c.')
-ax.plot(idx-sampleStart,bases,'k.')
-ax.plot(idx[0:-1]-sampleStart,100000./(1.*timeSpacing),'m.')
-ax.plot(idx-sampleStart,smoothBases,'r')
+ax.plot(filtered,'y-')
+ax.plot(idx-sampleStart,peaks-expTails,'c.')
+ax.plot(idx[closeSpacingMask]-sampleStart,peaks[closeSpacingMask]-expTails[closeSpacingMask],'b.')
+ax.plot(idx-sampleStart,smoothBases,'k')
 
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.plot(idx,energies,'b.')
-ax.plot(idx,modEnergies,'g.')
-
-nBins = 200
-peakHist,peakHistBins = np.histogram(peaks,bins=nBins)
-baseHist,baseHistBins = np.histogram(bases,bins=nBins)
-energyHist,energyHistBins = np.histogram(energies,bins=nBins)
-modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins)
+expEnergies = modEnergies-expTails
+nBins = 100
+energyHist,energyHistBins = np.histogram(energies,bins=nBins,density=True)
+modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins,density=True)
+expEnergyHist,expEnergyHistBins = np.histogram(expEnergies,bins=nBins,density=True)
 
 #fig = plt.figure()
 #ax = fig.add_subplot(111)
@@ -127,17 +128,30 @@ modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins)
 resolutionDict = fitR(energies)
 modResolutionDict = fitR(modEnergies)
 
+modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins,density=True)
+farEnergyHist,farEnergyHistBins = np.histogram(farEnergies,bins=nBins,density=True)
+closeEnergyHist,closeEnergyHistBins = np.histogram(energies[np.logical_not(spacingMask)],bins=nBins,density=True)
+modFarEnergyHist,modFarEnergyHistBins = np.histogram(modEnergies[spacingMask],bins=nBins,density=True)
+modCloseEnergyHist,modCloseEnergyHistBins = np.histogram(modEnergies[np.logical_not(spacingMask)],bins=nBins,density=True)
+
 fig = plt.figure()
 ax = fig.add_subplot(111)
-ax.step(peakHistBins[0:-1],peakHist,'c')
-ax.step(baseHistBins[0:-1],baseHist,'k')
 ax.step(energyHistBins[0:-1],energyHist,'b')
 ax.step(modEnergyHistBins[0:-1],modEnergyHist,'g')
+ax.step(expEnergyHistBins[0:-1],expEnergyHist,'y')
 ax.plot(resolutionDict['energyHistBinEdges'][0:-1],resolutionDict['gaussfit'],'m')
-ax.plot(modResolutionDict['energyHistBinEdges'][0:-1],resolutionDict['gaussfit'],'purple')
+ax.plot(modResolutionDict['energyHistBinEdges'][0:-1],modResolutionDict['gaussfit'],'purple')
+
+
 #energies=modEnergies
 #energyHist = modEnergyHist
 #energyHistBins = modEnergyHistBins
+
+baseDiffs = np.abs(bases-smoothBases)
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(timeSpacing,baseDiffs,',')
+ax.plot(timeSpacing[spacingMask],np.abs(farBases-smoothBases[spacingMask]),',')
 
     
 print 'Standard deviations:'
@@ -145,7 +159,7 @@ print 'raw baselines',np.std(bases)
 print 'smoothed baselines',np.std(smoothBases)
 print 'raw peaks',np.std(peaks)
 print 'peak-rawBases',np.std(energies)
-print 'time cut peak-rawBases',np.std(farEnergies)
+print 'time_cut peak-rawBases',np.std(farEnergies)
 print 'peak-smoothBases',np.std(modEnergies)
 print 'raw R=',resolutionDict['resolution']
 print 'mod R=',modResolutionDict['resolution']
