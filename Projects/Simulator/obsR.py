@@ -97,10 +97,10 @@ for line in powermeter:
     inCounts.append(float(line.strip()))
 inCounts = np.array(inCounts)
 
-pixToUse = [[0,26],[1,39],[2,25],[2,27],[2,31],[2,34],[2,39],[3,17],[3,26],[3,32],
+pixToUse = [[0,26],[2,25],[2,27],[2,31],[2,34],[2,39],[3,17],[3,26],[3,32],
             [3,36],[4,26],[4,32],[5,32],[6,22],[6,29],[6,30],[7,25],[7,27],[7,28],
             [7,32],[7,37],[8,30],[10,32],[10,42],[11,30],[12,29],[12,31],[13,29],[13,31],
-            [14,27],[14,32],[15,25],[15,26],[15,30],[15,31],[15,32],[16,23],[16,24],[16,30],
+            [14,27],[14,32],[15,25],[15,26],[15,30],[15,31],[15,32],[16,23],[16,30],
             [17,23],[17,25],[17,26],[17,39],[18,24],[18,28],[19,23],[19,26],[19,28],[19,30]]
 
 cmap = matplotlib.cm.jet
@@ -109,76 +109,76 @@ obs = ObsFile(obsFileName)
 
 
 row,col=pixToUse[0]
-firstSec=timeBinStarts[0]
-intTime=timeBinWidth
-resolutions = []
-modResolutions = []
-countRates = []
+allResolutions = []
+allModResolutions = []
+timeBinStarts = timeBinStarts[[-7,-5]]
+for (row,col) in pixToUse[0:2]:
+    firstSec=timeBinStarts[0]
+    intTime=timeBinWidth
+    resolutions = []
+    modResolutions = []
+    countRates = []
 
-fig = plt.figure()
-ax = fig.add_subplot(111)
-fig2 = plt.figure()
-ax2 = fig2.add_subplot(111)
-fig3 = plt.figure()
-ax3 = fig3.add_subplot(111)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    fig2 = plt.figure()
+    ax2 = fig2.add_subplot(111)
+    fig3 = plt.figure()
+    ax3 = fig3.add_subplot(111)
 
-print (row,col)
+    print (row,col)
 
-#timeBinStarts = timeBinStarts[[-7,-5]]
-for iTimeBin,firstSec in enumerate(timeBinStarts):
-    colorFraction = (iTimeBin+1.)/len(timeBinStarts)
-    color=cmap(colorFraction)
-    packetListDict = obs.getTimedPacketList(row,col,firstSec=firstSec,integrationTime=intTime)
+    for iTimeBin,firstSec in enumerate(timeBinStarts):
+        colorFraction = (iTimeBin+1.)/len(timeBinStarts)
+        color=cmap(colorFraction)
+        packetListDict = obs.getTimedPacketList(row,col,firstSec=firstSec,integrationTime=intTime,useParabolaPeaks=True)
 
-    timestamps = packetListDict['timestamps']
-    rawPeakHeights = packetListDict['peakHeights']
-    baselines = packetListDict['baselines']
-    modBaselines = smoothBaseline(baselines)
-    phases = rawPeakHeights-baselines
-    modPhases = rawPeakHeights-modBaselines
+        timestamps = packetListDict['timestamps']
+        rawPeakHeights = packetListDict['peakHeights']
+        baselines = packetListDict['baselines']
+        modBaselines = smoothBaseline(baselines)
+        phases = rawPeakHeights-baselines
+        modPhases = rawPeakHeights-modBaselines
 
-    ax.plot(timestamps,rawPeakHeights,'c.')
-    ax.plot(timestamps,baselines,'k.')
-    ax.plot(timestamps,modBaselines,'r-')
+        ax.plot(timestamps,rawPeakHeights,'c.')
+        ax.plot(timestamps,baselines,'k.')
+        ax.plot(timestamps,modBaselines,'r-')
 
-    modPhases = modPhases[np.logical_and(modPhases<-260,modPhases>-534)]
-    phases = phases[np.logical_and(modPhases<-260,modPhases>-534)]
-    rawPeakHeights = rawPeakHeights[np.logical_and(rawPeakHeights<1672,1350<rawPeakHeights)]
-
-
-    nCounts = len(timestamps)
-    countRate = nCounts/intTime
-    print 'count rate:%.0f cps'%countRate,
+        modPhases = modPhases[np.logical_and(modPhases<-260,modPhases>-534)]
+        phases = phases[np.logical_and(modPhases<-260,modPhases>-534)]
+        rawPeakHeights = rawPeakHeights[np.logical_and(rawPeakHeights<1672,1350<rawPeakHeights)]
 
 
-    nBins=100
-    baselineHist,baselineHistBinEdges = np.histogram(baselines,bins=nBins,density=True)
-    modBaselineHist,modBaselineHistBinEdges = np.histogram(modBaselines,bins=nBins,density=True)
-    peakHist,peakHistBinEdges = np.histogram(rawPeakHeights,bins=nBins,density=True)
-    
-    
-    rDict = fitR(phases)
-    modRDict = fitR(modPhases)
-    ax2.plot(rDict['energyHistBinEdges'][0:-1],rDict['energyHist'],color=color)
-    ax2.plot(rDict['energyHistBinEdges'][0:-1],rDict['gaussfit'],color=color)
-    ax3.plot(modRDict['energyHistBinEdges'][0:-1],modRDict['energyHist'],color=color)
-    ax3.plot(modRDict['energyHistBinEdges'][0:-1],modRDict['gaussfit'],color=color)
-    print 'R=',rDict['resolution'],'modR=',modRDict['resolution']
+        nCounts = len(timestamps)
+        countRate = nCounts/intTime
 
-    print 'standard deviations:'
-    print 'baselines',np.std(baselines),'peaks',np.std(rawPeakHeights),'sq',np.sqrt(np.std(baselines)**2+np.std(rawPeakHeights)**2),'subt',np.std(phases)
-    print 'modified'
-    print 'baselines',np.std(modBaselines),'peaks',np.std(rawPeakHeights),'sq',np.sqrt(np.std(modBaselines)**2+np.std(rawPeakHeights)**2),'subt',np.std(modPhases)
-    resolutions.append(rDict['resolution'])
-    modResolutions.append(modRDict['resolution'])
-    countRates.append(countRate)
+        nBins=100
+        baselineHist,baselineHistBinEdges = np.histogram(baselines,bins=nBins,density=True)
+        modBaselineHist,modBaselineHistBinEdges = np.histogram(modBaselines,bins=nBins,density=True)
+        peakHist,peakHistBinEdges = np.histogram(rawPeakHeights,bins=nBins,density=True)
+        
+        
+        rDict = fitR(phases)
+        modRDict = fitR(modPhases)
+        ax2.plot(rDict['energyHistBinEdges'][0:-1],rDict['energyHist'],color=color)
+        ax2.plot(rDict['energyHistBinEdges'][0:-1],rDict['gaussfit'],color=color)
+        ax3.plot(modRDict['energyHistBinEdges'][0:-1],modRDict['energyHist'],color=color)
+        ax3.plot(modRDict['energyHistBinEdges'][0:-1],modRDict['gaussfit'],color=color)
 
-outDict = extrema(modPhases)
-print outDict
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.plot(countRates,resolutions,'b')
-ax.plot(countRates,modResolutions,'r')
+        resolutions.append(rDict['resolution'])
+        modResolutions.append(modRDict['resolution'])
+        countRates.append(countRate)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(countRates,resolutions,'b')
+    ax.plot(countRates,modResolutions,'r')
+    ax.set_title('(%d,%d)'%(row,col))
+    allResolutions.append(resolutions)
+    allModResolutions.append(modResolutions)
+allResolutions = np.array(allResolutions)
+allModResolutions = np.array(allModResolutions)
+#np.savez('rs.npz',allResolutions=allResolutions,allModResolutions=allModResolutions)
 plt.show()
 
 
