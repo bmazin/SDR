@@ -4,10 +4,11 @@ import matplotlib.pyplot as plt
 from fitFunctions import gaussian
 import mpfit
 import scipy.stats
+import smooth
 from util.ObsFile import ObsFile
 from util.FileName import FileName
 
-def smoothBaseline(baselines,nPtsInMode=200):
+def smoothBaseline(baselines,nPtsInMode=400):
     modBases = np.array(baselines)
     for i in range(len(modBases)):
         startIdx = i-nPtsInMode//2
@@ -16,13 +17,24 @@ def smoothBaseline(baselines,nPtsInMode=200):
         endIdx = i+nPtsInMode//2
         if endIdx >= len(modBases):
             endIdx = len(modBases)-1
-        trimmedSample = scipy.stats.mstats.trim(baselines[startIdx:endIdx],(.1,.1),relative=True)
+        trimmedSample = scipy.stats.mstats.trim(baselines[startIdx:endIdx],(.4,0),relative=True)
         modBases[i] = np.ma.mean(trimmedSample)
+    return modBases
+
+def smoothBaseline2(baselines,timestamps,timeToAverage=500e-3):
+    #timeToAverage = 10e-3 #10 ms
+    modBases = np.array(baselines)
+    for i,ts in enumerate(timestamps):
+        startIdx = np.searchsorted(timestamps,ts-timeToAverage/2.)
+        endIdx = np.searchsorted(timestamps,ts+timeToAverage/2.)
+        trimmedSample = scipy.stats.mstats.trim(baselines[startIdx:endIdx],(.4,0),relative=True)
+        modBases[i] = np.ma.mean(trimmedSample)
+    print 2*(endIdx-startIdx)
     return modBases
 
 def fitR(energies):
 
-    nBins=100
+    nBins=101
     mask = energies < -250
     energies = energies[mask]
     energyHist,energyHistBinEdges = np.histogram(energies,bins=nBins,density=True)
@@ -71,16 +83,20 @@ def fitR(energies):
 
 
 def extrema(a):
-    nBins=30
+    nBins=300
     hist,binEdges = np.histogram(a,bins=nBins,density=True)
+    smoothWindowSize=50
+    histSmooth = smooth.smooth(hist,smoothWindowSize,'hanning')
     binCenters = binEdges[0:-1]+np.diff(binEdges)/2.
-    extremeIdxs = np.where(np.diff(np.sign(np.diff(hist))))[0]+1
-    bMaximums = np.diff(np.sign(np.diff(hist)))<0
-    bMaximums = bMaximums[np.where(np.diff(np.sign(np.diff(hist))))]
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.plot(binCenters,hist)
-    ax.plot(binCenters[extremeIdxs],hist[extremeIdxs],'.')
+    extremeIdxs = np.where(np.diff(np.sign(np.diff(histSmooth))))[0]+1
+    bMaximums = np.diff(np.sign(np.diff(histSmooth)))<0
+    bMaximums = bMaximums[np.where(np.diff(np.sign(np.diff(histSmooth))))]
+#    fig = plt.figure()
+#    ax = fig.add_subplot(111)
+#    ax.plot(binCenters,histSmooth)
+#    ax.plot(binCenters,hist)
+#    ax.plot(binCenters[extremeIdxs],histSmooth[extremeIdxs],'.')
+#    plt.show()
     return {'extremeX':binCenters[extremeIdxs],'extremeY':hist[extremeIdxs],'bMaximums':bMaximums}
 
 #obs_20130612-003423_CorrectedCount.txt
@@ -111,12 +127,14 @@ obs = ObsFile(obsFileName)
 row,col=pixToUse[0]
 allResolutions = []
 allModResolutions = []
-timeBinStarts = timeBinStarts[[-7,-5]]
+allModResolutions2 = []
+timeBinStarts = timeBinStarts[0:-5]
 for (row,col) in pixToUse[0:2]:
     firstSec=timeBinStarts[0]
     intTime=timeBinWidth
     resolutions = []
     modResolutions = []
+    modResolutions2 = []
     countRates = []
 
     fig = plt.figure()
@@ -125,6 +143,8 @@ for (row,col) in pixToUse[0:2]:
     ax2 = fig2.add_subplot(111)
     fig3 = plt.figure()
     ax3 = fig3.add_subplot(111)
+    fig4 = plt.figure()
+    ax4 = fig4.add_subplot(111)
 
     print (row,col)
 
@@ -136,48 +156,90 @@ for (row,col) in pixToUse[0:2]:
         timestamps = packetListDict['timestamps']
         rawPeakHeights = packetListDict['peakHeights']
         baselines = packetListDict['baselines']
-        modBaselines = smoothBaseline(baselines)
-        phases = rawPeakHeights-baselines
-        modPhases = rawPeakHeights-modBaselines
-
-        ax.plot(timestamps,rawPeakHeights,'c.')
-        ax.plot(timestamps,baselines,'k.')
-        ax.plot(timestamps,modBaselines,'r-')
-
-        modPhases = modPhases[np.logical_and(modPhases<-260,modPhases>-534)]
-        phases = phases[np.logical_and(modPhases<-260,modPhases>-534)]
-        rawPeakHeights = rawPeakHeights[np.logical_and(rawPeakHeights<1672,1350<rawPeakHeights)]
-
-
         nCounts = len(timestamps)
         countRate = nCounts/intTime
+        print '%.0f cps'%countRate,
 
-        nBins=100
+        modBaselines = smoothBaseline(baselines)
+        modBaselines2 = smoothBaseline2(baselines,timestamps)
+        phases = rawPeakHeights-baselines
+        modPhases = rawPeakHeights-modBaselines
+        modPhases2 = rawPeakHeights-modBaselines2
+
+        ax.plot(timestamps,rawPeakHeights,'c,')
+        ax.plot(timestamps,baselines,'k,')
+        ax.plot(timestamps,modBaselines,'r-')
+        ax.plot(timestamps,modBaselines2,'m-')
+
+        #do an initial hard-coded clip to take the noise tail out
+        phases = phases[phases<-180]
+        modPhases = modPhases[modPhases<-180]
+        modPhases2 = modPhases2[modPhases2<-180]
+        #parse out the minima before and after the gaussian peak in each histogram
+        exDict = extrema(phases)
+        modExDict = extrema(modPhases)
+        modExDict2 = extrema(modPhases2)
+        try:
+            phaseUpperBound = exDict['extremeX'][exDict['bMaximums']==False][-1]
+            phaseMax = exDict['extremeX'][np.argmax(exDict['extremeY'])]
+            phaseLowerBound = phaseMax-(phaseUpperBound-phaseMax)
+            modPhaseUpperBound = modExDict['extremeX'][modExDict['bMaximums']==False][-1]
+            modPhaseMax = modExDict['extremeX'][np.argmax(modExDict['extremeY'])]
+            modPhaseLowerBound = modPhaseMax-(modPhaseUpperBound-modPhaseMax)
+            modPhaseUpperBound2 = modExDict2['extremeX'][modExDict2['bMaximums']==False][-1]
+            modPhaseMax2 = modExDict2['extremeX'][np.argmax(modExDict2['extremeY'])]
+            modPhaseLowerBound2 = modPhaseMax2-(modPhaseUpperBound2-modPhaseMax2)
+
+    #        modPhases = modPhases[np.logical_and(modPhases<-260,modPhases>-534)]
+    #        phases = phases[np.logical_and(modPhases<-260,modPhases>-534)]
+    #        rawPeakHeights = rawPeakHeights[np.logical_and(rawPeakHeights<1672,1350<rawPeakHeights)]
+            phases = phases[np.logical_and(phases<phaseUpperBound,phases>phaseLowerBound)]
+            modPhases = modPhases[np.logical_and(modPhases<modPhaseUpperBound,modPhases>modPhaseLowerBound)]
+            modPhases2 = modPhases2[np.logical_and(modPhases2<modPhaseUpperBound2,modPhases2>modPhaseLowerBound2)]
+        except IndexError:
+            print 'clipping before R fit failed'
+        
+        
+
+
+
+        nBins=31
         baselineHist,baselineHistBinEdges = np.histogram(baselines,bins=nBins,density=True)
         modBaselineHist,modBaselineHistBinEdges = np.histogram(modBaselines,bins=nBins,density=True)
+        modBaselineHist2,modBaselineHistBinEdges2 = np.histogram(modBaselines2,bins=nBins,density=True)
         peakHist,peakHistBinEdges = np.histogram(rawPeakHeights,bins=nBins,density=True)
         
         
         rDict = fitR(phases)
         modRDict = fitR(modPhases)
+        modRDict2 = fitR(modPhases2)
         ax2.plot(rDict['energyHistBinEdges'][0:-1],rDict['energyHist'],color=color)
         ax2.plot(rDict['energyHistBinEdges'][0:-1],rDict['gaussfit'],color=color)
         ax3.plot(modRDict['energyHistBinEdges'][0:-1],modRDict['energyHist'],color=color)
         ax3.plot(modRDict['energyHistBinEdges'][0:-1],modRDict['gaussfit'],color=color)
+        ax4.plot(modRDict2['energyHistBinEdges'][0:-1],modRDict2['energyHist'],color=color)
+        ax4.plot(modRDict2['energyHistBinEdges'][0:-1],modRDict2['gaussfit'],color=color)
 
         resolutions.append(rDict['resolution'])
         modResolutions.append(modRDict['resolution'])
+        modResolutions2.append(modRDict2['resolution'])
         countRates.append(countRate)
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.plot(countRates,resolutions,'b')
     ax.plot(countRates,modResolutions,'r')
+    ax.plot(countRates,modResolutions2,'m')
     ax.set_title('(%d,%d)'%(row,col))
+    ax2.set_title('raw (%d,%d)'%(row,col))
+    ax3.set_title('pt smooth (%d,%d)'%(row,col))
+    ax4.set_title('ts smooth (%d,%d)'%(row,col))
     allResolutions.append(resolutions)
     allModResolutions.append(modResolutions)
+    allModResolutions2.append(modResolutions2)
 allResolutions = np.array(allResolutions)
 allModResolutions = np.array(allModResolutions)
+allModResolutions2 = np.array(allModResolutions2)
 #np.savez('rs.npz',allResolutions=allResolutions,allModResolutions=allModResolutions)
 plt.show()
 
