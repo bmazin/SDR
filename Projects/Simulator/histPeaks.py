@@ -18,6 +18,17 @@ def smoothBaseline(baselines,nPtsInMode=50):
         modBases[i] = np.ma.mean(trimmedSample)
     return modBases
 
+def smoothBaseline(baselines,timestamps,timeToAverage=500e-3):
+    #timeToAverage = 10e-3 #10 ms
+    modBases = np.array(baselines)
+    for i,ts in enumerate(timestamps):
+        startIdx = np.searchsorted(timestamps,ts-timeToAverage/2.)
+        endIdx = np.searchsorted(timestamps,ts+timeToAverage/2.)
+        trimmedSample = scipy.stats.mstats.trim(baselines[startIdx:endIdx],(.5,0),relative=True)
+        modBases[i] = np.ma.mean(trimmedSample)
+    print 2*(endIdx-startIdx)
+    return modBases
+
 def fitR(energies):
 
     nBins=100
@@ -64,7 +75,7 @@ def fitR(energies):
 
 roachNum=4
 pixelNum=0
-npz = np.load('detected1500.npz')
+npz = np.load('detected700Blue.npz')
 bases=npz['bases']
 peaks=npz['peaks']+bases
 energies=npz['energies']
@@ -88,27 +99,33 @@ farEnergies = energies[spacingMask]
 farIdx = idx[spacingMask]
 
 goodBases = np.array(bases)
-smoothBases = smoothBaseline(goodBases)
+smoothBases = smoothBaseline(goodBases,idx/1.e6)
 
 
 closeSpacingMask = timeSpacing < 100
 
 modEnergies = peaks-smoothBases
-tau=30.
+tau=25.
 expTails = modEnergies*np.exp(-timeSpacing/tau)
 expPeaks = expTails+smoothBases
+closeExpPeaks = peaks[closeSpacingMask]-expTails[closeSpacingMask]
+expEnergies = modEnergies-expTails
 
 sampleStart=5000
 fig = plt.figure()
 ax = fig.add_subplot(111)
 filteredIdx = np.array(np.arange(10000,20000),dtype=np.int)
 ax.plot(filteredIdx,filtered[filteredIdx],'y-')
-ax.plot(filtered,'y-')
+#ax.plot(filtered,'y-')
 ax.plot(idx-sampleStart,peaks-expTails,'c.')
 ax.plot(idx[closeSpacingMask]-sampleStart,peaks[closeSpacingMask]-expTails[closeSpacingMask],'b.')
 ax.plot(idx-sampleStart,smoothBases,'k')
+print threshold
+ax.plot(idx-sampleStart,smoothBases+threshold,'r')
 
-expEnergies = modEnergies-expTails
+print 'peaks:',len(peaks),'deadtime peaks',np.sum(closeSpacingMask),'false peaks',np.sum(expEnergies[closeSpacingMask]>threshold)
+print 'deadtime peaks','%.2f%%'%(100.*np.sum(closeSpacingMask)/len(peaks)),'false deadtime peaks','%.2f%%'%(100.*np.sum(expEnergies[closeSpacingMask]>threshold)/np.sum(closeSpacingMask))
+
 nBins = 100
 energyHist,energyHistBins = np.histogram(energies,bins=nBins,density=True)
 modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins,density=True)
