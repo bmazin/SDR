@@ -6,12 +6,15 @@
 ;
 ;***************************************************************************
 
-fname='test'
-resloc = fname + '-good.txt'
-swpname = fname + '.txt'
-datapath = '/Users/matt/Documents/mazin/widesweepanalysis/test/'
-outpath = '/Users/matt/Documents/mazin/widesweepanalysis/test/'
 
+fname='FL2'
+outlabel = '-right'
+filename = fname + '.txt'
+datapath = '/Scratch/wideAna/20131016adr/'
+outpath = '/Scratch/wideAna/20131016adr/'
+
+swpname = fname + '.txt'
+resloc = fname + outlabel+'.txt'
 ;outpath = '/Users/bmazin/Data/ResData/Archive/'
 width = 50 ; base width of fit
 atten=75
@@ -26,8 +29,7 @@ device,/helv,/isolatin1
 device,font_size=12,/inches,xsize=7.5,ysize=9,xoffset=.5,yoffset=1
 
 stridx = strsplit(datapath,'/')
-outfn = strmid(datapath,stridx[4],stridx[5]-stridx[4]-1)
-device,filename = strcompress(outpath + fname + '-fits.ps',/remove_all)
+device,filename = strcompress(outpath + fname + outlabel+'-fits.ps',/remove_all)
 
 ;load resonance locations
 res = read_ascii(outpath+resloc)
@@ -92,9 +94,10 @@ data1a[*,*] = 0.0
 ;A = FINDGEN(17) * (!PI*2/16.)
 ;USERSYM, COS(A), SIN(A), /FILL
 
-openw,1, strcompress(outpath + fname + '-fits.txt',/remove_all)
+openw,1, strcompress(outpath + fname + outlabel+'-fits2.txt',/remove_all)
 ;print,n_elements(data1[0,*])
 ;loop over all the resonators
+print,n-1
 for j=0,n-1 do begin
 ;for j=0,2 do begin
   ;stop

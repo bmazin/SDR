@@ -8,12 +8,12 @@
 
 ;fname='sci4abeta_fib2_68dBm'
 ;fname2='fl2-110mk-sci4aBeta'
-fname='fl1_fib_again_noisy_65dB'
+fname='FL2'
 outlabel = '-right'
 filename = fname + '.txt'
-datapath = '/Scratch/wideAna/20130228/'
+datapath = '/Scratch/wideAna/20131016adr/'
 ;datapath2 = '/Users/matt/Documents/mazin/widesweepanalysis/20130117adr/'
-outpath = '/Scratch/wideAna/20130228/'
+outpath = '/Scratch/wideAna/20131016adr/'
 ;outpath2 = '/Users/matt/Documents/mazin/widesweepanalysis/20130117adr/'
 duplicate_threshold=50; 50 to avoid collisions, 10 to include collisions
 ;outpath = '/Users/bmazin/Data/ResData/Archive/'
