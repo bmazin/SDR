@@ -1,0 +1,11 @@
+/Users/bmazin/Data/ResData/20120218/ps2/	!Path to data
+/Users/bmazin/Data/ResData/20120218/ps2/	!Path for output files
+resnum=1,6					!resonator groups, can be a range of the form X,Y
+atten=60,80,2					!attenuator settings, can be a range of the form X,Y,step
+T=60,60,1					!temperature, can be a range of the form X,Y,step
+sub=0						!background subtraction - temp for high temp sweep, 0 for none, -1 for phase fit only
+skip=0						!skip=0, do resonator fitting. skip=1, no resonator fitting
+Tc=0.8						!guess at Tc
+V=3937.2					!volume of resonator in um^3
+tauqp=0.000250					! quasiparticle lifetime
+loss=35.0
