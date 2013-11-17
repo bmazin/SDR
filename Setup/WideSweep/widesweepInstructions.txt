@@ -1,0 +1,19 @@
+1. Copy the widesweep date directory from mazinlabbackup to Scratch.
+$cp /mnt/mazinlabbackup/ADR/20131117 /Scratch/wideAna
+2. Open idl on turk
+$idlde &
+3. Open SDR/Setup/WideSweep/wideana_mouse_right.pro
+4. Change the filename and directory names to match the new files
+Ex: fname='SCI4-FL1' for SCI4-FL1.txt
+    datapath = '/Scratch/wideAna/20131117/'
+    outpath = '/Scratch/wideAna/20131117/'
+The output will be saved in this directory with the outlabel appended.
+5. Run the program.  A black window will pop up.  Resize it how you want and click the mouse wheel to update the view.
+Left click a resonance to select it
+Right click a resonance to remove it
+Scroll down on the mouse wheel to save your choices and move forward
+Scroll up on the mouse wheel to remove your choices from teh last frame and redo it.
+After 80 frames it will throw an index error.  This means you're done and can close the window.
+6. Open SDR/Setup/Widesweep/autofit.pro
+7.  Change the filename root, directory, and outlabel to match the last program.
+8. Run autofit.
