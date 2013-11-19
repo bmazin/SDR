@@ -10,13 +10,13 @@ NRoaches=4 #number of roaches per feedline
 roachBandwidth=0.512 #GHz, bandwidth that each roach can cover, depends on dac clockrate
 
 #resonant frequency list for the feedline
-dir = '/home/sean/data/20121202adr/'
+dir = '/home/sean/data/20131114/'
 feedline=int(sys.argv[1])
-datafilename=dir+'Pal-FL%d-diff.txt'%feedline
+datafilename=dir+'SCI5-FL%d-right.txt'%feedline
 table = np.loadtxt(datafilename)
 
-#freqs = table[:,2]
-freqs = table[:,1]
+freqs = table[:,2]
+#freqs = table[:,1]
 freqs.sort()
 fig = plt.figure()
 ax=fig.add_subplot(111)
@@ -36,24 +36,17 @@ roachFreqStart = np.array([fStart]*NRoaches)
 roachLOFreq = np.array([fStart]*NRoaches)
 
 if feedline == 1:
-#    roachLOFreq[0] = fStart+roachBandwidth/2.0
-#    roachLOFreq[1] = roachLOFreq[0]+roachBandwidth+.02
-#    roachLOFreq[2] = roachLOFreq[1]+roachBandwidth+.13
-#    roachLOFreq[3] = roachLOFreq[2]+roachBandwidth+.25
-    roachLOFreq[0] = 3.3912227
-    roachLOFreq[1] = 3.9309845
-    roachLOFreq[2] = 4.5944910
-    roachLOFreq[3] = 5.3860378
+    roachLOFreq[0] = fStart+roachBandwidth/2.0+.08
+    roachLOFreq[1] = roachLOFreq[0]+roachBandwidth+.15
+    roachLOFreq[2] = roachLOFreq[1]+roachBandwidth+.1
+    roachLOFreq[3] = roachLOFreq[2]+roachBandwidth+.05
 else:
-#    roachLOFreq[0] = fStart+roachBandwidth/2.0+.07
-#    roachLOFreq[1] = roachLOFreq[0]+roachBandwidth+.14
-#    roachLOFreq[2] = roachLOFreq[1]+roachBandwidth+.02
-#    roachLOFreq[3] = roachLOFreq[2]+roachBandwidth+.14
-    roachLOFreq[0] = 3.2354908
-    roachLOFreq[1] = 3.9260192
-    roachLOFreq[2] = 4.4389467
-    roachLOFreq[3] = 5.1086125
+    roachLOFreq[0] = fStart+roachBandwidth/2.0
+    roachLOFreq[1] = roachLOFreq[0]+roachBandwidth+.08
+    roachLOFreq[2] = roachLOFreq[1]+roachBandwidth+.11
+    roachLOFreq[3] = roachLOFreq[2]+roachBandwidth+.11
     
+print roachLOFreq
 roachFreqEnd = roachLOFreq+roachBandwidth/2.0
 roachFreqStart = roachLOFreq-roachBandwidth/2.0
 roachFreqList=[[]]*NRoaches
@@ -65,21 +58,21 @@ for iRoach in np.arange(0,NRoaches):
     r = iRoach+4*(feedline-1)
     roachFreqList[iRoach] = freqs[np.logical_and(roachFreqStart[iRoach] <= freqs,freqs < roachFreqEnd[iRoach])]
     excludedFreqs = excludedFreqs[np.logical_or(excludedFreqs < roachFreqStart[iRoach],roachFreqEnd[iRoach] < excludedFreqs)]
-    print 'roach ',r, ' covers ',len(roachFreqList[iRoach]),' freqs'
+    print 'roach ',r, ' covers ',len(roachFreqList[iRoach]),' freqs, ',
     roachFreqMin = roachFreqList[iRoach].min()
     roachFreqMax = roachFreqList[iRoach].max()
-    print 'from %.3f to %.3f'%(roachFreqMin,roachFreqMax)
+    print 'from %.3f to %.3f'%(roachFreqMin,roachFreqMax),
     roachFreqLO=roachFreqMin+(roachFreqMax-roachFreqMin)/2.0
-    print 'with LO freq at %.3f'%roachLOFreq[iRoach]
+    print ' with LO freq at %.3f'%roachLOFreq[iRoach]
     lo_fid.write('%.5f\n'%roachLOFreq[iRoach])
-    #ax.hist(roachFreqList[iRoach],bins=20)
-    fid = open(dir+'d_freq%d.txt'%r,'w')
+    ax.hist(roachFreqList[iRoach],bins=20)
+    fid = open(dir+'freq%d.txt'%r,'w')
     fid.write('1\t1\t1\t1\n')
     for freq in roachFreqList[iRoach]:
         fid.write('%.7f\t0\t0\t1\n'%freq)
     fid.close()
 
-#ax.hist(excludedFreqs,bins=100,color='black')
+ax.hist(excludedFreqs,bins=100,color='black')
 print '%d freqs excluded'%len(excludedFreqs)
 lo_fid.close()
 
