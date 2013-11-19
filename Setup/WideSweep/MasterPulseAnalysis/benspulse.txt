@@ -1,0 +1,13 @@
+/Users/bmazin/Data/ResData/20110930/xr4/	!Path to data
+/Users/bmazin/Data/ResData/20110930/xr4/	!Path for output files
+/Users/bmazin/Data/ResData/Archive/		!Path for permanent archive
+pulse_data.dat			!Pulse data file name
+resnum=1					!resonator group
+atten=42				!attenuator setting
+T=180						!temperature
+sub=0						!background subtraction - temp for high temp sweep, 0 for none, -1 for phase fit only
+loss=35.0					!attenuation before device, DF=45, ADR=35
+0
+0
+/Users/bmazin/Data/ResData/20110715/opt1/Template-2pass-405.dat					!template to use for opt filter (if 0, generate own)
+/Users/bmazin/Data/ResData/20110715/opt1/NoiseSpectra-2pass-405.dat				!noise spectra to use for opt filter (if 0, generate own

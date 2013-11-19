@@ -53,6 +53,16 @@ roachFreqList=[[]]*NRoaches
 outputTable=[[]]*NRoaches
 excludedFreqs = freqs
 
+for iRoach in np.arange(0,NRoaches):
+    r = iRoach+4*(feedline-1)
+    roachFreqList[iRoach] = freqs[np.logical_and(roachFreqStart[iRoach] <= freqs,freqs < roachFreqEnd[iRoach])]
+    excludedFreqs = excludedFreqs[np.logical_or(excludedFreqs < roachFreqStart[iRoach],roachFreqEnd[iRoach] < excludedFreqs)]
+    print 'roach ',r, ' covers ',len(roachFreqList[iRoach]),' freqs'
+    if len(roachFreqList[iRoach]>0):
+        ax.hist(roachFreqList[iRoach],bins=20)
+print '%d freqs excluded'%len(excludedFreqs)
+ax.hist(excludedFreqs,bins=100,color='black')
+plt.show()
 lo_fid=open(dir+'FL%d-lofreqs.txt'%feedline,'w')
 for iRoach in np.arange(0,NRoaches):
     r = iRoach+4*(feedline-1)
@@ -78,6 +88,5 @@ lo_fid.close()
 
 
 
-plt.show()
 
 
