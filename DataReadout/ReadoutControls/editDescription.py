@@ -6,6 +6,13 @@ import os
 import glob
 import lib.pulses_v1 as pulses
 
+def is_int(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 def confirm(prompt=None, resp=False):
     """prompts for yes or no response from the user. Returns True for yes and
     False for no.
@@ -46,17 +53,38 @@ def confirm(prompt=None, resp=False):
         if ans == 'n' or ans == 'N':
             return False
 
-if len(sys.argv) != 2 or os.path.exists(sys.argv[1]) == False:
-    if os.path.exits(path) == False:
-        print 'obsPath %s is not found'%sys.argv[1]
-    print 'Usage: %s obsPath.h5'%sys.argv[0]
-    print 'Displays the description for obsPath and prompts the user to change the description'
+if len(sys.argv) != 2 and len(sys.argv) != 3:
+    print 'Usage: %s numLatestObs|path [cal]'%sys.argv[0]
+    print 'Displays the description for obsPath and prompts the user to change the description for numLatestObs-th from latest obs file. Or if given a path, checks current location and at path given by MKID_DATA_DIR'
     exit(1)
-path = sys.argv[1]
+
+obsBase = 'obs*.h5'
+calBase = 'cal*.h5'
+if len(sys.argv) == 3 and sys.argv[2] == 'cal':
+    base = calBase
+else:
+    base = obsBase
+toOpen = sys.argv[1]
+path = os.environ['MKID_DATA_DIR']
+if is_int(toOpen):
+    obsIndex = int(sys.argv[1])
+    obsPaths = sorted(glob.glob(os.path.join(path,base)))[::-1]
+    obsPath = obsPaths[obsIndex]
+    if obsIndex == 0:
+        print 'Filename: ',os.path.basename(obsPath)
+        if confirm('Thats the latest file.  Continue only if this is not currently exposing.  Continue?') == False:
+            exit(0)
+elif os.path.exists(toOpen):
+    obsPath = toOpen
+elif os.path.exists(os.path.join(path,toOpen)):
+    obsPath = os.path.join(path,toOpen)
+else:
+    print 'File doesn\'t exist: ',sys.argv[1]
+
 #open existing file for reading/writing
-obsFile = tables.openFile(path,mode='r+')
+obsFile = tables.openFile(obsPath,mode='r+')
 hdr=obsFile.root.header.header.read()
-print os.path.basename(path)
+print 'Filename: ',os.path.basename(obsPath)
 print 'Target: ',hdr['target'][0]
 print 'Local time: ',hdr['localtime'][0]
 print 'UTC: ',hdr['utc'][0]

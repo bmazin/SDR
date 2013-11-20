@@ -1,13 +1,19 @@
 import os
 import numpy
 import pylab as plt
+import sys
 #import matplotlib.mlab as mlab
 #import matplotlib.pyplot as plt
 
 #with open('~data/20120812adr/FL1-ps_freq0.txt', 'r') as f:
 
-path='/home/sean/data/LICK2012/20120901/'
-filename = 'ps_freq5'
+if len(sys.argv) != 2:
+    print 'Usage: ',sys.argv[0],' roachNum'
+    exit(1)
+roachNum = int(sys.argv[1])
+
+path='/home/sean/data/sci4alpha/'
+filename = 'ps_freq%d'%roachNum
 outfilename = filename + '-old'
 
 os.rename(path+filename+'.txt',path+outfilename+'.txt')
@@ -30,7 +36,8 @@ plt.ylabel('Number')
 plt.title('title')
 
 #plt.ion()
-p=plt.show()
+#plt.draw()
+plt.show()
 
 newData=data[1:,3]
 minAtten=input('Input min Attenuation: ')
@@ -43,8 +50,7 @@ for i in range(len(newData)):
 print newData
 h2=plt.hist(newData,bins=numBin)
 
-
-
+#plt.draw()
 plt.show()
 #enter=input('Press any key to continue...')
 
@@ -68,5 +74,6 @@ for i in range(len(data[1:,3])):
 
 
 f.close()
+p=plt.show()
 
 #numpy.savetxt('testReaddata.txt',[[4,2,3,4],[8,6,7,8],[29,23,25,27]],fmt=['%f','%d','%d','%d'],delimiter='\t')

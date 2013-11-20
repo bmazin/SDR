@@ -42,7 +42,7 @@ def BeamImage(obsfile, beammapfile, timestamp):
     carray = ca.read() 
     h5file.close()
 
-def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,passedfilt,dir="./",target="Target",equinox=2000.0,epoch=2011.0,focus=np.nan, parallactic=np.nan):
+def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,passedfilt,dir="./",telescope = "Broida", target="Target",equinox=2000.0,epoch=2011.0,focus=np.nan, parallactic=np.nan):
     #lt = time.time() #passed in call to HeaderGen
     dt = datetime.datetime.utcfromtimestamp(lt)
           
@@ -59,8 +59,22 @@ def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,passedfi
     w['description'] = ''
     w['filt'] = passedfilt
     
-    w['telescope'] = 'Lick 36 inch Shane Telescope'
-    
+    if telescope == "Palomar":
+        w['telescope'] = 'Palomar 200" Hale Telescope'
+        w['obslat'] = 33.0 + 21.0/60.0 + 21.6/3600.0 #Palomar
+        w['obslong'] = -1.*(116.0 +  51.0/60.0 + 46.80/3600.0) #Palomar
+        w['obsalt'] = 1706.0 #Palomar
+    if telescope == "Lick":
+        w['telescope'] = 'Lick 36 inch Shane Telescope' 
+        w['obslat'] = 37.0 + 20.0/60.0 + 24.6/3600.0 #Lick
+        w['obslong'] = -1.*(121.0 +  38.0/60.0 + 43.80/3600.0) #Lick
+        w['obsalt'] = 1283.0 #Lick
+    if telescope == "Broida":
+        w['telescope'] = 'Mazin Lab, UCSB' 
+        w['obslat'] = 34.414243 #UCSB's location according to Google Earth
+        w['obslong'] = -119.843009
+        w['obsalt'] = 100.0
+
     if focus != np.nan:
         w['focus'] = focus
     if parallactic != np.nan:
@@ -71,14 +85,6 @@ def HeaderGen(filename,beammapfile,lt,exptime,ra,dec,alt,az,airmass,lst,passedfi
     w['airmass'] = airmass
     w['equinox'] = equinox
     w['epoch'] = epoch
-    
-    #w['obslat'] = 33.0 + 21.0/60.0 + 21.6/3600.0 #Palomar
-    #w['obslong'] = -1.*(116.0 +  51.0/60.0 + 46.80/3600.0) #Palomar
-    #w['obsalt'] = 1706.0 #Palomar
-    
-    w['obslat'] = 37.0 + 20.0/60.0 + 24.6/3600.0 #Lick
-    w['obslong'] = -1.*(121.0 +  38.0/60.0 + 43.80/3600.0) #Lick
-    w['obsalt'] = 1283.0 #Lick
     
     w['timezone'] = time.altzone/3600.0
     w['localtime'] = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime(lt))

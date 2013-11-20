@@ -12,10 +12,10 @@ bin_data_1=str(np.load('bin_data_1.npy'))
 phase_timestream=np.loadtxt('phase_timestream.txt')
 bin_max=len(bin_data_1)/4
 
-addr0=12802
-addr1=15860
-median =  -0.31893158518
-threshold = -44.9301864736
+addr0=969
+addr1=3132
+median =  -0.0414051531
+threshold = -1.10506996019
 pulseMask = int(12*'1',2) #bitmask of 12 ones
 timeMask = int(20*'1',2)#bitmask of 20 ones
 N_pts = len(phase_timestream)

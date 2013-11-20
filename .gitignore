@@ -1,6 +1,9 @@
-*.sim
-*.o
 *.pyc
+*.o
+*~
+*.autosave
+*.swp
+*.sim
 *.so
 *.exe
 *.dll

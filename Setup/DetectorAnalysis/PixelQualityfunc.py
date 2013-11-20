@@ -22,22 +22,24 @@ def createAccuratefQMatrix(bmaptitle, title1,titlefits1,title2,titlefits2,closef
     FL1fits=np.loadtxt('/home/sean/data/%s'%titlefits1)
     approxf1=FL1fits[:,1]
     QFL1=FL1fits[:,2]
+    QiFL1=FL1fits[:,4]
 
-    freqs4=np.loadtxt('/home/sean/data/%s0.txt'%title2)
+    freqs4=np.loadtxt('/home/sean/data/%s4.txt'%title2)
     f4=freqs4[:,0]
     f4=f4[1:]
-    freqs5=np.loadtxt('/home/sean/data/%s1.txt'%title2)
+    freqs5=np.loadtxt('/home/sean/data/%s5.txt'%title2)
     f5=freqs5[:,0]
     f5=f5[1:]
-    freqs6=np.loadtxt('/home/sean/data/%s2.txt'%title2)
+    freqs6=np.loadtxt('/home/sean/data/%s6.txt'%title2)
     f6=freqs6[:,0]
     f6=f6[1:]
-    freqs7=np.loadtxt('/home/sean/data/%s3.txt'%title2)
+    freqs7=np.loadtxt('/home/sean/data/%s7.txt'%title2)
     f7=freqs7[:,0]
     f7=f7[1:]
     FL2fits=np.loadtxt('/home/sean/data/%s'%titlefits2)
     approxf2=FL2fits[:,1]
     QFL2=FL2fits[:,2]
+    QiFL2=FL2fits[:,4]
 
     accuratefs=[f0,f1,f2,f3,f4,f5,f6,f7]
 
@@ -56,7 +58,7 @@ def createAccuratefQMatrix(bmaptitle, title1,titlefits1,title2,titlefits2,closef
                 while foundmatch==0:
                     if FL1j+i+1< len(approxf1):
                         if abs(accuratefs[roach][pixf]-approxf1[FL1j+i]) < closefcutoff:
-                            fQroach.append([accuratefs[roach][pixf],QFL1[FL1j+i]])
+                            fQroach.append([accuratefs[roach][pixf],QFL1[FL1j+i],QiFL1[FL1j+i]])
                             indexofpickedapproxf1.append(FL1j+i)
                             foundmatch=1
                             FL1j=FL1j+i+1
@@ -74,7 +76,7 @@ def createAccuratefQMatrix(bmaptitle, title1,titlefits1,title2,titlefits2,closef
                 while foundmatch==0:
                     if FL2j+i+1< len(approxf2):
                         if abs(accuratefs[roach][pixf]-approxf2[FL2j+i]) < closefcutoff:
-                            fQroach.append([accuratefs[roach][pixf],QFL2[FL2j+i]])
+                            fQroach.append([accuratefs[roach][pixf],QFL2[FL2j+i],QiFL2[FL2j+i]])
                             indexofpickedapproxf2.append(FL2j+i)
                             foundmatch=1
                             FL2j=FL2j+i+1

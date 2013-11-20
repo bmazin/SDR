@@ -1,0 +1,12 @@
+Description of compiliable mdl files (Some need a few tries to compile without timing errors).
+
+The following have the deadtime lockout bug and 3pt threshold bug:
+chan_dtrig_v2.mdl - First compiled baseline subtraction with alpha=0.1 (running average of 10 pts, lagging 5 pts)
+var_lpf_v3.mdl - Compiled baseline subtraction with variable alpha. Still untested. Alpha should work for ~0.1-0.05. IQ fir have effectively 20 taps, custom fir has 26 taps.
+iqlpf16_v1.mdl - 550 MHz sample rate with variable alpha baseline subtraction. IQ fir have effectively 16 taps (with correct hardcoded coefficients), and the Custom FIr has 18 taps
+
+The following have the deadtime lockout and 3pt thresholds bugs fixed
+chan_512_cfix.mdl - This has the new 512 MHz data packet but does not have baseline triggers.
+btrig_fix_v1.mdl - this has baseline triggers where y[t] = alpha*x[-30]+(1-alpha)y[t-10]
+chan_snap_v3.mdl - This has the snapQDR block to take a second of raw data
+

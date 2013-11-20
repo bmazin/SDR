@@ -6,9 +6,10 @@
 ;
 ;***************************************************************************
 
-filename = 'FL1-115mk-70.txt'
-datapath = '/Users/matt/Documents/mazin/widesweepanalysis/20120611adr/'
-outpath = '/Users/matt/Documents/mazin/widesweepanalysis/20120611adr/'
+fname='test'
+filename = fname + '.txt'
+datapath = '/Users/matt/Documents/mazin/widesweepanalysis/test/'
+outpath = '/Users/matt/Documents/mazin/widesweepanalysis/test/'
 ;outpath = '/Users/bmazin/Data/ResData/Archive/'
 
 ;have IDL keep responsibility for plot windows because X11 throws BadMatch error
@@ -24,7 +25,7 @@ device,font_size=12,/inches,xsize=7.5,ysize=9,xoffset=.5,yoffset=1
 
 stridx = strsplit(datapath,'/')
 outfn = strmid(datapath,stridx[5],11)
-device,filename = strcompress(outpath + outfn + '-ws.ps',/remove_all)
+device,filename = strcompress(outpath + fname + '-good.ps',/remove_all)
 
 ; load up the widesweep
 
@@ -96,16 +97,26 @@ device,/close
 
 rescount = 0
 
-openw,1, strcompress(outpath + outfn + '-ws.txt',/remove_all)
+openw,1, strcompress(outpath + fname+'-good.txt',/remove_all)
 
 set_plot,'X'
 !p.multi=[0,1,0]
 loadct,2
 device,decomposed=0
-for i=0,79 do begin  ; 0,79 should be!
+
+
+resonantFreq=make_array(80,/PTR)
+resonantLoc=make_array(80,/PTR)
+numBreaks = 4  ;should be 79
+
+for i=0,numBreaks do begin  ; 0,79 should be!
+  print,'Left-click to add, right-click to remove, scroll-down to continue, scroll-up to go back, click mouse wheel to replot.'
+  print, 'frame '
+  print, i
   m = mag[fsteps1*i/40 : fsteps1*(i+1)/40 - 1]
   f = data1[0,fsteps1*i/40 : fsteps1*(i+1)/40 - 1]
   v1 = -30.0 + 30.0*v[fsteps1*i/40 : fsteps1*(i+1)/40 - 1] /max(v[fsteps1*i/40 : fsteps1*(i+1)/40 - 1])
+  ;v1 = -30.0 + 15.0*v[fsteps1*i/40 : fsteps1*(i+1)/40 - 1] /mean(v[fsteps1*i/40 : fsteps1*(i+1)/40 - 1])
   
   ; median subtract baseline
   m1 = m - median(m)
@@ -114,89 +125,146 @@ for i=0,79 do begin  ; 0,79 should be!
   oplot,f,v1,line=1
   
   ; first guess at resonators
-  auto_peak_sensitivity = 9
+  auto_peak_sensitivity = 5
+
   g2 = peaks(v1,auto_peak_sensitivity)
   
   ;eliminate doubles
+  duplicate_threshold=50
   n = n_elements(g2)-2
   if( n GT 0 ) then begin
     for j=0,n do begin
       if( abs(g2[j] - g2[j+1]) LT 50 ) then g2[j+1] = -100
-      if( n GE 1 AND j LE n-1) then if ( abs(g2[j] - g2[j+2]) LT 50 ) then g2[j+2] = -100    
-      if( n GE 2 AND j LE n-2) then if ( abs(g2[j] - g2[j+3]) LT 50 ) then g2[j+3] = -100   
-      if( n GE 3 AND j LE n-3) then if ( abs(g2[j] - g2[j+4]) LT 50 ) then g2[j+4] = -100   
-      if( n GE 4 AND j LE n-4) then if ( abs(g2[j] - g2[j+5]) LT 50 ) then g2[j+5] = -100   
-      if( n GE 5 AND j LE n-5) then if ( abs(g2[j] - g2[j+6]) LT 50 ) then g2[j+6] = -100  
-      if( n GE 6 AND j LE n-6) then if ( abs(g2[j] - g2[j+7]) LT 50 ) then g2[j+7] = -100  
+      if( n GE 1 AND j LE n-1) then if ( abs(g2[j] - g2[j+2]) LT duplicate_threshold ) then g2[j+2] = -100    
+      if( n GE 2 AND j LE n-2) then if ( abs(g2[j] - g2[j+3]) LT duplicate_threshold ) then g2[j+3] = -100   
+      if( n GE 3 AND j LE n-3) then if ( abs(g2[j] - g2[j+4]) LT duplicate_threshold ) then g2[j+4] = -100   
+      if( n GE 4 AND j LE n-4) then if ( abs(g2[j] - g2[j+5]) LT duplicate_threshold ) then g2[j+5] = -100   
+      if( n GE 5 AND j LE n-5) then if ( abs(g2[j] - g2[j+6]) LT duplicate_threshold ) then g2[j+6] = -100  
+      if( n GE 6 AND j LE n-6) then if ( abs(g2[j] - g2[j+7]) LT duplicate_threshold ) then g2[j+7] = -100  
     endfor
   endif
  
   g3 = g2[where(g2 GE 0)]
   
-  for j=0,n_elements(g3 )-1 do begin
-    plots,[f[g3[j]] ,f[g3[j]]] ,[-30,10],line=2,color=150
-    tvbox,[0.0005,38.0],f[g3[j]],-10,color=fix(50.0+randomu(seed)*200.0),/DATA  
-  endfor
- 
-  while 1 do begin
-  print,'Press: r to remove, a to add, p to replot, c to continue.  Left click to add/remove, right to return.'
-  ch = get_kbrd()
-  if( ch EQ 'c' ) then begin
-    if g3[0] EQ -100 then break
-    print,f[g3]
-    for j=0,n_elements(g3)-1 do begin
-      printf,1,rescount,long(g3[j]+fsteps1*i/40),f[g3[j]]
-      rescount++
-    endfor
-    break
-  endif 
-  
-  if( ch EQ 'p' ) then begin   ; replot
-    plot,f,m1,yr=[-30,10],/ystyle,/xstyle
-    oplot,f,v1,line=1
+  if g3[0] GE 0 then begin
     for j=0,n_elements(g3 )-1 do begin
       plots,[f[g3[j]] ,f[g3[j]]] ,[-30,10],line=2,color=150
-      tvbox,[0.0005,38.0],f[g3[j]],-10,color=fix(50.0+randomu(seed)*200.0),/DATA 
+      tvbox,[0.0005,38.0],f[g3[j]],-10,color=fix(50.0+randomu(seed)*200.0),/DATA  
     endfor
-  endif
-
-  if( ch EQ 'r' ) then begin   ; manually remove bad guesses
-  while 1 do begin
-    cursor,x,y,/data,/down
-    if( !MOUSE.button EQ 1 ) then begin
-      idx = findel(x,f[g3])
-      plots,[f[g3[idx]],f[g3[idx]]] ,[-30,10],line=0,color=0      
-      tvbox,[0.0005,38.0],f[g3[idx]],-10,color=0,/DATA 
-      g3[idx] = -100
-      g3 = g3[where(g3 GE 0)]
-    endif
-    if( !MOUSE.button EQ 4 ) then break 
-  endwhile  
-  endif
+  endif else begin
+    print, 'no peaks found'
+  endelse
   
-  if( ch EQ 'a' ) then begin    ; manually add missed resonators
-   print,'click frequency to add resonator to list'
-   while 1 do begin
+  
+  while 1 do begin
+    
+    ;ch = get_kbrd()
+    ;print, g3
+    ;print,f[g3]
+    
     cursor,x,y,/data,/down
-    if( !MOUSE.button EQ 1 ) then begin
+    if( !MOUSE.button EQ 1 ) then begin     ;left mouse click
       idx = findel( x, f  )
       plots,[f[idx],f[idx]] ,[-30,10],line=1,color=150 
       tvbox,[0.0005,38.0],f[idx],-10,color=fix(50.0+randomu(seed)*200.0),/DATA      
       g4 = [g3,idx]
       g3 = g4[sort(g4)]
+      g3 = g3[where(g3 GE 0)]
       print,f[g3]   
     endif
-    if( !MOUSE.button EQ 4 ) then break 
-  endwhile  
-  endif
-  
+    if( !MOUSE.button EQ 4 ) then begin     ;right mouse click
+      ;if g3[0] NE -100 then begin
+        idx = findel(x,f[g3])
+        plots,[f[g3[idx]],f[g3[idx]]] ,[-30,10],line=0,color=0      
+        tvbox,[0.0005,38.0],f[g3[idx]],-10,color=0,/DATA 
+        g3[idx] = -100
+        g3 = g3[where(g3 GE 0)]
+        ;print, g3
+        ;print, f[g3]
+      ;endif
+    endif
+    
+;    if( !MOUSE.button GE 0 ) then begin
+;      print, !MOUSE.button
+;    endif
+    
+    if( !MOUSE.button EQ 8 ) then begin       ;scroll up
+      if i GT 0 then begin
+        resonantFreq[i-1]=PTR_NEW()
+        resonantLoc[i-1]=PTR_NEW()
+        i=i-2
+        print, 'Undone one frame'
+        break
+      endif
+    endif
+    
+    
+    if( !MOUSE.button EQ 16 ) then begin      ;scroll down
+      if g3[0] LT 0 then begin
+        resonantLoc[i]=PTR_NEW([])
+        resonantFreq[i]=PTR_NEW([])
+        break
+      endif
+      
+      print,f[g3]
+      resonantFreq[i]=PTR_NEW(f[g3])
+      resonantLoc[i]=PTR_NEW(g3)
+      
+      ;for j=0,n_elements(g3)-1 do begin
+      ;  printf,1,rescount,long(g3[j]+fsteps1*i/40),f[g3[j]]
+      ;  rescount++
+      ;endfor
+          
+      break
+    endif
+    
+    if( !MOUSE.button EQ 2 ) then begin       ;wheel click
+      plot,f,m1,yr=[-30,10],/ystyle,/xstyle
+      oplot,f,v1,line=1
+      if (g3[0] GE 0) then begin
+        for j=0,n_elements(g3 )-1 do begin
+          plots,[f[g3[j]] ,f[g3[j]]] ,[-30,10],line=2,color=150
+          tvbox,[0.0005,38.0],f[g3[j]],-10,color=fix(50.0+randomu(seed)*200.0),/DATA 
+        endfor
+      endif
+      print, f[g3]
+    endif
+    
+
   endwhile
   
-
+  ;Uncomment 'read' to prompt end of program
+  if i EQ numBreaks then begin
+    undo = 1
+    ;read,'Press 1 to finish, otherwise 0 to redo this frame: ',undo
+    if undo EQ 0 then begin
+      resonantFreq[i]=PTR_NEW()
+      resonantLoc[i]=PTR_NEW()
+      i=i-1
+    endif
+  endif
+  
+  ;stop
 endfor
 
-close,1
+
+;Load data into file
+for i=0,numBreaks do begin
+  if n_elements(*resonantFreq[i]) GT 0 then begin
+    for j=0,n_elements(*resonantFreq[i])-1 do begin
+      printf,1,rescount,long((*resonantLoc[i])[j]+fsteps1*i/40),(*resonantFreq[i])[j]
+      rescount++
+      ;printf,1,rescount,long(g3[j]+fsteps1*i/40),f[g3[j]]
+    endfor
+  endif
+endfor
+
+
+
+close, 1
+free_lun, 1
 
 print,'Detected Resonators: ',rescount
+print, 'Resonator list saved in: ', outpath, filename
 
 end

@@ -19,9 +19,20 @@ from lib import iqsweep
 
 
 
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print 'Usage: ',sys.argv[0],' roachNo'
+        exit(1)
+    roachNo = int(sys.argv[1])
+    datadir = os.environ['FREQ_PATH']#'/home/sean/data/20121105adr/'
+    configFile = numpy.loadtxt(os.path.join(datadir,'roachConfig.txt'))
+    defaultLOFreqs = configFile[:,0]
+    defaultAttens = configFile[:,1]
+    defaultLOFreq = defaultLOFreqs[roachNo]
+    defaultAtten = int(defaultAttens[roachNo])
 
 
-MAX_ATTEN = 99
+    MAX_ATTEN = 99
 
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
@@ -43,6 +54,21 @@ class AppForm(QMainWindow):
         self.freqRes = self.sampleRate/N_lut_entries
         #self.iq_centers = numpy.array([0.+0j]*256)
         self.customResonators=numpy.array([[0.0,-1]]*256)	#customResonator[ch]=[freq,atten]
+        self.last_I_on_res = None
+        self.last_Q_on_res = None
+        self.last_I = None
+        self.last_Q = None
+        self.last_iq_centers = None
+        self.last_IQ_vels = None
+        self.last_f_span = None
+        self.I = None
+        self.Q = None
+        self.I_on_res = None
+        self.Q_on_res = None
+        self.iq_centers = None
+        self.IQ_vels = None
+        self.f_span = None
+
         
     def openClient(self):
         self.status_text.setText('connecting...')
@@ -491,7 +517,7 @@ class AppForm(QMainWindow):
     def sweepLOready(self):
         atten_in = float(self.textbox_atten_in.text())
         saveDir = str(self.textbox_saveDir.text())
-        savefile = saveDir + 'ps_' + time.strftime("%Y%m%d-%H%M%S",time.localtime()) + str(self.textbox_roachIP.text())+'.h5'
+        savefile = saveDir + 'ps_r%d_'%roachNo + time.strftime("%Y%m%d-%H%M%S",time.localtime())+'.h5'
         dac_freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
         self.N_freqs = len(dac_freqs)
         f_base = float(self.textbox_loFreq.text())
@@ -515,10 +541,14 @@ class AppForm(QMainWindow):
         else:
             attens = [i for i in range(atten_start, atten_stop-1, -1)]
 
+        if len(attens) > 1:
+            print 'Saving to ',savefile
         for a in attens:	
             print a
             self.programAttenuators(atten_in, a)
             time.sleep(0.5)
+            if self.f_span != None:
+                self.last_f_span = self.f_span
             f_span = []
             l = 0
             self.f_span = [[0]*steps]*self.N_freqs
@@ -526,6 +556,13 @@ class AppForm(QMainWindow):
                 f_span = f_span + [f-0.5*steps*df+n*df for n in range(steps)]
                 self.f_span[l] = [f-0.5*steps*df+n*df for n in range(steps)]
                 l = l + 1
+
+            if self.I != None:
+               self.last_I = numpy.array(self.I) 
+               self.last_Q = numpy.array(self.Q) 
+               self.last_I_on_res = numpy.array(self.I_on_res) 
+               self.last_Q_on_res = numpy.array(self.Q_on_res) 
+               self.last_iq_centers = numpy.array(self.iq_centers) 
             I = numpy.zeros(self.N_freqs*steps, dtype='float32')
             Q = numpy.zeros(self.N_freqs*steps, dtype='float32')
             I_std = numpy.zeros(self.N_freqs*steps, dtype='float32')
@@ -565,35 +602,43 @@ class AppForm(QMainWindow):
             
             
             N = steps*self.N_freqs
+            #calculate IQ velocities (distances between points in IQ loop)
+            if self.IQ_vels != None:
+                self.last_IQ_vels = self.IQ_vels
+            self.IQ_vels = numpy.zeros([self.N_freqs,steps-1])
+            for ch in range(self.N_freqs):
+                for iFreq,freq in enumerate(self.f_span[ch][0:-1]):
+                    dI = self.I[ch][iFreq]-self.I[ch][iFreq+1]
+                    dQ = self.Q[ch][iFreq]-self.Q[ch][iFreq+1]
+                    self.IQ_vels[ch][iFreq] = numpy.sqrt(dI**2+dQ**2)
 	
-            for n in range(self.N_freqs):
-                w = iqsweep.IQsweep()
-                w.f0 = dac_freqs[n]/1e9
-                w.span = steps*df/1e6
-                w.fsteps = steps
-                #w.atten1 = a
-                w.atten1 = a + self.attens[n]
-                #w.atten1 = atten
-                # w.atten2 is actually the "scale factor" used in the DAC LUT
-                # generation.
-                w.atten2 = 0
-                w.scale = self.scale_factor
-                w.PreadoutdB = -w.atten1 - 20*numpy.log10(self.scale_factor)
-                w.Tstart = 0.100
-                w.Tend = 0.100
-                w.I0 = 0.0
-                w.Q0 = 0.0
-                w.resnum = n
-                w.freq =  numpy.array(f_span[n*steps:(n+1)*steps], dtype='float32')/1e9
-                w.I = I[n*steps:(n+1)*steps]
-                w.Q = Q[n*steps:(n+1)*steps]
-                w.Isd = I_std[n*steps:(n+1)*steps]
-                w.Qsd = Q_std[n*steps:(n+1)*steps]
-                w.time = time.time()
-                w.savenoise = 0
-                #w.Save(savefile,'r0', 'a')
-            
-            
+            if len(attens) > 1:
+                for n in range(self.N_freqs):
+                    w = iqsweep.IQsweep()
+                    w.f0 = dac_freqs[n]/1e9
+                    w.span = steps*df/1e6
+                    w.fsteps = steps
+                    #w.atten1 = a
+                    w.atten1 = a + self.attens[n]
+                    #w.atten1 = atten
+                    # w.atten2 is actually the "scale factor" used in the DAC LUT
+                    # generation.
+                    w.atten2 = 0
+                    w.scale = self.scale_factor
+                    w.PreadoutdB = -w.atten1 - 20*numpy.log10(self.scale_factor)
+                    w.Tstart = 0.100
+                    w.Tend = 0.100
+                    w.I0 = 0.0
+                    w.Q0 = 0.0
+                    w.resnum = n
+                    w.freq =  numpy.array(f_span[n*steps:(n+1)*steps], dtype='float32')/1e9
+                    w.I = I[n*steps:(n+1)*steps]
+                    w.Q = Q[n*steps:(n+1)*steps]
+                    w.Isd = I_std[n*steps:(n+1)*steps]
+                    w.Qsd = Q_std[n*steps:(n+1)*steps]
+                    w.time = time.time()
+                    w.savenoise = 0
+                    w.Save(savefile,'r0', 'a')
         self.axes0.clear()
         self.axes1.clear()
         self.axes0.semilogy(f_span, (I**2 + Q**2)**.5, '.-')
@@ -612,6 +657,7 @@ class AppForm(QMainWindow):
                     self.roach.write_int('startDAC', 1)
                     time.sleep(1)
                     print ".",
+                    sys.stdout.flush()
                 print "done."
                 self.button_startDAC.setText('Stop DAC')
                 self.dacStatus = 'on'
@@ -692,10 +738,20 @@ class AppForm(QMainWindow):
         ch = ch + 1
         ch = ch%self.N_freqs
         self.textbox_channel.setText(str(ch))
+        self.showChannel(ch)
+
+    def showChannel(self,ch=None):
+        if ch == None:
+            ch = int(self.textbox_channel.text())
         self.axes0.clear()
         self.axes1.clear()
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
+        self.axes0.semilogy(self.f_span[ch][0:-1], self.IQ_vels[ch],'g.-')
+        if self.last_IQ_vels != None:
+            self.axes0.semilogy(self.last_f_span[ch][0:-1], self.last_IQ_vels[ch],'c.-',alpha=0.5)
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
+        if self.last_I != None:
+            self.axes1.plot(self.last_I[ch], self.last_Q[ch], 'c.-', self.last_iq_centers.real[ch], self.last_iq_centers.imag[ch], '.', self.last_I_on_res[ch], self.last_Q_on_res[ch], '.',alpha=0.5)
         self.canvas.draw()
 
         
@@ -704,30 +760,17 @@ class AppForm(QMainWindow):
         atten=self.attens[ch]
         
         if self.customResonators[ch][1]!=-1:
-            freq=self.customResonators[ch][0]
+            #freq=self.customResonators[ch][0]
             atten=self.customResonators[ch][1]
         self.textbox_freq.setText(str(freq))
         self.spinbox_attenuation.setValue(int(atten))
-        
+
     def channelIncDown(self):
         ch = int(self.textbox_channel.text())
         ch = ch - 1
         ch = ch%self.N_freqs
         self.textbox_channel.setText(str(ch))
-        self.axes0.clear()
-        self.axes1.clear()
-        self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
-        self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
-        self.canvas.draw()
-
-        freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
-        freq=freqs[ch]/10**9
-        atten=self.attens[ch]
-        if self.customResonators[ch][1]!=-1:
-            freq=self.customResonators[ch][0]
-            atten=self.customResonators[ch][1]
-        self.textbox_freq.setText(str(freq))
-        self.spinbox_attenuation.setValue(int(atten))
+        self.showChannel(ch)
 
     def changeCenter(self, event):
         I = event.xdata
@@ -739,20 +782,56 @@ class AppForm(QMainWindow):
         self.axes1.plot(I, Q, '.')
         self.canvas.draw()
 
+    def snapResFreq(self):
+        ch = int(self.textbox_channel.text())
+        for ch in range(self.N_freqs):
+            iMaxIQVel = numpy.argmax(self.IQ_vels[ch])
+            #The longest edge is identified, choose which vertex of the edge
+            #is the resonant frequency by checking the neighboring edges
+            #len(IQ_vels[ch]) == len(f_span)-1, so iMaxIQVel is the index
+            #of the lower frequency vertex of the longest edge
+            if iMaxIQVel+1 < len(self.IQ_vels[ch]) and self.IQ_vels[ch][iMaxIQVel-1] < self.IQ_vels[ch][iMaxIQVel+1]:
+                iNewResFreq = iMaxIQVel+1
+            else:
+                iNewResFreq = iMaxIQVel
 
-    def updateResonator(self,atten=-1):
+            maxJump = 5e-5# don't jump further than 50kHz
+            freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
+            currentFreq=freqs[ch]/10**9
+            newFreq = self.f_span[ch][iNewResFreq]
+            newFreq = newFreq/1e9
+            if (abs(newFreq-currentFreq) <= maxJump):
+                self.updateResFreq(ch=ch,freq=newFreq)
+
+    def updateResFreq(self,ch,freq):
         freqFile =str(self.textbox_freqFile.text())
         freqFile=freqFile[:-4] + '_NEW.txt'
-        ch = int(self.textbox_channel.text())
+        try:
+            f=open(freqFile,'a')
+            atten = self.attens[ch]
+            f.write(str(int(ch))+'\t'+str(freq)+'\t'+str(atten)+'\n')
+            f.close()
+
+            self.customResonators[ch]=[freq,atten]
+            print 'ch:',ch,'freq:',freq,'atten:',atten
+        except IOError:
+            print 'IOERROR! Trouble opening',freqFile
+
+    def updateResonator(self,atten=-1,ch=None):
+        freqFile =str(self.textbox_freqFile.text())
+        freqFile=freqFile[:-4] + '_NEW.txt'
+        if ch == None:
+            ch = int(self.textbox_channel.text())
         try:
             
             f=open(freqFile,'a')
             if atten == -1:
                 atten=self.spinbox_attenuation.value()
             freq=float(self.textbox_freq.text())
+            if atten == -1:
+                atten=self.spinbox_attenuation.value()
             f.write(str(int(ch))+'\t'+str(freq)+'\t'+str(atten)+'\n')
             f.close()
-
             self.customResonators[ch]=[freq,atten]
             print 'ch:',ch,'freq:',freq,'atten:',atten
         except IOError:
@@ -783,7 +862,12 @@ class AppForm(QMainWindow):
         self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
         
         # Roach board's IP address
-        self.textbox_roachIP = QLineEdit('10.0.0.10')
+        roachIP = roachNo
+        if roachNo == 6:
+            roachIP = 7
+        elif roachNo == 7:
+            roachIP = 6
+        self.textbox_roachIP = QLineEdit('10.0.0.1%d'%roachIP)
         self.textbox_roachIP.setMaximumWidth(200)
         label_roachIP = QLabel('Roach IP Address:')
 
@@ -793,7 +877,7 @@ class AppForm(QMainWindow):
         self.connect(self.button_openClient, SIGNAL('clicked()'), self.openClient)
         
         # LO frequency.
-        self.textbox_loFreq = QLineEdit('3.57e9')
+        self.textbox_loFreq = QLineEdit('%fe9'%defaultLOFreq)
         self.textbox_loFreq.setMaximumWidth(100)
         label_loFreq = QLabel('LO frequency:')
 
@@ -820,7 +904,7 @@ class AppForm(QMainWindow):
         label_DACfreqs = QLabel('DAC Freqs:')
 
         # Input attenuation.
-        self.textbox_atten_in = QLineEdit('0')
+        self.textbox_atten_in = QLineEdit('5')
         self.textbox_atten_in.setMaximumWidth(50)
         label_atten_in = QLabel('Input atten.:')
 
@@ -834,26 +918,26 @@ class AppForm(QMainWindow):
         #self.textbox_dds_shift = QLineEdit('149')	#chan_512_nodead_2012_Sep_05_1346.bof
         #self.textbox_dds_shift = QLineEdit('147')	#chan_if_acc_x_2011_Aug_02_0713.bof
         #self.textbox_dds_shift = QLineEdit('153')	#chan_dtrig_2012_Aug_28_1204.bof
-        self.textbox_dds_shift = QLineEdit('151')       #chan_dtrig_v2_2012_Aug_28_1956.bof
+        self.textbox_dds_shift = QLineEdit('154')       
         self.textbox_dds_shift.setMaximumWidth(50)
         label_dds_shift = QLabel('DDS sync. lag:')
 
         # Power sweep range. 
-        self.textbox_powerSweepStart = QLineEdit('42')
+        self.textbox_powerSweepStart = QLineEdit(str(defaultAtten))
         self.textbox_powerSweepStart.setMaximumWidth(50)
         label_powerSweepStart = QLabel('Start atten.:')
-        self.textbox_powerSweepStop = QLineEdit('42')
+        self.textbox_powerSweepStop = QLineEdit(str(defaultAtten))
         self.textbox_powerSweepStop.setMaximumWidth(50)
         label_powerSweepStop = QLabel('Stop atten:')
 
         # Save directory
-        self.textbox_saveDir = QLineEdit('/home/sean/data/LICK2012/')
+        self.textbox_saveDir = QLineEdit(datadir)
         self.textbox_saveDir.setMaximumWidth(250)
         label_saveDir = QLabel('Save directory:')
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit('/home/sean/data/sci3gamma/ps_freq0.txt')
+        self.textbox_freqFile = QLineEdit(datadir+'ps_freq%d.txt'%roachNo)
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
@@ -922,10 +1006,15 @@ class AppForm(QMainWindow):
         self.textbox_freq.setMaximumWidth(130)
         label_freq = QLabel('Freq (GHz):')
         
+        #button to snap resonant frequency to peak IQ velocity
+        self.button_autoFreq = QPushButton("Auto")
+        self.button_autoFreq.setMaximumWidth(170)
+        self.connect(self.button_autoFreq, SIGNAL('clicked()'), self.snapResFreq)
         #button to submit frequency and attenuation changes
         self.button_updateResonator = QPushButton("Submit")
         self.button_updateResonator.setMaximumWidth(170)
         self.connect(self.button_updateResonator, SIGNAL('clicked()'), self.updateResonator)
+        
  
         #button to 'delete' resonator by setting attenuation really high
         self.button_deleteResonator = QPushButton('Remove Resonator')
@@ -999,6 +1088,7 @@ class AppForm(QMainWindow):
         hbox23.addWidget(self.spinbox_attenuation)
         hbox23.addWidget(label_freq)
         hbox23.addWidget(self.textbox_freq)
+        hbox23.addWidget(self.button_autoFreq)
         hbox23.addWidget(self.button_updateResonator)
         gbox2.addLayout(hbox23)
         hbox24 = QHBoxLayout()
@@ -1032,6 +1122,7 @@ class AppForm(QMainWindow):
         self.file_menu = self.menuBar().addMenu("&File")
         
         load_file_action = self.create_action("&Save plot",
+
             shortcut="Ctrl+S", slot=self.save_plot, 
             tip="Save the plot")
         quit_action = self.create_action("&Quit", slot=self.close, 

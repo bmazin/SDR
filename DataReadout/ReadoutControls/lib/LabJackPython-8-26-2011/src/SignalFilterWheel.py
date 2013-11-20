@@ -18,16 +18,16 @@ def SignalFilterWheel():
     # Configure
     d.configU3()
     
-    DAC1_REGISTER = 5002
-    d.writeRegister(DAC1_REGISTER, basevoltage)
+    DAC0_REGISTER = 5000
+    d.writeRegister(DAC0_REGISTER, basevoltage)
     #print "Switched voltage to " + str(basevoltage)
     time.sleep(0.5)
     
-    d.writeRegister(DAC1_REGISTER, triggervoltage)
+    d.writeRegister(DAC0_REGISTER, triggervoltage)
     #print "Switched voltage to " + str(triggervoltage)
     time.sleep(0.5)
     
-    d.writeRegister(DAC1_REGISTER,basevoltage)
+    d.writeRegister(DAC0_REGISTER,basevoltage)
     #print "Switched voltage to " + str(basevoltage)
     #time.sleep(0.5)
     

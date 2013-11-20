@@ -6,10 +6,15 @@
 ;
 ;***************************************************************************
 
-resloc = '20110723adr-ws.txt'
-swpname = 'FL2-20110723.txt'
-datapath = '/Users/bmazin/Data/ResData/20110723adr/fl2/'
-outpath = '/Users/bmazin/Data/ResData/20110723adr/fl2/'
+
+fname='FL2'
+outlabel = '-right'
+filename = fname + '.txt'
+datapath = '/Scratch/wideAna/20131016adr/'
+outpath = '/Scratch/wideAna/20131016adr/'
+
+swpname = fname + '.txt'
+resloc = fname + outlabel+'.txt'
 ;outpath = '/Users/bmazin/Data/ResData/Archive/'
 width = 50 ; base width of fit
 atten=75
@@ -24,14 +29,13 @@ device,/helv,/isolatin1
 device,font_size=12,/inches,xsize=7.5,ysize=9,xoffset=.5,yoffset=1
 
 stridx = strsplit(datapath,'/')
-outfn = strmid(datapath,stridx[4],stridx[5]-stridx[4]-1)
-device,filename = strcompress(outpath + outfn + '-fits.ps',/remove_all)
+device,filename = strcompress(outpath + fname + outlabel+'-fits.ps',/remove_all)
 
 ;load resonance locations
 res = read_ascii(outpath+resloc)
 res = res.field1
 n = n_elements(res[0,*])
-
+;stop
 ;load widesweep data
 resfile = strcompress(datapath+swpname,/remove_all)
 lines = file_lines(resfile) - 7
@@ -52,6 +56,8 @@ data1 = dblarr(5,lines)
 readf,1,data1
 close,1
 
+;stop
+
 m = lines/2-1
 
 ; work ok if data sweep taken in the reverse direction
@@ -69,8 +75,8 @@ if( data1[0,0] GT data1[0,10] ) then begin
   data1[4,m+1:lines-1] = reverse(data1[4,m+1:lines-1],2)    
 endif
     
-data1a = dblarr(5,lines)
-data1a[*,*] = 0.0
+;data1a = dblarr(5,lines)
+;data1a[*,*] = 0.0
 
 ; get rid of any zeros in errors
 if(where(data1[2,*] LT 1d-6) NE -1 ) then data1[2, where(data1[2,*] LT 1d-6) ] = 1d-6
@@ -88,20 +94,45 @@ data1a[*,*] = 0.0
 ;A = FINDGEN(17) * (!PI*2/16.)
 ;USERSYM, COS(A), SIN(A), /FILL
 
-openw,1, strcompress(outpath + outfn + '-fits.txt',/remove_all)
-
+openw,1, strcompress(outpath + fname + outlabel+'-fits2.txt',/remove_all)
+;print,n_elements(data1[0,*])
 ;loop over all the resonators
-for j=1,n-1 do begin
+print,n-1
+for j=0,n-1 do begin
 ;for j=0,2 do begin
-  f = data1[0, res[1,j]-width:res[1,j]+width+1 ]
-  I = data1[1, res[1,j]-width:res[1,j]+width+1 ]
-  Q = data1[3, res[1,j]-width:res[1,j]+width+1 ]  
+  ;stop
+  ;print,'res[1,'+STRTRIM(j,2)+']: ' +STRING(res[1,j])
+  indStart = res[1,j]-width
+  indEnd = res[1,j]+width+1
+  
+  ;indStart=indStart+10
+  indEnd=indEnd-10
+  
+  if indStart LT 0 then begin
+    print, 'Error: resonator too close to begining of data collection'
+    indStart = 0
+  endif
+  
+  if indEnd GE n_elements(data1[0,*]) then begin
+    print, 'Error: resonator too close to end of data collection'
+    indEnd = n_elements(data1[0,*])-1
+  endif
+  
+  
+  f = data1[0, indStart:indEnd ]
+  I = data1[1, indStart:indEnd ]
+  Q = data1[3, indStart:indEnd ]  
 
   ;plot,I,Q,psym=8
   cent = findel( res[1,j]/1d9, data1[0,*] )
   ;print,cent
-  if( cent LT m ) then r1 = ResFit(data1[*,res[1,j]-width:res[1,j]+width+1],Iz1,Qz1,fix(1000.0*((ts+te)/2.0)),j,atten,outpath,data1a[*,res[1,j]-width:res[1,j]+width+1],Iz1a,Qz1a,0)
-  if( cent GE m ) then r1 = ResFit(data1[*,res[1,j]-width:res[1,j]+width+1],Iz2,Qz2,fix(1000.0*((ts+te)/2.0)),j,atten,outpath,data1a[*,res[1,j]-width:res[1,j]+width+1],Iz2a,Qz2a,0)
+  ;if( cent LT m ) then r1 = ResFit(data1[*,res[1,j]-width:res[1,j]+width+1],Iz1,Qz1,fix(1000.0*((ts+te)/2.0)),j,atten,outpath,data1a[*,res[1,j]-width:res[1,j]+width+1],Iz1a,Qz1a,0)
+  ;if( cent GE m ) then r1 = ResFit(data1[*,res[1,j]-width:res[1,j]+width+1],Iz2,Qz2,fix(1000.0*((ts+te)/2.0)),j,atten,outpath,data1a[*,res[1,j]-width:res[1,j]+width+1],Iz2a,Qz2a,0)
+  if( cent LT m ) then r1 = ResFit(data1[*,indStart:indEnd],Iz1,Qz1,fix(1000.0*((ts+te)/2.0)),j,atten,outpath,data1a[*,indStart:indEnd],Iz1a,Qz1a,0)
+  if( cent GE m ) then r1 = ResFit(data1[*,indStart:indEnd],Iz2,Qz2,fix(1000.0*((ts+te)/2.0)),j,atten,outpath,data1a[*,indStart:indEnd],Iz2a,Qz2a,0)
+  
+ 
+ 
  
   ;return,[radius,p[8],p[9],Izero,Qzero,p[0],Qc,Qi,p[1],atten,sqrt(bestchisq/DOF)]
   Q = r1[5]

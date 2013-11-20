@@ -1,0 +1,11 @@
+/Users/matt/Documents/mazin/xray/Data/20120312/xr12a/	!Path to data
+/Users/matt/Documents/mazin/xray/Data/20120312/xr12a/processed/	!Path for output files
+/Users/matt/Documents/mazin/xray/Data/20120312/xr12a/processed			!Path for permanent archive
+pulse_data.dat				!Pulse data file name
+resnum=1					!resonator group
+atten=37					!attenuator setting
+T=60						!temperature
+sub=0						!background subtraction - temp for high temp sweep, 0 for none, -1 for phase fit only
+loss=45.0					!attenuation before device, DF=45, ADR=35
+0
+0
