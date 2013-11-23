@@ -31,6 +31,7 @@ void toggle_trigger(char* path_triggerfile,int bool_start);
 int make_connection(int server);
 int start_server();
 int get_process_id();
+int get_roach_num();
 int send_packet(char* path_low_order_data,char* path_high_order_data,int client, int first_half_file);
 int need_to_restart();
 double current_time();
@@ -50,8 +51,10 @@ int main(int argc, char* argv[])
     int no_interrupt = 1;
     int server,client;
 	int first_half_file = 1;
+    int roach_num = -1;
 
-    printf("Starting PulseServer\n");
+    roach_num = get_roach_num();
+    printf("Starting PulseServer %d\n",roach_num);
 
     signal(SIGPIPE,SIG_IGN);
     process_id = get_process_id();
@@ -66,7 +69,7 @@ int main(int argc, char* argv[])
     {
         packet_no = 0;
         printf("Waiting for connection...\n");
-        perror("PulseServer is ready ");
+        fprintf(stderr,"\nPulseServer %d is ready ",roach_num);
 		fflush(stdout);
         client = make_connection(server);
 		printf("Connection made at %f\n",current_time());
@@ -95,7 +98,7 @@ int main(int argc, char* argv[])
                 printf("packet %d ",packet_no);
                 if (send_packet(path_datafile0,path_datafile1,client,first_half_file) < 0 && (errno == ECONNRESET || errno == EPIPE))
                 {
-                    perror("\nTCP connection reset by peer");
+                    fprintf(stderr,"\nTCP connection %d reset by peer",roach_num);
                     printf("\nTCP connection reset by peer\n");
                     fflush(stdout);
                     continue_current_session = 0;
@@ -267,6 +270,19 @@ int get_process_id()
     return process_id;
 }
 
+int get_roach_num()
+{
+    int roach_num = -1;
+    FILE* command_output;
+    char line[STR_SIZE];
+    command_output = popen("ifconfig eth0 | grep 'inet addr' | grep '10.0.0.1[0-9]' -o","r");
+    if (command_output < 0 || command_output == NULL)
+        error("ERROR calling ifconfig");
+    fgets(line,STR_SIZE-1,command_output);
+    sscanf(line,"10.0.0.1%d",&roach_num);
+    return roach_num;
+}
+
 int start_server()
 {
     char host[]="";//empty string defaults to localhost
@@ -387,7 +403,7 @@ int need_to_restart()//Checks for a restart file and returns true if found, else
     else //Stop file exists, restart
     {
         printf("Received Restart signal\n");
-        perror("\nRecieved Restart signal :");
+        fprintf(stderr,"\nRecieved Restart signal %d",get_roach_num());
         fflush(stdout);
         return 1;
     }
@@ -411,7 +427,7 @@ int need_to_stop()//Checks for a stop file and returns true if found, else retur
     else //Stop file exists, stop
     {
         printf("found stop file %d\n",stopfile);
-        perror("\nReceived Stop Signal");
+        fprintf(stderr,"\n%d:Received Stop Signal",get_roach_num());
         fflush(stdout);
         return 1;
     }
