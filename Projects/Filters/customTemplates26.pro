@@ -81,8 +81,8 @@ fit = t1f
 end
 
 ; make templates and noise spectra from SDR pulses
-path = '/Users/matt/Documents/mazin/filters/pulseData/20121204/'
-nrows = 147
+path = '/Scratch/filterData/20131123/'
+nrows = 1430
 listpath = path+'snap_list.txt'
 openr,2,listpath
 pixel_list = intarr(2,nrows)
@@ -97,7 +97,7 @@ for ipixel=0,nrows-1 do begin
   roach_str = 'r'+strtrim(roach,trim_both_ends)
   pixel = pixel_list[1,ipixel]
   pixel_str = 'p'+strtrim(pixel,trim_both_ends)
-  nsecs = 60
+  nsecs = 20
   secs_str = strtrim(nsecs,trim_both_ends)
   phasedata = 'ch_snap_'+roach_str+pixel_str+'_'+secs_str+'secs.dat'
   max_pulse_count = 30000
@@ -344,6 +344,11 @@ for ipixel=0,nrows-1 do begin
     endfor
     close,2
     
+    openw,3,path+roach_str+pixel_str+'TemplateFit-2pass26.dat'
+    for i=0,1999 do begin
+      printf,3,idx[i]*1.00,fit[i]
+    endfor
+    close,3
     ;openw,2,path+'NoiseSpectra-2pass.dat'
     ;for i=0,799 do begin
     ;  printf,2,Fa[i],n1a[i]
