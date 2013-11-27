@@ -80,7 +80,8 @@ def tryFilter(filter,sample,fig=None,NAxes=1,iAxes=1,label=''):
         ax.plot([0,len(sample)-1],[threshold,threshold])
         ax.set_title(label)
 
-def detectPulses(sample,threshold,baselines):
+def detectPulses(sample,threshold,baselines,deadtime=10):
+    #deadtime in ticks (us)
     filtered = np.array(sample)
 
     #threshold = calcThreshold(filtered[0:2000])
@@ -90,16 +91,39 @@ def detectPulses(sample,threshold,baselines):
     t = 0
     negDeriv = derivative <= 0
     posDeriv = np.logical_not(negDeriv)
+    print np.shape(derivative)
+    print np.shape(filtered)
+    print np.shape(negDeriv)
    
-    triggerBooleans = filtered[1:-2] < threshold
-    peakCondition1 = np.logical_and(negDeriv[0:-2],posDeriv[1:-1])
-    peakCondition2 = np.logical_and(triggerBooleans,posDeriv[2:])
-    peakBooleans = np.logical_and(peakCondition1,peakCondition2)
+#    triggerBooleans = filtered[9:-2] < threshold
+#    peakCondition0 = np.logical_and(negDeriv[0:-10],negDeriv[1:-9])
+#    peakCondition1 = np.logical_and(negDeriv[2:-8],negDeriv[3:-7])
+#    peakCondition2 = np.logical_and(negDeriv[4:-6],negDeriv[5:-5])
+#    peakCondition3 = np.logical_and(negDeriv[6:-4],negDeriv[7:-3])
+#    peakCondition4 = np.logical_and(negDeriv[8:-2],posDeriv[9:-1])
+#    peakCondition5 = np.logical_and(triggerBooleans,posDeriv[10:])
+#    peakCondition01 = np.logical_and(peakCondition0,peakCondition1)
+#    peakCondition23 = np.logical_and(peakCondition2,peakCondition3)
+#    peakCondition45 = np.logical_and(peakCondition4,peakCondition5)
+#    peakBooleans = np.logical_and(peakCondition01,peakCondition23)
+#    peakBooleans = np.logical_and(peakBooleans,peakCondition45)
+
+    nNegDerivChecks = 9
+    lenience = 1
+    triggerBooleans = filtered[nNegDerivChecks:-2] < threshold
+
+    negDerivChecksSum = np.zeros(len(negDeriv[0:-nNegDerivChecks-1]))
+    for i in range(nNegDerivChecks):
+        negDerivChecksSum += negDeriv[i:i-nNegDerivChecks-1]
+    peakCondition0 = negDerivChecksSum >= nNegDerivChecks-lenience
+    peakCondition1 = np.logical_and(posDeriv[nNegDerivChecks:-1],posDeriv[nNegDerivChecks+1:])
+    peakCondition01 = np.logical_and(peakCondition0,peakCondition1)
+    peakBooleans = np.logical_and(triggerBooleans,peakCondition01)
+        
     try:
-        peakIndices = np.where(peakBooleans)[0]+1
+        peakIndices = np.where(peakBooleans)[0]+nNegDerivChecks
         i = 0
         p = peakIndices[i]
-        deadtime=100#us
         while p < peakIndices[-1]:
             peakIndices = peakIndices[np.logical_or(peakIndices-p > deadtime , peakIndices-p <= 0)]#apply deadtime
             i+=1
@@ -115,16 +139,64 @@ def detectPulses(sample,threshold,baselines):
     peakBaselines = baselines[peakIndices]
     return peakIndices,peakHeights,peakBaselines
 
+
+def oldDetectPulses(sample,threshold,baselines):
+    filtered = np.array(sample)
+
+    #threshold = calcThreshold(filtered[0:2000])
+    filtered -= baselines
+    derivative = np.diff(filtered)
+    peakHeights = []
+    t = 0
+    negDeriv = derivative <= 0
+    posDeriv = np.logical_not(negDeriv)
+
+    triggerBooleans = filtered[1:-2] < threshold
+    peakCondition1 = np.logical_and(negDeriv[0:-2],posDeriv[1:-1])
+    peakCondition2 = np.logical_and(triggerBooleans,posDeriv[2:])
+    peakBooleans = np.logical_and(peakCondition1,peakCondition2)
+    try:
+        peakIndices = np.where(peakBooleans)[0]+1
+        i = 0
+        p = peakIndices[i]
+        deadtime=10#us
+        while p < peakIndices[-1]:
+            peakIndices = peakIndices[np.logical_or(peakIndices-p > deadtime , peakIndices-p <= 0)]#apply deadtime
+            i+=1
+            if i < len(peakIndices):
+                p = peakIndices[i]
+            else:
+                p = peakIndices[-1]
+    except IndexError:
+        return np.array([]),np.array([]),np.array([])
+
+
+    peakHeights = filtered[peakIndices]
+    peakBaselines = baselines[peakIndices]
+    return peakIndices,peakHeights,peakBaselines
+
 rootFolder = '/home/kids/labData/'
+quietFolder = '/home/kids/labData/20130925/blue/'
+
+#roachNum = 0
+#pixelNum = 51
+#secs=60
+#folder = '/home/kids/labData/20130925/blue/'
+#cps=700
+#bFiltered = False
+#phaseFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs_%dcps.dat'%(roachNum,pixelNum,secs,cps))
+#quietFilename = os.path.join(quietFolder,'ch_snap_r%dp%d_%dsecs_%dcps.dat'%(roachNum,pixelNum,30,0))
+#label='Blue'
 
 roachNum = 0
 pixelNum = 51
 secs=60
-folder = '/home/kids/labData/20130925/blue/'
-cps=700
+folder = '/home/kids/labData/20130925/red/'
+cps=600
 bFiltered = False
 phaseFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs_%dcps.dat'%(roachNum,pixelNum,secs,cps))
-quietFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs_%dcps.dat'%(roachNum,pixelNum,30,0))
+quietFilename = os.path.join(quietFolder,'ch_snap_r%dp%d_%dsecs_%dcps.dat'%(roachNum,pixelNum,30,0))
+label='Red'
 
 #roachNum = 0
 #pixelNum = 134
@@ -142,6 +214,7 @@ quietFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs_%dcps.dat'%(roachNum,
 #phaseFilename = os.path.join(folder,'ch_snap_r%dp%d_%dsecs.dat'%(roachNum,pixelNum,secs))
 
 bPlotPeaks = True
+deadtime=100
 
 phaseFile = open(phaseFilename,'r')
 quietFile = open(quietFilename,'r')
@@ -190,13 +263,10 @@ else:
 threshold = calcThreshold(quietFiltered,Nsigma=thresholdSigma)
 print 'threshold done'
 sys.stdout.flush()
-baselines=np.array(base(filtered,threshold),dtype=np.int)
-print 'baselines done'
-#newBaselines=np.array(base(filtered),dtype=np.int)
+baselines=np.array(lpfFIR(filtered),dtype=np.int)
+baselines2=np.array(base(filtered,threshold),dtype=np.int)
 print 'baselines done'
 sys.stdout.flush()
-#baselines2=np.array([IIR(filtered,t) for t in xrange(len(filtered))])
-#print 'baselines2 done'
 sys.stdout.flush()
 
 endIdx = 1000*thresholdLength
@@ -205,16 +275,20 @@ if bPlotPeaks:
     ax.plot(filtered[0:endIdx],'k.-',label='optimal filtered phase')
     ax.plot(baselines[0:endIdx],'b',label='lpf baseline')
     ax.plot(baselines[0:endIdx]+threshold,'y--',label='threshold')
+    ax.plot(baselines2[0:endIdx]+threshold,'g--',label='threshold')
 
 
-idx,peaks,bases = detectPulses(filtered,threshold,baselines)
+idx,peaks,bases = detectPulses(filtered,threshold,baselines,deadtime=deadtime)
+idx2,peaks2,bases2 = oldDetectPulses(filtered,threshold,baselines)
 print len(peaks),'peaks detected'
+print len(peaks2),'old peaks detected'
 sys.stdout.flush()
 
 
 if len(peaks)>0:
     if bPlotPeaks:
         
+        ax.plot(idx2,peaks2+bases2,'bo',label='detected peak')
         ax.plot(idx,peaks+bases,'r.',label='detected peak')
         ax.plot(idx,bases,'g.',label='detected baseline')
         ax.set_xlabel('time (us)')
@@ -225,7 +299,7 @@ if len(peaks)>0:
         iAxes+=1
 
 
-    np.savez('detected700Blue_dead100.npz',idx=idx,peaks=peaks,bases=bases,baselines=baselines,threshold=threshold,qdrValues=qdrValues,filtered=filtered)
+    np.savez('sdetected%d%s_dead%d.npz'%(cps,label,deadtime),idx=idx,peaks=peaks,bases=bases,baselines=baselines,threshold=threshold,qdrValues=qdrValues,filtered=filtered)
     print 'done'
     sys.stdout.flush()
     plt.show()
