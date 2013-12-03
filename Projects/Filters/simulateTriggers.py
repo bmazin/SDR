@@ -1,5 +1,21 @@
-import numpy as np
+from matplotlib import rcParams, rc
+
+# common setup for matplotlib
+params = {'savefig.dpi': 300, # save figures to 300 dpi
+          'axes.labelsize': 14,
+          'text.fontsize': 14,
+          'legend.fontsize': 14,
+          'xtick.labelsize': 14,
+          'ytick.major.pad': 6,
+          'xtick.major.pad': 6,
+          'ytick.labelsize': 14}
+# use of Sans Serif also in math mode
+rc('text.latex', preamble='\usepackage{sfmath}')
+
+rcParams.update(params)
+
 import matplotlib.pyplot as plt
+import numpy as np
 import os
 import struct
 
@@ -81,39 +97,55 @@ qdr_values = struct.unpack('>%dh'%(nLongsnapSamples),phase)
 qdr_phase_values = np.array(qdr_values,dtype=np.float32)*360./2**16*4/np.pi
 
 fig = plt.figure()
-NAxes = 1
+NAxes = 2
 iAxes = 1
 size=26
 offset = 3
 
-sampleStart = 0
-nSamples = 80000
+sampleStart = 5000
+nSamples = 20000
 thresholdLength = 2000
 thresholdSigma = 2.5
 
 filter= np.loadtxt('/Scratch/filterData/fir/template20121207r4.txt')[pixelNum,:]
-print filter
-sample=qdr_values[sampleStart:nSamples]
-#filtered = np.array(sample)
-filtered = np.correlate(filter,sample,mode='same')[::-1]
+lpf250kHz= np.loadtxt('/Scratch/filterData/fir/lpf_250kHz.txt')
+sample=qdr_values[sampleStart:sampleStart+nSamples]
+unfiltered = np.array(sample,dtype=np.float32)*360./2**16*4/np.pi
+filtered = np.correlate(filter,unfiltered,mode='same')[::-1]
+lpffiltered = np.correlate(lpf250kHz,unfiltered,mode='same')[::-1]
 baselines=np.array([IIR(filtered,t) for t in xrange(len(filtered))])
 threshold = calcThreshold(filtered[0:thresholdLength],Nsigma=thresholdSigma)
+
 ax=fig.add_subplot(NAxes,1,iAxes)
-ax.plot(filtered,'b',label='phase')
-ax.plot(baselines,'y',label='lpf baseline')
+ax.plot(unfiltered,'k.-',label='unfiltered phase')
+ax.set_ylabel('unfiltered phase (${}^{\circ}$)')
+ax.set_xlim([5000,15000])
+iAxes+=1
+
+#ax=fig.add_subplot(NAxes,1,iAxes)
+#ax.plot(lpffiltered,'k',label='250kHz lpf filtered phase')
+#ax.set_ylabel('250kHz lpf phase (${}^{\circ}$)')
+#ax.set_xlim([5000,15000])
+#iAxes+=1
+
+ax=fig.add_subplot(NAxes,1,iAxes)
+ax.plot(filtered,'k.-',label='optimal filtered phase')
+ax.plot(baselines,'b',label='lpf baseline')
 #ax.plot(baselines+template26Threshold)
 #ax.plot([0,len(filtered)-1],[threshold,threshold])
 idx,peaks,bases = detectPulses(filtered,threshold)
 idx+=sampleStart
-ax.plot(idx,peaks+bases,'ro',label='detected peak')
-ax.plot(idx,bases,'go',label='detected baseline')
+ax.plot(idx-sampleStart,peaks+bases,'ro',label='detected peak')
+ax.plot(idx-sampleStart,bases,'go',label='detected baseline')
 ax.set_xlabel('time (us)')
-ax.set_ylabel('phase (16-bit adu)')
+ax.set_ylabel('phase (${}^{\circ}$)')
+ax.set_xlim([5000,15000])
 #ax.set_title('detected peaks and baseline for ~%d cps, pixel /r%d/p%d'%(cps,roachNum,pixelNum))
-ax.legend(loc='lower left')
+ax.legend(loc='lower right')
 iAxes+=1
 outFilename = os.path.splitext(phaseFilename)[0]+'.png'
 #plt.savefig(outFilename)
 
+print 'done'
 plt.show()
 
