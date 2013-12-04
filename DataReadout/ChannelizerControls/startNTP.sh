@@ -24,8 +24,9 @@ echo " . done"
 echo -n "Updating ntp on roaches "
 for i in ${ROACHES[*]}
 do
+    echo "ROACH$i"
 	ssh root@10.0.0.1$i /etc/init.d/ntp stop > /dev/null
-	check_status
+	#check_status
 	ssh root@10.0.0.1$i ntpdate 10.0.0.50 > /dev/null
 	check_status
 	ssh root@10.0.0.1$i /etc/init.d/ntp start > /dev/null
