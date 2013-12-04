@@ -40,7 +40,7 @@ done
 echo " done"
 
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-LOGNAME=logs/ps.log
+LOGNAME=logs/ps_$TIMESTAMP.log
 
 echo -n "Compiling PulseServer code "
 for i in ${ROACHES[*]}
