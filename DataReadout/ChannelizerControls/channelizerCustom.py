@@ -496,12 +496,13 @@ class AppForm(QMainWindow):
         baseline = [[] for n in range(256)]
         peaks = [[] for n in range(256)]
         seconds = int(self.textbox_seconds.text())
-        steps = seconds*10
+        nStepsPerSec = 10.
+        steps = int(seconds*nStepsPerSec)
         self.roach.write_int('startBuffer', 1)
         time.sleep(1)
         for n in range(steps):
             addr0 = self.roach.read_int('pulses_addr')
-            time.sleep(0.1)
+            time.sleep(1./nStepsPerSec)
             addr1 = self.roach.read_int('pulses_addr')
             bin_data_0 = self.roach.read('pulses_bram0', 4*2**14)
             bin_data_1 = self.roach.read('pulses_bram1', 4*2**14)
@@ -558,6 +559,7 @@ class AppForm(QMainWindow):
         base = numpy.array(baseline[ch],dtype='float')
         base = base/2.0**9-4.0
         base = base*180.0/numpy.pi
+        times = numpy.array(timestamp[ch],dtype='float')
         peaksCh = numpy.array(peaks[ch],dtype = 'float')
         peaksCh = peaksCh/2.0**9-4.0
         peaksCh = peaksCh*180.0/numpy.pi
@@ -568,9 +570,9 @@ class AppForm(QMainWindow):
         print 'stddev baseline:',numpy.std(base)
         self.axes0.clear()
         #self.axes0.plot(timestamp[ch], '.')
-        self.axes0.plot(base, 'g.-')
-        self.axes0.plot(peaksCh, 'b.-')
-        self.axes0.plot(peaksSubBase, 'r.-')
+        self.axes0.plot(times,base, 'g.')
+        self.axes0.plot(times,peaksCh, 'b.')
+        self.axes0.plot(times,peaksSubBase, 'r.')
         self.canvas.draw()
 
     def channelInc(self):
@@ -684,7 +686,9 @@ class AppForm(QMainWindow):
                 x_string = x_string + str(l*1e9) + '\n'
             
             self.iq_centers = numpy.array([0.+0j]*256)
+            print N_freqs,numpy.shape(self.iq_centers),numpy.shape(x)
             for n in range(N_freqs):
+                print n
                 #for n in range(256):
                 self.iq_centers[n] = complex(x[n+1,1], x[n+1,2])
             
@@ -765,7 +769,7 @@ class AppForm(QMainWindow):
         self.canvas.setParent(self.main_frame)
         self.axes0 = self.fig.add_subplot(121)
         self.axes1 = self.fig.add_subplot(122)
-        cid=self.canvas.mpl_connect('button_press_event', self.setCustomThreshold)
+        #cid=self.canvas.mpl_connect('button_press_event', self.setCustomThreshold)
         
         # Create the navigation toolbar, tied to the canvas
         self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
@@ -796,8 +800,12 @@ class AppForm(QMainWindow):
         self.connect(self.button_importFreqs, SIGNAL('clicked()'), self.importFreqs)   
 
         # File with FIR coefficients
-        self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched_30us.txt')
-        #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched20121204r%d.txt'%roachNum)
+        #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched_30us.txt')
+        #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/lpf_250kHz.txt')
+        firFileName = os.environ['CUSTOM_FIR']
+        if '%d' in firFileName:#the fir file is specific to the roach, stick the number in
+            firFileName = firFileName%roachNum
+        self.textbox_coeffsFile = QLineEdit(os.path.join('/home/sean/data/common/fir/',firFileName))
         #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched20121128r%d.txt'%roachNum)
         self.textbox_coeffsFile.setMaximumWidth(200)
 
