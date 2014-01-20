@@ -9,6 +9,9 @@ from util.ObsFile import ObsFile
 from util.FileName import FileName
 
 def smoothBaseline(baselines,nPtsInMode=400):
+    #A point based smoothing
+    #For each baseline point, nPts surrounding the point are trimmed and averaged
+    #to make a new baseline point
     modBases = np.array(baselines)
     for i in range(len(modBases)):
         startIdx = i-nPtsInMode//2
@@ -21,13 +24,15 @@ def smoothBaseline(baselines,nPtsInMode=400):
         modBases[i] = np.ma.mean(trimmedSample)
     return modBases
 
-def smoothBaseline(baselines,timestamps,timeToAverage=500e-3):
-    #timeToAverage = 10e-3 #10 ms
+def smoothBaseline(baselines,timestamps,timeToAverage=500e-3,upperTrimFraction=0.5):
+    #A time based smoothing
+    #For each baseline point, all points within a given time interval around the point is
+    #trimmed and averaged to make a new baseline point
     modBases = np.array(baselines)
     for i,ts in enumerate(timestamps):
         startIdx = np.searchsorted(timestamps,ts-timeToAverage/2.)
         endIdx = np.searchsorted(timestamps,ts+timeToAverage/2.)
-        trimmedSample = scipy.stats.mstats.trim(baselines[startIdx:endIdx],(.5,0),relative=True)
+        trimmedSample = scipy.stats.mstats.trim(baselines[startIdx:endIdx],(upperTrimFraction,0),relative=True)
         modBases[i] = np.ma.mean(trimmedSample)
     return modBases
 
@@ -99,7 +104,7 @@ def extrema(a):
     return {'extremeX':binCenters[extremeIdxs],'extremeY':hist[extremeIdxs],'bMaximums':bMaximums}
 
 #obs_20130612-003423_CorrectedCount.txt
-#timeBinStarts = np.array([74.,201.,327.,454.,581.,707.,833.,960.,1087.,1214.,1340.,1467.,1594.,1721.,1846.])
+timeBinStarts = np.array([74.,201.,327.,454.,581.,707.,833.,960.,1087.,1214.,1340.,1467.,1594.,1721.,1846.])
 timeBinWidth = 56.
 timeBinSpacing = 70.
 powermeter = open('obs_20130612-003423_CorrectedCount.txt', 'r')
@@ -110,11 +115,11 @@ pixToUse = [[0,26],[2,25],[2,27],[2,31],[2,34],[2,39],[3,17],[3,26],[3,32],
             [17,23],[17,25],[17,26],[17,39],[18,24],[18,28],[19,23],[19,26],[19,28],[19,30]]
 
 #obs_20131019_025156.h5
-timeBinStarts = np.array([112.,195.,275.,357.,445.,527.,609.,690.,772.,854.,942.,1024.,1106.,1187.])
-timeBinWidth = 16.
-timeBinSpacing = 66.
-powermeter = open('obs_20130612-003423_CorrectedCount.txt', 'r') ##fix later
-pixToUse = [[0,0]]
+#timeBinStarts = np.array([112.,195.,275.,357.,445.,527.,609.,690.,772.,854.,942.,1024.,1106.,1187.])
+#timeBinWidth = 16.
+#timeBinSpacing = 66.
+#powermeter = open('obs_20130612-003423_CorrectedCount.txt', 'r') ##fix later
+#pixToUse = [[0,0]]
 
 inCounts = []
 for line in powermeter:
@@ -129,11 +134,11 @@ obsFileName = '/Scratch/linearityTestData/obs_20130612-003423.h5'
 obs = ObsFile(obsFileName)
 
 
-row,col=pixToUse[0]
 allResolutions = []
 allModResolutions = []
 allModResolutions2 = []
 allCountRates = []
+pixToUse = pixToUse[0:3]
 timeBinStarts = timeBinStarts[0:-3]
 for (row,col) in pixToUse[0:3]:
     firstSec=timeBinStarts[0]
@@ -153,6 +158,7 @@ for (row,col) in pixToUse[0:3]:
     print (row,col)
 
     for iTimeBin,firstSec in enumerate(timeBinStarts):
+        print 'time bin',iTimeBin,firstSec
         colorFraction = (iTimeBin+1.)/len(timeBinStarts)
         color=cmap(colorFraction)
         packetListDict = obs.getTimedPacketList(row,col,firstSec=firstSec,integrationTime=intTime)
@@ -162,7 +168,7 @@ for (row,col) in pixToUse[0:3]:
         baselines = packetListDict['baselines']
         nCounts = len(timestamps)
         countRate = nCounts/intTime
-        print '%.0f cps'%countRate,
+        print '%.0f cps'%countRate
 
         modBaselines = smoothBaseline(baselines,timestamps)
         phases = rawPeakHeights-baselines
