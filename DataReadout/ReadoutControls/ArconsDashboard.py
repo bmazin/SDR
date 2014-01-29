@@ -49,6 +49,7 @@ from lib.rad2altaz import rad2altaz
 from lib.make_image_v2 import make_image as make_image_import
 from lib.HeaderGen import HeaderGen
 import lib.pulses_v1 as pulses
+from lib.getSeeing import getPalomarSeeing
 #from lib.SignalFilterWheel import SignalFilterWheel
 from lib.arcons_basic_gui import Ui_arcons
 from tables import *
@@ -61,7 +62,7 @@ numYPixel = 46
 
 EMERGENCY_LASER = False #used only at Palomar if wti ips-400 switch is needed to turn on laser box
 
-observatory = "Broida" # "Broida", "Palomar", or "Lick"
+observatory = "Palomar" # "Broida", "Palomar", or "Lick"
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
 filters = ['V-band','R-band','Open','405','546','Closed']
@@ -449,6 +450,7 @@ class StartQt4(QMainWindow):
             self.get_telescope_position(lt = self.start_time) #returns alt, az, ra, dec, ha, lst, utc, airmass
             self.get_telescope_status() #only returns focus
             self.get_parallactic()
+            self.seeing = getPalomarSeeing()
             #convert ra and dec from ra:ra:ra, dec:dec:dec to floats
             self.dec = float(ephem.degrees(self.dec))
             self.ra = float(ephem.hours(self.ra))
@@ -460,8 +462,9 @@ class StartQt4(QMainWindow):
             self.ui.file_name_lineEdit.setText(str(self.obsfile))
             if os.path.exists(self.bindir) == False:
                 os.mkdir(self.bindir)
-            HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,filthead,dir=str(self.datadir), telescope = observatory, target=targname, focus=self.focus, parallactic = self.parallactic)
+            HeaderGen(self.obsfile, self.beammapfile, self.start_time,  self.exptime, self.ra, self.dec, self.alt, self.az, self.airmass, self.lst, filthead,dir=str(self.datadir), telescope = observatory, target=targname, focus=self.focus, parallactic = self.parallactic, seeing = self.seeing)
             proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
+            #proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMasterR1.c",shell=True)
             proc.wait()
             self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s >> %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
             print "PacketMaster process started with logfile %s" % logfile
@@ -479,6 +482,7 @@ class StartQt4(QMainWindow):
         self.ui.continuous.setChecked(False) #turn off continuous observing so packet master can reset
         print "Calling stopPacketMaster.sh"
         subprocess.Popen("./stopPacketMaster.sh",shell=True)
+        #subprocess.Popen("./stopPacketMasterR1.sh",shell=True)
         self.finish_observation()
         
     def finish_observation(self):
@@ -1049,6 +1053,8 @@ class StartQt4(QMainWindow):
             #print float(ephem.degrees(self.alt))
             #print float(ephem.degrees(self.az))
         
+            self.seeing = getPalomarSeeing()
+
         elif observatory == "Lick":
             #Lick's location
             self.lat = 37.0 + 20.0/60.0 + 24.6/3600.0
