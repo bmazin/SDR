@@ -19,6 +19,7 @@ from functools import partial
 from scipy import signal
 from scipy.signal import filter_design as fd
 from scipy.interpolate import UnivariateSpline
+import Peaks as Peaks
 
 class PopUp(QMainWindow):
     def __init__(self, parent=None,plotFunc=None,title='',separateProcess=False, image=None,showMe=True, initialFile=None):
@@ -47,6 +48,25 @@ class PopUp(QMainWindow):
     def draw(self):
         self.fig.canvas.draw()
 
+    def on_key_press(self,event):
+        print "on_key_press:  key pressed is ==>%s===<"%event.key
+        if event.key == "right":
+            self.segmentIncrement(None,0.1)
+        elif event.key == "left":
+            self.segmentDecrement(None,0.1)
+
+    def on_button_press(self,event):
+        print "on_button_press:  button pressed is ==>%s===<"%event.button,event.xdata,event.ydata
+        if event.button == 3:
+            self.replot()
+
+    def replot(self):
+            xlim = self.axes.set_xlim()
+            print "replot with xlim=",xlim
+            self.xmin=xlim[0]
+            self.xmax=xlim[1]
+            self.plotSegment()
+
     def create_main_frame(self,title):
         self.main_frame = QWidget()
       # Create the mpl Figure and FigCanvas objects. 
@@ -54,11 +74,15 @@ class PopUp(QMainWindow):
         self.fig = Figure((7, 5), dpi=self.dpi)
         self.canvas = FigureCanvas(self.fig)
         self.canvas.setParent(self.main_frame)
-        self.axes = self.fig.add_subplot(111)
+        self.canvas.setFocusPolicy(Qt.StrongFocus)
+        self.canvas.setFocus()
 
+        self.axes = self.fig.add_subplot(111)
+        self.fig.canvas.mpl_connect('key_press_event',self.on_key_press)
+        self.fig.canvas.mpl_connect('button_press_event',self.on_button_press)
         # Create the segment slider
         self.segmentSlider = QtGui.QSlider(Qt.Horizontal, self)
-        self.segmentSlider.setRange(0,80)
+        self.segmentSlider.setRange(0,800)
         self.segmentSlider.setFocusPolicy(Qt.NoFocus)
         self.segmentSlider.setGeometry(30,40,100,30)
         self.segmentSlider.valueChanged[int].connect(self.changeSegmentValue)
@@ -123,7 +147,11 @@ class PopUp(QMainWindow):
         self.y = {}
         self.y['mag']=np.sqrt(np.power(self.data1[:,1]-float(self.Iz2),2) + np.power(self.data1[:,2]-float(self.Qz2),2))
         self.yToShow = {'mag':True}
-        
+        self.allx = self.data1[:,0]
+        self.xDomain = (self.allx[-1]-self.allx[0])/self.segmentMax
+        self.xmin = self.allx[0] + self.xDomain
+        self.xmax = self.xmin + self.xDomain
+
         # do this automatically...for now, or forever?
         #self.calcSpeed()
         #self.yToShow['magSpeed'] = True
@@ -133,13 +161,24 @@ class PopUp(QMainWindow):
         #self.yToShow['magBessel'] = True
         self.calcUSpline()
         self.yToShow['magUSpline'] = True
-    def segmentDecrement(self, value):
-        self.segment = max(0,self.segment-1)
-        self.segmentSlider.setSliderPosition(self.segment)
 
-    def segmentIncrement(self, value):
-        self.segment = min(self.segmentMax,self.segment+1)
-        self.segmentSlider.setSliderPosition(self.segment)
+        # find peaks in the mag-magUSpline data
+        diff = self.y['magUSpline'] - self.y['mag']
+        self.peaks = Peaks.peaks(diff,2)
+    def segmentDecrement(self, value, amount=0.9):
+        self.segment = max(0,self.segment-amount)
+        print "decrement:  segment=",self.segment
+        self.segmentSlider.setSliderPosition(10*self.segment)
+
+    def segmentIncrement(self, value, amount=0.9):
+        self.segment = min(self.segmentMax,self.segment+amount)
+        print "AAA increment:  segment=",self.segment
+        self.segmentSlider.setSliderPosition(10*self.segment)
+        print "BBB increment:  segment=",self.segment
+
+    def calcXminXmax(self):
+        self.xmin = self.allx[0] + self.segment*self.xDomain
+        self.xmax = self.xmin + self.xDomain
 
     def yDisplayClicked(self, value):
         print "yDisplayClicked:  value=",value
@@ -147,10 +186,11 @@ class PopUp(QMainWindow):
             self.yDisplay.setText("diff")
         else:
             self.yDisplay.setText("raw")
-        self.plotSegment()
+        self.replot()
 
     def changeSegmentValue(self,value):
-        self.segment = value
+        self.segment = value/10.0
+        self.calcXminXmax()
         self.plotSegment()
 
     def plotSegment(self):
@@ -165,20 +205,22 @@ class PopUp(QMainWindow):
                 yNames = ["diff"]
                 self.yToShow["diff"] = True
             stride = self.data1.shape[0]/self.segmentMax
-            i0 = self.segment*stride
-            i1 = i0+stride
+            # plot all values and then set xmin and xmax to show this segment
             self.axes.clear()
             for yName in yNames:
                 print "now yName=",yName
                 if self.yToShow[yName]:
-                    xx = self.data1[i0:i1,0]
-                    yy = self.y[yName][i0:i1]
-                    # differences, filters, and convolutions shorten yy
-                    self.axes.plot(xx[0:len(yy)],yy, label=yName)
-            self.axes.set_title("segment=%d"%self.segment)
+                    self.axes.plot(self.allx, self.y[yName], label=yName)
+
+            # vertical line at each peak position
+            for peak in self.peaks:
+                x = self.allx[peak]
+                if x > self.xmin and x < self.xmax:
+                    self.axes.axvline(x=x,color='r')
+            self.axes.set_xlim((self.xmin,self.xmax))
+            self.axes.set_title("segment=%.1f"%self.segment)
             self.axes.legend()
             self.draw()
-
     def calcSpeed(self):
         """ calculate the speed at each point """
         mag = self.y['mag']
@@ -250,6 +292,7 @@ class PopUp(QMainWindow):
     #def create_status_bar(self):
         #self.status_text = QLabel("Awaiting orders.")
         #self.statusBar().addWidget(self.status_text, 1)
+
 
 def main(initialFile=None):
     form = PopUp(showMe=False,title='WideSweep',initialFile=initialFile)
