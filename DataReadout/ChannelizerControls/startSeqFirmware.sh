@@ -4,10 +4,15 @@ CLK="512"
 #BOF="chan_if_acc_x_2011_Aug_02_0713.bof" #Palomar 2011 firmware,has deadtime lockout bug, 3-pt trigger bug
 #BOF="chan_dtrig_v2_2012_Aug_28_1956.bof" #Has short low pass filter baseline, plus Palomar 2011 bugs
 #BOF="btrig_fix_v1_2012_Sep_06_1516.bof" *fixed deadtime lockout, longer low pass filter baseline
-BOF="chan_snap_v3_2012_Oct_30_1216.bof" #has snapQDR block for long snapshots, DDS lag: 154
+#BOF="chan_snap_v3_2012_Oct_30_1216.bof" #has snapQDR block for long snapshots, DDS lag: 154
+
 #BOF="chan_snap_v3_2013_Oct_03_1412.bof" #has snapQDR block for long snapshots, DDS lag: 192
 #BOF="chan_dead_v2_2013_Oct_07_1841.bof" #short dead time + count rate limiter, DDS lag: 194
-#BOF="chan_smart_v1_2013_Nov_13_1403.bof" #has moving average baseline block. DDS lag:
+#BOF="chan_smart_v0_2013_Nov_12_1137.bof" #has moving average baseline. DDS lag: 194
+#BOF="chan_smart_v1_2013_Nov_13_1403.bof" #has moving average baseline block and strict trigger conditions. DDS lag: 194
+#BOF="chan_smart_v2_2013_Nov_16_2141.bof" #has moving average baseline block and strict trigger conditions. Fixed bugs. DDS lag: 194
+#BOF="chan_sm1_2013_Nov_26_2220.bof" #baseline threshold has on/off switch. added many snaps in capture. deadline bug fixed. DDS lag: 194
+BOF=$BOFFILE
 
 if [ "$1" == "--help" ]; then
 	echo "Usage: $0 CLOCK_MHZ [BOF_FILE]"
@@ -54,7 +59,13 @@ do
     echo " done"
 done
 
-echo -n "Setting LPF alpha register ... "
-python lib/set_alpha.py
+if [ "$B_BASE_THRESH" == 0 ]; then
+    echo -n "Setting alpha registers ... "
+    python lib/set_alpha.py
+fi
+if [ "$B_BASE_THRESH" == 1 ]; then
+    echo -n "Setting baseline threshold registers ... "
+    python lib/set_base_thresh.py
+fi
 check_status -1
 echo "DONE"

@@ -25,6 +25,7 @@ if __name__ == '__main__':
         exit(1)
     roachNo = int(sys.argv[1])
     datadir = os.environ['FREQ_PATH']#'/home/sean/data/20121105adr/'
+    print datadir
     configFile = numpy.loadtxt(os.path.join(datadir,'roachConfig.txt'))
     defaultLOFreqs = configFile[:,0]
     defaultAttens = configFile[:,1]
@@ -795,7 +796,7 @@ class AppForm(QMainWindow):
             else:
                 iNewResFreq = iMaxIQVel
 
-            maxJump = 5e-5# don't jump further than 50kHz
+            maxJump = 7e-5# don't jump further than 70kHz/7 points
             freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
             currentFreq=freqs[ch]/10**9
             newFreq = self.f_span[ch][iNewResFreq]
@@ -863,10 +864,10 @@ class AppForm(QMainWindow):
         
         # Roach board's IP address
         roachIP = roachNo
-        if roachNo == 6:
-            roachIP = 7
-        elif roachNo == 7:
-            roachIP = 6
+#        if roachNo == 6:
+#            roachIP = 7
+#        elif roachNo == 7:
+#            roachIP = 6
         self.textbox_roachIP = QLineEdit('10.0.0.1%d'%roachIP)
         self.textbox_roachIP.setMaximumWidth(200)
         label_roachIP = QLabel('Roach IP Address:')
@@ -918,7 +919,7 @@ class AppForm(QMainWindow):
         #self.textbox_dds_shift = QLineEdit('149')	#chan_512_nodead_2012_Sep_05_1346.bof
         #self.textbox_dds_shift = QLineEdit('147')	#chan_if_acc_x_2011_Aug_02_0713.bof
         #self.textbox_dds_shift = QLineEdit('153')	#chan_dtrig_2012_Aug_28_1204.bof
-        self.textbox_dds_shift = QLineEdit('154')       
+        self.textbox_dds_shift = QLineEdit(os.environ['DDS_LAG'])       
         self.textbox_dds_shift.setMaximumWidth(50)
         label_dds_shift = QLabel('DDS sync. lag:')
 

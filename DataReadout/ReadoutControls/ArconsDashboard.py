@@ -59,9 +59,9 @@ h = 4.13567E-15 #[ev*s]
 numXPixel = 44
 numYPixel = 46
 
-EMERGENCY_LASER = True #used only at Palomar if wti ips-400 switch is needed to turn on laser box
+EMERGENCY_LASER = False #used only at Palomar if wti ips-400 switch is needed to turn on laser box
 
-observatory = "Palomar" # "Broida", "Palomar", or "Lick"
+observatory = "Broida" # "Broida", "Palomar", or "Lick"
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
 filters = ['V-band','R-band','Open','405','546','Closed']
@@ -251,11 +251,11 @@ class StartQt4(QMainWindow):
                     return
         else:
             if self.ui.laser_toggle.isChecked():
-                laseronproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s"%(ljpath,'on'),shell=True)
+                laseronproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s %s"%(ljpath,'on', 'all'),shell=True)
                 laseronproc.wait()
                 self.ui.laser_label.setText("ON")
             else:
-                laseroffproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s"%(ljpath,'off'),shell=True)
+                laseroffproc = subprocess.Popen("sudo nice -n -5 python %slaserBoxControl.py %s %s"%(ljpath,'off','all'),shell=True)
                 laseroffproc.wait()
                 self.ui.laser_label.setText("OFF")
 
@@ -456,13 +456,14 @@ class StartQt4(QMainWindow):
             self.obsname = basename+time.strftime("%Y%m%d-%H%M%S", time.gmtime(self.start_time))
             self.obsfile = str(self.obsname) + '.h5'
             logfile = 'logs/'+str(self.obsname)+'.log'
+            #logfile = 'logs/pm.log'
             self.ui.file_name_lineEdit.setText(str(self.obsfile))
             if os.path.exists(self.bindir) == False:
                 os.mkdir(self.bindir)
             HeaderGen(self.obsfile, self.beammapfile, self.start_time,self.exptime,self.ra,self.dec,self.alt,self.az,self.airmass,self.lst,filthead,dir=str(self.datadir), telescope = observatory, target=targname, focus=self.focus, parallactic = self.parallactic)
             proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
             proc.wait()
-            self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s > %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
+            self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s >> %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
             print "PacketMaster process started with logfile %s" % logfile
             print "Header written to data file, beginning observation..."
             #time.sleep(5) #wait 1 second for Ben's code to create beamimage before activating rebinning
@@ -887,7 +888,7 @@ class StartQt4(QMainWindow):
         self.ui.spectra_plot.canvas.ax.clear()
         self.spectrum_pixel = self.bmap[median(self.spectrum_pixel_x)][(self.nypix-1)-median(self.spectrum_pixel_y)]
         self.ui.pixelpath.setText(str(self.spectrum_pixel))
-        self.ui.row.setText(str(median(self.spectrum_pixel_y)))
+        self.ui.row.setText(str((numYPixel-1)-median(self.spectrum_pixel_y)))
         self.ui.col.setText(str(median(self.spectrum_pixel_x)))
         #self.spectrum_pixel = self.nxpix*(median(self.spectrum_pixel_y))+median(self.spectrum_pixel_x)
         #self.ui.pixel_no_lcd.display(self.spectrum_pixel)
@@ -900,6 +901,7 @@ class StartQt4(QMainWindow):
         self.ui.spectra_plot.canvas.ax.plot(time,plotcounts)
         self.ui.spectra_plot.canvas.format_labels()
         self.ui.spectra_plot.canvas.draw()
+        self.ui.spectra_plot.canvas.ax.plot(time,plotcounts)
         #if len(self.spectrum_pixel_x) != 0:
         #   self.scene = QGraphicsScene()
         #   for i in xrange(len(self.spectrum_pixel_x)):
