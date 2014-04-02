@@ -563,7 +563,7 @@ class AppForm(QMainWindow):
 
         if len(attens) > 1:
             print 'Saving to ',savefile
-        for a in attens:	
+        for a in attens:
             print a
             self.programAttenuators(atten_in, a)
             time.sleep(0.5)
@@ -631,7 +631,7 @@ class AppForm(QMainWindow):
                     dI = self.I[ch][iFreq]-self.I[ch][iFreq+1]
                     dQ = self.Q[ch][iFreq]-self.Q[ch][iFreq+1]
                     self.IQ_vels[ch][iFreq] = numpy.sqrt(dI**2+dQ**2)
-	
+
             if len(attens) > 1:
                 for n in range(self.N_freqs):
                     w = iqsweep.IQsweep()
@@ -681,7 +681,7 @@ class AppForm(QMainWindow):
                 print "done."
                 self.button_startDAC.setText('Stop DAC')
                 self.dacStatus = 'on'
-	        self.status_text.setText('DAC turned on. ')
+                self.status_text.setText('DAC turned on. ')
                 self.square_DACindicate.setStyleSheet("QFrame { background-color: #00ff00 }")
                 self.square_DACindicate.setFrameShadow(QtGui.QFrame.Sunken)
                 self.square_DACindicate.setText('on')
@@ -692,7 +692,7 @@ class AppForm(QMainWindow):
             self.roach.write_int('startDAC', 0)
             self.button_startDAC.setText('Start DAC')
             self.dacStatus = 'off'
-	    self.status_text.setText('DAC turned off. ')
+            self.status_text.setText('DAC turned off. ')
             print 'DAC turned off'
             self.square_DACindicate.setStyleSheet("QFrame { background-color: #ff0000 }")
             self.square_DACindicate.setFrameShadow(QtGui.QFrame.Raised)
