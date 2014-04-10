@@ -4,7 +4,7 @@ check_status()
     status=$?
     if [ $status -ne 0 ]; then
         echo ""
-        echo "ERROR"
+        echo "ERROR $status"
         exit $status
     fi  
     return 0
@@ -22,7 +22,7 @@ cp ~/Matt/DataReadout/obs_${EXPTIME}s.h5 $OBSNAME
 check_status
 echo " done"
 
-echo -n "Compiling PulseServer code ... "
+echo -n "Compiling PacketMaster code ... "
 h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c
 check_status
 echo " done"

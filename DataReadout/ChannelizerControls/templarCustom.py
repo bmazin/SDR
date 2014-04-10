@@ -25,7 +25,13 @@ if __name__ == '__main__':
         exit(1)
     roachNo = int(sys.argv[1])
     datadir = os.environ['FREQ_PATH']#'/home/sean/data/20121105adr/'
+    print datadir
     configFile = numpy.loadtxt(os.path.join(datadir,'roachConfig.txt'))
+    try:
+        scaleFactorFile = numpy.loadtxt(os.path.join(datadir,'scaleFactors.txt'))
+        defaultScale = float(scaleFactorFile[:,1][roachNo])
+    except:
+        defaultScale = 10.
     defaultLOFreqs = configFile[:,0]
     defaultAttens = configFile[:,1]
     defaultLOFreq = defaultLOFreqs[roachNo]
@@ -68,6 +74,7 @@ class AppForm(QMainWindow):
         self.iq_centers = None
         self.IQ_vels = None
         self.f_span = None
+        self.last_scale_factor = None
 
         
     def openClient(self):
@@ -284,6 +291,8 @@ class AppForm(QMainWindow):
         
     def freqCombLUT(self, echo, freq, sampleRate, resolution, amplitude=[1.]*256, phase=[0.]*256, random_phase = 'yes'):
         offset = int(self.textbox_offset.text())
+        bKeepOldScale = self.cbox_keepScaleFactor.isChecked()
+        bUseCustomScale = self.cbox_useScaleFactor.isChecked()
         amp_full_scale = 2**15-1
         N_freqs = len(freq)
         size = int(sampleRate/resolution)
@@ -313,11 +322,21 @@ class AppForm(QMainWindow):
             Q = Q + single_Q
         
         a = numpy.array([abs(I).max(), abs(Q).max()])
-        I = numpy.array([int(i*amp_full_scale/a.max()) for i in I])
-        Q = numpy.array([int(q*amp_full_scale/a.max()) for q in Q])
+        scale_factor = a.max()
+        scaleFudgeFactor = 1.1 #don't scale to the max value, but get close
         if echo == 'yes':
-            print 'scale factor: ', a.max()
-            self.scale_factor = a.max()
+            scale_factor = scaleFudgeFactor*scale_factor
+            if bKeepOldScale == True and self.last_scale_factor != None:
+                scale_factor = self.last_scale_factor
+            if bUseCustomScale == True:
+                scale_factor = float(self.textbox_customScale.text())
+            self.scale_factor = scale_factor
+        I = numpy.array([int(i*amp_full_scale/scale_factor) for i in I])
+        Q = numpy.array([int(q*amp_full_scale/scale_factor) for q in Q])
+        if echo == 'yes':
+            self.last_scale_factor = self.scale_factor
+            print 'max V value:', a.max()
+            print 'scale factor: ', self.scale_factor
             atten_out_guess=20*numpy.log10(self.previous_scale_factor/self.scale_factor) + self.minimumAttenuation
             print 'Set atten_out to: ', atten_out_guess
             atten_out_guess=int(atten_out_guess)+1
@@ -394,6 +413,7 @@ class AppForm(QMainWindow):
         else:
             self.toggleDAC()
             
+        numpy.savez('dac.npy',I_dac=self.I_dac,Q_dac=self.Q_dac,I_dds=self.I_dds,Q_dds=self.Q_dds)
         binaryData = ''
         for n in range(len(self.I_dac)/2):
             i_dac_0 = struct.pack('>h', self.I_dac[2*n])
@@ -543,7 +563,7 @@ class AppForm(QMainWindow):
 
         if len(attens) > 1:
             print 'Saving to ',savefile
-        for a in attens:	
+        for a in attens:
             print a
             self.programAttenuators(atten_in, a)
             time.sleep(0.5)
@@ -611,7 +631,7 @@ class AppForm(QMainWindow):
                     dI = self.I[ch][iFreq]-self.I[ch][iFreq+1]
                     dQ = self.Q[ch][iFreq]-self.Q[ch][iFreq+1]
                     self.IQ_vels[ch][iFreq] = numpy.sqrt(dI**2+dQ**2)
-	
+
             if len(attens) > 1:
                 for n in range(self.N_freqs):
                     w = iqsweep.IQsweep()
@@ -661,7 +681,7 @@ class AppForm(QMainWindow):
                 print "done."
                 self.button_startDAC.setText('Stop DAC')
                 self.dacStatus = 'on'
-	        self.status_text.setText('DAC turned on. ')
+                self.status_text.setText('DAC turned on. ')
                 self.square_DACindicate.setStyleSheet("QFrame { background-color: #00ff00 }")
                 self.square_DACindicate.setFrameShadow(QtGui.QFrame.Sunken)
                 self.square_DACindicate.setText('on')
@@ -672,7 +692,7 @@ class AppForm(QMainWindow):
             self.roach.write_int('startDAC', 0)
             self.button_startDAC.setText('Start DAC')
             self.dacStatus = 'off'
-	    self.status_text.setText('DAC turned off. ')
+            self.status_text.setText('DAC turned off. ')
             print 'DAC turned off'
             self.square_DACindicate.setStyleSheet("QFrame { background-color: #ff0000 }")
             self.square_DACindicate.setFrameShadow(QtGui.QFrame.Raised)
@@ -784,6 +804,24 @@ class AppForm(QMainWindow):
 
     def snapResFreq(self):
         ch = int(self.textbox_channel.text())
+        iMaxIQVel = numpy.argmax(self.IQ_vels[ch])
+        #The longest edge is identified, choose which vertex of the edge
+        #is the resonant frequency by checking the neighboring edges
+        #len(IQ_vels[ch]) == len(f_span)-1, so iMaxIQVel is the index
+        #of the lower frequency vertex of the longest edge
+        if iMaxIQVel+1 < len(self.IQ_vels[ch]) and self.IQ_vels[ch][iMaxIQVel-1] < self.IQ_vels[ch][iMaxIQVel+1]:
+            iNewResFreq = iMaxIQVel+1
+        else:
+            iNewResFreq = iMaxIQVel
+
+        freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
+        currentFreq=freqs[ch]/10**9
+        newFreq = self.f_span[ch][iNewResFreq]
+        newFreq = newFreq/1e9
+        self.updateResFreq(ch=ch,freq=newFreq)
+
+    def snapAllResFreqs(self):
+        ch = int(self.textbox_channel.text())
         for ch in range(self.N_freqs):
             iMaxIQVel = numpy.argmax(self.IQ_vels[ch])
             #The longest edge is identified, choose which vertex of the edge
@@ -795,7 +833,7 @@ class AppForm(QMainWindow):
             else:
                 iNewResFreq = iMaxIQVel
 
-            maxJump = 5e-5# don't jump further than 50kHz
+            maxJump = float(self.textbox_freqAutoLimit.text())#10e-5# don't jump further than 100kHz/10 points
             freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
             currentFreq=freqs[ch]/10**9
             newFreq = self.f_span[ch][iNewResFreq]
@@ -863,10 +901,10 @@ class AppForm(QMainWindow):
         
         # Roach board's IP address
         roachIP = roachNo
-        if roachNo == 6:
-            roachIP = 7
-        elif roachNo == 7:
-            roachIP = 6
+#        if roachNo == 6:
+#            roachIP = 7
+#        elif roachNo == 7:
+#            roachIP = 6
         self.textbox_roachIP = QLineEdit('10.0.0.1%d'%roachIP)
         self.textbox_roachIP.setMaximumWidth(200)
         label_roachIP = QLabel('Roach IP Address:')
@@ -918,7 +956,7 @@ class AppForm(QMainWindow):
         #self.textbox_dds_shift = QLineEdit('149')	#chan_512_nodead_2012_Sep_05_1346.bof
         #self.textbox_dds_shift = QLineEdit('147')	#chan_if_acc_x_2011_Aug_02_0713.bof
         #self.textbox_dds_shift = QLineEdit('153')	#chan_dtrig_2012_Aug_28_1204.bof
-        self.textbox_dds_shift = QLineEdit('154')       
+        self.textbox_dds_shift = QLineEdit(os.environ['DDS_LAG'])       
         self.textbox_dds_shift.setMaximumWidth(50)
         label_dds_shift = QLabel('DDS sync. lag:')
 
@@ -970,6 +1008,12 @@ class AppForm(QMainWindow):
         self.square_DACindicate.setMidLineWidth(3)
         self.square_DACindicate.setText('off')
         
+
+        self.cbox_keepScaleFactor = QCheckBox("Keep Last Scale")
+        self.cbox_useScaleFactor = QCheckBox("Use Scale")
+        self.textbox_customScale = QLineEdit(str(defaultScale))
+        self.textbox_customScale.setMaximumWidth(60)
+
         # define DAC/DDS frequencies and load LUTs. 
         self.button_define_LUTs= QPushButton("(3)Define LUTs")
         self.button_define_LUTs.setMaximumWidth(200)
@@ -1003,13 +1047,15 @@ class AppForm(QMainWindow):
         
         #textbox for adjusting frequency
         self.textbox_freq = QLineEdit('0')
-        self.textbox_freq.setMaximumWidth(130)
+        self.textbox_freq.setMaximumWidth(90)
         label_freq = QLabel('Freq (GHz):')
         
+
         #button to snap resonant frequency to peak IQ velocity
-        self.button_autoFreq = QPushButton("Auto")
+        self.button_autoFreq = QPushButton("Auto Freq")
         self.button_autoFreq.setMaximumWidth(170)
         self.connect(self.button_autoFreq, SIGNAL('clicked()'), self.snapResFreq)
+
         #button to submit frequency and attenuation changes
         self.button_updateResonator = QPushButton("Submit")
         self.button_updateResonator.setMaximumWidth(170)
@@ -1017,10 +1063,18 @@ class AppForm(QMainWindow):
         
  
         #button to 'delete' resonator by setting attenuation really high
-        self.button_deleteResonator = QPushButton('Remove Resonator')
+        self.button_deleteResonator = QPushButton('Remove')
         self.button_deleteResonator.setMaximumWidth(170)
         self.connect(self.button_deleteResonator, SIGNAL('clicked()'), self.deleteResonator)
         
+        #button to snap resonant frequency to peak IQ velocity
+        self.button_autoFreqs = QPushButton("Auto All Freqs")
+        self.button_autoFreqs.setMaximumWidth(170)
+        self.connect(self.button_autoFreqs, SIGNAL('clicked()'), self.snapAllResFreqs)
+
+        self.textbox_freqAutoLimit = QLineEdit('10e-5')
+        self.textbox_freqAutoLimit.setMaximumWidth(70)
+        label_freqAutoLimit = QLabel('Max Freq Jump (GHz):')
         
         # Add widgets to window.
         gbox0 = QVBoxLayout()
@@ -1056,6 +1110,11 @@ class AppForm(QMainWindow):
         hbox11.addWidget(self.textbox_dds_shift)
         gbox1.addLayout(hbox10)
         gbox1.addLayout(hbox11)
+        gbox1.addWidget(self.cbox_keepScaleFactor)
+        hbox111 = QHBoxLayout()
+        hbox111.addWidget(self.cbox_useScaleFactor)
+        hbox111.addWidget(self.textbox_customScale)
+        gbox1.addLayout(hbox111)
         gbox1.addWidget(self.button_define_LUTs)
         #gbox1.addWidget(self.button_startDAC)
         hbox12 = QHBoxLayout()
@@ -1088,11 +1147,14 @@ class AppForm(QMainWindow):
         hbox23.addWidget(self.spinbox_attenuation)
         hbox23.addWidget(label_freq)
         hbox23.addWidget(self.textbox_freq)
-        hbox23.addWidget(self.button_autoFreq)
         hbox23.addWidget(self.button_updateResonator)
+        hbox23.addWidget(self.button_autoFreq)
+        hbox23.addWidget(self.button_deleteResonator)
         gbox2.addLayout(hbox23)
         hbox24 = QHBoxLayout()
-        hbox24.addWidget(self.button_deleteResonator)
+        hbox24.addWidget(label_freqAutoLimit)
+        hbox24.addWidget(self.textbox_freqAutoLimit)
+        hbox24.addWidget(self.button_autoFreqs)
         gbox2.addLayout(hbox24)
         hbox25 = QHBoxLayout()
         hbox25.addWidget(self.button_rotateLoops)
