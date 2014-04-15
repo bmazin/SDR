@@ -1,6 +1,9 @@
 import numpy as np
 from scipy.interpolate import UnivariateSpline
+from scipy import signal
 import Peaks
+from interval import interval, inf, imath
+import math
 class WideAnaFile():
     def __init__(self,fileName):
         file = open(fileName,'r')
@@ -23,12 +26,48 @@ class WideAnaFile():
         y = self.y['mag']        
         self.splineS = splineS
         self.splineK = splineK
+        print "now fit spline with s,k=",splineS,splineK
         spline = UnivariateSpline(x,y,s=self.splineS, k=self.splineK)
-        self.y['magUSpline'] = spline(x)
+        self.y['baseline'] = spline(x)
 
     def findPeaks(self, m=2, useDifference=True):
         if useDifference:
-            diff = self.y['magUSpline'] - self.y['mag']
+            diff = self.y['baseline'] - self.y['mag']
         else:
             diff = -self.y['mag']            
-        self.peaks = Peaks.peaks(diff,m)
+        self.peaksDict = Peaks.peaks(diff,m,returnDict=True)
+        self.peaks = self.peaksDict['big']
+
+    def findPeaksThreshold(self,threshSigma):
+        self.fptThreshSigma = threshSigma
+        values = self.y['mag']-self.y['baseline']
+        self.fptHg = np.histogram(values,bins=100)
+        self.fptCenters = 0.5*(self.fptHg[1][:-1] + self.fptHg[1][1:])
+        self.fptAverage = np.average(self.fptCenters,weights=self.fptHg[0])
+        self.fptStd = np.sqrt(np.average((self.fptCenters-self.fptAverage)**2, 
+                                      weights=self.fptHg[0]))
+        thresh = self.fptAverage - threshSigma*self.fptStd
+        ind = np.arange(len(values))[values < thresh]
+        self.threshIntervals = interval()
+        for i in ind-1:
+            self.threshIntervals = threshIntervals | interval[i-0.6,i+0.6]
+        self.peaks = np.zeros(len(threshIntervals))
+
+        iPeak = 0
+        for threshInterval in self.threshIntervals:
+            i0 = int(math.ceil(self.threshInterval[0]))
+            i1 = int(math.ceil(self.threshInterval[1]))
+            peak = np.average(self.x[i0:i1],weights=np.abs(values[i0:i1]))
+            self.peaks[iPeak] = peak
+            x0 = self.x[i0]
+            x1 = self.x[i1]
+            print "iPeak=%d i0=%d i1=%d x0=%f x1=%f peak=%f"%(iPeak,i0,i1,x0,x1,peak)
+            iPeak += 1
+    def filter(self, order=4, rs=40, wn=0.1):
+        b,a = signal.cheby2(order, rs, wn, btype="high", analog=False)
+        self.y['filtered'] = signal.filtfilt(b,a,self.y['mag'])
+
+    def fitFilter(self, order=4, rs=40, wn=0.5):
+        self.filter(order=order, rs=rs, wn=wn)
+        self.y['baseline'] = self.y['mag']-self.y['filtered']
+
