@@ -173,6 +173,11 @@ class TestWideAnaFile(unittest.TestCase):
         plt.xlim(xmin,xmax)
         plt.legend().get_frame().set_alpha(0.5)
         plt.savefig("testFitSpline.png")
+
+    def testCreatePdf(self):
+        fileName = 'ucsb_100mK_24db_1.txt'
+        waf = WideAnaFile(fileName)
+        waf.createPdf('ucsb_100mK_24db_1-good.pdf')
 if __name__ == '__main__':
     unittest.main()
 

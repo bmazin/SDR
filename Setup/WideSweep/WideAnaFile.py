@@ -4,6 +4,10 @@ from scipy import signal
 import Peaks
 from interval import interval, inf, imath
 import math
+
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+
 class WideAnaFile():
     def __init__(self,fileName):
         file = open(fileName,'r')
@@ -71,3 +75,28 @@ class WideAnaFile():
         self.filter(order=order, rs=rs, wn=wn)
         self.y['baseline'] = self.y['mag']-self.y['filtered']
 
+    def createPdf(self, pdfFile, deltaF=0.15, plotsPerPage=5):
+        print "begin createPdf to ",pdfFile
+        print "fMin,fMax=",self.x.min(),self.x.max()
+        print "number of bins",len(self.x)
+        nx = int(deltaF*len(self.x)/(self.x.max()-self.x.min()))
+        print "nx=",nx
+        pdf_pages = PdfPages(pdfFile)
+        db = 20*np.log10(self.y['mag']/self.y['mag'].max())
+        startNewPage = True
+        for i0 in range(0,len(self.x),nx):
+            print "i0=",i0
+            if startNewPage:
+                fig = plt.figure(figsize=(8.5,11), dpi=100)
+                iPlot = 0
+                startNewPage = False
+            iPlot += 1
+            ax = fig.add_subplot(plotsPerPage, 1, iPlot)
+            ax.plot(self.x[i0:i0+nx],db[i0:i0+nx])
+            ax.set_xlabel("Frequency (GHz)")
+            ax.set_ylabel("S21(db)")
+            if iPlot == plotsPerPage:
+                startNewPage = True
+                pdf_pages.savefig(fig)
+                print "saved a page"
+        pdf_pages.close()
