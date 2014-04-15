@@ -1,9 +1,6 @@
+.DS_Store
+*~*
+*#*
 *.pyc
-*.o
-*~
-*.autosave
-*.swp
-*.sim
-*.so
-*.exe
-*.dll
+*.png
+y
