@@ -41,6 +41,7 @@ class WideAnaFile():
             diff = -self.y['mag']            
         self.peaksDict = Peaks.peaks(diff,m,returnDict=True)
         self.peaks = self.peaksDict['big']
+        self.pk = self.peaksDict['pk']
 
     def findPeaksThreshold(self,threshSigma):
         self.fptThreshSigma = threshSigma
@@ -76,16 +77,11 @@ class WideAnaFile():
         self.y['baseline'] = self.y['mag']-self.y['filtered']
 
     def createPdf(self, pdfFile, deltaF=0.15, plotsPerPage=5):
-        print "begin createPdf to ",pdfFile
-        print "fMin,fMax=",self.x.min(),self.x.max()
-        print "number of bins",len(self.x)
         nx = int(deltaF*len(self.x)/(self.x.max()-self.x.min()))
-        print "nx=",nx
         pdf_pages = PdfPages(pdfFile)
         db = 20*np.log10(self.y['mag']/self.y['mag'].max())
         startNewPage = True
         for i0 in range(0,len(self.x),nx):
-            print "i0=",i0
             if startNewPage:
                 fig = plt.figure(figsize=(8.5,11), dpi=100)
                 iPlot = 0
@@ -98,5 +94,4 @@ class WideAnaFile():
             if iPlot == plotsPerPage:
                 startNewPage = True
                 pdf_pages.savefig(fig)
-                print "saved a page"
         pdf_pages.close()

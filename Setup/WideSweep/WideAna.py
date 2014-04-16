@@ -2,6 +2,25 @@
 A replacement for WideAna.pro for those who prefer python to idl.
 
 Usage:  python WideAna.py test/ucsb_100mK_24db_1.txt 
+
+Read the input file.
+
+Interactively add and remove resonance locations.
+
+Create file that plot dB vs frequency, in panels that are 0.15 GHz wide
+if it does not exist. This file is the base input file name with -good.ps appended.
+
+Create file of resonance positions.
+This file is the base input file name with -good.txt appended.
+This file contains one line for each resonance, with the columns:
+  -- id number (sequential from 0)
+  -- index of the wavelength in the input file
+  -- frequency in GHz
+
+If this file already exists when the program starts, it is moved to the same file name with at date and time
+string appended, and a new copy is made with all found resonances.  The file is updated each time a line is
+added or subtracted.
+
 Matt Strader
 Chris Stoughton
 """
@@ -10,7 +29,7 @@ from PyQt4.QtGui import *
 from PyQt4 import QtGui
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
+import sys, os
 from multiprocessing import Process
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
@@ -32,15 +51,11 @@ class WideAna(QMainWindow):
         self.fitParams = { "filter":{"order":4,"rs":40,"wn":0.1},
                            'spline':{"splineS":1,"splineK":3}}
         self.initialFile = initialFile
-        self.goodFile = initialFile+".good"
+        self.baseFile = ('.').join(initialFile.split('.')[:-1])
+        self.goodFile = self.baseFile+"-good.txt"
+        self.pdfFile = self.baseFile+"-good.pdf"
         self.fitLineEdits = {}
         self.fitLabels = {}
-        #for mode in self.fitParams.keys():
-        #    self.fitLineEdits[mode] = {}
-        #    self.fitLabels[mode] = {}
-        #    for param in self.fitParams[mode].keys():
-        #        self.fitLineEdits[mode][param] = QtGui.QLineEdit()
-        #        self.fitLabels[mode][param] = QtGui.QLabel()
         self.splineS = 1
         self.splineK = 3
         self.setWindowTitle(title)
@@ -54,6 +69,14 @@ class WideAna(QMainWindow):
         self.segment = 0
         self.segmentMax = 80
         self.load_file(initialFile)
+        # make the PDF file
+
+        if not os.path.exists(self.pdfFile):
+            print "create ",self.pdfFile
+            self.waf.createPdf(self.pdfFile)
+        else:
+            print "already on disk; ",self.pdfFile
+
         # plot the first segment
         self.calcXminXmax()
         self.plotSegment()
@@ -70,6 +93,18 @@ class WideAna(QMainWindow):
 
     def on_button_press(self,event):
         print "on_button_press:  button pressed is ==>%s===<"%event.button,event.xdata,event.ydata
+        ind = np.searchsorted(self.waf.x, event.xdata)
+        xFound = self.waf.x[ind]
+        indPk = np.searchsorted(self.waf.pk, ind)
+        xPkFound0 = self.waf.x[self.waf.pk[indPk-1]]
+        xPkFound1 = self.waf.x[self.waf.pk[indPk]]
+        print "ind,xFound,indPk,xPkFound",ind,xFound,indPk,xPkFound0,xPkFound1
+        if abs(xPkFound0-event.xdata) < abs(xPkFound1-event.xdata):
+            bestIndex = indPk-1
+        else:
+            bestIndex = indPk
+        bestX = self.waf.x[self.waf.pk[bestIndex]]
+        print "bestX=",bestX
         if event.button == 3:
             self.replot()
 
@@ -179,7 +214,8 @@ class WideAna(QMainWindow):
         #self.waf.fitSpline(splineS=1.0, splineK=1)
         self.waf.fitFilter(wn=0.01)
         self.waf.findPeaks(m=2)
-
+        self.peakMask = np.zeros(len(self.waf.x),dtype=np.bool)
+        self.peakMask[self.waf.peaks] = True
         self.xDomain = (self.waf.x[-1]-self.waf.x[0])/self.segmentMax
 
 
@@ -231,11 +267,10 @@ class WideAna(QMainWindow):
             for yName in yNames:
                 self.axes.plot(self.waf.x, self.waf.y[yName], label=yName)
 
-            # vertical line at each peak position
-            for peak in self.waf.peaks:
-                x = self.waf.x[peak]
+            for x in self.waf.x[self.peakMask]:
                 if x > self.xmin and x < self.xmax:
                     self.axes.axvline(x=x,color='r')
+
             self.axes.set_xlim((self.xmin,self.xmax))
             self.axes.set_title("segment=%.1f"%self.segment)
             self.axes.legend().get_frame().set_alpha(0.5)
