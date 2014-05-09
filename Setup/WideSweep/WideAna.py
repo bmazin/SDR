@@ -1,6 +1,26 @@
 """
 A replacement for WideAna.pro for those who prefer python to idl.
 
+Usage:  python WideAna.py test/ucsb_100mK_24db_1.txt 
+
+Read the input file.
+
+Interactively add and remove resonance locations.
+
+Create file that plot dB vs frequency, in panels that are 0.15 GHz wide
+if it does not exist. This file is the base input file name with -good.ps appended.
+
+Create file of resonance positions.
+This file is the base input file name with -good.txt appended.
+This file contains one line for each resonance, with the columns:
+  -- id number (sequential from 0)
+  -- index of the wavelength in the input file
+  -- frequency in GHz
+
+If this file already exists when the program starts, it is moved to the same file name with at date and time
+string appended, and a new copy is made with all found resonances.  The file is updated each time a line is
+added or subtracted.
+
 Matt Strader
 Chris Stoughton
 """
@@ -9,7 +29,7 @@ from PyQt4.QtGui import *
 from PyQt4 import QtGui
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
+import sys, os
 from multiprocessing import Process
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
@@ -20,13 +40,22 @@ from scipy import signal
 from scipy.signal import filter_design as fd
 from scipy.interpolate import UnivariateSpline
 import Peaks as Peaks
+from WideAnaFile import WideAnaFile
 
-class PopUp(QMainWindow):
+class WideAna(QMainWindow):
     def __init__(self, parent=None,plotFunc=None,title='',separateProcess=False, image=None,showMe=True, initialFile=None):
         self.parent = parent
         if self.parent == None:
             self.app = QApplication([])
-        super(PopUp,self).__init__(parent)
+        super(WideAna,self).__init__(parent)
+        self.fitParams = { "filter":{"order":4,"rs":40,"wn":0.1},
+                           'spline':{"splineS":1,"splineK":3}}
+        self.initialFile = initialFile
+        self.baseFile = ('.').join(initialFile.split('.')[:-1])
+        self.goodFile = self.baseFile+"-good.txt"
+        self.pdfFile = self.baseFile+"-good.pdf"
+        self.fitLineEdits = {}
+        self.fitLabels = {}
         self.splineS = 1
         self.splineK = 3
         self.setWindowTitle(title)
@@ -39,11 +68,18 @@ class PopUp(QMainWindow):
             self.show()
         self.segment = 0
         self.segmentMax = 80
-        self.data1 = None
-        if initialFile:
-            print "now open initialFile=",initialFile
-            self.load_file(initialFile)
-            self.plotSegment()
+        self.load_file(initialFile)
+        # make the PDF file
+
+        if not os.path.exists(self.pdfFile):
+            print "create ",self.pdfFile
+            self.waf.createPdf(self.pdfFile)
+        else:
+            print "already on disk; ",self.pdfFile
+
+        # plot the first segment
+        self.calcXminXmax()
+        self.plotSegment()
 
     def draw(self):
         self.fig.canvas.draw()
@@ -57,6 +93,18 @@ class PopUp(QMainWindow):
 
     def on_button_press(self,event):
         print "on_button_press:  button pressed is ==>%s===<"%event.button,event.xdata,event.ydata
+        ind = np.searchsorted(self.waf.x, event.xdata)
+        xFound = self.waf.x[ind]
+        indPk = np.searchsorted(self.waf.pk, ind)
+        xPkFound0 = self.waf.x[self.waf.pk[indPk-1]]
+        xPkFound1 = self.waf.x[self.waf.pk[indPk]]
+        print "ind,xFound,indPk,xPkFound",ind,xFound,indPk,xPkFound0,xPkFound1
+        if abs(xPkFound0-event.xdata) < abs(xPkFound1-event.xdata):
+            bestIndex = indPk-1
+        else:
+            bestIndex = indPk
+        bestX = self.waf.x[self.waf.pk[bestIndex]]
+        print "bestX=",bestX
         if event.button == 3:
             self.replot()
 
@@ -69,6 +117,7 @@ class PopUp(QMainWindow):
 
     def create_main_frame(self,title):
         self.main_frame = QWidget()
+
       # Create the mpl Figure and FigCanvas objects. 
         self.dpi = 100
         self.fig = Figure((7, 5), dpi=self.dpi)
@@ -82,6 +131,7 @@ class PopUp(QMainWindow):
         self.fig.canvas.mpl_connect('button_press_event',self.on_button_press)
         # Create the segment slider
         self.segmentSlider = QtGui.QSlider(Qt.Horizontal, self)
+        self.segmentSlider.setToolTip("Slide to change segment")
         self.segmentSlider.setRange(0,800)
         self.segmentSlider.setFocusPolicy(Qt.NoFocus)
         self.segmentSlider.setGeometry(30,40,100,30)
@@ -89,15 +139,32 @@ class PopUp(QMainWindow):
 
         # Create the left and right buttons
         segmentDecrement = QtGui.QPushButton('<',self)
+        segmentDecrement.setToolTip("Back to previous segment")
         segmentDecrement.clicked[bool].connect(self.segmentDecrement)
         segmentIncrement = QtGui.QPushButton('>',self)
+        segmentIncrement.setToolTip("Forward to next segment")
         segmentIncrement.clicked[bool].connect(self.segmentIncrement)
 
-        # create text input for splineK
-        
+        # create display mode button
         self.yDisplay = QtGui.QPushButton("raw")
+        self.yDisplay.setToolTip("Toggle y axis: raw data or difference=raw-baseline") 
         self.yDisplay.setCheckable(True)
         self.yDisplay.clicked[bool].connect(self.yDisplayClicked)
+
+        # create information boxes
+        self.countLabel = QtGui.QLabel()
+        self.inputLabel = QtGui.QLabel()
+        self.inputLabel.setText("Input File:%s"%self.initialFile)
+
+        self.goodLabel = QtGui.QLabel()
+        self.goodLabel.setText("Good File:%s"%self.goodFile)
+
+        # create controls for baseline fitting
+        #self.baseline = QtGui.QPushButton("filter")
+        #self.baseline.setCheckable(True)
+        #self.baseline.clicked[bool].connect(self.baselineClicked)
+
+
         # Create the navigation toolbar, tied to the canvas
         self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
 
@@ -109,62 +176,49 @@ class PopUp(QMainWindow):
         segmentBox.addWidget(self.segmentSlider)
         segmentBox.addWidget(segmentIncrement)
         segmentBox.addWidget(self.yDisplay)
+
+        # baseline box
+        #self.baselineBox = QHBoxLayout()
+        #self.updateBaselineBox()
+
+        # info box
+        self.infoBox = QVBoxLayout()
+        self.infoBox.addWidget(self.inputLabel)
+        self.infoBox.addWidget(self.countLabel)
+
         # entire box
         vbox = QVBoxLayout()
         vbox.addLayout(segmentBox)
+        #vbox.addLayout(self.baselineBox)
+        vbox.addLayout(self.infoBox)
         vbox.addWidget(self.canvas)
         vbox.addWidget(self.mpl_toolbar)
 
         self.main_frame.setLayout(vbox)
         self.setCentralWidget(self.main_frame)
         
-        # Manu Bars and Actions
-        self.file_menu = self.menuBar().addMenu("&File")
-        self.file_menu.addAction(
-            self.create_action("&Read", 
-                               shortcut="Ctrl+R", 
-                               slot=self.read_file,
-                               tip="Read File"))
 
-    def read_file(self):
-        fileName = str(QFileDialog.getOpenFileName(parent=None, 
-                                    caption=QString(str("Choose Wide File")), 
-                                    directory="/Users/stoughto/wideAna/20131122"))
-        self.load_file(fileName)
+    def updateBaselineBox(self):
+        for i in range(self.baselineBox.count()):
+            print "now remove i=",i
+            item = self.baselineBox.itemAt(i)
+            self.baselineBox.removeItem(item)
+        mode = str(self.baseline.text())
+        print "mode=",mode
+        self.baseline.setFixedSize(70,40)
+        self.baselineBox.addWidget(self.baseline)
+        keys = self.fitParams[mode]
 
     def load_file(self, fileName):
-        file = open(fileName,'r')
-        (self.fr1,self.fspan1,self.fsteps1,self.atten1) = file.readline().split()
-        (self.fr2,self.fspan2,self.fsteps2,self.atten2) = file.readline().split()
-        (self.ts,self.te) = file.readline().split()
-        (self.Iz1,self.Izsd1) = file.readline().split()
-        (self.Qz1,self.Qzsd1) = file.readline().split()
-        (self.Iz2,self.Izsd2) = file.readline().split()
-        (self.Qz2,self.Qzsd2) = file.readline().split()
-        file.close()
-        self.data1 = np.loadtxt(fileName, skiprows=7, usecols=(0,1,3))
-        self.loadedFileName=fileName
-        self.y = {}
-        self.y['mag']=np.sqrt(np.power(self.data1[:,1]-float(self.Iz2),2) + np.power(self.data1[:,2]-float(self.Qz2),2))
-        self.yToShow = {'mag':True}
-        self.allx = self.data1[:,0]
-        self.xDomain = (self.allx[-1]-self.allx[0])/self.segmentMax
-        self.xmin = self.allx[0] + self.xDomain
-        self.xmax = self.xmin + self.xDomain
+        self.waf = WideAnaFile(fileName)
+        #self.waf.fitSpline(splineS=1.0, splineK=1)
+        self.waf.fitFilter(wn=0.01)
+        self.waf.findPeaks(m=2)
+        self.peakMask = np.zeros(len(self.waf.x),dtype=np.bool)
+        self.peakMask[self.waf.peaks] = True
+        self.xDomain = (self.waf.x[-1]-self.waf.x[0])/self.segmentMax
 
-        # do this automatically...for now, or forever?
-        #self.calcSpeed()
-        #self.yToShow['magSpeed'] = True
-        #self.calcGauss()
-        #self.yToShow['magGauss'] = True
-        #self.calcBessel()
-        #self.yToShow['magBessel'] = True
-        self.calcUSpline()
-        self.yToShow['magUSpline'] = True
 
-        # find peaks in the mag-magUSpline data
-        diff = self.y['magUSpline'] - self.y['mag']
-        self.peaks = Peaks.peaks(diff,2)
     def segmentDecrement(self, value, amount=0.9):
         self.segment = max(0,self.segment-amount)
         print "decrement:  segment=",self.segment
@@ -172,12 +226,10 @@ class PopUp(QMainWindow):
 
     def segmentIncrement(self, value, amount=0.9):
         self.segment = min(self.segmentMax,self.segment+amount)
-        print "AAA increment:  segment=",self.segment
         self.segmentSlider.setSliderPosition(10*self.segment)
-        print "BBB increment:  segment=",self.segment
 
     def calcXminXmax(self):
-        self.xmin = self.allx[0] + self.segment*self.xDomain
+        self.xmin = self.waf.x[0] + self.segment*self.xDomain
         self.xmax = self.xmin + self.xDomain
 
     def yDisplayClicked(self, value):
@@ -188,6 +240,14 @@ class PopUp(QMainWindow):
             self.yDisplay.setText("raw")
         self.replot()
 
+    def baselineClicked(self,value):
+        print "baselineClicked:  value=",value
+        if value:
+            self.baseline.setText("spline")
+        else:
+            self.baseline.setText("filter")
+        self.updateBaselineBox()
+
     def changeSegmentValue(self,value):
         self.segment = value/10.0
         self.calcXminXmax()
@@ -195,31 +255,25 @@ class PopUp(QMainWindow):
 
     def plotSegment(self):
         ydText = self.yDisplay.text()
-        print "in plotSegment for segment=",self.segment,ydText
-        
-        if self.data1 != None:
+        if self.waf != None:
             if ydText == "raw":
-                yNames = ["mag","magUSpline"]
+                yNames = ["mag"]
             else:
-                self.y["diff"] = self.y["mag"]-self.y["magUSpline"]
+                self.waf.y["diff"] = self.waf.y["mag"]-self.waf.y["baseline"]
                 yNames = ["diff"]
-                self.yToShow["diff"] = True
-            stride = self.data1.shape[0]/self.segmentMax
+            stride = self.waf.data1.shape[0]/self.segmentMax
             # plot all values and then set xmin and xmax to show this segment
             self.axes.clear()
             for yName in yNames:
-                print "now yName=",yName
-                if self.yToShow[yName]:
-                    self.axes.plot(self.allx, self.y[yName], label=yName)
+                self.axes.plot(self.waf.x, self.waf.y[yName], label=yName)
 
-            # vertical line at each peak position
-            for peak in self.peaks:
-                x = self.allx[peak]
+            for x in self.waf.x[self.peakMask]:
                 if x > self.xmin and x < self.xmax:
                     self.axes.axvline(x=x,color='r')
+
             self.axes.set_xlim((self.xmin,self.xmax))
             self.axes.set_title("segment=%.1f"%self.segment)
-            self.axes.legend()
+            self.axes.legend().get_frame().set_alpha(0.5)
             self.draw()
     def calcSpeed(self):
         """ calculate the speed at each point """
@@ -242,28 +296,7 @@ class PopUp(QMainWindow):
         mag = self.y['mag']
         self.y['magBessel'] = signal.lfilter(b,a,mag)
 
-    def calcUSpline(self):
-        x = self.data1[:,0]
-        y = self.y['mag']
-        
-        spline = UnivariateSpline(x,y,s=self.splineS, k=self.splineK)
-        self.y['magUSpline'] = spline(x)
 
-    def tempSmoothing(self):
-        #polyOrder=40
-        #self.poly=np.poly1d(np.polyfit(self.data1[:,0],self.mag,polyOrder))
-        #self.polyFit = self.poly(self.data1[:,0])
-        #self.changeSegmentValue(0)
-        """ placeholder """
-        nSmooth=5
-        norm_pass = 1/float(nSmooth)
-        norm_stop = 1.5*norm_pass
-        (N,Wn) = signal.buttord(wp=norm_pass, ws=norm_stop,
-                                gpass=2, gstop=30,analog=0)
-        (b,a) = signal.butter(N, Wn, btype='low', analog=0, output='ba')
-        yFiltered = signal.lfilter(b,a,yy)
-        self.axes.plot(xx,yFiltered,label="butter")
-        
     def create_action(self, text, slot=None, shortcut=None,
                       icon=None,tip=None,checkable=False,signal="triggered()"):
         action = QAction(text, self)
@@ -285,21 +318,20 @@ class PopUp(QMainWindow):
         self.statusBar().addWidget(self.status_text, 1)
 
     def show(self):
-        super(PopUp,self).show()
+        super(WideAna,self).show()
         if self.parent == None:
             self.app.exec_()
 
-    #def create_status_bar(self):
-        #self.status_text = QLabel("Awaiting orders.")
-        #self.statusBar().addWidget(self.status_text, 1)
-
 
 def main(initialFile=None):
-    form = PopUp(showMe=False,title='WideSweep',initialFile=initialFile)
+    form = WideAna(showMe=False,title='WideSweep',initialFile=initialFile)
     form.show()
 
 if __name__ == "__main__":
     initialFile = None
     if len(sys.argv) > 1:
         initialFile = sys.argv[1]
+    else:
+        print "need to specify a filename"
+        exit()
     main(initialFile=initialFile)

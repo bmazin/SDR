@@ -9,4 +9,5 @@ The following have the deadtime lockout and 3pt thresholds bugs fixed
 chan_512_cfix.mdl - This has the new 512 MHz data packet but does not have baseline triggers.
 btrig_fix_v1.mdl - this has baseline triggers where y[t] = alpha*x[-30]+(1-alpha)y[t-10]
 chan_snap_v3.mdl - This has the snapQDR block to take a second of raw data
+chan_snap_v4.mdl - Has same functionality (except for count rate limit in capture block), but made with updated casper library blocks, and with less fpga resources required.
 
