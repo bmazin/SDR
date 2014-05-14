@@ -7,8 +7,9 @@ Read the input file.
 
 Interactively add and remove resonance locations.
 
-Create file that plot dB vs frequency, in panels that are 0.15 GHz wide
-if it does not exist. This file is the base input file name with -good.ps appended.
+Create file that plot dB vs frequency, in panels that are 0.15 GHz
+wide if it does not exist. This file is the base input file name with
+-good.ps appended.
 
 Create file of resonance positions.
 This file is the base input file name with -good.txt appended.
@@ -17,9 +18,10 @@ This file contains one line for each resonance, with the columns:
   -- index of the wavelength in the input file
   -- frequency in GHz
 
-If this file already exists when the program starts, it is moved to the same file name with at date and time
-string appended, and a new copy is made with all found resonances.  The file is updated each time a line is
-added or subtracted.
+If this file already exists when the program starts, it is moved to
+the same file name with at date and time string appended, and a new
+copy is made with all found resonances.  The file is updated each time
+a line is added or subtracted.
 
 Matt Strader
 Chris Stoughton
@@ -29,7 +31,7 @@ from PyQt4.QtGui import *
 from PyQt4 import QtGui
 import matplotlib.pyplot as plt
 import numpy as np
-import sys, os
+import sys, os, time, shutil
 from multiprocessing import Process
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
@@ -53,6 +55,9 @@ class WideAna(QMainWindow):
         self.initialFile = initialFile
         self.baseFile = ('.').join(initialFile.split('.')[:-1])
         self.goodFile = self.baseFile+"-good.txt"
+        if os.path.exists(self.goodFile):
+            shutil.copy(self.goodFile,
+                        self.goodFile+time.strftime("-%Y-%m-%d-%H-%M-%S"))
         self.pdfFile = self.baseFile+"-good.pdf"
         self.fitLineEdits = {}
         self.fitLabels = {}
@@ -61,7 +66,6 @@ class WideAna(QMainWindow):
         self.setWindowTitle(title)
         self.plotFunc = plotFunc
         self.create_main_frame(title)
-        self.create_status_bar()
         if plotFunc != None:
             plotFunc(fig=self.fig,axes=self.axes)
         if showMe == True:
@@ -72,45 +76,67 @@ class WideAna(QMainWindow):
         # make the PDF file
 
         if not os.path.exists(self.pdfFile):
-            print "create ",self.pdfFile
+            print "Create overview PDF file:",self.pdfFile
             self.waf.createPdf(self.pdfFile)
         else:
-            print "already on disk; ",self.pdfFile
-
+            print "Overview PDF file already on disk:",self.pdfFile
         # plot the first segment
         self.calcXminXmax()
         self.plotSegment()
+        print "Ready to add and delete peaks."
 
     def draw(self):
         self.fig.canvas.draw()
 
     def on_key_press(self,event):
-        print "on_key_press:  key pressed is ==>%s===<"%event.key
         if event.key == "right":
             self.segmentIncrement(None,0.1)
+            return
         elif event.key == "left":
             self.segmentDecrement(None,0.1)
+            return
+        elif event.key == "up":
+            self.zoom(1.25)
+            return
+        elif event.key == "down":
+            self.zoom(0.8)
+            return
+        self.on_key_or_button(event, event.key)
 
     def on_button_press(self,event):
-        print "on_button_press:  button pressed is ==>%s===<"%event.button,event.xdata,event.ydata
-        ind = np.searchsorted(self.waf.x, event.xdata)
-        xFound = self.waf.x[ind]
-        indPk = np.searchsorted(self.waf.pk, ind)
-        xPkFound0 = self.waf.x[self.waf.pk[indPk-1]]
-        xPkFound1 = self.waf.x[self.waf.pk[indPk]]
-        print "ind,xFound,indPk,xPkFound",ind,xFound,indPk,xPkFound0,xPkFound1
-        if abs(xPkFound0-event.xdata) < abs(xPkFound1-event.xdata):
-            bestIndex = indPk-1
-        else:
-            bestIndex = indPk
-        bestX = self.waf.x[self.waf.pk[bestIndex]]
-        print "bestX=",bestX
-        if event.button == 3:
-            self.replot()
+        self.on_key_or_button(event,event.button)
+
+
+    def on_key_or_button(self, event, pressed):
+        xdata = getattr(event, 'xdata', None)
+        if xdata is not None:
+            ind = np.searchsorted(self.waf.x, xdata)
+            xFound = self.waf.x[ind]
+            indPk = np.searchsorted(self.waf.pk, ind)
+            xPkFound0 = self.waf.x[self.waf.pk[indPk-1]]
+            xPkFound1 = self.waf.x[self.waf.pk[indPk]]
+            if abs(xPkFound0-xdata) < abs(xPkFound1-xdata):
+                bestIndex = indPk-1
+            else:
+                bestIndex = indPk
+            bestWafIndex = self.waf.pk[bestIndex]
+            bestX = self.waf.x[bestWafIndex]
+            if pressed == 3 or pressed == "d":
+                if self.peakMask[bestWafIndex]:
+                    self.peakMask[bestWafIndex] = False
+                    self.setCountLabel()
+                    self.replot()
+                    self.writeToGoodFile()
+
+            if pressed == 1 or pressed == "a":
+                if not self.peakMask[bestWafIndex]:
+                    self.peakMask[bestWafIndex] = True
+                    self.setCountLabel()
+                    self.replot()
+                    self.writeToGoodFile()
 
     def replot(self):
             xlim = self.axes.set_xlim()
-            print "replot with xlim=",xlim
             self.xmin=xlim[0]
             self.xmax=xlim[1]
             self.plotSegment()
@@ -152,7 +178,11 @@ class WideAna(QMainWindow):
         self.yDisplay.clicked[bool].connect(self.yDisplayClicked)
 
         # create information boxes
+        self.instructionsLabel = QtGui.QLabel()
+        self.instructionsLabel.setText("ADD peak:  left click or a;  DELETE peak:  right click or d")
         self.countLabel = QtGui.QLabel()
+        self.countLabel.setText("count label")
+
         self.inputLabel = QtGui.QLabel()
         self.inputLabel.setText("Input File:%s"%self.initialFile)
 
@@ -184,13 +214,14 @@ class WideAna(QMainWindow):
         # info box
         self.infoBox = QVBoxLayout()
         self.infoBox.addWidget(self.inputLabel)
+        self.infoBox.addWidget(self.goodLabel)
         self.infoBox.addWidget(self.countLabel)
-
+        self.infoBox.addWidget(self.instructionsLabel)
         # entire box
         vbox = QVBoxLayout()
+        vbox.addLayout(self.infoBox)
         vbox.addLayout(segmentBox)
         #vbox.addLayout(self.baselineBox)
-        vbox.addLayout(self.infoBox)
         vbox.addWidget(self.canvas)
         vbox.addWidget(self.mpl_toolbar)
 
@@ -217,11 +248,38 @@ class WideAna(QMainWindow):
         self.peakMask = np.zeros(len(self.waf.x),dtype=np.bool)
         self.peakMask[self.waf.peaks] = True
         self.xDomain = (self.waf.x[-1]-self.waf.x[0])/self.segmentMax
+        self.setCountLabel()
+        self.writeToGoodFile()
 
+    def setCountLabel(self):
+        self.countLabel.setText("Number of peaks = %d"%self.peakMask.sum())
+
+    def writeToGoodFile(self):
+        gf = open(self.goodFile,'wb')
+        id = 0
+        for index in range(len(self.peakMask)):
+            if self.peakMask[index]:
+                line = "%8d %12d %16.7f\n"%(id,index,self.waf.x[index])
+                gf.write(line)
+                id += 1
+        gf.close()
+
+    # deal with zooming and plotting one segment
+    def zoom(self,zoom):
+        self.segment *= zoom
+        self.segmentMax *= zoom
+        self.xDomain /= zoom
+        print "zoom=",zoom,self.segment,self.segmentMax,self.xDomain
+        self.calcXminXmax()
+        self.plotSegment()
+
+    def changeSegmentValue(self,value):
+        self.segment = value/10.0
+        self.calcXminXmax()
+        self.plotSegment()
 
     def segmentDecrement(self, value, amount=0.9):
         self.segment = max(0,self.segment-amount)
-        print "decrement:  segment=",self.segment
         self.segmentSlider.setSliderPosition(10*self.segment)
 
     def segmentIncrement(self, value, amount=0.9):
@@ -232,26 +290,6 @@ class WideAna(QMainWindow):
         self.xmin = self.waf.x[0] + self.segment*self.xDomain
         self.xmax = self.xmin + self.xDomain
 
-    def yDisplayClicked(self, value):
-        print "yDisplayClicked:  value=",value
-        if value:
-            self.yDisplay.setText("diff")
-        else:
-            self.yDisplay.setText("raw")
-        self.replot()
-
-    def baselineClicked(self,value):
-        print "baselineClicked:  value=",value
-        if value:
-            self.baseline.setText("spline")
-        else:
-            self.baseline.setText("filter")
-        self.updateBaselineBox()
-
-    def changeSegmentValue(self,value):
-        self.segment = value/10.0
-        self.calcXminXmax()
-        self.plotSegment()
 
     def plotSegment(self):
         ydText = self.yDisplay.text()
@@ -272,50 +310,28 @@ class WideAna(QMainWindow):
                     self.axes.axvline(x=x,color='r')
 
             self.axes.set_xlim((self.xmin,self.xmax))
-            self.axes.set_title("segment=%.1f"%self.segment)
+            self.axes.set_title("segment=%.1f/%.1f"%(self.segment,self.segmentMax))
             self.axes.legend().get_frame().set_alpha(0.5)
             self.draw()
-    def calcSpeed(self):
-        """ calculate the speed at each point """
-        mag = self.y['mag']
-        self.y['magSpeed'] = mag[1:]-mag[:-1]
-
-    def calcGauss(self,sigma=2):
-        """ convolve with a gaussian of width sigma"""
-        m = int(sigma*5)
-        gauss = signal.gaussian(m,sigma)
-        gauss /= gauss.sum()
-        mag = self.y['mag']
-        self.y['magGauss'] = signal.convolve(mag,gauss,mode='same')
-
-    def calcBessel(self,nSmooth=50):
-        Wp = 1/float(nSmooth)
-        (b,a) = fd.iirfilter(8, Wp, btype='highpass', ftype='bessel')
-        print "b=",b
-        print "a=",a
-        mag = self.y['mag']
-        self.y['magBessel'] = signal.lfilter(b,a,mag)
 
 
-    def create_action(self, text, slot=None, shortcut=None,
-                      icon=None,tip=None,checkable=False,signal="triggered()"):
-        action = QAction(text, self)
-        if icon is not None:
-            action.setIcon(QIcon(":/%s.png" % icon))
-        if shortcut is not None:
-            action.setShortcut(shortcut)
-        if tip is not None:
-            action.setToolTip(tip)
-            action.setStatusTip(tip)
-        if slot is not None:
-            self.connect(action, SIGNAL(signal), slot)
-        if checkable:
-            action.setCheckable(True)
-        return action
 
-    def create_status_bar(self):
-        self.status_text = QLabel("")
-        self.statusBar().addWidget(self.status_text, 1)
+
+    def yDisplayClicked(self, value):
+        print "yDisplayClicked:  value=",value
+        if value:
+            self.yDisplay.setText("diff")
+        else:
+            self.yDisplay.setText("raw")
+        self.replot()
+
+    def baselineClicked(self,value):
+        print "baselineClicked:  value=",value
+        if value:
+            self.baseline.setText("spline")
+        else:
+            self.baseline.setText("filter")
+        self.updateBaselineBox()
 
     def show(self):
         super(WideAna,self).show()

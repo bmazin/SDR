@@ -3,4 +3,5 @@
 *#*
 *.pyc
 *.png
-y
+*pdf
+ucsb_100mK_24db_1-good.txt-*
