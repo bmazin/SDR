@@ -23,6 +23,14 @@ the same file name with at date and time string appended, and a new
 copy is made with all found resonances.  The file is updated each time
 a line is added or subtracted.
 
+
+The view window is controlled by:
+- self.segment:  value from the segment; slider , varies from 0 to 1000
+- self.zoomFactor
+
+- from this calculate fMiddle, the frequency at the middle of the plot,
+  ranges from self.waf.x[0] to self.waf[-1], xMin and xMax
+
 Matt Strader
 Chris Stoughton
 """
@@ -70,8 +78,8 @@ class WideAna(QMainWindow):
             plotFunc(fig=self.fig,axes=self.axes)
         if showMe == True:
             self.show()
-        self.segment = 0
-        self.segmentMax = 80
+
+
         self.load_file(initialFile)
         # make the PDF file
 
@@ -81,6 +89,10 @@ class WideAna(QMainWindow):
         else:
             print "Overview PDF file already on disk:",self.pdfFile
         # plot the first segment
+
+        self.deltaXDisplay = 0.100 # display width in GHz
+        self.zoomFactor = 1.0
+        self.segment = 0
         self.calcXminXmax()
         self.plotSegment()
         print "Ready to add and delete peaks."
@@ -137,8 +149,8 @@ class WideAna(QMainWindow):
 
     def replot(self):
             xlim = self.axes.set_xlim()
-            self.xmin=xlim[0]
-            self.xmax=xlim[1]
+            self.xMin=xlim[0]
+            self.xMax=xlim[1]
             self.plotSegment()
 
     def create_main_frame(self,title):
@@ -158,7 +170,8 @@ class WideAna(QMainWindow):
         # Create the segment slider
         self.segmentSlider = QtGui.QSlider(Qt.Horizontal, self)
         self.segmentSlider.setToolTip("Slide to change segment")
-        self.segmentSlider.setRange(0,800)
+        self.segmentMax = 100000.0
+        self.segmentSlider.setRange(0,int(self.segmentMax))
         self.segmentSlider.setFocusPolicy(Qt.NoFocus)
         self.segmentSlider.setGeometry(30,40,100,30)
         self.segmentSlider.valueChanged[int].connect(self.changeSegmentValue)
@@ -231,11 +244,9 @@ class WideAna(QMainWindow):
 
     def updateBaselineBox(self):
         for i in range(self.baselineBox.count()):
-            print "now remove i=",i
             item = self.baselineBox.itemAt(i)
             self.baselineBox.removeItem(item)
         mode = str(self.baseline.text())
-        print "mode=",mode
         self.baseline.setFixedSize(70,40)
         self.baselineBox.addWidget(self.baseline)
         keys = self.fitParams[mode]
@@ -247,7 +258,6 @@ class WideAna(QMainWindow):
         self.waf.findPeaks(m=2)
         self.peakMask = np.zeros(len(self.waf.x),dtype=np.bool)
         self.peakMask[self.waf.peaks] = True
-        self.xDomain = (self.waf.x[-1]-self.waf.x[0])/self.segmentMax
         self.setCountLabel()
         self.writeToGoodFile()
 
@@ -266,31 +276,37 @@ class WideAna(QMainWindow):
 
     # deal with zooming and plotting one segment
     def zoom(self,zoom):
-        self.segment *= zoom
-        self.segmentMax *= zoom
-        self.xDomain /= zoom
-        print "zoom=",zoom,self.segment,self.segmentMax,self.xDomain
+        self.zoomFactor *= zoom
         self.calcXminXmax()
         self.plotSegment()
 
     def changeSegmentValue(self,value):
-        self.segment = value/10.0
+        self.segment = value
         self.calcXminXmax()
         self.plotSegment()
 
     def segmentDecrement(self, value, amount=0.9):
-        self.segment = max(0,self.segment-amount)
-        self.segmentSlider.setSliderPosition(10*self.segment)
+        wafDx = self.waf.x[-1]-self.waf.x[0]
+        plotDx = self.xMax-self.xMin
+        dsdx = self.segmentMax / wafDx
+        ds = amount * dsdx * plotDx
+        self.segment = max(0,self.segment-ds)
+        self.segmentSlider.setSliderPosition(self.segment)
 
     def segmentIncrement(self, value, amount=0.9):
-        self.segment = min(self.segmentMax,self.segment+amount)
-        self.segmentSlider.setSliderPosition(10*self.segment)
+        wafDx = self.waf.x[-1]-self.waf.x[0]
+        plotDx = self.xMax-self.xMin
+        dsdx = self.segmentMax / wafDx
+        ds = amount * dsdx * plotDx
+        self.segment = min(self.segmentMax,self.segment+ds)
+        self.segmentSlider.setSliderPosition(self.segment)
 
     def calcXminXmax(self):
-        self.xmin = self.waf.x[0] + self.segment*self.xDomain
-        self.xmax = self.xmin + self.xDomain
-
-
+        xMiddle = self.waf.x[0] + \
+            (self.segment/self.segmentMax)*(self.waf.x[-1]-self.waf.x[0])
+        dx = self.deltaXDisplay/self.zoomFactor
+        self.xMin = xMiddle-dx/2.0
+        self.xMax = xMiddle+dx/2.0
     def plotSegment(self):
         ydText = self.yDisplay.text()
         if self.waf != None:
@@ -306,10 +322,10 @@ class WideAna(QMainWindow):
                 self.axes.plot(self.waf.x, self.waf.y[yName], label=yName)
 
             for x in self.waf.x[self.peakMask]:
-                if x > self.xmin and x < self.xmax:
+                if x > self.xMin and x < self.xMax:
                     self.axes.axvline(x=x,color='r')
 
-            self.axes.set_xlim((self.xmin,self.xmax))
+            self.axes.set_xlim((self.xMin,self.xMax))
             self.axes.set_title("segment=%.1f/%.1f"%(self.segment,self.segmentMax))
             self.axes.legend().get_frame().set_alpha(0.5)
             self.draw()
@@ -318,7 +334,6 @@ class WideAna(QMainWindow):
 
 
     def yDisplayClicked(self, value):
-        print "yDisplayClicked:  value=",value
         if value:
             self.yDisplay.setText("diff")
         else:
@@ -326,7 +341,6 @@ class WideAna(QMainWindow):
         self.replot()
 
     def baselineClicked(self,value):
-        print "baselineClicked:  value=",value
         if value:
             self.baseline.setText("spline")
         else:
