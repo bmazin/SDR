@@ -29,7 +29,7 @@ The view window is controlled by:
 - self.zoomFactor
 
 - from this calculate fMiddle, the frequency at the middle of the plot,
-  ranges from self.waf.x[0] to self.waf[-1], xMin and xMax
+  ranges from self.wsf.x[0] to self.wsf[-1], xMin and xMax
 
 Matt Strader
 Chris Stoughton
@@ -50,7 +50,7 @@ from scipy import signal
 from scipy.signal import filter_design as fd
 from scipy.interpolate import UnivariateSpline
 import Peaks as Peaks
-from WideAnaFile import WideAnaFile
+from WideSweepFile import WideSweepFile
 
 class WideAna(QMainWindow):
     def __init__(self, parent=None,plotFunc=None,title='',separateProcess=False, image=None,showMe=True, initialFile=None):
@@ -85,7 +85,7 @@ class WideAna(QMainWindow):
 
         if not os.path.exists(self.pdfFile):
             print "Create overview PDF file:",self.pdfFile
-            self.waf.createPdf(self.pdfFile)
+            self.wsf.createPdf(self.pdfFile)
         else:
             print "Overview PDF file already on disk:",self.pdfFile
         # plot the first segment
@@ -122,27 +122,27 @@ class WideAna(QMainWindow):
     def on_key_or_button(self, event, pressed):
         xdata = getattr(event, 'xdata', None)
         if xdata is not None:
-            ind = np.searchsorted(self.waf.x, xdata)
-            xFound = self.waf.x[ind]
-            indPk = np.searchsorted(self.waf.pk, ind)
-            xPkFound0 = self.waf.x[self.waf.pk[indPk-1]]
-            xPkFound1 = self.waf.x[self.waf.pk[indPk]]
+            ind = np.searchsorted(self.wsf.x, xdata)
+            xFound = self.wsf.x[ind]
+            indPk = np.searchsorted(self.wsf.pk, ind)
+            xPkFound0 = self.wsf.x[self.wsf.pk[indPk-1]]
+            xPkFound1 = self.wsf.x[self.wsf.pk[indPk]]
             if abs(xPkFound0-xdata) < abs(xPkFound1-xdata):
                 bestIndex = indPk-1
             else:
                 bestIndex = indPk
-            bestWafIndex = self.waf.pk[bestIndex]
-            bestX = self.waf.x[bestWafIndex]
+            bestWsfIndex = self.wsf.pk[bestIndex]
+            bestX = self.wsf.x[bestWsfIndex]
             if pressed == 3 or pressed == "d":
-                if self.peakMask[bestWafIndex]:
-                    self.peakMask[bestWafIndex] = False
+                if self.peakMask[bestWsfIndex]:
+                    self.peakMask[bestWsfIndex] = False
                     self.setCountLabel()
                     self.replot()
                     self.writeToGoodFile()
 
             if pressed == 1 or pressed == "a":
-                if not self.peakMask[bestWafIndex]:
-                    self.peakMask[bestWafIndex] = True
+                if not self.peakMask[bestWsfIndex]:
+                    self.peakMask[bestWsfIndex] = True
                     self.setCountLabel()
                     self.replot()
                     self.writeToGoodFile()
@@ -252,12 +252,12 @@ class WideAna(QMainWindow):
         keys = self.fitParams[mode]
 
     def load_file(self, fileName):
-        self.waf = WideAnaFile(fileName)
-        #self.waf.fitSpline(splineS=1.0, splineK=1)
-        self.waf.fitFilter(wn=0.01)
-        self.waf.findPeaks(m=2)
-        self.peakMask = np.zeros(len(self.waf.x),dtype=np.bool)
-        self.peakMask[self.waf.peaks] = True
+        self.wsf = WideSweepFile(fileName)
+        #self.wsf.fitSpline(splineS=1.0, splineK=1)
+        self.wsf.fitFilter(wn=0.01)
+        self.wsf.findPeaks(m=2)
+        self.peakMask = np.zeros(len(self.wsf.x),dtype=np.bool)
+        self.peakMask[self.wsf.peaks] = True
         self.setCountLabel()
         self.writeToGoodFile()
 
@@ -269,7 +269,7 @@ class WideAna(QMainWindow):
         id = 0
         for index in range(len(self.peakMask)):
             if self.peakMask[index]:
-                line = "%8d %12d %16.7f\n"%(id,index,self.waf.x[index])
+                line = "%8d %12d %16.7f\n"%(id,index,self.wsf.x[index])
                 gf.write(line)
                 id += 1
         gf.close()
@@ -286,42 +286,42 @@ class WideAna(QMainWindow):
         self.plotSegment()
 
     def segmentDecrement(self, value, amount=0.9):
-        wafDx = self.waf.x[-1]-self.waf.x[0]
+        wsfDx = self.wsf.x[-1]-self.wsf.x[0]
         plotDx = self.xMax-self.xMin
-        dsdx = self.segmentMax / wafDx
+        dsdx = self.segmentMax / wsfDx
         ds = amount * dsdx * plotDx
         self.segment = max(0,self.segment-ds)
         self.segmentSlider.setSliderPosition(self.segment)
 
     def segmentIncrement(self, value, amount=0.9):
-        wafDx = self.waf.x[-1]-self.waf.x[0]
+        wsfDx = self.wsf.x[-1]-self.wsf.x[0]
         plotDx = self.xMax-self.xMin
-        dsdx = self.segmentMax / wafDx
+        dsdx = self.segmentMax / wsfDx
         ds = amount * dsdx * plotDx
         self.segment = min(self.segmentMax,self.segment+ds)
         self.segmentSlider.setSliderPosition(self.segment)
 
     def calcXminXmax(self):
-        xMiddle = self.waf.x[0] + \
-            (self.segment/self.segmentMax)*(self.waf.x[-1]-self.waf.x[0])
+        xMiddle = self.wsf.x[0] + \
+            (self.segment/self.segmentMax)*(self.wsf.x[-1]-self.wsf.x[0])
         dx = self.deltaXDisplay/self.zoomFactor
         self.xMin = xMiddle-dx/2.0
         self.xMax = xMiddle+dx/2.0
     def plotSegment(self):
         ydText = self.yDisplay.text()
-        if self.waf != None:
+        if self.wsf != None:
             if ydText == "raw":
                 yNames = ["mag"]
             else:
-                self.waf.y["diff"] = self.waf.y["mag"]-self.waf.y["baseline"]
+                self.wsf.y["diff"] = self.wsf.y["mag"]-self.wsf.y["baseline"]
                 yNames = ["diff"]
-            stride = self.waf.data1.shape[0]/self.segmentMax
+            stride = self.wsf.data1.shape[0]/self.segmentMax
             # plot all values and then set xmin and xmax to show this segment
             self.axes.clear()
             for yName in yNames:
-                self.axes.plot(self.waf.x, self.waf.y[yName], label=yName)
+                self.axes.plot(self.wsf.x, self.wsf.y[yName], label=yName)
 
-            for x in self.waf.x[self.peakMask]:
+            for x in self.wsf.x[self.peakMask]:
                 if x > self.xMin and x < self.xMax:
                     self.axes.axvline(x=x,color='r')
 
