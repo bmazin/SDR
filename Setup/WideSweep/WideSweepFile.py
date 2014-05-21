@@ -8,44 +8,60 @@ import math
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
-class WideAnaFile():
+class WideSweepFile():
+    """
+    Handle data written by the program WideSweep.vi
+    
+    The first seven lines are header information.
+    Each remaining line is frequency, I, sigma_I, Q, sigma_Q
+
+    """
     def __init__(self,fileName):
         file = open(fileName,'r')
-        (self.fr1,self.fspan1,self.fsteps1,self.atten1) = file.readline().split()
-        (self.fr2,self.fspan2,self.fsteps2,self.atten2) = file.readline().split()
+        (self.fr1,self.fspan1,self.fsteps1,self.atten1) = \
+            file.readline().split()
+        (self.fr2,self.fspan2,self.fsteps2,self.atten2) = \
+            file.readline().split()
         (self.ts,self.te) = file.readline().split()
-        (self.Iz1,self.Izsd1) = file.readline().split()
-        (self.Qz1,self.Qzsd1) = file.readline().split()
-        (self.Iz2,self.Izsd2) = file.readline().split()
-        (self.Qz2,self.Qzsd2) = file.readline().split()
+        (self.Iz1,self.Izsd1) = [float(x) for x in file.readline().split()]
+        (self.Qz1,self.Qzsd1) = [float(x) for x in file.readline().split()]
+        (self.Iz2,self.Izsd2) = [float(x) for x in file.readline().split()]
+        (self.Qz2,self.Qzsd2) = [float(x) for x in file.readline().split()]
         file.close()
-        self.data1 = np.loadtxt(fileName, skiprows=7, usecols=(0,1,3))
+        self.data1 = np.loadtxt(fileName, skiprows=7)
         self.loadedFileName=fileName
         self.x = self.data1[:,0]
-        self.y = {}
-        self.y['mag']=np.sqrt(np.power(self.data1[:,1]-float(self.Iz2),2) + np.power(self.data1[:,2]-float(self.Qz2),2))
+        self.n = len(self.x)
+        ind = np.arange(self.n)
+        Iz = np.where(ind<self.n/2, self.Iz1, self.Iz2)
+        self.I = self.data1[:,1]
+        print "self.I size = ",self.I.size
+        print "Iz.size = ",Iz.size
+        self.I = self.I - Iz
+        Qz = np.where(ind<self.n/2, self.Qz1, self.Qz2)
+        self.Q = self.data1[:,3] - Qz
+        self.mag = np.sqrt(np.power(self.I,2) + np.power(self.Q,2))
 
     def fitSpline(self, splineS=1, splineK=3):
         x = self.data1[:,0]
-        y = self.y['mag']        
+        y = self.mag        
         self.splineS = splineS
         self.splineK = splineK
-        print "now fit spline with s,k=",splineS,splineK
         spline = UnivariateSpline(x,y,s=self.splineS, k=self.splineK)
-        self.y['baseline'] = spline(x)
+        self.baseline = spline(x)
 
     def findPeaks(self, m=2, useDifference=True):
         if useDifference:
-            diff = self.y['baseline'] - self.y['mag']
+            diff = self.baseline - self.mag
         else:
-            diff = -self.y['mag']            
+            diff = -self.mag            
         self.peaksDict = Peaks.peaks(diff,m,returnDict=True)
         self.peaks = self.peaksDict['big']
         self.pk = self.peaksDict['pk']
 
     def findPeaksThreshold(self,threshSigma):
         self.fptThreshSigma = threshSigma
-        values = self.y['mag']-self.y['baseline']
+        values = self.mag-self.baseline
         self.fptHg = np.histogram(values,bins=100)
         self.fptCenters = 0.5*(self.fptHg[1][:-1] + self.fptHg[1][1:])
         self.fptAverage = np.average(self.fptCenters,weights=self.fptHg[0])
@@ -70,16 +86,16 @@ class WideAnaFile():
             iPeak += 1
     def filter(self, order=4, rs=40, wn=0.1):
         b,a = signal.cheby2(order, rs, wn, btype="high", analog=False)
-        self.y['filtered'] = signal.filtfilt(b,a,self.y['mag'])
+        self.filtered = signal.filtfilt(b,a,self.mag)
 
     def fitFilter(self, order=4, rs=40, wn=0.5):
         self.filter(order=order, rs=rs, wn=wn)
-        self.y['baseline'] = self.y['mag']-self.y['filtered']
+        self.baseline = self.mag-self.filtered
 
     def createPdf(self, pdfFile, deltaF=0.15, plotsPerPage=5):
         nx = int(deltaF*len(self.x)/(self.x.max()-self.x.min()))
         pdf_pages = PdfPages(pdfFile)
-        db = 20*np.log10(self.y['mag']/self.y['mag'].max())
+        db = 20*np.log10(self.mag/self.mag.max())
         startNewPage = True
         for i0 in range(0,len(self.x),nx):
             if startNewPage:
@@ -95,3 +111,17 @@ class WideAnaFile():
                 startNewPage = True
                 pdf_pages.savefig(fig)
         pdf_pages.close()
+
+    def resFit(self,ind0,ind1):
+        """
+        Logic copied from MasterResonatorAnalysis/resfit.pro
+        """
+        if ind0 < len(self.x)/2:
+            iZero = self.Iz1
+            qZero = self.Qz1
+        else:
+            iZero = self.Iz2
+            qZero = self.Qz2
+
+
+
