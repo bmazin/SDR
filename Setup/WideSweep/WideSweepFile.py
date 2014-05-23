@@ -2,7 +2,7 @@ import numpy as np
 from scipy.interpolate import UnivariateSpline
 from scipy import signal
 import Peaks
-from interval import interval, inf, imath
+#from interval import interval, inf, imath
 import math
 
 import matplotlib.pyplot as plt
