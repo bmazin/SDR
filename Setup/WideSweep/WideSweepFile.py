@@ -10,7 +10,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 
 class WideSweepFile():
     """
-    Handle data written by the program WideSweep.vi
+    Handle data written by the program SegmentedSweep.vi
     
     The first seven lines are header information.
     Each remaining line is frequency, I, sigma_I, Q, sigma_Q
@@ -38,8 +38,10 @@ class WideSweepFile():
         print "self.I size = ",self.I.size
         print "Iz.size = ",Iz.size
         self.I = self.I - Iz
+        self.Ierr = self.data1[:,2]
         Qz = np.where(ind<self.n/2, self.Qz1, self.Qz2)
         self.Q = self.data1[:,3] - Qz
+        self.Qerr = self.data1[:,4]
         self.mag = np.sqrt(np.power(self.I,2) + np.power(self.Q,2))
 
     def fitSpline(self, splineS=1, splineK=3):

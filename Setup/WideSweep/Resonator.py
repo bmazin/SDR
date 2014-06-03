@@ -2,6 +2,9 @@ import numpy as np
 import scipy.ndimage.filters
 from mpfit import mpfit
 import math
+import random
+import matplotlib.pyplot as plt
+import matplotlib
 class Resonator:
     def __init__(self, freq, I, Ierr, Q, Qerr):
         self.freq = freq
@@ -226,3 +229,109 @@ class Resonator:
         status = 0
         return [status, np.abs((y-model)/err)]
 
+    def resfit(self):
+        """
+        implements logic of resfit.pro for this resonator
+        """
+        rfp = self.resFitPrep()
+        x = rfp['functkw']['x']
+        y = rfp['functkw']['y']
+        err = rfp['functkw']['err']
+        p = rfp['p0']
+        parinfo = rfp['parinfo']
+        functkw = rfp['functkw']
+        m = mpfit(Resonator.resDiffLin, p, parinfo=parinfo, 
+                  functkw=functkw, quiet=1)
+        rdlFit = Resonator.resDiffLin(m.params, 
+                                      fjac=None, x=x, y=y, err=err)
+        bestChi2 = np.power(rdlFit[1],2).sum()
+        bestIter = 0
+        parold = p.copy()
+        random.seed(y.sum())
+        bestPar = p.copy()
+        bestM = m
+        for k in range(1,12):
+            parnew = parold.copy()
+            parnew[0] = 20000 + 30000.0*random.random()
+            parnew[1] = parold[1] + 5000*random.gauss(0.0, 1.0)
+            parnew[2] = parold[2] + 0.2*parold[2]*random.gauss(0.0,1.0)
+            parnew[3] = parold[3] + 0.2*parold[3]*random.gauss(0.0,1.0)
+            parnew[4] = parold[4] + 5.0*parold[4]*random.gauss(0.0,1.0)
+            parnew[5] = parold[5] + 0.2*parold[5]*random.gauss(0.0,1.0)
+            parnew[6] = parold[6] + 0.5*parold[6]*random.gauss(0.0,1.0)
+            parnew[7] = parold[7] + 0.5*parold[7]*random.gauss(0.0,1.0)
+            parnew[8] = parold[8] + 0.5*parold[8]*random.gauss(0.0,1.0)
+            parnew[9] = parold[9] + 0.5*parold[9]*random.gauss(0.0,1.0)
+            m = mpfit(Resonator.resDiffLin, parnew, parinfo=parinfo, 
+                      functkw=functkw, quiet=1)
+            rdlFit = Resonator.resDiffLin(m.params, 
+                                          fjac=None, x=x, y=y, err=err)
+            thisChi2 = np.power(rdlFit[1],2).sum()
+            if m.status > 0 and thisChi2 < bestChi2:
+                bestIter = k
+                bestChi2 = thisChi2
+                bestM = m
+        p = bestM.params
+        yFit = Resonator.resModel(x, bestM.params)
+        ndf = len(x) - len(bestM.params)
+        # size of loop from fit
+        radius = (p[6]+p[7])/4.0 
+        # normalized diamter of the loop (off resonance = 1)
+        diam = (2.0*radius)/(math.sqrt(p[8]**2+p[9]**2) + radius)
+        Qc = p[0]/diam
+        Qi = p[0]/(1.0-diam)
+        dip = 1.0 - diam
+        dipdb = 20.0*math.log10(dip)
+        chi2Mazin = math.sqrt(bestChi2/ndf)
+        return {"m":bestM,"x":x,"y":y,"yFit":yFit,"chi2":bestChi2, "ndf":ndf,
+                "Q":p[0],"f0":p[1]/1e9, "Qc":Qc, "Qi":Qi, "dipdb":dipdb,
+                "chi2Mazin":chi2Mazin}
+
+    def plot(self,rf,pdfPages):
+        plt.clf()
+        #plt.figure(figsize=(8,10.5))
+        fig,(ax1,ax2) = plt.subplots(2,1,figsize=(8,10.5))
+        y = rf['y']
+        ax1.plot(y.real,y.imag,"o", mfc="none")
+
+        #yFit = Resonator.resModel(rf['x'], rf['m'].params)
+        yFit = rf['yFit']
+        ax1.plot(yFit.real,yFit.imag)
+        ax1.axvline(linewidth=1,color='b',x=self.xrc1,linestyle=":")
+        ax1.axhline(linewidth=1,color='b',y=self.yrc1,linestyle=":")
+
+        xFormatter = matplotlib.ticker.ScalarFormatter(useOffset=False)
+        ax2.xaxis.set_major_formatter(xFormatter)
+
+        mag = abs(y)
+        mag /= max(mag)
+        mag = 20*np.log10(mag)
+
+        magFit = abs(yFit)
+        magFit /= max(magFit)
+        magFit = 20 * np.log10(magFit)
+        freq = rf['x']/1e9
+        ax2.plot(freq,mag,'o',mfc='none')
+        ax2.plot(freq,magFit)
+        ax2.set_ylabel("S21 (db)")
+        ax2.set_xlabel("f(GHz)")
+
+        p = rf['m'].params
+
+        textstr = "Q=%.1f \n "%rf['Q']
+        textstr += "Qc=%.1f \n "%rf['Qc']
+        textstr += "Qi=%.1f \n "%rf['Qi']
+        textstr += "f0=%.6f GHz\n "%rf['f0']
+        textstr += "S21=%.1f db \n "%rf['dipdb']
+        textstr += "chi2mazin=%.1f  "%rf['chi2Mazin']
+
+        props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+        ax2.text(0.95, 0.05, textstr, transform=ax2.transAxes, fontsize=14,
+                 verticalalignment='bottom', 
+                 horizontalalignment='right',
+                 bbox=props)
+
+
+
+        pdfPages.savefig()
+        plt.close()

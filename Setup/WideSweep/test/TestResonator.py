@@ -4,6 +4,7 @@ import numpy as np
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from Resonator import Resonator
 from mpfit import mpfit
+from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
 class TestResonator(unittest.TestCase):
     """
@@ -120,6 +121,17 @@ class TestResonator(unittest.TestCase):
         plt.axes().set_aspect('equal')
         plt.savefig("testResModel.png")
 
+    def testResfit(self):
+        pdfPages = PdfPages("testResfit.pdf")
+        f = np.loadtxt("resonatorTestQIMA.txt", usecols=(1,))
+        I = np.loadtxt("resonatorTestQIMA.txt", usecols=(2,))
+        Ierr = 0.001*np.ones(len(I))
+        Q = np.loadtxt("resonatorTestQIma.txt", usecols=(3,))
+        Qerr = 0.001*np.ones(len(Q))
+        res = Resonator(f,I,Ierr,Q,Qerr)
+        rf = res.resfit()
+        res.plot(rf,pdfPages)
+        pdfPages.close()
 if __name__ == '__main__':
     unittest.main()
 
