@@ -311,15 +311,15 @@ class WideAna(QMainWindow):
         ydText = self.yDisplay.text()
         if self.wsf != None:
             if ydText == "raw":
-                yNames = ["mag"]
+                yPlot = self.wsf.mag
+                yName = "magnitude"
             else:
-                self.wsf.y["diff"] = self.wsf.y["mag"]-self.wsf.y["baseline"]
-                yNames = ["diff"]
+                yPlot = self.wsf.mag-self.wsf.baseline
+                yName = "mag-baseline"
             stride = self.wsf.data1.shape[0]/self.segmentMax
             # plot all values and then set xmin and xmax to show this segment
             self.axes.clear()
-            for yName in yNames:
-                self.axes.plot(self.wsf.x, self.wsf.y[yName], label=yName)
+            self.axes.plot(self.wsf.x, yPlot, label=yName)
 
             for x in self.wsf.x[self.peakMask]:
                 if x > self.xMin and x < self.xMax:
