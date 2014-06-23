@@ -101,16 +101,17 @@ class WideAna(QMainWindow):
         self.fig.canvas.draw()
 
     def on_key_press(self,event):
-        if event.key == "right":
+        print "WideAna.on_key_press:  event.key=",event.key
+        if event.key == "right" or event.key == 'r':
             self.segmentIncrement(None,0.1)
             return
-        elif event.key == "left":
+        elif event.key == "left" or event.key == 'l':
             self.segmentDecrement(None,0.1)
             return
-        elif event.key == "up":
+        elif event.key == "up" or event.key == '+':
             self.zoom(1.25)
             return
-        elif event.key == "down":
+        elif event.key == "down" or event.key == '-':
             self.zoom(0.8)
             return
         self.on_key_or_button(event, event.key)
@@ -133,14 +134,14 @@ class WideAna(QMainWindow):
                 bestIndex = indPk
             bestWsfIndex = self.wsf.pk[bestIndex]
             bestX = self.wsf.x[bestWsfIndex]
-            if pressed == 3 or pressed == "d":
+            if pressed == "d":
                 if self.peakMask[bestWsfIndex]:
                     self.peakMask[bestWsfIndex] = False
                     self.setCountLabel()
                     self.replot()
                     self.writeToGoodFile()
 
-            if pressed == 1 or pressed == "a":
+            if pressed == "a":
                 if not self.peakMask[bestWsfIndex]:
                     self.peakMask[bestWsfIndex] = True
                     self.setCountLabel()
@@ -192,7 +193,7 @@ class WideAna(QMainWindow):
 
         # create information boxes
         self.instructionsLabel = QtGui.QLabel()
-        self.instructionsLabel.setText("ADD peak:  left click or a;  DELETE peak:  right click or d")
+        self.instructionsLabel.setText("ADD peak:  a;  REMOVE peak:  d  ZOOM:  +/- SCAN l/r ")
         self.countLabel = QtGui.QLabel()
         self.countLabel.setText("count label")
 

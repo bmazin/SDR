@@ -6,9 +6,10 @@
 ##Variables used by ArconsDashboard
 
 # The directory where obs files will be saved
-export MKID_DATA_DIR=$HOME/data/$(date +%Y%m%d)
+export MKID_DATA_DIR=/home/mkids/Desktop/stoughto/2014-06-18
+#export MKID_DATA_DIR=$HOME/data/$(date +%Y%m%d)
 # The path to the beammap h5 file, identifying frequencies with pixel locations for each readout unit (roach board)
-export BEAMMAP_PATH=~/data/common/sorted_beamimage46x44.h5
+export BEAMMAP_PATH=/home/mkids/Desktop/stoughto/2014-06-18/beammap-1x5.h5
 # A file to store the current state of the filter wheel
 export FILTER_WHEEL_PATH=~/SDR/DataReadout/ReadoutControls/bin/filter.txt
 # A file to store the current state of the calibration mirror arm
@@ -25,17 +26,19 @@ export DDS_LAG=154
 #boolean switch to indicate whether the current firmware makes use of a threshold in computing baseline phase
 export B_BASE_THRESH=0
 # The directory where the current frequency/attenuation files are stored (EX: ps_freq0.txt). Also where roachConfig.txt is.
-export FREQ_PATH=~/data/20140312/
+#export FREQ_PATH=~/data/20140312/
+export FREQ_PATH=/home/mkids/Desktop/stoughto/2014-06-18
 
 ##Variables used by channelizerCustom
 
 # filename(s) of FIR coefficients to be loaded into firmware.  
 #Use %d in place of roach number to have a different file for each roach
+export CUSTOM_FIR_DIR=/home/mkids/stoughto/SDR/Projects/Filters
 export CUSTOM_FIR=matched_30us.txt
 #Default phase level for photon triggering
 export THRESHOLD_LEVEL=2.1
 
 ##Variables added to help port to new hardware configurations
-export MKID_NROW=46
-export MKID_NCOL=44
+export MKID_NROW=1
+export MKID_NCOL=5
 export MKID_TELESCOPE=Broida
