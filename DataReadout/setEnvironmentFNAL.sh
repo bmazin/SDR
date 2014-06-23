@@ -37,3 +37,8 @@ export CUSTOM_FIR_DIR=/home/mkids/stoughto/SDR/Projects/Filters
 export CUSTOM_FIR=matched_30us.txt
 #Default phase level for photon triggering
 export THRESHOLD_LEVEL=2.1
+
+##Variables added to help port to new hardware configurations
+export MKID_NROW=1
+export MKID_NCOL=5
+export MKID_TELESCOPE=Broida

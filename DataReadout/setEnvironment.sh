@@ -34,3 +34,8 @@ export FREQ_PATH=~/data/20140312/
 export CUSTOM_FIR=matched_30us.txt
 #Default phase level for photon triggering
 export THRESHOLD_LEVEL=2.1
+
+##Variables added to help port to new hardware configurations
+export MKID_NROW=46
+export MKID_NCOL=44
+export MKID_TELESCOPE=Broida
