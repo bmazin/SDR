@@ -35,8 +35,6 @@ class WideSweepFile():
         ind = np.arange(self.n)
         Iz = np.where(ind<self.n/2, self.Iz1, self.Iz2)
         self.I = self.data1[:,1]
-        print "self.I size = ",self.I.size
-        print "Iz.size = ",Iz.size
         self.I = self.I - Iz
         self.Ierr = self.data1[:,2]
         Qz = np.where(ind<self.n/2, self.Qz1, self.Qz2)
@@ -84,7 +82,6 @@ class WideSweepFile():
             self.peaks[iPeak] = peak
             x0 = self.x[i0]
             x1 = self.x[i1]
-            print "iPeak=%d i0=%d i1=%d x0=%f x1=%f peak=%f"%(iPeak,i0,i1,x0,x1,peak)
             iPeak += 1
     def filter(self, order=4, rs=40, wn=0.1):
         b,a = signal.cheby2(order, rs, wn, btype="high", analog=False)
@@ -112,6 +109,8 @@ class WideSweepFile():
             if iPlot == plotsPerPage:
                 startNewPage = True
                 pdf_pages.savefig(fig)
+        if not startNewPage:
+            pdf_pages.savefig(fig)
         pdf_pages.close()
 
     def resFit(self,ind0,ind1):
