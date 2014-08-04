@@ -649,6 +649,7 @@ class AppForm(QMainWindow):
         self.roach.write('dram_memory', binaryData)
 
         x = numpy.loadtxt(saveDir+'centers.dat')
+        print "channelizerCustom:  saveDir=",saveDir," x=",x
         N_freqs = len(x[:,0])
         for n in range(N_freqs):
             self.iq_centers[n] = complex(x[n,0], x[n,1])
@@ -672,6 +673,7 @@ class AppForm(QMainWindow):
         freqFile =str(self.textbox_freqFile.text())
         self.loadCustomAtten()
         try:
+            print "channelizerCustom.y:  freqFile=",freqFile
             x = numpy.loadtxt(freqFile) 
             x_string = ''
             for i in range(len(self.customResonators)):
@@ -683,12 +685,12 @@ class AppForm(QMainWindow):
             N_freqs = len(x[1:,0])
             self.numFreqs=N_freqs
             for l in x[1:,0]:
+                temp_x_string = str(l*1e9) + '\n'
                 x_string = x_string + str(l*1e9) + '\n'
             
             self.iq_centers = numpy.array([0.+0j]*256)
             print N_freqs,numpy.shape(self.iq_centers),numpy.shape(x)
             for n in range(N_freqs):
-                print n
                 #for n in range(256):
                 self.iq_centers[n] = complex(x[n+1,1], x[n+1,2])
             
@@ -802,10 +804,11 @@ class AppForm(QMainWindow):
         # File with FIR coefficients
         #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched_30us.txt')
         #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/lpf_250kHz.txt')
-        firFileName = os.environ['CUSTOM_FIR']
+        firFileName = os.environ['MKID_CUSTOM_FIR']
+        firDir = os.environ['MKID_CUSTOM_FIR_DIR']
         if '%d' in firFileName:#the fir file is specific to the roach, stick the number in
             firFileName = firFileName%roachNum
-        self.textbox_coeffsFile = QLineEdit(os.path.join('/home/sean/data/common/fir/',firFileName))
+        self.textbox_coeffsFile = QLineEdit(os.path.join(firDir,firFileName))
         #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched20121128r%d.txt'%roachNum)
         self.textbox_coeffsFile.setMaximumWidth(200)
 
@@ -1029,6 +1032,6 @@ if __name__=='__main__':
         print 'Usage: ',sys.argv[0],' roachNum'
         exit(1)
     roachNum = int(sys.argv[1])
-    datadir = os.environ['FREQ_PATH']
+    datadir = os.environ['MKID_FREQ_PATH']
     main()
 

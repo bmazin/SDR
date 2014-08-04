@@ -24,9 +24,10 @@ if __name__ == '__main__':
         print 'Usage: ',sys.argv[0],' roachNo'
         exit(1)
     roachNo = int(sys.argv[1])
-    datadir = os.environ['FREQ_PATH']#'/home/sean/data/20121105adr/'
+    datadir = os.environ['MKID_FREQ_PATH']#'/home/sean/data/20121105adr/'
     print datadir
     configFile = numpy.loadtxt(os.path.join(datadir,'roachConfig.txt'))
+    configFile = numpy.reshape(configFile,(-1,2))
     try:
         scaleFactorFile = numpy.loadtxt(os.path.join(datadir,'scaleFactors.txt'))
         defaultScale = float(scaleFactorFile[:,1][roachNo])
@@ -146,6 +147,7 @@ class AppForm(QMainWindow):
             atten_out0 = 63 - int((atten_out_desired-31.5)*2)
             atten_out1 = 0
 
+        print "templarCustom.programAttenuators:  atten_in_desired=",atten_in_desired," atten_out_desired=",atten_out_desired," atten_out0=",atten_out0," atten_out1=",atten_out1
         reg = numpy.binary_repr((atten_in<<12)+(atten_out0<<6)+(atten_out1<<0))
         b = '0'*(18-len(reg)) + reg
         print reg, len(reg)
@@ -430,7 +432,7 @@ class AppForm(QMainWindow):
 
         # Write LUTs to file.
         saveDir = str(self.textbox_saveDir.text())
-        f = open(saveDir + 'luts.dat', 'w')
+        f = open(os.path.join(saveDir,'luts.dat'), 'w')
         f.write(binaryData)
         f.close()
         print 'LUTs saved in: ',saveDir
@@ -464,7 +466,7 @@ class AppForm(QMainWindow):
         
             centers_for_file[ch] = [self.iq_centers[ch].real, self.iq_centers[ch].imag]
             
-        numpy.savetxt(saveDir+'centers.dat', centers_for_file)
+        numpy.savetxt(os.path.join(saveDir,'centers.dat'), centers_for_file)
 
     def findIQcenters(self, I, Q):
         I_0 = (I.max()+I.min())/2.
@@ -534,10 +536,19 @@ class AppForm(QMainWindow):
             self.sweepLOready()
             self.status_text.setText('Sweeping...DONE')
 
+    def toggleShowPrevious(self):
+        self.showPrevious = not self.showPrevious
+        if self.showPrevious:
+            self.button_showPrevious.setStyleSheet("background-color: #00ff00")
+        else:
+            self.button_showPrevious.setStyleSheet("background-color: #ff0000")
+        print "in toggleShowPrevious:  showPrevious=",self.showPrevious
+
     def sweepLOready(self):
         atten_in = float(self.textbox_atten_in.text())
         saveDir = str(self.textbox_saveDir.text())
-        savefile = saveDir + 'ps_r%d_'%roachNo + time.strftime("%Y%m%d-%H%M%S",time.localtime())+'.h5'
+        savefile = os.path.join(saveDir,'ps_r%d_'%roachNo + time.strftime("%Y%m%d-%H%M%S",time.localtime())+'.h5')
+        print "in sweelLOready:  savefile=",savefile
         dac_freqs = map(float, unicode(self.textedit_DACfreqs.toPlainText()).split())
         self.N_freqs = len(dac_freqs)
         f_base = float(self.textbox_loFreq.text())
@@ -767,10 +778,10 @@ class AppForm(QMainWindow):
         self.axes1.clear()
         self.axes0.semilogy(self.f_span[ch], (self.I[ch]**2 + self.Q[ch]**2)**.5, '.-')
         self.axes0.semilogy(self.f_span[ch][0:-1], self.IQ_vels[ch],'g.-')
-        if self.last_IQ_vels != None:
+        if self.last_IQ_vels != None and self.showPrevious:
             self.axes0.semilogy(self.last_f_span[ch][0:-1], self.last_IQ_vels[ch],'c.-',alpha=0.5)
         self.axes1.plot(self.I[ch], self.Q[ch], '.-', self.iq_centers.real[ch], self.iq_centers.imag[ch], '.', self.I_on_res[ch], self.Q_on_res[ch], '.')
-        if self.last_I != None:
+        if self.last_I != None and self.showPrevious:
             self.axes1.plot(self.last_I[ch], self.last_Q[ch], 'c.-', self.last_iq_centers.real[ch], self.last_iq_centers.imag[ch], '.', self.last_I_on_res[ch], self.last_Q_on_res[ch], '.',alpha=0.5)
         self.canvas.draw()
 
@@ -956,7 +967,7 @@ class AppForm(QMainWindow):
         #self.textbox_dds_shift = QLineEdit('149')	#chan_512_nodead_2012_Sep_05_1346.bof
         #self.textbox_dds_shift = QLineEdit('147')	#chan_if_acc_x_2011_Aug_02_0713.bof
         #self.textbox_dds_shift = QLineEdit('153')	#chan_dtrig_2012_Aug_28_1204.bof
-        self.textbox_dds_shift = QLineEdit(os.environ['DDS_LAG'])       
+        self.textbox_dds_shift = QLineEdit(os.environ['MKID_DDS_LAG'])       
         self.textbox_dds_shift.setMaximumWidth(50)
         label_dds_shift = QLabel('DDS sync. lag:')
 
@@ -975,7 +986,7 @@ class AppForm(QMainWindow):
         label_saveDir.setMaximumWidth(150)
     
         # File with frequencies/attens
-        self.textbox_freqFile = QLineEdit(datadir+'ps_freq%d.txt'%roachNo)
+        self.textbox_freqFile = QLineEdit(os.path.join(datadir,'ps_freq%d.txt'%roachNo))
         self.textbox_freqFile.setMaximumWidth(200)
 
         # Load freqs and attens from file.
@@ -1023,7 +1034,14 @@ class AppForm(QMainWindow):
         self.button_sweepLO = QPushButton("(5)Sweep LO")
         self.button_sweepLO.setMaximumWidth(340)
         self.connect(self.button_sweepLO, SIGNAL('clicked()'), self.sweepLO)    
-          
+        # Toggle whether to show previous or not
+        self.button_showPrevious = QPushButton("Show Prev")
+        self.button_showPrevious.setMaximumWidth(200)
+        self.connect(self.button_showPrevious, SIGNAL('clicked()'),
+                     self.toggleShowPrevious)
+        self.showPrevious = False
+        self.toggleShowPrevious()
+
         # Channel increment up 1.
         self.button_channelIncUp = QPushButton("+")
         self.button_channelIncUp.setMaximumWidth(50)
@@ -1135,6 +1153,7 @@ class AppForm(QMainWindow):
         hbox21.addWidget(label_loSpan)
         hbox21.addWidget(self.textbox_loSpan)
         hbox21.addWidget(self.button_sweepLO)
+        hbox21.addWidget(self.button_showPrevious)
         gbox2.addLayout(hbox21)
         hbox22 = QHBoxLayout()
         hbox22.addWidget(label_channel)

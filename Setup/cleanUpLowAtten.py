@@ -8,19 +8,21 @@ import sys
 #with open('~data/20120812adr/FL1-ps_freq0.txt', 'r') as f:
 
 if len(sys.argv) != 2:
-    print 'Usage: ',sys.argv[0],' roachNum'
+    print 'Usage: ',sys.argv[0],' zero-based roachNum'
     exit(1)
 roachNum = int(sys.argv[1])
 
-path='/home/sean/data/sci4alpha/'
+#path='/home/sean/data/sci4alpha/'
+path = os.environ['MKID_DATA_DIR']
 filename = 'ps_freq%d'%roachNum
 outfilename = filename + '-old'
 
-os.rename(path+filename+'.txt',path+outfilename+'.txt')
+
+os.rename(os.path.join(path,filename+'.txt'),os.path.join(path,outfilename+'.txt'))
 
 numBin=20
 
-data=numpy.loadtxt(path+outfilename+'.txt')
+data=numpy.loadtxt(os.path.join(path,outfilename+'.txt'))
 print data[1:,3]
 print 'median: ', numpy.median(data[1:,3])
 avg=numpy.mean(data[1:,3])
@@ -37,6 +39,7 @@ plt.title('title')
 
 #plt.ion()
 #plt.draw()
+
 plt.show()
 
 newData=data[1:,3]
@@ -58,7 +61,9 @@ plt.show()
 data[1:,3]=newData
 #numpy.savetxt(path+outfilename+'txt',data,delimiter='/t')
 
-f=open(path+filename+'.txt','w')
+outFn = os.path.join(path,filename+'.txt') 
+print "save final answers to outFn=",outFn
+f=open(outFn,'w')
 f.write('\n\n')
 for i in range(len(data[1:,3])):
     #f.write(str((data[i,0],'\t',data[i,1],'\t',data[i,2],'\t',data[i,3])))

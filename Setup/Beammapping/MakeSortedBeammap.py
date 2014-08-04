@@ -4,14 +4,18 @@
 import numpy as np
 from tables import *
 import os
-
-NROWS=46
-NCOLS=44
-nRoachRows = 23
-nRoachCols = 11
-roachMatrix = np.array([[2,0,5,6],[3,1,4,7]])
-path = os.environ['BEAMMAP_PATH']
+import ast
+nRoachRows=int(os.environ['MKID_NROW'])
+nRoachCols=int(os.environ['MKID_NCOL'])
+roachMatrix = ast.literal_eval(os.environ['MKID_ROACH_MATRIX'])
+#nRoachRows = 23
+#nRoachCols = 11
+#roachMatrix = np.array([[2,0,5,6],[3,1,4,7]])
+path = os.environ['MKID_BEAMMAP_PATH']
 print'beamimage at ',path
+if os.path.exists(path):
+    print "that file already exists so I quit"
+    exit(1)
 #outfile = path + 'sorted_beamimage%dx%d.h5'%(NROWS,NCOLS)
 
 #numpy.fromfile(txtfile,dtype='float32',count=-1,sep=' ')
@@ -25,7 +29,7 @@ bgroup = h5file.createGroup('/','beammap','Beam Map of Array')
 
 # make beammap array - this is a 2d array (top left is 0,0.  first index is column, second is row) containing a string with the name of the group holding the photon data
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)      # without minimal compression the files sizes are ridiculous...
-ca = h5file.createCArray(bgroup, 'beamimage', StringAtom(itemsize=40), (NROWS,NCOLS), filters=filt1)  
+ca = h5file.createCArray(bgroup, 'beamimage', StringAtom(itemsize=40), (nRoachRows,nRoachCols), filters=filt1)  
 
 # load of the text file with resonator data in it and use it to make the beamimage
 
@@ -48,4 +52,4 @@ np.set_printoptions(threshold=np.nan)
 print ca.read()
 
 h5file.close()
-print 'file closed'
+print 'Success:  done writing',path

@@ -1,0 +1,47 @@
+export SDR_DIR=/home/mkids/stoughto-devel/SDR/
+export PYTHONPATH=$SDR_DIR/Setup/WideSweep
+alias WideSweep="python $SDR_DIR/Setup/WideSweep/WideAna.py"
+alias autofit="python $SDR_DIR/Setup/WideSweep/autofit.py"
+alias distributeFreqsToRoaches="python $SDR_DIR/Setup/WideSweep/distributeFreqsToRoaches.py"
+alias makeRoachConfig="python $SDR_DIR/Setup/WideSweep/makeRoachConfig.py"
+alias makeSortedBeammap="python $SDR_DIR/Setup/Beammapping/MakeSortedBeammap.py"
+alias templarCustom='python $SDR_DIR/DataReadout/ChannelizerControls/templarCustom.py'
+alias psFit='python $SDR_DIR/Setup/PSFit.py'
+alias cleanUpLowAtten='python $SDR_DIR/Setup/cleanUpLowAtten.py'
+alias channelizerCustom='python $SDR_DIR/DataReadout/ChannelizerControls/channelizerCustom.py'
+alias arconsDashboard='python $SDR_DIR/DataReadout/ReadoutControls/ArconsDashboard.py'
+
+export MKID_DATA_DIR=/mkids/data/2014-07-22
+export MKID_FILTER_WHEEL_PATH=$MKID_DATA_DIR/filter.txt
+export MKID_MIRROR_ANGLE_PATH=$MKID_DATA_DIR/mirror.txt
+#The filename of the current compiled firmware.  Should be stored in SDR/DataReadout/ChannelizerControls/boffiles/
+export BOFFILE=chan_snap_v3_2012_Oct_30_1216.bof
+#The git commit of the model file for the boffile above
+export FIRMWARE_COMMIT=75f17828098b0d3c57acf07f9b3188b39794f666
+
+export MKID_DDS_LAG=154
+export MKID_B_BASE_THRESH=0
+export MKID_FREQ_PATH=$MKID_DATA_DIR
+
+##Variables used by channelizerCustom
+
+# filename(s) of FIR coefficients to be loaded into firmware.  
+#Use %d in place of roach number to have a different file for each roach
+export MKID_CUSTOM_FIR_DIR=$SDR_DIR/Projects/Filters
+export MKID_CUSTOM_FIR=matched_30us.txt
+#Default phase level for photon triggering
+export MKID_THRESHOLD_LEVEL=2.1
+
+# The path to the beammap h5 file, identifying frequencies with pixel locations for each readout unit (roach board)
+export MKID_BEAMMAP_PATH=$MKID_DATA_DIR/beammap-3x10-new.h5
+
+##Variables added to help port to new hardware configurations
+export MKID_BEAM_ROWS=3
+export MKID_BEAM_COLS=10
+export MKID_NROW=3
+export MKID_NCOL=10
+export MKID_OBSERVATORY=Broida
+export MKID_NROACHES=1  # no. roaches per feedline -- 1 roach on 1 feedline
+#export MKID_NROACHES="4 4"  # no. roaches per feedline -- 4 roaches on a total of two feedlines
+export MKID_ROACH_MATRIX="[[0]]"
+export MKID_ROACH_BANDWIDTH=0.512 # GHz

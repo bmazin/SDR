@@ -58,10 +58,10 @@ These are the environment variables used:
 Program Input and Output for Setup
 ----------------------------------
 
-1.  `SDR/Setup/WideSweep/SegmentedSweep.vi` creates data01.txt
-This program does not use `MKID_DATA_DIR` so you need to specify
-it in the dialog box.
+1.  `SDR/Setup/WideSweep/SegmentedSweep.vi` creates 'data01.txt'.
+This program does not use `MKID_DATA_DIR` so you need to specify it in
+the dialog box.
 
- 
+2.  
 
   
