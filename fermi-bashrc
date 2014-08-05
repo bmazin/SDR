@@ -9,7 +9,7 @@ alias templarCustom='python $SDR_DIR/DataReadout/ChannelizerControls/templarCust
 alias psFit='python $SDR_DIR/Setup/PSFit.py'
 alias cleanUpLowAtten='python $SDR_DIR/Setup/cleanUpLowAtten.py'
 alias channelizerCustom='python $SDR_DIR/DataReadout/ChannelizerControls/channelizerCustom.py'
-alias arconsDashboard='python $SDR_DIR/DataReadout/ReadoutControls/ArconsDashboard.py'
+alias arconsDashboard='cd $SDR_DIR/DataReadout/ReadoutControls; python ArconsDashboard.py'
 
 export MKID_DATA_DIR=/mkids/data/2014-07-22
 export MKID_FILTER_WHEEL_PATH=$MKID_DATA_DIR/filter.txt
