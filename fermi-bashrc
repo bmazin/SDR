@@ -44,4 +44,7 @@ export MKID_OBSERVATORY=Broida
 export MKID_NROACHES=1  # no. roaches per feedline -- 1 roach on 1 feedline
 #export MKID_NROACHES="4 4"  # no. roaches per feedline -- 4 roaches on a total of two feedlines
 export MKID_ROACH_MATRIX="[[0]]"
+# I bet there is a  way to use sed or awk or some other bash shell magic to
+# calculate MKID_ROACHES from MKID_ROACHES_MATRIX.  For now, just copy.
+export MKID_ROACHES=(0)
 export MKID_ROACH_BANDWIDTH=0.512 # GHz

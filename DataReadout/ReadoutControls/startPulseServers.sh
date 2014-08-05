@@ -1,5 +1,5 @@
 #!/bin/bash
-ROACHES=(0)
+ROACHES=$MKID_ROACHES
 
 check_status()
 {
