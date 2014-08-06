@@ -17,8 +17,8 @@ from lib import iqsweep
 #DONE...Do not add custom threshold when zooming or panning plot
 #DONE...roughly calculate baseline from snapshot data and show on plot
 #WORKING...show originally calculated median/threshold as faded line
-#...toggle button to save longsnapshot data
-
+#DONE...toggle button to save longsnapshot data
+#DONE..read pulses does not write to a "sean" directory; plot histograms of peak heights
 
 
 class AppForm(QMainWindow):
@@ -422,9 +422,11 @@ class AppForm(QMainWindow):
         self.roach.write_int('snapqdr_ctrl',0)
         self.roach.write_int('startSnap', 0)
         phase = []
+        print "before m loop:  steps=",steps," L=",L
         for m in range(steps*L):
             phase.append(struct.unpack('>h', bin_data_phase[m*4+2:m*4+4])[0])
             phase.append(struct.unpack('>h', bin_data_phase[m*4+0:m*4+2])[0])
+        print "after m loop:  len(phase) = ",len(phase)
         if steps > 1:
             dir = os.environ['MKID_DATA_DIR']
             fname =os.path.join(dir,'ch_snap_r%dp%d_%dsecs.dat'%(roachNum,ch_we,steps))
@@ -549,7 +551,8 @@ class AppForm(QMainWindow):
         print 'total counts by channel: ',channel_count
         channel_count = numpy.array(channel_count)
         ch = int(self.textbox_channel.text())
-        numpy.savetxt('/home/sean/data/restest/test.dat', p1[ch])
+
+        #numpy.savetxt('/home/sean/data/restest/test.dat', p1[ch])
         
         # With lamp off, run "readPulses."  If count rate is above 50, it's anamolous 
         # and it's FIR should be set to 0.
@@ -562,7 +565,7 @@ class AppForm(QMainWindow):
         base = numpy.array(baseline[ch],dtype='float')
         base = base/2.0**9-4.0
         base = base*180.0/numpy.pi
-        times = numpy.array(timestamp[ch],dtype='float')
+        times = numpy.array(timestamp[ch],dtype='float')/1e6
         peaksCh = numpy.array(peaks[ch],dtype = 'float')
         peaksCh = peaksCh/2.0**9-4.0
         peaksCh = peaksCh*180.0/numpy.pi
@@ -576,6 +579,35 @@ class AppForm(QMainWindow):
         self.axes0.plot(times,base, 'g.')
         self.axes0.plot(times,peaksCh, 'b.')
         self.axes0.plot(times,peaksSubBase, 'r.')
+        labels = self.axes0.get_xticklabels()
+        for label in labels:
+            label.set_rotation(-90)
+        self.axes0.set_title("ch=%d b: peakg:base  r: peak-base"%ch)
+        self.axes0.set_xlabel("time within second (sec)")
+
+        self.axes1.clear()
+        baseMean = numpy.mean(base)
+        baseStd = numpy.std(base)
+        peakMean = numpy.mean(peaksCh)
+        peakStd = numpy.std(peaksCh)
+        psbMean = numpy.mean(peaksSubBase)
+        psbStd = numpy.std(peaksSubBase)
+        hTitle = "p:%.1f(%.1f) b:%.1f(%.1f) p-b:%.1f(%.1f)"%(peakMean,peakStd,baseMean,baseStd,psbMean,psbStd)
+        print "hTitle=",hTitle
+        r = (-150,10)
+        nBin=40
+        hgBase,bins = numpy.histogram(base,nBin,range=r, density=False)
+        hgPeak,bins = numpy.histogram(peaksCh,nBin,range=r, density=False)
+        hgPeakSubBase,bins = numpy.histogram(peaksSubBase,nBin,range=r, density=False)
+
+        width = 0.7*(bins[1]-bins[0])
+        center = (bins[:-1]+bins[1:])/2
+        self.axes1.bar(center, hgBase, width, alpha=0.5, linewidth=0, color='g')
+        self.axes1.bar(center, hgPeak, width, alpha=0.5, linewidth=0, color='b')
+        self.axes1.bar(center, hgPeakSubBase, width, alpha=0.5, linewidth=0, color='r')
+        self.axes1.set_xlabel("peak phase (degrees)")
+        self.axes1.set_title(hTitle)
+
         self.canvas.draw()
 
     def channelInc(self):
@@ -706,7 +738,7 @@ class AppForm(QMainWindow):
             #self.loadCustomThresholds()
         except IOError:
             print 'No such file or directory:',freqFile
-            self.status_text.setText('IOError')
+            self.status_text.setText('IOError: trouble with %s'%freqFile)
 
     def findDeletedResonators(self):
         for i in range(len(self.customResonators)):
@@ -986,14 +1018,15 @@ class AppForm(QMainWindow):
     def writeSnapshotData(self):
         try:
             if self.longsnapshotInfo:
-                lsi = self.longsnapshotInfo
-                ymdhms = time.strftime("%Y%m%d-%H%M%S",time.gmtime(lsi['startTime']))
-                pfn = "longsnapshot-%s.pkl"%ymdhms
-                ffn = os.path.join(os.environ['MKID_DATA_DIR'],pfn)
-                pickle.dump(lsi,open(ffn,'wb'))
-                print "pickle file written",ffn
+                if self.saveSnapshot:
+                    lsi = self.longsnapshotInfo
+                    ymdhms = time.strftime("%Y%m%d-%H%M%S",time.gmtime(lsi['startTime']))
+                    pfn = "longsnapshot-%s.pkl"%ymdhms
+                    ffn = os.path.join(os.environ['MKID_DATA_DIR'],pfn)
+                    pickle.dump(lsi,open(ffn,'wb'))
+                    print "pickle file written",ffn
         except AttributeError:
-            print "longhapshotInfo not defined so no pickle file written"
+            pass
 
     def create_status_bar(self):
         self.status_text = QLabel("Awaiting orders.")
