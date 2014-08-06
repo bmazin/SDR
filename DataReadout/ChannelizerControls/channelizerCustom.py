@@ -1,4 +1,4 @@
-import sys, os, random, math, array, fractions
+import sys, os, random, math, array, fractions,time,datetime,pickle
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import socket
@@ -17,7 +17,7 @@ from lib import iqsweep
 #DONE...Do not add custom threshold when zooming or panning plot
 #DONE...roughly calculate baseline from snapshot data and show on plot
 #WORKING...show originally calculated median/threshold as faded line
-
+#...toggle button to save longsnapshot data
 
 
 
@@ -241,8 +241,8 @@ class AppForm(QMainWindow):
                 phase.append(struct.unpack('>h', bin_data_phase[m*4+2:m*4+4])[0])
                 phase.append(struct.unpack('>h', bin_data_phase[m*4+0:m*4+2])[0])
             phase = numpy.array(phase)
-            #phase_avg = numpy.median(phase)
-            #sigma = phase.std()
+            #phase_avg = numpy.median(self.phase)
+            #sigma = self.phase.std()
 
             n,bins= numpy.histogram(phase,bins=100)
             n = numpy.array(n,dtype='float32')/numpy.sum(n)
@@ -360,7 +360,6 @@ class AppForm(QMainWindow):
 
         if steps <= 1000:
             self.axes1.plot(phase,'.-')
-
         med=numpy.median(phase)
 
         print 'ch:',ch_we,'median:',med,
@@ -391,9 +390,11 @@ class AppForm(QMainWindow):
         self.canvas.draw()
         print "snapshot taken"
 
-    def longsnapshot(self):        
+    def longsnapshot(self):
+        self.longsnapshotInfo = None
         self.displayResonatorProperties()
         ch_we = int(self.textbox_channel.text())
+        startTime = int(numpy.floor(time.time()))
         self.roach.write_int('ch_we', ch_we)
         #print self.roach.read_int('ch_we')
         
@@ -486,6 +487,8 @@ class AppForm(QMainWindow):
             self.axes0.set_ylabel('FFT of snapshot, nAverages=%d'%nFFTAverages)
             self.canvas.draw()
 
+            self.longsnapshotInfo = {"channel":ch_we,"startTime":startTime,"phase":phase}
+            self.writeSnapshotData()
         print "longsnapshot taken"
 
     def readPulses(self):
@@ -855,7 +858,14 @@ class AppForm(QMainWindow):
         self.button_longsnapshot = QPushButton("longsnapshot")
         self.button_longsnapshot.setMaximumWidth(170)
         self.connect(self.button_longsnapshot, SIGNAL('clicked()'), self.longsnapshot)            
-        
+
+        # toggle whether to write long snap to pickle file
+        self.button_saveSnapshot = QPushButton("Save longsnapshot")
+        #self.button_saveSnapshot.setMaximumWidth(400)
+        self.connect(self.button_saveSnapshot,SIGNAL('clicked()'),
+                     self.toggleSaveSnapshot)
+        self.saveSnapshot = True
+        self.toggleSaveSnapshot()
         # Read pulses
         self.button_readPulses = QPushButton("Read pulses")
         self.button_readPulses.setMaximumWidth(170)
@@ -938,6 +948,7 @@ class AppForm(QMainWindow):
         hbox22.addWidget(self.button_longsnapshot)
         hbox22.addWidget(self.textbox_longsnapSteps)
         hbox22.addWidget(label_longsnapSteps)
+        hbox22.addWidget(self.button_saveSnapshot)
         gbox2.addLayout(hbox22)
         gbox2.addWidget(self.button_rmCustomThreshold)
         hbox23 = QHBoxLayout()
@@ -965,6 +976,25 @@ class AppForm(QMainWindow):
         self.main_frame.setLayout(vbox)
         self.setCentralWidget(self.main_frame)
   
+    def toggleSaveSnapshot(self):
+        self.saveSnapshot = not self.saveSnapshot
+        if self.saveSnapshot:
+            self.button_saveSnapshot.setStyleSheet("background-color: #00ff00")
+            self.writeSnapshotData()
+        else:
+            self.button_saveSnapshot.setStyleSheet("background-color: #ff0000")
+    def writeSnapshotData(self):
+        try:
+            if self.longsnapshotInfo:
+                lsi = self.longsnapshotInfo
+                ymdhms = time.strftime("%Y%m%d-%H%M%S",time.gmtime(lsi['startTime']))
+                pfn = "longsnapshot-%s.pkl"%ymdhms
+                ffn = os.path.join(os.environ['MKID_DATA_DIR'],pfn)
+                pickle.dump(lsi,open(ffn,'wb'))
+                print "pickle file written",ffn
+        except AttributeError:
+            print "longhapshotInfo not defined so no pickle file written"
+
     def create_status_bar(self):
         self.status_text = QLabel("Awaiting orders.")
         self.statusBar().addWidget(self.status_text, 1)
