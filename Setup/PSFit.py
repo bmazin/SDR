@@ -3,6 +3,15 @@
 #
 # Given IQ sweeps at various powers of resonators, this program chooses the best resonant frequency and power
 # ----------------------------------
+#
+# Chris S:
+#
+# select_atten was being called multiple times after clicking on a point in plot_1.
+# inside of select_atten, the call to self.ui.atten.setValue(self.atten) triggered
+# another call to select_atten since it is a slot.
+#
+# So, instead of calling select_atten directly, call self.ui.atten.setValue(round(attenuation)) when
+# you want to call select_atten, and do not call this setValue inside select_atten.
 
 #import standard python libraries
 import sys
@@ -113,7 +122,11 @@ class StartQt4(QMainWindow):
         #self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,self.res1_max2_vels-1,'b.-')
         #self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,max2_neighbors-1,'b.-')
         #self.ui.plot_1.canvas.ax.plot(self.Res1.atten1s,self.res1_max2_ratio-1,'g.-')
-        cid=self.ui.plot_1.canvas.mpl_connect('button_press_event', self.click_plot_1)
+
+
+        # Chris S:  seems that button_press_event causes click_plot_1 to be called more than once sometimes.
+        #cid=self.ui.plot_1.canvas.mpl_connect('button_press_event', self.click_plot_1)
+        cid=self.ui.plot_1.canvas.mpl_connect('button_release_event', self.click_plot_1)
         #self.ui.plot_1.canvas.format_labels()
         self.ui.plot_1.canvas.draw()
 
@@ -124,12 +137,13 @@ class StartQt4(QMainWindow):
             if guess_atten_idx[0][0]+rule_of_thumb_offset < len(self.Res1.atten1s):
                 guess_atten_idx[0][0] += rule_of_thumb_offset
             guess_atten = self.Res1.atten1s[guess_atten_idx[0][0]]
-            print 'Guessing attenuation is ',guess_atten
-            self.select_atten(guess_atten)
+            print 'in loadres:  Guessing attenuation is ',guess_atten
+            #Chris S. self.select_atten(guess_atten)
+            self.ui.atten.setValue(round(guess_atten))
         else:
-            print 'Defaulting guess attenuation to center'
-            self.select_atten(self.Res1.atten1s[self.NAttens/2])
-
+            print 'in loadres:  Defaulting guess attenuation to center'
+            #Chris S. self.select_atten(self.Res1.atten1s[self.NAttens/2])
+            self.ui.atten.setValue(round(self.Res1.atten1s[self.NAttens/2]))
     def guess_res_freq(self):
         guess_idx = argmax(self.res1_iq_vels[self.iAtten])
         #The longest edge is identified, choose which vertex of the edge
@@ -141,7 +155,7 @@ class StartQt4(QMainWindow):
         else:
             iNewResFreq = guess_idx-1
         guess = self.Res1.freq[iNewResFreq]
-        print 'Guessing resonant freq at ',guess
+        print 'Guessing resonant freq at ',guess,' for self.iAtten=',self.iAtten
         self.select_freq(guess)
 
     def loadps(self):
@@ -160,8 +174,8 @@ class StartQt4(QMainWindow):
         self.select_freq(event.xdata)
 
     def click_plot_1(self, event):
-        self.select_atten(event.xdata)
-
+        #Chris. self.select_atten(event.xdata)
+        self.ui.atten.setValue(round(event.xdata))
     def select_freq(self,freq):
         self.resfreq = freq
         self.ui.frequency.setText(str(self.resfreq))
@@ -195,7 +209,7 @@ class StartQt4(QMainWindow):
         self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_ratio[self.iAtten],'ro')
         self.ui.plot_1.canvas.ax.plot(self.atten,self.res1_max_vels[self.iAtten],'ro')
         self.ui.plot_1.canvas.draw()
-        self.ui.atten.setValue(self.atten)
+        #Chris S self.ui.atten.setValue(self.atten)
         self.makeplots()
         self.guess_res_freq()
 
@@ -257,6 +271,7 @@ class StartQt4(QMainWindow):
             
 
     def setnewatten(self):
+        #Chris S.:  this is the only place that select_atten should be called.
         self.select_atten(self.ui.atten.value())
 
     def savevalues(self):
