@@ -41,3 +41,27 @@ Projects:
 ---------------------
 
 Projects/ contains code for smaller projects related to the ARCONS instrument, such as tools based on the main channelizer controls that test new aspects of the firmware.
+
+
+Data Model
+==========
+
+Environment Variables
+---------------------
+
+These are set in a script.  The reference scripts are in
+`SDR/DataReadout/setEnvironment.sh` and `setEnvironmentFNAL.sh`.
+These are the environment variables used:
+
+  1.  `MKID_DATA_DIR`: where data live.  
+
+Program Input and Output for Setup
+----------------------------------
+
+1.  `SDR/Setup/WideSweep/SegmentedSweep.vi` creates 'data01.txt'.
+This program does not use `MKID_DATA_DIR` so you need to specify it in
+the dialog box.
+
+2.  
+
+  

@@ -1,5 +1,5 @@
 #!/bin/bash
-ROACHES=(0 1 2 3 4 5 6 7)
+ROACHES=$MKID_ROACHES
 
 check_status()
 {
