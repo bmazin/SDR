@@ -12,6 +12,8 @@
 #
 # So, instead of calling select_atten directly, call self.ui.atten.setValue(round(attenuation)) when
 # you want to call select_atten, and do not call this setValue inside select_atten.
+#
+# Near line 68, set the frequency instead of the index to the frequency.
 
 #import standard python libraries
 import sys
@@ -64,7 +66,8 @@ class StartQt4(QMainWindow):
         self.Res1=IQsweep()
         self.Res1.LoadPowers(str(self.openfile), 'r0', self.freq[self.resnum])
         self.ui.res_num.setText(str(self.resnum))
-        self.resfreq = self.resnum
+        #chris S. self.resfreq = self.resnum
+        self.resfreq = self.freq[self.resnum]
         self.ui.frequency.setText(str(self.resfreq))
         self.NAttens = len(self.Res1.atten1s)
         self.res1_iq_vels=numpy.zeros((self.NAttens,self.Res1.fsteps-1))
@@ -284,6 +287,7 @@ class StartQt4(QMainWindow):
         self.f = open(str(self.savefile), 'a')
         self.f.write(str(self.resfreq)+'\t'+str(Icen)+'\t'+str(Qcen)+'\t'+str(self.atten)+'\n')
         self.f.close()
+        print " ....... Saved to file:  resnum=",self.resnum," resfreq=",self.resfreq," atten=",self.atten
         self.resnum += 1
         self.atten = -1
         self.loadres()
