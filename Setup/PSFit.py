@@ -14,6 +14,10 @@
 # you want to call select_atten, and do not call this setValue inside select_atten.
 #
 # Near line 68, set the frequency instead of the index to the frequency.
+#
+# Implemented a v2 gui that fits in a small screen.  
+# Run this program with no arguments to get the "classic" look.
+# Run this progam with any variable to get the "new" look.  The values of arguments are ignored.
 
 #import standard python libraries
 import sys
@@ -32,7 +36,6 @@ from tables import *
 #import my functions
 #from make_image_v2 import make_image as make_image_import
 from lib.iqsweep import *
-from lib.PSFit_GUI import Ui_MainWindow
 
 class StartQt4(QMainWindow):
     def __init__(self,parent=None):
@@ -293,6 +296,11 @@ class StartQt4(QMainWindow):
         self.loadres()
                 
 if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        from lib.PSFit_GUI_v2 import Ui_MainWindow
+    else:
+        from lib.PSFit_GUI import Ui_MainWindow
+
     app = QApplication(sys.argv)
     myapp = StartQt4()
     myapp.show()
