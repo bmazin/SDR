@@ -32,8 +32,12 @@ filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)      # without mi
 ca = h5file.createCArray(bgroup, 'beamimage', StringAtom(itemsize=40), (nRoachRows,nRoachCols), filters=filt1)  
 
 # load of the text file with resonator data in it and use it to make the beamimage
-
-NCHANNELS_PER_ROACH=253
+beamRows = int(os.environ['MKID_BEAM_ROWS'])
+beamCols = int(os.environ['MKID_BEAM_COLS'])
+#NCHANNELS_PER_ROACH=253
+NCHANNELS_PER_ROACH=beamRows*beamCols
+logFile = open(path+'.log','wb')
+index = 0
 for iRoachRow,roachRow in enumerate(roachMatrix):
     for iRoachCol,roachCol in enumerate(roachRow):
         roach = roachCol
@@ -45,7 +49,10 @@ for iRoachRow,roachRow in enumerate(roachMatrix):
                 pixel = (pixRow*nRoachCols+pixCol)%NCHANNELS_PER_ROACH
                 name = '/r%d/p%d/' % (roach,pixel)
                 ca[y,x]=name
+                logFile.write("%5d %4d %4d %4d %4d %s\n"%(index,pixRow,pixCol,y,x,name))
+                index += 1
 
+logFile.close()
 
 h5file.flush()
 np.set_printoptions(threshold=np.nan)
