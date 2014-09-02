@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1100</width>
+    <height>750</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="open_filename">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>431</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="save_filename">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>240</y>
+      <width>431</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="MPL_Widget" name="plot_1" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>541</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <zorder>plot_2</zorder>
+   </widget>
+   <widget class="MPL_Widget" name="plot_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>290</y>
+      <width>541</width>
+      <height>401</height>
+     </rect>
+    </property>
+    <zorder>plot_1</zorder>
+   </widget>
+   <widget class="MPL_Widget" name="plot_3" native="true">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>10</y>
+      <width>651</width>
+      <height>281</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>431</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="open_browse">
+       <property name="text">
+        <string>Open</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="jumptonum">
+       <property name="toolTip">
+        <string>Resonator Number</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="6">
+      <widget class="QLabel" name="frequency">
+       <property name="toolTip">
+        <string>Frequency (GHz)</string>
+       </property>
+       <property name="text">
+        <string>-1</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="save_browse">
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSpinBox" name="atten">
+       <property name="maximumSize">
+        <size>
+         <width>776</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Attenuation</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="jumptores">
+       <property name="text">
+        <string>Jump To Res</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>atten</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="6">
+      <widget class="QLabel" name="res_num">
+       <property name="toolTip">
+        <string>Resonator Number</string>
+       </property>
+       <property name="statusTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>-1</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="savevalues">
+       <property name="toolTip">
+        <string>Save this resonator and move to next one</string>
+       </property>
+       <property name="text">
+        <string>Save Values</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1100</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="s">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MPL_Widget</class>
+   <extends>QWidget</extends>
+   <header>lib.mpl_pyqt4_widget</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
