@@ -117,9 +117,9 @@ roachNum=4
 pixelNum=0
 bSmoothed = True
 if bSmoothed:
-    npz = np.load('detected700Blue_dead10.npz')
+    npz = np.load('sdetected700Blue_dead10.npz')
 else:
-    npz = np.load('detected600Red_dead100.npz')
+    npz = np.load('sdetected600Red_dead10.npz')
     
 bases=npz['bases']
 peaks=npz['peaks']+bases
@@ -128,129 +128,135 @@ threshold=npz['threshold']
 idx=npz['idx']
 qdrValues=npz['qdrValues']
 filtered=npz['filtered']
-#newBaselines=np.array(base(filtered,threshold),dtype=np.int)
-#newBases = newBaselines[idx]
 
-energies = peaks-bases
-timeSpacing = np.diff(idx)
-timeSpacing = np.append(2000,timeSpacing)
-spacingMask = timeSpacing > 1000 #us
-#spacingMask = np.append(spacingMask,False)
+idx2=npz['idx2']
+bases2=npz['bases2']
+peaks2=npz['peaks2']+bases2
+baselines2=npz['baselines2']
 
-print 'sufficently spaced photons:',np.sum(spacingMask)
+def analyze(idx,peaks,bases,baselines):
+    energies = peaks-bases
+    timeSpacing = np.diff(idx)
+    timeSpacing = np.append(2000,timeSpacing)
+    spacingMask = timeSpacing > 1000 #us
+    #spacingMask = np.append(spacingMask,False)
 
+    print 'sufficently spaced photons:',np.sum(spacingMask)
 
-farPeaks = peaks[spacingMask]
-farBases = bases[spacingMask]
-farEnergies = energies[spacingMask]
-farIdx = idx[spacingMask]
+    farPeaks = peaks[spacingMask]
+    farBases = bases[spacingMask]
+    farEnergies = energies[spacingMask]
+    farIdx = idx[spacingMask]
 
-goodBases = np.array(bases)
-if bSmoothed:
-    smoothBases = np.array(bases)
-else:
-    smoothBases = smoothBaseline(goodBases,idx/1.e6)
-
-
-closeSpacingMask = timeSpacing < 100
-
-modEnergies = peaks-smoothBases
-tau=80.
-normModEnergies = modEnergies/np.mean(modEnergies)
-#energyTau = tau*normModEnergies**.5 #give tau a little energy dependence
-expTails = modEnergies*np.exp(-timeSpacing/tau)
-
-expPeaks = expTails+smoothBases
-expEnergies = modEnergies-expTails
-expMask = expEnergies<threshold
-notExpMask = expMask==False
-expEnergiesCut = expEnergies[expMask]
-
-filteredIdx = np.array(np.arange(10000,100000),dtype=np.int)
-phaseVel = np.diff(filtered)
-phaseVelSum = np.cumsum(phaseVel)
-phaseVelSign = np.sign(phaseVel)
-phaseVelSign[phaseVelSign==1]=0
-phaseVelSignCount = np.cumsum(phaseVelSign)
-
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax2 = ax.twinx()
-ax.plot(filteredIdx,phaseVel[filteredIdx],'.-',color='Gold')
-ax.plot(filteredIdx,100*phaseVelSign[filteredIdx],'.-',color='g')
-ax2.plot(filteredIdx,filtered[filteredIdx],'k.-')
-ax2.plot(idx[expMask],peaks[expMask],'r.')
-ax2.plot(idx[expMask==False],peaks[expMask==False],'m.')
-ax2.set_xlim([filteredIdx[0],filteredIdx[-1]])
-ax.set_xlim([filteredIdx[0],filteredIdx[-1]])
-ax2.set_ylim([np.min(filtered[filteredIdx]),np.max(filtered[filteredIdx])])
-
-sampleStart=5000
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.plot(filteredIdx,filtered[filteredIdx],'k.-')
-
-#ax.plot(idx[notExpMask],peaks[notExpMask]-expTails[notExpMask],'m.')
-#ax.plot(idx[expMask],peaks[expMask]-expTails[expMask],'r.')
-
-#ax.plot(idx,peaks,'r.')
-ax.plot(idx[expMask],peaks[expMask],'r.')
-ax.plot(idx[expMask==False],peaks[expMask==False],'m.')
-ax.plot(idx,smoothBases,'DarkOrange')
-ax.plot(idx,bases,'g.')
-ax.plot(filteredIdx,baselines[filteredIdx],'b-')
-ax.plot(idx,expPeaks,'g')
-print threshold
-ax.plot(idx,smoothBases+threshold,'k')
-
-print 'peaks:',len(peaks),'deadtime peaks',np.sum(closeSpacingMask),'false peaks',np.sum(expMask==False)
-print 'deadtime peaks','%.2f%%'%(100.*np.sum(closeSpacingMask)/len(peaks)),'false deadtime peaks','%.2f%%'%(100.*np.sum(expEnergies[closeSpacingMask]>threshold)/np.sum(closeSpacingMask))
-
-byEyeCutoff=-6000
-energies=energies[energies<byEyeCutoff]
-expEnergiesCut=expEnergiesCut[expEnergiesCut<byEyeCutoff]
-
-nBins = 100
-energyHist,energyHistBins = np.histogram(energies,bins=nBins,density=True)
-modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins,density=True)
-expEnergyCutHist,expEnergyCutHistBins = np.histogram(expEnergiesCut,bins=nBins,density=True)
-
-#peakHist,peakHistBins = np.histogram(peaks,bins=nBins,density=True)
-#baseHist,baseHistBins = np.histogram(bases,bins=nBins,density=True)
-#expEnergyHist,expEnergyHistBins = np.histogram(energies,bins=nBins,density=True)
-#fig = plt.figure()
-#ax = fig.add_subplot(111)
-#ax.step(peakHistBins[0:-1],peakHist,'c')
-#ax.step(baseHistBins[0:-1],baseHist,'k')
-#ax.step(energyHistBins[0:-1],energyHist,'b')
-
-resolutionDict = fitR(energies)
-modResolutionDict = fitR(expEnergiesCut)
-
-modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins,density=True)
-farEnergyHist,farEnergyHistBins = np.histogram(farEnergies,bins=nBins,density=True)
-
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.step(energyHistBins[0:-1],energyHist,'b')
-ax.step(expEnergyCutHistBins[0:-1],expEnergyCutHist,'y')
-ax.plot(resolutionDict['energyHistBinEdges'][0:-1],resolutionDict['gaussfit'],'m')
-ax.plot(modResolutionDict['energyHistBinEdges'][0:-1],modResolutionDict['gaussfit'],'purple')
+    goodBases = np.array(bases)
+    if bSmoothed:
+        smoothBases = np.array(bases)
+    else:
+        smoothBases = smoothBaseline(goodBases,idx/1.e6)
 
 
-#energies=modEnergies
-#energyHist = modEnergyHist
-#energyHistBins = modEnergyHistBins
+    closeSpacingMask = timeSpacing < 100
 
-    
-print 'Standard deviations:'
-print 'raw baselines',np.std(bases)
-#print 'new baselines',np.std(newBases)
-print 'smoothed baselines',np.std(smoothBases)
-print 'raw peaks',np.std(peaks)
-print 'peak-rawBases',np.std(energies)
-print 'time_cut peak-rawBases',np.std(farEnergies)
-print 'peak-smoothBases',np.std(modEnergies)
-print 'raw R=',resolutionDict['resolution']
-print 'mod R=',modResolutionDict['resolution']
+    modEnergies = peaks-smoothBases
+    tau=80.
+    normModEnergies = modEnergies/np.mean(modEnergies)
+    #energyTau = tau*normModEnergies**.5 #give tau a little energy dependence
+    print np.shape(modEnergies),np.shape(timeSpacing)
+    expTails = modEnergies*np.exp(-timeSpacing/tau)
+
+    expPeaks = expTails+smoothBases
+    expEnergies = modEnergies-expTails
+    expMask = expEnergies<threshold
+    notExpMask = expMask==False
+    expEnergiesCut = expEnergies[expMask]
+
+    filteredIdx = np.array(np.arange(10000,100000),dtype=np.int)
+    phaseVel = np.diff(filtered)
+    phaseVelSum = np.cumsum(phaseVel)
+    phaseVelSign = np.sign(phaseVel)
+    phaseVelSign[phaseVelSign==1]=0
+    phaseVelSignCount = np.cumsum(phaseVelSign)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax2 = ax.twinx()
+    ax.plot(filteredIdx,phaseVel[filteredIdx],'.-',color='Gold')
+    ax.plot(filteredIdx,100*phaseVelSign[filteredIdx],'.-',color='g')
+    ax2.plot(filteredIdx,filtered[filteredIdx],'k.-')
+    ax2.plot(idx[expMask],peaks[expMask],'r.')
+    ax2.plot(idx[expMask==False],peaks[expMask==False],'m.')
+    ax2.set_xlim([filteredIdx[0],filteredIdx[-1]])
+    ax.set_xlim([filteredIdx[0],filteredIdx[-1]])
+    ax2.set_ylim([np.min(filtered[filteredIdx]),np.max(filtered[filteredIdx])])
+
+    sampleStart=5000
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(filteredIdx,filtered[filteredIdx],'k.-')
+
+    #ax.plot(idx[notExpMask],peaks[notExpMask]-expTails[notExpMask],'m.')
+    #ax.plot(idx[expMask],peaks[expMask]-expTails[expMask],'r.')
+
+    #ax.plot(idx,peaks,'r.')
+    ax.plot(idx[expMask],peaks[expMask],'r.')
+    ax.plot(idx[expMask==False],peaks[expMask==False],'m.')
+    ax.plot(idx,smoothBases,'DarkOrange')
+    ax.plot(idx,bases,'g.')
+    ax.plot(filteredIdx,baselines[filteredIdx],'b-')
+    ax.plot(idx,expPeaks,'g')
+    print threshold
+    ax.plot(idx,smoothBases+threshold,'k')
+
+    print 'peaks:',len(peaks),'deadtime peaks',np.sum(closeSpacingMask),'false peaks',np.sum(expMask==False)
+    print 'deadtime peaks','%.2f%%'%(100.*np.sum(closeSpacingMask)/len(peaks)),'false deadtime peaks','%.2f%%'%(100.*np.sum(expEnergies[closeSpacingMask]>threshold)/np.sum(closeSpacingMask))
+
+    byEyeCutoff=-6000
+    energies=energies[energies<byEyeCutoff]
+    expEnergiesCut=expEnergiesCut[expEnergiesCut<byEyeCutoff]
+
+    nBins = 100
+    energyHist,energyHistBins = np.histogram(energies,bins=nBins,density=True)
+    modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins,density=True)
+    expEnergyCutHist,expEnergyCutHistBins = np.histogram(expEnergiesCut,bins=nBins,density=True)
+
+    #peakHist,peakHistBins = np.histogram(peaks,bins=nBins,density=True)
+    #baseHist,baseHistBins = np.histogram(bases,bins=nBins,density=True)
+    #expEnergyHist,expEnergyHistBins = np.histogram(energies,bins=nBins,density=True)
+    #fig = plt.figure()
+    #ax = fig.add_subplot(111)
+    #ax.step(peakHistBins[0:-1],peakHist,'c')
+    #ax.step(baseHistBins[0:-1],baseHist,'k')
+    #ax.step(energyHistBins[0:-1],energyHist,'b')
+
+    resolutionDict = fitR(energies)
+    modResolutionDict = fitR(expEnergiesCut)
+
+    modEnergyHist,modEnergyHistBins = np.histogram(modEnergies,bins=nBins,density=True)
+    farEnergyHist,farEnergyHistBins = np.histogram(farEnergies,bins=nBins,density=True)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.step(energyHistBins[0:-1],energyHist,'b')
+    ax.step(expEnergyCutHistBins[0:-1],expEnergyCutHist,'y')
+    ax.plot(resolutionDict['energyHistBinEdges'][0:-1],resolutionDict['gaussfit'],'m')
+    ax.plot(modResolutionDict['energyHistBinEdges'][0:-1],modResolutionDict['gaussfit'],'purple')
+
+
+    #energies=modEnergies
+    #energyHist = modEnergyHist
+    #energyHistBins = modEnergyHistBins
+
+        
+    print 'Standard deviations:'
+    print 'raw baselines',np.std(bases)
+    #print 'new baselines',np.std(newBases)
+    print 'smoothed baselines',np.std(smoothBases)
+    print 'raw peaks',np.std(peaks)
+    print 'peak-rawBases',np.std(energies)
+    print 'time_cut peak-rawBases',np.std(farEnergies)
+    print 'peak-smoothBases',np.std(modEnergies)
+    print 'raw R=',resolutionDict['resolution']
+    print 'mod R=',modResolutionDict['resolution']
+analyze(idx,peaks,bases,baselines)
+analyze(idx2,peaks2,bases2,baselines2)
 plt.show()
