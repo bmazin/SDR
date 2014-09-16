@@ -361,8 +361,10 @@ def main(initialFile=None):
 if __name__ == "__main__":
     initialFile = None
     if len(sys.argv) > 1:
-        initialFile = sys.argv[1]
+        initialFileName = sys.argv[1]
+        mdd = os.environ['MKID_DATA_DIR']
+        initialFile = os.path.join(mdd,initialFileName)
     else:
-        print "need to specify a filename"
+        print "need to specify a filename located in MKID_DATA_DIR"
         exit()
     main(initialFile=initialFile)

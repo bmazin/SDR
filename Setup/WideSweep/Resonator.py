@@ -281,11 +281,14 @@ class Resonator:
         Qc = p[0]/diam
         Qi = p[0]/(1.0-diam)
         dip = 1.0 - diam
-        dipdb = 20.0*math.log10(dip)
+        try:
+            dipdb = 20.0*math.log10(dip)
+        except ValueError:
+            dipdb = -99
         chi2Mazin = math.sqrt(bestChi2/ndf)
         return {"m":bestM,"x":x,"y":y,"yFit":yFit,"chi2":bestChi2, "ndf":ndf,
                 "Q":p[0],"f0":p[1]/1e9, "Qc":Qc, "Qi":Qi, "dipdb":dipdb,
-                "chi2Mazin":chi2Mazin}
+                "chi2Mazin":chi2Mazin, "dip":dip}
 
     def plot(self,rf,pdfPages):
         plt.clf()

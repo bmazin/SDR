@@ -22,9 +22,13 @@
 # Version 4 reupdated 06/14/12. Ability to turn on dummy TCS info added.
 # Version 5 updated 06/14/12.  Now spawns PacketMaster.c process to handle data taking
 # ----------------------------------
-
-
-#import standard python libraries
+# Chris S. notes July 2014
+# Image does not display.  Is this because Arcons_frame.png is not created?
+# The line that does plt.savefig to create the image is commentd out.
+#
+# Upgrade to use MKID_ environment variables.
+# Write  lib/mkid-environment.h before compiling PacketMaster
+# uncomment line that does the plot.savefig to create Arcons_frame.png
 import sys
 import time
 import datetime
@@ -57,12 +61,21 @@ from tables import *
 c = 3.0E17 #[nm/s]
 h = 4.13567E-15 #[ev*s]
 
-numXPixel = 44
-numYPixel = 46
+# Parse environment variables that define pixel geometry and check sanity
+numXPixel = int(os.environ['MKID_NCOL'])
+numYPixel = int(os.environ['MKID_NROW'])
+nRoaches = array(os.environ['MKID_NROACHES'].split(),dtype=int)
+sumNRoaches = nRoaches.sum()
+beamRows = int(os.environ['MKID_BEAM_ROWS'])
+beamCols = int(os.environ['MKID_BEAM_COLS'])
+nPixA = beamRows*beamCols*sumNRoaches
+nPixB = numXPixel*numYPixel
+assert nPixA==nPixB, "MKID_ geometry does not make sense %d %d"%(nPixA,nPixB)
+print "Begin with number of pixels = ",nPixA
 
 EMERGENCY_LASER = False #used only at Palomar if wti ips-400 switch is needed to turn on laser box
 
-observatory = "Palomar" # "Broida", "Palomar", or "Lick"
+observatory = "Broida" # "Broida", "Palomar", or "Lick"
 filt1 = Filters(complevel=1, complib='zlib', fletcher32=False)
 
 filters = ['V-band','R-band','Open','405','546','Closed']
@@ -77,23 +90,24 @@ class StartQt4(QMainWindow):
         self.ui.setupUi(self)
         self.debug=0
 
+        
         #delete old quicklook frames from previous observation to avoid confusion
         if isfile("TV_frame.bmp"):
             os.remove("TV_frame.bmp")
         elif isfile("TV_frame.png"):
             os.remove("TV_frame.png")
-        
+
         #set some important permanent parameters (array size, energy range, directories)
         self.nxpix = self.get_xpix()
         self.nypix = self.get_ypix()
         self.int_time = 1 #seconds
-        
+
         #self.rearrange_frames()
         self.ui.brightpix.setMaximum(self.nxpix*self.nypix)
         #self.resize(390+20+15+10*self.nxpix,475+20+10*self.nypix)
 
         self.check_params()
-        
+
         self.Emin = 0.92 #eV corresponds to 1350 nm
         self.Emax = 3.18 #eV corresponds to 390 nm (changed from original 4.2 ev)
 
@@ -114,11 +128,11 @@ class StartQt4(QMainWindow):
         self.taking_sky = False
         self.calibrating = False
         #default beammap file, can be updated in gui with browse button
-        self.beammapfile = os.environ['BEAMMAP_PATH']#"beamimage.h5"
-
-        self.filterfile = os.environ['FILTER_WHEEL_PATH']
+        self.beammapfile = os.environ['MKID_BEAMMAP_PATH']#"beamimage.h5"
+        print "beammapfile=",self.beammapfile
+        self.filterfile = os.environ['MKID_FILTER_WHEEL_PATH']
         self.checkfilter()
-        self.mirrorfile = os.environ['MIRROR_ANGLE_PATH']
+        self.mirrorfile = os.environ['MKID_MIRROR_ANGLE_PATH']
         self.checkmirror()
 
         #set default directory, binning routine directory, and data directory
@@ -129,13 +143,13 @@ class StartQt4(QMainWindow):
         #put default directory in data directory search line upon startup
         self.ui.data_directory_lineEdit.setText(self.datadir)
         self.roachdir = "./" #where the roaches (or Ben's client) will look for directions on where to put data
-        
+
         #upon startup we are not observing, but this becomes true when Start Obs is clicked
         self.observing = False
-        
+
         #create image thread for image generation routine to happen while gui updates
         #self.image_thread = image_Worker(self, nxpix=self.nxpix, nypix=self.nypix, Emin=self.Emin, Emax=self.Emax)
-        
+
         #create timer thread that controls observation timer
         self.timer_thread = timer_Worker(self)
 
@@ -144,11 +158,11 @@ class StartQt4(QMainWindow):
 
         #load flat factors
         self.loadFlatFactors()
-        
+
         #use mouse to select pixel from tv_image, also triggers a new spectrum to be displayed
         self.ui.tv_image.mousePressEvent = self.start_pixel_select
         self.ui.tv_image.mouseReleaseEvent = self.end_pixel_select
-        
+
         #Label filters
         self.ui.filter1.setText("1) "+str(filters[0]))
         self.ui.filter2.setText("2) "+str(filters[1]))
@@ -156,7 +170,7 @@ class StartQt4(QMainWindow):
         self.ui.filter4.setText("4) "+str(filters[3]))
         self.ui.filter5.setText("5) "+str(filters[4]))
         self.ui.filter6.setText("6) "+str(filters[5]))
-        
+
         #signal from image thread to make spectrum
         #QObject.connect(self.image_thread,SIGNAL("new_spectrum"),self.display_spectra)
         #button signals
@@ -167,10 +181,10 @@ class StartQt4(QMainWindow):
         QObject.connect(self.ui.subtract_sky_radioButton, SIGNAL("toggled(bool)"), self.set_sky_sub)
         #QObject.connect(self.ui.image_color_radioButton, SIGNAL("toggled(bool)"), self.set_image_color)
         QObject.connect(self.ui.search_pushButton, SIGNAL("clicked()"), self.file_dialog)
-        
+
         QObject.connect(self.ui.choose_beamimage, SIGNAL("clicked()"), self.choose_beamimage)
         QObject.connect(self.ui.choose_bindir, SIGNAL("clicked()"), self.choose_bindir)
-        
+
         QObject.connect(self.ui.laser_toggle, SIGNAL("clicked(bool)"), self.toggle_laser)
 
         QObject.connect(self.ui.start_observation_pushButton, SIGNAL("clicked()"), self.start_observation)
@@ -189,7 +203,7 @@ class StartQt4(QMainWindow):
         QObject.connect(self.ui.do_cal_button, SIGNAL("clicked()"), self.do_cal)
         QObject.connect(self.ui.go_home_button, SIGNAL("clicked()"), self.go_home)
         QObject.connect(self.ui.goto_button, SIGNAL("clicked()"), self.goto_angle)
-        
+
         #create timers to update images and statuses constantly
         self.status_timer = QTimer()
         QObject.connect(self.status_timer,SIGNAL("timeout()"),self.update_status)
@@ -197,7 +211,7 @@ class StartQt4(QMainWindow):
         self.update_timer = QTimer()
         QObject.connect(self.update_timer,SIGNAL("timeout()"),self.update_remaining_time)
         self.update_timer.start(200)
-        
+
         #create timer to poll path for changes to org file
         self.stattime = 0 #bin file creation time that is checked by check_files
         self.polling_timer = QTimer()
@@ -206,9 +220,9 @@ class StartQt4(QMainWindow):
 
         #signal image thread to restart if bin file is locked when it tries to access it
         #QObject.connect(self.image_thread,SIGNAL("retry_image()"), self.start_image_thread)
-        
+
     #def start_image_thread(self):
-        #self.image_thread.start_images(self.bindir)        
+        #self.image_thread.start_images(self.bindir)
 
     def toggle_laser(self):
         if EMERGENCY_LASER == True:
@@ -264,7 +278,7 @@ class StartQt4(QMainWindow):
         self.ui.goto_angle.setValue(40)
         self.goto_angle()
         print "Moved calibration arm to HOME"
-    
+
     def goto_angle(self):
         angle = self.ui.goto_angle.value()
         while self.mirrorposition != angle:
@@ -273,14 +287,14 @@ class StartQt4(QMainWindow):
                 gotoproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoToAngle.py %i"%(ljpath, self.mirrorposition),shell=True)
                 gotoproc.wait()
             else:
-                self.mirrorposition-=1                
+                self.mirrorposition-=1
                 gotoproc = subprocess.Popen("sudo nice -n -5 python %smirrorGoToAngle.py %i"%(ljpath, self.mirrorposition+1),shell=True)
                 gotoproc.wait()
         f=open(str(self.mirrorfile),'w') #put file where dataBin is running
         f.write(str(self.mirrorposition))
         f.close()
         print "Moved calibration arm to angle %i"%(angle)
-    
+
     def do_cal(self):
         caltime = self.ui.cal_time.value()
         calangle = self.ui.cal_angle.value()
@@ -343,7 +357,7 @@ class StartQt4(QMainWindow):
                 self.ui.filter5.setChecked(True)
             elif self.filterposition == 6:
                 self.ui.filter6.setChecked(True)
-    
+
     def movefilter(self):
         if self.ui.filter1.isChecked():
             moveto = 1
@@ -375,7 +389,7 @@ class StartQt4(QMainWindow):
             f.write(str(self.filterposition)+' '+str(filters[self.filterposition-1]))
             f.close()
             print "Completed filter move"
-            
+
     def loadbeammap(self):
         bmfile = openFile(self.beammapfile, 'r')
         #read beammap in to memory to create beam image
@@ -386,11 +400,11 @@ class StartQt4(QMainWindow):
 
     def loadFlatFactors(self):
         try:
-            self.flatFactors = load('/home/sean/data/common/intensityFactors.npy')
+            #self.flatFactors = load('/home/sean/data/common/intensityFactors.npy')
             self.flatFactors = flipud(self.flatFactors)
         except:
             print "Unable to load flat factors, flat fielding will not work"
-            self.ui.flat_field_radioButton.setEnabled(False)    
+            self.ui.flat_field_radioButton.setEnabled(False)
 
     #turn gui functionality on/off when observations are stopped/running
     def enable_observation(self):
@@ -417,7 +431,7 @@ class StartQt4(QMainWindow):
             #f.write(str(self.datadir)) #write data path to file
             #f.close()
         self.ui.data_directory_lineEdit.setText(self.datadir) #put new path name in line edit
-    
+
     def start_observation(self):
         '''we will want this function to activate the saving of data.  will need to name,
         open, and begin writing to file.  also activate observation timer if a
@@ -428,7 +442,7 @@ class StartQt4(QMainWindow):
             self.exptime = self.ui.obs_time_spinBox.value()
         if self.exptime == 0:
             print "Please enter a desired observation time in seconds"
-        else:        
+        else:
             self.image_time = 0
             self.counts = zeros((self.exptime,self.nxpix*self.nypix),int32)
             #print self.counts
@@ -462,11 +476,23 @@ class StartQt4(QMainWindow):
             self.ui.file_name_lineEdit.setText(str(self.obsfile))
             if os.path.exists(self.bindir) == False:
                 os.mkdir(self.bindir)
-            HeaderGen(self.obsfile, self.beammapfile, self.start_time,  self.exptime, self.ra, self.dec, self.alt, self.az, self.airmass, self.lst, filthead,dir=str(self.datadir), telescope = observatory, target=targname, focus=self.focus, parallactic = self.parallactic, seeing = self.seeing)
+            HeaderGen(self.obsfile, self.beammapfile, self.start_time,  self.exptime, self.ra, self.dec, self.alt, self.az, self.airmass, self.lst, filthead,dir=str(self.datadir), telescope = observatory, target=targname, focus=self.focus, parallactic = self.parallactic)
+
+            # Write the file lib/mkid-environment.h used by lib/PacketMaster.c
+            meFile = open("lib/mkid-environment.h","wb")
+            meFile.write("#define NROACHES %d\n"%nRoaches)
+            meFile.write("#define NPIXELS_PER_ROACH %d\n"%(beamRows*beamCols))
+            meFile.write("#define BEAM_ROWS %d\n"%beamRows)
+            meFile.write("#define BEAM_COLS %d\n"%beamCols)
+            meFile.close()
+
             proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
             #proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMasterR1.c",shell=True)
             proc.wait()
-            self.pulseMasterProc = subprocess.Popen("sudo nice -n -10 bin/PacketMaster %s %s >> %s"%(str(self.datadir)+'/'+self.obsfile,self.beammapfile,logfile),shell=True)
+            filePath = os.path.join(self.datadir,self.obsfile)
+            pmCommand = "sudo nice -n -10 bin/PacketMaster %s %s >> %s"%(filePath,self.beammapfile,logfile)
+            print "Start PacketMaster like this: ",pmCommand
+            self.pulseMasterProc = subprocess.Popen(pmCommand,shell=True)
             print "PacketMaster process started with logfile %s" % logfile
             print "Header written to data file, beginning observation..."
             #time.sleep(5) #wait 1 second for Ben's code to create beamimage before activating rebinning
@@ -474,7 +500,7 @@ class StartQt4(QMainWindow):
             self.polling_timer.start(200)
             #start observation timer
             self.timer_thread.start_timer(self.exptime)
-            
+
     def stop_observation(self):
         '''what happens when you click the "stop observation" button.
         will need to clear and reset timer, close and save any data files
@@ -484,7 +510,7 @@ class StartQt4(QMainWindow):
         subprocess.Popen("./stopPacketMaster.sh",shell=True)
         #subprocess.Popen("./stopPacketMasterR1.sh",shell=True)
         self.finish_observation()
-        
+
     def finish_observation(self):
         #f=open(str(self.bindir)+"/stop.bin", 'wb')
         #f.close()
@@ -510,7 +536,7 @@ class StartQt4(QMainWindow):
         if self.ui.continuous.isChecked():
              self.pulseMasterProc.wait() #wait for packet master to finish and start a new observation automatically
              self.start_observation()
-    
+
     def update_description(self):
         #updates the description section in the header info with whatever is in the description box on the dashboard. Activated by clicking "update description" button after data taking is complete.
         h5file = openFile(str(self.datadir)+'/'+str(self.obsfile), mode='a')
@@ -527,19 +553,19 @@ class StartQt4(QMainWindow):
         h5file.flush()
         h5file.close()
         print "Updated description in header of " + str(self.obsfile)
-        
+
     def choose_beamimage(self):
         newbeamimage = QFileDialog.getOpenFileName(parent=None, caption=QString(str("Choose Beamimage File")),directory = ".",filter=QString(str("H5 (*.h5)")))
         if len(newbeamimage) > 0:
             self.beammapfile = str(newbeamimage)
             self.loadbeammap()
-    
+
     def choose_bindir(self):
         newbindir = QFileDialog.getExistingDirectory(self, str("Choose Bin Directory"), "",QFileDialog.ShowDirsOnly)
         if len(newbindir) > 0:
             self.bindir = str(newbindir)
-        
-    def send_params(self):  
+
+    def send_params(self):
         if self.observing == True:
             #send parameter file to dataBin including integration time, and obs file name
             f=open(str(self.bindir)+"/file.bin", 'w')
@@ -558,14 +584,14 @@ class StartQt4(QMainWindow):
             datapacket = struct.pack('ii',self.start_time,self.exptime)
             f.write(datapacket)
             f.close()
-            
+
     def set_sky_sub(self):
         #Use radio button to set if we want sky subtraction to be on or off
         if self.ui.subtract_sky_radioButton.isChecked():
             self.sky_subtraction = True
         else:
             self.sky_subtraction = False
-            
+
     #def set_simple_imaging(self):
     #   if self.ui.simple_imaging_radioButton.isChecked():
     #       self.image_thread.simple_imaging = True
@@ -577,13 +603,13 @@ class StartQt4(QMainWindow):
     #       self.image_thread.color_on = True
     #   else:
     #       self.image_thread.color_on = False
-    
+
     #def load_skyfile(self):
         #pass
-    
+
     #def load_darkfile(self):
         #pass
-        
+
     def take_sky(self):
         self.taking_sky = True
         self.skytime = self.ui.int_time_spinBox.value()
@@ -592,12 +618,13 @@ class StartQt4(QMainWindow):
         self.start_observation()
 
     def make_image(self):
-        rawdata = load(self.binfile)
-        
+        #rawdata = load(self.binfile)
+        rawdata = loadtxt(self.binfile)
+
         #debug data
         #rawdata=load('/home/sean/Matt/DataReadout/cdata.npy')
         #rawdata=load('/Users/ourhero/Documents/Mazinlab/cdata.npy')
-        
+
         rawshape = shape(rawdata)
         #print 'Rotating data:'
         #print rawdata.shape
@@ -611,14 +638,14 @@ class StartQt4(QMainWindow):
         #print rotated.shape
         #rotated = reshape(rotated,(1,self.nypix,self.nxpix))
         #print rotated.shape
-        
+
         if self.taking_sky == True:
             self.skycount += rotated
-        
+
         tf = self.image_time
         self.int_time = self.ui.int_time_spinBox.value()
         ti = tf-self.int_time
-        
+
         #print 'rawdata shape ', shape(rawdata)
         newcounts = reshape(rawdata,(1,self.nxpix*self.nypix))
         #self.counts= append(self.counts,newcounts,axis=0)
@@ -626,7 +653,7 @@ class StartQt4(QMainWindow):
 
         self.counts[self.image_time] = newcounts
         self.rotated_counts[self.image_time] = rotated
-        
+
         #print 'shape of counts', shape(self.counts)
         if ti<0:
             ti = 0
@@ -657,21 +684,21 @@ class StartQt4(QMainWindow):
             brightest = self.ui.brightpix.value()
             self.vmin = 0
             self.vmax = indices[0,-1*(brightest)]
-        
-        fig = plt.figure(figsize=(.44,.46), dpi=100, frameon=False)
+
+        #fig = plt.figure(figsize=(.44,.46), dpi=100, frameon=False)
+        fig = plt.figure(figsize=(0.01*numXPixel,0.01*numYPixel), dpi=100, frameon=False)
         im = plt.figimage(photon_count, cmap='gray',vmin = self.vmin, vmax = self.vmax)
-        
+
         if tf==ti:
             self.redpix = where(photon_count > 2000)
         else:
             self.redpix = where(photon_count > 2000*(tf-ti))
         #im = plt.figimage(rawdata, cmap='gray')
         plt.savefig("Arcons_frame.png", pad_inches=0)
-        print "Generated image ",tf
-        try:
-            print '# redpix= ',len(self.redpix[0])
-        except:
-            print '# redpix= 0'
+        #try:
+        #    print '# redpix= ',len(self.redpix[0])
+        #except:
+        #    print '# redpix= 0'
         self.image_time+=1
         self.update_image()
         if self.taking_sky == True:
@@ -700,7 +727,7 @@ class StartQt4(QMainWindow):
             #display pixmap
             self.scene = QGraphicsScene()
             self.scene.addPixmap(pix)
-            if len(self.redpix)> 0:  
+            if len(self.redpix)> 0:
                 for i in xrange(len(self.redpix[0])):
                     x = self.redpix[1][i]
                     y = self.redpix[0][i]
@@ -716,25 +743,34 @@ class StartQt4(QMainWindow):
                 for i in xrange(len(self.spectrum_pixel_x)):
                     x = self.spectrum_pixel_x[i]
                     y = self.spectrum_pixel_y[i]
-                    #print x,',',y
                     #self.scene.addRect(10*(x),10*(y),9,9, Qt.blue) #10's since image plot is 320x320 pixels
                     self.scene.addRect(10*(x),10*(y),9,9, Qt.blue)
             self.ui.tv_image.setScene(self.scene)
             self.ui.tv_image.show()
             #os.remove(str(imagefile))
-        else: 
+        else:
+            print "blank scene since ",imagefile," does not exist"
             self.blankscene = QGraphicsScene()
             self.blankscene.clear()
             self.ui.tv_image.setScene(self.blankscene)
             self.ui.tv_image.show()
-    
+
     def expand_window(self):
         #if spectrum options button is clicked resize window to show/hide options
         if self.ui.options_radioButton.isChecked():
-            self.resize(590+20+10*self.nxpix,450+20+10*self.nypix)
+            #rx = 590+20+10*self.nxpix
+            #ry = 450+20+10*self.nypix
+            rx = 590+20+10*numXPixel
+            ry = 450+20+10*numYPixel
+
         else:
-            self.resize(380+20+15+10*self.nxpix,450+20+10*self.nypix)
-    
+            #rx = 380+20+15+10*self.nxpix
+            #ry = 450+20+10*self.nypix
+            rx = 380+20+15+10*numXPixel
+            ry = 450+20+10*numYPixel
+        print "resize to rx,ry = ",rx,ry
+        self.resize(rx,ry)
+
     #def set_plot_mode(self):
         #change between spectra plots and signal to noise ratio plots
     #   if self.ui.plot_snr_radioButton.isChecked():
@@ -744,7 +780,7 @@ class StartQt4(QMainWindow):
     #       self.image_thread.set_plot_mode("spectra")
     #       self.ui.spectra_plot.canvas.ytitle = "Counts"
     #   pass
-    
+
     def set_spectrum_mode(self):
         if self.ui.drag_select_radioButton.isChecked():
             self.pix_select_mode="drag"
@@ -758,7 +794,7 @@ class StartQt4(QMainWindow):
             self.pix_select_mode="circ"
             self.spectrum_pixel_x = []
             self.spectrum_pixel_y = []
-            
+
     def start_pixel_select(self,event):
         #Mouse press returns x,y position of first pixel to be used in spectra
         self.startrawx,self.startrawy = event.pos().x(), event.pos().y()
@@ -766,7 +802,7 @@ class StartQt4(QMainWindow):
         self.startpy = self.startrawy/10
         self.startpix = self.nxpix*self.startpy+self.startpx
         #print '(' , self.startpx,',',self.startpy,')'
-    
+
     def end_pixel_select(self,event):
         #Mouse release returns x,y position of last pixel to be used in spectra
         self.endrawx,self.endrawy = event.pos().x(), event.pos().y()
@@ -778,7 +814,7 @@ class StartQt4(QMainWindow):
         #print 'y: ',
         #print self.endraw
         self.pixel_list()
-        
+
     def pixel_list(self):
         #if click and drag selection is on, add new pixels to the list of all pixels being plotted
         if self.pix_select_mode == "drag":
@@ -841,7 +877,7 @@ class StartQt4(QMainWindow):
                 self.spectrum_pixel_x.append(x)
                 self.spectrum_pixel_y.append(y)
                 #print 'Look here for an error?'
-            
+
             if (x in self.spectrum_pixel_x) and (y in self.spectrum_pixel_y):
 
                 px = array(self.spectrum_pixel_x)
@@ -864,7 +900,7 @@ class StartQt4(QMainWindow):
                     for i in xrange(len(repeats)):
                         del(self.spectrum_pixel_x[repeats[-(i+1)]])
                         del(self.spectrum_pixel_y[repeats[-(i+1)]])
-                        
+
         if self.observing == False:
             #self.image_thread.update_spectrum(self.bindir)
             if hasattr(self, 'image_time'):
@@ -936,12 +972,12 @@ class StartQt4(QMainWindow):
         x2 = -1*x2
         #invert y's and shift x and y since graphics view (0,0) is top left corner
         y1 = -1*y1
-        y2 = -1*y2  
+        y2 = -1*y2
         x1,y1,x2,y2 = x1+w/2.0,y1+h/2.0,x2+h/2.0,y2+h/2.0
         self.compass.addLine(x1,y1,x2,y2,pen=Qt.green)
         self.ui.compass_graphicsView.setScene(self.compass)
         self.ui.compass_graphicsView.show()
-        
+
     def get_parallactic(self):
         if observatory == "Palomar":
             try:
@@ -954,14 +990,14 @@ class StartQt4(QMainWindow):
             except:
                 print "Connection to TCS failed on get_parallactic"
                 return
-            
+
             parallactic = response.split('\n')
             title, par_value = parallactic[0].split('= ')
             self.parallactic = float(par_value)
         else:
             self.parallactic = nan
-            
-        
+
+
     def get_telescope_status(self):
         if observatory == "Palomar":
             try:
@@ -974,29 +1010,29 @@ class StartQt4(QMainWindow):
             except:
                 print "Connection to TCS failed on get_telescope_status"
                 return
-            
+
             print response
             utc, line2, line3, line4, cass_angle = response.split('\n')
             id, focus, tubelength = line2.split(', ')
             focus_title, focus_val = focus.split('= ')
-            self.focus = focus_val 
+            self.focus = focus_val
         else:
             self.focus = nan
 
     def get_telescope_position(self, lt=0):
-        
+
         if observatory == "Palomar":
             #Palomar's location
             self.lat = 33.0 + 21.0/60.0 + 21.6/3600.0
             self.lon = 116.0 + 51.0/60.0 + 46.8/3600.0
-            
+
             #send status request to TCS system
             #client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             #client.connect(("198.202.125.194", 49200)) #connecting remotely to Palomar
-        
+
             try:
                 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                client.connect(("198.202.125.194", 5004))                
+                client.connect(("198.202.125.194", 5004))
                 #client.connect(("10.200.2.11", 49200)) #connecting directly at Palomar
                 client.send('REQPOS\r')
                 response = client.recv(1024)
@@ -1004,55 +1040,55 @@ class StartQt4(QMainWindow):
             except:
                 print "Connection to TCS failed on get_telescope_position"
                 return
-            
+
             #split response into status fields
             line1,line2,airmass = response.split('\n')
-                
+
             utc, lst = line1.split(', ')
             ra, dec, ha = line2.split(', ')
-                
+
             utc_title, junk, utc_day, utc_time = utc.split(' ')
             #utc_hour, utc_min, utc_sec = utc_time.split(':')
             self.utc = utc_time
-            
+
             lst_title, junk, lst_time = lst.split(' ')
             #lst_hour, lst_min, lst_sec = lst_time.split(':')
             self.lst = lst_time
-            
+
             ra_title, junk, ra_val = ra.split(' ')
             #ra_hour, ra_min, ra_sec = ra_val.split(':')
             self.ra = (ra_val)
-            
+
             dec_title, junk, dec_val = dec.split(' ')
             #dec_hour, dec_min, dec_sec = dec_val.split(':')
             self.dec = (dec_val)
-            
+
             ha_title, junk, ha_val = ha.split(' ')
             #ha_hour, ha_min, ha_sec = ha_val.split(':')
             self.ha = ha_val
-            
+
             airmass_title, airmass_val = airmass.split('=  ')
             airmass_val=airmass_val[:-1]
             self.airmass = float(airmass_val)
-            
+
             #calculate alt and az of current target
             targname = str(self.ui.target_lineEdit.text())
             target = ephem.readdb(str(targname)+',f|L,'+str(ra_val)+','+str(dec_val)+',2000')
-            
+
             if lt==0:
                 lt = time.time()
             dt = datetime.datetime.utcfromtimestamp(lt)
-    
+
             palomar = ephem.Observer()
             palomar.long, palomar.lat = '-116.0:51.0:46.80', '33.0:21.0:21.6'
             palomar.date = ephem.Date(dt)
             palomar.elevation = 1706.0
             target.compute(palomar)
             self.alt, self.az = target.alt*(180./math.pi), target.az*(180/math.pi)
-            
+
             #print float(ephem.degrees(self.alt))
             #print float(ephem.degrees(self.az))
-        
+
             self.seeing = getPalomarSeeing()
 
         elif observatory == "Lick":
@@ -1068,7 +1104,7 @@ class StartQt4(QMainWindow):
             except:
                 print "Connection to TCS failed on get_telescope_position"
                 return
-            
+
             #split response into status fields
             a = response.split(' ')
             b = []
@@ -1082,34 +1118,34 @@ class StartQt4(QMainWindow):
             utc_date = b[4]
             utc_time = b[5]
             ra = b[6]
-            
+
             self.utc = utc_time
             self.lst = sid
             self.ra = ra
             self.dec = dec
             self.ha = ha
             self.airmass = float(airmass)
-            
+
             #calculate alt and az of current target
             targname = str(self.ui.target_lineEdit.text())
             target = ephem.readdb(str(targname)+',f|L,'+str(ra)+','+str(dec)+',2000')
-            
+
             if lt==0:
                 lt = time.time()
             dt = datetime.datetime.utcfromtimestamp(lt)
-    
+
             lick = ephem.Observer()
             lick.long, lick.lat = '-121:38:43.80', '37:20:24.6'
             lick.date = ephem.Date(dt)
             lick.elevation = 1283.0
             target.compute(lick)
             self.alt, self.az = target.alt*(180./math.pi), target.az*(180/math.pi)
-            
+
         else:
             #UCSB Broida Hall's location from Google Earth
             self.lat = 34.414243
             self.lon = -119.843009
-   
+
             ###Code for dummy status setting
             self.ra = float(self.ui.RA_lineEdit.text())
             self.dec = float(self.ui.Dec_lineEdit.text())
@@ -1121,8 +1157,8 @@ class StartQt4(QMainWindow):
             self.alt, self.az, self.lst, self.ha = rad2altaz(self.ra, self.dec, self.lon, self.lat, self.t)
             self.airmass = 1./cos((pi/180)*(90-self.alt))
             #self.parallactic = 0.0
-        
-        
+
+
     def set_telescope_status(self):
         self.get_telescope_position()
         #display coordinates
@@ -1144,10 +1180,10 @@ class StartQt4(QMainWindow):
             self.ui.remaining_time_lcdNumber.display(self.ui.obs_time_spinBox.value())
         else:
             self.ui.remaining_time_lcdNumber.display(self.timer_thread.remaining_time)
-            
+
     def update_status(self):
         self.set_telescope_status()
-        
+
     def update_image(self):
         if self.image_time == self.exptime:
             pass
@@ -1160,10 +1196,10 @@ class StartQt4(QMainWindow):
             #if self.image_thread.spectrum_pixel != None:
         	    #self.display_spectra()
             #self.update_remaining_time()
-        
+
     def check_files(self):
         #if self.observing == True:
-        self.binfile = str(self.bindir)+'/'+str(self.obsname)+'_'+str(self.image_time)+'.npy'
+        self.binfile = str(self.bindir)+'/'+str(self.obsname)+'_'+str(self.image_time)+'.txt'
         #self.binfile = "/home/sean/ben/bin/obs_20110726-114310"+'_'+str(self.image_time)+'.npy'
         if self.debug == 1:
             self.make_image()
@@ -1179,7 +1215,7 @@ class StartQt4(QMainWindow):
             #if self.stattime != statinfo.st_mtime:
                 #self.start_image_thread()
                 #self.stattime = statinfo.st_mtime
-                
+
     def check_params(self):
         self.ui.tv_image.setGeometry(QRect(10, 10, 10*(self.nxpix)+4, 10*(self.nypix)+4))
         #self.ui.tv_image.setGeometry(QRect(10, 0, 450, 600))
@@ -1187,7 +1223,7 @@ class StartQt4(QMainWindow):
         # check if params have changed value using gui controls
         # self.data_thread.update_params(self.nxpix, self.nypix, self.Emin, self.Emax)
         # update values, pass new values to image thread, and write file with these new values to send to dataBin
-        
+
     def closeEvent(self, event=None):
         #self.image_thread.__del__()
         if isfile(str(self.bindir)+"/lock.bin"):
@@ -1198,7 +1234,7 @@ class StartQt4(QMainWindow):
             #os.remove("TV_frame.bmp")
         if isfile("Arcons_frame.png"):
             os.remove("Arcons_frame.png")
-     
+
     def rearrange_frames(self):
         self.ui.frame_4.setGeometry(QtCore.QRect(390, 180, 25+10*self.nxpix, 25+10*self.nypix)) #pixel array frame
         #self.ui.frame_4.setGeometry(QtCore.QRect(390, 180, 200+10*self.nxpix, 150+10*self.nypix)) #pixel array frame
@@ -1216,15 +1252,15 @@ class StartQt4(QMainWindow):
         #self.ui.brightpix.setMaximum(self.nxpix*self.nypix)
         self.ui.label_22.setGeometry(QtCore.QRect(491+20+10*self.nxpix, 300, 91, 21))
         self.ui.takesky.setGeometry(QtCore.QRect(420+20+10*self.nxpix, 380, 171, 51))
-        
+
     def get_xpix(self):
         return numXPixel
     def get_ypix(self):
         return numYPixel
 
-       
-#Data generation in dataSim.py and organization in dataBin.py, and image generation is in own thread that stays in this gui application.    
-#image_Worker retrieves and opens organized files, saves to local arrays, storing as cumulative arrays 
+
+#Data generation in dataSim.py and organization in dataBin.py, and image generation is in own thread that stays in this gui application.
+#image_Worker retrieves and opens organized files, saves to local arrays, storing as cumulative arrays
 #if we are in an observation, and makes quicklook images and spectra from these local arrays.
 class image_Worker(QThread):
     def __init__(self, parent = None, nxpix=numXPixel, nypix=numYPixel, Emin=0.92, Emax=3.18):
@@ -1285,7 +1321,7 @@ class image_Worker(QThread):
     def subtract_sky(self, meds):
         '''Sky subtraction works by taking the median of counts over all pixels in every energy slice
         and subtracting that number from each pixel's count total.  Since there are generally 8 to 9 times more
-        sky pixels than object pixels this median should come from a sky pixel and can be used as 
+        sky pixels than object pixels this median should come from a sky pixel and can be used as
         a good representation of sky counts at that energy'''
         #subtract each bins median values from each pixel in that bin
         self.C0[:] = [x-int(meds[0]) for x in self.C0]
@@ -1363,7 +1399,7 @@ class image_Worker(QThread):
                 if self.plot_mode == "spectra":
                     self.make_spectrum(median(self.spectrum_pixel),totalcounts)
                 else:
-                    self.make_spectrum(median(self.spectrum_pixel),self.SNR)        
+                    self.make_spectrum(median(self.spectrum_pixel),self.SNR)
                 pylab.clf()
         else:
             #retry update spectrum
@@ -1406,7 +1442,7 @@ class image_Worker(QThread):
                 self.C7=darray[:,7]
                 self.C8=darray[:,8]
                 self.C9=darray[:,9]
-                
+
                 #get median energy's for every bin for sky subtraction and SNR calculation
                 self.medians = [median(self.C0),median(self.C1),median(self.C2),median(self.C3),median(self.C4),\
                             median(self.C5),median(self.C6),median(self.C7),median(self.C8),median(self.C9)]
@@ -1422,7 +1458,7 @@ class image_Worker(QThread):
                     im = make_image_import(self.pc, self.me, self.color_on,self.satpercent)
                     im.save("TV_frame.bmp")
                 else:
-                    print "Reshaping image from ", shape(self.pc), 
+                    print "Reshaping image from ", shape(self.pc),
                     photon_count = array(self.pc)
                     photon_count = photon_count.reshape(32,32)
                     photon_count = flipud(photon_count)
@@ -1449,7 +1485,7 @@ class image_Worker(QThread):
                 print "lock is in place on bin file, cannot image"
                 time.sleep(0.1)
                 self.emit(SIGNAL("retry_image()"))
-            
+
 class timer_Worker(QThread):
     def __init__(self, parent = None):
         QThread.__init__(self, parent)
@@ -1476,7 +1512,7 @@ class timer_Worker(QThread):
             time.sleep(0.1)
         self.emit(SIGNAL("timeout()"))
         self.stop()
-        
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     myapp = StartQt4()
