@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<casper_design_info.xml datestr="06-Aug-2014 18:39:27" system="chan_svf" version="0.1">
+   <design_info/>
+   <memory>
+      <memory_class class="register"><!--Register information for this design.-->
+         <register handle="78269.001" io_delay="0" io_dir="To Processor" name="rd_valid" numios="1" parent="chan_svf/DRAM_LUT" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="To Processor" length="1" name="reg" offset="0" owner="DRAM_LUT/rd_valid" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97090.0015" io_delay="0" io_dir="From Processor" name="b0b1" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b0b1" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97102.0015" io_delay="0" io_dir="From Processor" name="b10b11" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b10b11" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97114.0015" io_delay="0" io_dir="From Processor" name="b12b13" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b12b13" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97126.0031" io_delay="0" io_dir="From Processor" name="b14b15" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b14b15" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97138.0031" io_delay="0" io_dir="From Processor" name="b16b17" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b16b17" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97150.0031" io_delay="0" io_dir="From Processor" name="b18b19" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b18b19" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97162.0031" io_delay="0" io_dir="From Processor" name="b20b21" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b20b21" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97174.0031" io_delay="0" io_dir="From Processor" name="b22b23" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b22b23" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97186.0031" io_delay="0" io_dir="From Processor" name="b24b25" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b24b25" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97198.0031" io_delay="0" io_dir="From Processor" name="b2b3" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b2b3" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97210.0031" io_delay="0" io_dir="From Processor" name="b4b5" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b4b5" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97222.0031" io_delay="0" io_dir="From Processor" name="b6b7" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b6b7" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97234.0031" io_delay="0" io_dir="From Processor" name="b8b9" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/b8b9" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="103640.002" io_delay="0" io_dir="From Processor" name="load_coeff" numios="1" parent="chan_svf/FIR" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="FIR/load_coeff" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="108637.0079" io_delay="0" io_dir="From Processor" name="LO_SLE" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="LO_SLE" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97399.0016" io_delay="0" io_dir="From Processor" name="SER_DI" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="SER_DI" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97411.0018" io_delay="0" io_dir="From Processor" name="SWAT_LE" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="SWAT_LE" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97750.0016" io_delay="0" io_dir="To Processor" name="addr" numios="1" parent="chan_svf/avgIQ" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="To Processor" length="1" name="reg" offset="0" owner="avgIQ/addr" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97888.0029" io_delay="0" io_dir="From Processor" name="ctrl" numios="1" parent="chan_svf/avgIQ" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="avgIQ/ctrl" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97946.0029" io_delay="0" io_dir="From Processor" name="bins" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="bins" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="97975.0027" io_delay="0" io_dir="From Processor" name="alpha" numios="1" parent="chan_svf/capture/Baseline" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="capture/Baseline/alpha" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="98134.0027" io_delay="0" io_dir="From Processor" name="b_oldbase" numios="1" parent="chan_svf/capture" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="capture/b_oldbase" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="98146.0029" io_delay="0" io_dir="From Processor" name="base_Kf" numios="1" parent="chan_svf/capture" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="capture/base_Kf" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="98158.0029" io_delay="0" io_dir="From Processor" name="base_Kq" numios="1" parent="chan_svf/capture" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="capture/base_Kq" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="98497.0018" io_delay="0" io_dir="From Processor" name="load_thresh" numios="1" parent="chan_svf/capture" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="capture/load_thresh" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="98513.0015" io_delay="0" io_dir="From Processor" name="threshold" numios="1" parent="chan_svf/capture" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="capture/threshold" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="98928.0026" io_delay="0" io_dir="From Processor" name="ch_we" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="ch_we" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="98963.0026" io_delay="0" io_dir="From Processor" name="centers" numios="1" parent="chan_svf/conv_phase" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="conv_phase/centers" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="98975.0028" io_delay="0" io_dir="From Processor" name="load_centers" numios="1" parent="chan_svf/conv_phase" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="conv_phase/load_centers" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="99860.0049" io_delay="0" io_dir="From Processor" name="if_switch" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="if_switch" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="99872.0051" io_delay="0" io_dir="From Processor" name="load_bins" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="load_bins" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="100253.0049" io_delay="0" io_dir="To Processor" name="addr" numios="1" parent="chan_svf/pulses" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="To Processor" length="1" name="reg" offset="0" owner="pulses/addr" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="100617.0055" io_delay="0" io_dir="From Processor" name="regs" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="regs" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="100629.0057" io_delay="0" io_dir="To Processor" name="seconds" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="To Processor" length="1" name="reg" offset="0" owner="seconds" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="100664.0055" io_delay="0" io_dir="To Processor" name="addr" numios="1" parent="chan_svf/snapPhase" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="To Processor" length="1" name="reg" offset="0" owner="snapPhase/addr" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="100802.0057" io_delay="0" io_dir="From Processor" name="ctrl" numios="1" parent="chan_svf/snapPhase" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="snapPhase/ctrl" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="100898.0031" io_delay="0" io_dir="To Processor" name="addr" numios="1" parent="chan_svf/snapqdr" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="To Processor" length="1" name="reg" offset="0" owner="snapqdr/addr" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="100910.0033" io_delay="0" io_dir="From Processor" name="ctrl" numios="1" parent="chan_svf/snapqdr" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="snapqdr/ctrl" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="101010.0033" io_delay="0" io_dir="From Processor" name="start" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="start" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="101022.0033" io_delay="0" io_dir="From Processor" name="startAccumulator" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="startAccumulator" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="101034.0033" io_delay="0" io_dir="From Processor" name="startBuffer" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="startBuffer" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="101046.0033" io_delay="0" io_dir="From Processor" name="startDAC" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="startDAC" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="101058.0033" io_delay="0" io_dir="From Processor" name="startSnap" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="startSnap" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register>
+         <register handle="101070.0033" io_delay="0" io_dir="From Processor" name="stb_en" numios="1" parent="chan_svf" sample_period="1" tag="xps:sw_reg">
+            <memoryword address="-1" bin_pt="0" direction="From Processor" length="1" name="reg" offset="0" owner="stb_en" owner_width="32" stride_bytes="0" type="Unsigned" width="32"/>
+         </register><!--Snapshot information for this design.-->
+      </memory_class>
+      <memory_class class="snapshot"/>
+   </memory>
+   <memory_class class="sbram"/>
+   <casper_fft>
+      <PFB_fft add_latency="2" async="off" bin_pt_in="-1" bitgrowth="off" bram_latency="3" cal_bits="1" coeff_bit_width="18" coeff_decimation="on" coeff_generation="on" coeff_sharing="on" coeffs_bit_limit="8" conv_latency="2" delays_bit_limit="8" dsp48_adders="on" fftsize="9" hardcode_shifts="off" input_bit_width="18" max_bits="19" max_fanout="4" mult_latency="2" mult_spec="2" n_bits_rotation="25" n_inputs="1" n_streams="1" overflow="Wrap" quantization="Truncate" shift_schedule="" unscramble="on"/>
+      <PFB_fft1 add_latency="2" async="off" bin_pt_in="-1" bitgrowth="off" bram_latency="3" cal_bits="1" coeff_bit_width="18" coeff_decimation="on" coeff_generation="on" coeff_sharing="on" coeffs_bit_limit="8" conv_latency="2" delays_bit_limit="8" dsp48_adders="on" fftsize="9" hardcode_shifts="off" input_bit_width="18" max_bits="19" max_fanout="4" mult_latency="2" mult_spec="2" n_bits_rotation="25" n_inputs="1" n_streams="1" overflow="Wrap" quantization="Truncate" shift_schedule="" unscramble="on"/>
+   </casper_fft>
+   <xps_sw_reg>
+      <DRAM_LUT_rd_valid arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="To Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b0b1 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b10b11 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b12b13 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b14b15 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b16b17 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b18b19 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b20b21 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b22b23 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b24b25 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b2b3 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b4b5 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b6b7 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_b8b9 arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <FIR_load_coeff arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <LO_SLE arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <SER_DI arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <SWAT_LE arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <avgIQ_addr arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="To Processor" name1="reg" numios="1" sample_period="1"/>
+      <avgIQ_ctrl arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <bins arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <capture_Baseline_alpha arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <capture_b_oldbase arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <capture_base_Kf arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <capture_base_Kq arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <capture_load_thresh arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <capture_threshold arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <ch_we arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <conv_phase_centers arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <conv_phase_load_centers arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <if_switch arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <load_bins arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <pulses_addr arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="To Processor" name1="reg" numios="1" sample_period="1"/>
+      <regs arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <seconds arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="To Processor" name1="reg" numios="1" sample_period="1"/>
+      <snapPhase_addr arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="To Processor" name1="reg" numios="1" sample_period="1"/>
+      <snapPhase_ctrl arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <snapqdr_addr arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="To Processor" name1="reg" numios="1" sample_period="1"/>
+      <snapqdr_ctrl arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <start arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <startAccumulator arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <startBuffer arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <startDAC arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <startSnap arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+      <stb_en arith_type1="Unsigned" bin_pt1="0" bitwidth1="32" io_delay="0" io_dir="From Processor" name1="reg" numios="1" sample_period="1"/>
+   </xps_sw_reg>
+   <casper_pfb_fir>
+      <PFB_pfb_fir add_latency="1" bitwidthin="12" bitwidthout="12" bram_latency="3" coeffbitwidth="12" coeffdistmem="off" coeffs_share="on" fan_latency="1" fwidth="2.5" makebiplex="off" mult_latency="2" mult_spec="2" n_inputs="1" pfbsize="9" quantization="Truncate" totaltaps="4" windowtype="hamming"/>
+      <PFB_pfb_fir1 add_latency="1" bitwidthin="12" bitwidthout="12" bram_latency="3" coeffbitwidth="12" coeffdistmem="off" coeffs_share="on" fan_latency="1" fwidth="2.5" makebiplex="off" mult_latency="2" mult_spec="2" n_inputs="1" pfbsize="9" quantization="Truncate" totaltaps="4" windowtype="hamming"/>
+   </casper_pfb_fir>
+   <xps_bram>
+      <avgIQ_bram addr_width="nsamples" arith_type="Unsigned" data_bin_pt="0" data_width="32" init_vals="0" optimization="Minimum_Area" reg_core_output="off" reg_prim_output="off" sample_rate="1"/>
+      <pulses_bram0 addr_width="14" arith_type="Unsigned" data_bin_pt="0" data_width="32" init_vals="0" optimization="Minimum_Area" reg_core_output="off" reg_prim_output="off" sample_rate="1"/>
+      <pulses_bram1 addr_width="14" arith_type="Unsigned" data_bin_pt="0" data_width="32" init_vals="0" optimization="Minimum_Area" reg_core_output="off" reg_prim_output="off" sample_rate="1"/>
+      <snapPhase_bram addr_width="nsamples" arith_type="Unsigned" data_bin_pt="0" data_width="32" init_vals="0" optimization="Minimum_Area" reg_core_output="off" reg_prim_output="off" sample_rate="1"/>
+   </xps_bram>
+</casper_design_info.xml>

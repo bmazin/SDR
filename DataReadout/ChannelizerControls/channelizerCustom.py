@@ -1,4 +1,4 @@
-import sys, os, random, math, array, fractions
+import sys, os, random, math, array, fractions,time,datetime,pickle
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import socket
@@ -17,8 +17,8 @@ from lib import iqsweep
 #DONE...Do not add custom threshold when zooming or panning plot
 #DONE...roughly calculate baseline from snapshot data and show on plot
 #WORKING...show originally calculated median/threshold as faded line
-
-
+#DONE...toggle button to save longsnapshot data
+#DONE..read pulses does not write to a "sean" directory; plot histograms of peak heights
 
 
 class AppForm(QMainWindow):
@@ -241,8 +241,8 @@ class AppForm(QMainWindow):
                 phase.append(struct.unpack('>h', bin_data_phase[m*4+2:m*4+4])[0])
                 phase.append(struct.unpack('>h', bin_data_phase[m*4+0:m*4+2])[0])
             phase = numpy.array(phase)
-            #phase_avg = numpy.median(phase)
-            #sigma = phase.std()
+            #phase_avg = numpy.median(self.phase)
+            #sigma = self.phase.std()
 
             n,bins= numpy.histogram(phase,bins=100)
             n = numpy.array(n,dtype='float32')/numpy.sum(n)
@@ -360,7 +360,6 @@ class AppForm(QMainWindow):
 
         if steps <= 1000:
             self.axes1.plot(phase,'.-')
-
         med=numpy.median(phase)
 
         print 'ch:',ch_we,'median:',med,
@@ -391,9 +390,11 @@ class AppForm(QMainWindow):
         self.canvas.draw()
         print "snapshot taken"
 
-    def longsnapshot(self):        
+    def longsnapshot(self):
+        self.longsnapshotInfo = None
         self.displayResonatorProperties()
         ch_we = int(self.textbox_channel.text())
+        startTime = int(numpy.floor(time.time()))
         self.roach.write_int('ch_we', ch_we)
         #print self.roach.read_int('ch_we')
         
@@ -421,9 +422,11 @@ class AppForm(QMainWindow):
         self.roach.write_int('snapqdr_ctrl',0)
         self.roach.write_int('startSnap', 0)
         phase = []
+        print "before m loop:  steps=",steps," L=",L
         for m in range(steps*L):
             phase.append(struct.unpack('>h', bin_data_phase[m*4+2:m*4+4])[0])
             phase.append(struct.unpack('>h', bin_data_phase[m*4+0:m*4+2])[0])
+        print "after m loop:  len(phase) = ",len(phase)
         if steps > 1:
             dir = os.environ['MKID_DATA_DIR']
             fname =os.path.join(dir,'ch_snap_r%dp%d_%dsecs.dat'%(roachNum,ch_we,steps))
@@ -486,6 +489,8 @@ class AppForm(QMainWindow):
             self.axes0.set_ylabel('FFT of snapshot, nAverages=%d'%nFFTAverages)
             self.canvas.draw()
 
+            self.longsnapshotInfo = {"channel":ch_we,"startTime":startTime,"phase":phase}
+            self.writeSnapshotData()
         print "longsnapshot taken"
 
     def readPulses(self):
@@ -546,7 +551,8 @@ class AppForm(QMainWindow):
         print 'total counts by channel: ',channel_count
         channel_count = numpy.array(channel_count)
         ch = int(self.textbox_channel.text())
-        numpy.savetxt('/home/sean/data/restest/test.dat', p1[ch])
+
+        #numpy.savetxt('/home/sean/data/restest/test.dat', p1[ch])
         
         # With lamp off, run "readPulses."  If count rate is above 50, it's anamolous 
         # and it's FIR should be set to 0.
@@ -559,7 +565,7 @@ class AppForm(QMainWindow):
         base = numpy.array(baseline[ch],dtype='float')
         base = base/2.0**9-4.0
         base = base*180.0/numpy.pi
-        times = numpy.array(timestamp[ch],dtype='float')
+        times = numpy.array(timestamp[ch],dtype='float')/1e6
         peaksCh = numpy.array(peaks[ch],dtype = 'float')
         peaksCh = peaksCh/2.0**9-4.0
         peaksCh = peaksCh*180.0/numpy.pi
@@ -573,6 +579,35 @@ class AppForm(QMainWindow):
         self.axes0.plot(times,base, 'g.')
         self.axes0.plot(times,peaksCh, 'b.')
         self.axes0.plot(times,peaksSubBase, 'r.')
+        labels = self.axes0.get_xticklabels()
+        for label in labels:
+            label.set_rotation(-90)
+        self.axes0.set_title("ch=%d b: peakg:base  r: peak-base"%ch)
+        self.axes0.set_xlabel("time within second (sec)")
+
+        self.axes1.clear()
+        baseMean = numpy.mean(base)
+        baseStd = numpy.std(base)
+        peakMean = numpy.mean(peaksCh)
+        peakStd = numpy.std(peaksCh)
+        psbMean = numpy.mean(peaksSubBase)
+        psbStd = numpy.std(peaksSubBase)
+        hTitle = "p:%.1f(%.1f) b:%.1f(%.1f) p-b:%.1f(%.1f)"%(peakMean,peakStd,baseMean,baseStd,psbMean,psbStd)
+        print "hTitle=",hTitle
+        r = (-150,10)
+        nBin=40
+        hgBase,bins = numpy.histogram(base,nBin,range=r, density=False)
+        hgPeak,bins = numpy.histogram(peaksCh,nBin,range=r, density=False)
+        hgPeakSubBase,bins = numpy.histogram(peaksSubBase,nBin,range=r, density=False)
+
+        width = 0.7*(bins[1]-bins[0])
+        center = (bins[:-1]+bins[1:])/2
+        self.axes1.bar(center, hgBase, width, alpha=0.5, linewidth=0, color='g')
+        self.axes1.bar(center, hgPeak, width, alpha=0.5, linewidth=0, color='b')
+        self.axes1.bar(center, hgPeakSubBase, width, alpha=0.5, linewidth=0, color='r')
+        self.axes1.set_xlabel("peak phase (degrees)")
+        self.axes1.set_title(hTitle)
+
         self.canvas.draw()
 
     def channelInc(self):
@@ -649,6 +684,7 @@ class AppForm(QMainWindow):
         self.roach.write('dram_memory', binaryData)
 
         x = numpy.loadtxt(saveDir+'centers.dat')
+        print "channelizerCustom:  saveDir=",saveDir," x=",x
         N_freqs = len(x[:,0])
         for n in range(N_freqs):
             self.iq_centers[n] = complex(x[n,0], x[n,1])
@@ -672,6 +708,7 @@ class AppForm(QMainWindow):
         freqFile =str(self.textbox_freqFile.text())
         self.loadCustomAtten()
         try:
+            print "channelizerCustom.y:  freqFile=",freqFile
             x = numpy.loadtxt(freqFile) 
             x_string = ''
             for i in range(len(self.customResonators)):
@@ -683,12 +720,12 @@ class AppForm(QMainWindow):
             N_freqs = len(x[1:,0])
             self.numFreqs=N_freqs
             for l in x[1:,0]:
+                temp_x_string = str(l*1e9) + '\n'
                 x_string = x_string + str(l*1e9) + '\n'
             
             self.iq_centers = numpy.array([0.+0j]*256)
             print N_freqs,numpy.shape(self.iq_centers),numpy.shape(x)
             for n in range(N_freqs):
-                print n
                 #for n in range(256):
                 self.iq_centers[n] = complex(x[n+1,1], x[n+1,2])
             
@@ -701,7 +738,7 @@ class AppForm(QMainWindow):
             #self.loadCustomThresholds()
         except IOError:
             print 'No such file or directory:',freqFile
-            self.status_text.setText('IOError')
+            self.status_text.setText('IOError: trouble with %s'%freqFile)
 
     def findDeletedResonators(self):
         for i in range(len(self.customResonators)):
@@ -802,10 +839,11 @@ class AppForm(QMainWindow):
         # File with FIR coefficients
         #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched_30us.txt')
         #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/lpf_250kHz.txt')
-        firFileName = os.environ['CUSTOM_FIR']
+        firFileName = os.environ['MKID_CUSTOM_FIR']
+        firDir = os.environ['MKID_CUSTOM_FIR_DIR']
         if '%d' in firFileName:#the fir file is specific to the roach, stick the number in
             firFileName = firFileName%roachNum
-        self.textbox_coeffsFile = QLineEdit(os.path.join('/home/sean/data/common/fir/',firFileName))
+        self.textbox_coeffsFile = QLineEdit(os.path.join(firDir,firFileName))
         #self.textbox_coeffsFile = QLineEdit('/home/sean/data/common/fir/matched20121128r%d.txt'%roachNum)
         self.textbox_coeffsFile.setMaximumWidth(200)
 
@@ -852,7 +890,14 @@ class AppForm(QMainWindow):
         self.button_longsnapshot = QPushButton("longsnapshot")
         self.button_longsnapshot.setMaximumWidth(170)
         self.connect(self.button_longsnapshot, SIGNAL('clicked()'), self.longsnapshot)            
-        
+
+        # toggle whether to write long snap to pickle file
+        self.button_saveSnapshot = QPushButton("Save longsnapshot")
+        #self.button_saveSnapshot.setMaximumWidth(400)
+        self.connect(self.button_saveSnapshot,SIGNAL('clicked()'),
+                     self.toggleSaveSnapshot)
+        self.saveSnapshot = True
+        self.toggleSaveSnapshot()
         # Read pulses
         self.button_readPulses = QPushButton("Read pulses")
         self.button_readPulses.setMaximumWidth(170)
@@ -935,6 +980,7 @@ class AppForm(QMainWindow):
         hbox22.addWidget(self.button_longsnapshot)
         hbox22.addWidget(self.textbox_longsnapSteps)
         hbox22.addWidget(label_longsnapSteps)
+        hbox22.addWidget(self.button_saveSnapshot)
         gbox2.addLayout(hbox22)
         gbox2.addWidget(self.button_rmCustomThreshold)
         hbox23 = QHBoxLayout()
@@ -962,6 +1008,26 @@ class AppForm(QMainWindow):
         self.main_frame.setLayout(vbox)
         self.setCentralWidget(self.main_frame)
   
+    def toggleSaveSnapshot(self):
+        self.saveSnapshot = not self.saveSnapshot
+        if self.saveSnapshot:
+            self.button_saveSnapshot.setStyleSheet("background-color: #00ff00")
+            self.writeSnapshotData()
+        else:
+            self.button_saveSnapshot.setStyleSheet("background-color: #ff0000")
+    def writeSnapshotData(self):
+        try:
+            if self.longsnapshotInfo:
+                if self.saveSnapshot:
+                    lsi = self.longsnapshotInfo
+                    ymdhms = time.strftime("%Y%m%d-%H%M%S",time.gmtime(lsi['startTime']))
+                    pfn = "longsnapshot-%s.pkl"%ymdhms
+                    ffn = os.path.join(os.environ['MKID_DATA_DIR'],pfn)
+                    pickle.dump(lsi,open(ffn,'wb'))
+                    print "pickle file written",ffn
+        except AttributeError:
+            pass
+
     def create_status_bar(self):
         self.status_text = QLabel("Awaiting orders.")
         self.statusBar().addWidget(self.status_text, 1)
@@ -1029,6 +1095,6 @@ if __name__=='__main__':
         print 'Usage: ',sys.argv[0],' roachNum'
         exit(1)
     roachNum = int(sys.argv[1])
-    datadir = os.environ['FREQ_PATH']
+    datadir = os.environ['MKID_FREQ_PATH']
     main()
 

@@ -1,8 +1,11 @@
 /* 
  * PacketMaster.c - A TCP client to pull data down off the ROACH boards and store them in
  *  a pre-existing h5 VLArray file
- * To compile: h5cc -shlib -pthread -o PPM PulsePacketMaster.c
- * Usage: ./PPM
+ * compiled in ArconsDashboard.py with this command
+ h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c
+
+ *
+ * change NROACHES to 1
  */
  
 #include <stdio.h>
@@ -25,13 +28,13 @@
 #include <sys/stat.h>
 #include "hdf5.h"
 #include "hdf5_hl.h"
-
+#include "mkid-environment.h"
 //max number of characters in all strings
 #define STR_SIZE 80 
 //number of rows in the final quicklook images
-#define BEAM_ROWS 46
+//#define BEAM_ROWS 2
 //number of columns in the final quicklook images
-#define BEAM_COLS 44
+//#define BEAM_COLS 5
 //number of dimensions in the Variable Length array (VLarray).  
 //There is a 1D array of pointers to variable length arrays, so rank=1
 #define DATA_RANK 1
@@ -44,11 +47,13 @@
 #define TIMESTAMPER 0
 
 //change number of roaches here and adjust hostnames in connect_to_roach()
-#define NROACHES 8
+//#define NROACHES 8
+//#define NROACHES 1 
 //The number of channels or pixels corresponding to each roach
-#define NPIXELS_PER_ROACH 253
+//#define NPIXELS_PER_ROACH 10
 //max number of possible photon counts in a second of data for a pixel 
 #define MAX_EVENTS_PER_SEC 2500
+
 
 void append_path(const char* path, char* rest);//creates a relative file path from pwd to a filename
 void add_group_attrs(hid_t group);//adds attributes to an H5 group so that it's readable by PyTables
@@ -58,6 +63,7 @@ int socket_ready(int roachno,int sockfd,int bufsz);//finds how many bytes are wa
 int read_socket_all(int sockfd, uint32_t *pa, int bufsz);//read a packet from a roach's send buffer
 int connect_to_roach(int roachno);//create a tcp connection to a roach
 int write_quicklook_image(char* obs_filepath,uint16_t data[][BEAM_COLS],int sec);
+int write_quicklook_image_v2(char* obs_filepath,uint16_t data[][BEAM_COLS],int sec);
 void reap_child(int sig);
 double current_time();
 void get_obs_path(char* path, char* obs_filename, char* obs_filepath);
@@ -145,6 +151,7 @@ int main(int argc, char *argv[])
     int photon_index = 0;
     int absolute_pixel_adr = 0;
 
+    printf("begin PacketMaster with argc=%d\n",argc);
     if (argc != 3)
     {
         printf("Usage: %s OBS_FILE_PATH BEAMMAP_PATH\n");
@@ -209,16 +216,26 @@ int main(int argc, char *argv[])
     for(r=0;r<NROACHES;++r)
     {
         socket_id[r] = connect_to_roach(r);
-        printf("successfully connected to %d\n",r);
+        printf("good news:  successfully connected to %d\n",r);
     }
     fflush(stdout);
     obs_time = time(NULL)+1;//New data will begin when roaches receive the next pulse per second (PPS)
+    printf("before write_obstime\n");
+    fflush(stdout);
     write_obstime(obs_filepath,(double)(obs_time));
+    printf(" after write_obstime\n");
+    fflush(stdout);
     sprintf(pixel_dataset_name,"%s%d",dataset_name_base,obs_time);
     copy_beam_file_tree(obs_filepath,beammap_path,beam_data);
+    printf(" after copy_beam_file_tree\n");
+    fflush(stdout);
 
     create_datasets(obs_filepath,pixel_dataset_name,exptime);
+    printf(" after create_datasets\n");
+    fflush(stdout);
     update_beammap_names(obs_filepath, pixel_dataset_name, beam_data, pixel_adr);
+    printf(" after update_beammap_names\n");
+    fflush(stdout); 
 
 
     printf("need to stop?: %d\n",need_to_stop());
@@ -411,6 +428,9 @@ int main(int argc, char *argv[])
     }
     
     //printf("Lost count: %d\n",N_packets_lost);
+
+    fprintf(stderr,"exiting.");
+    printf("exiting.");
     return 0;
 }
 
@@ -612,7 +632,7 @@ int write_quicklook_image(char* obs_filepath, uint16_t data[BEAM_ROWS][BEAM_COLS
     char npy_filename[STR_SIZE];
     char obs_path[STR_SIZE];
     char lock_filename[STR_SIZE];
-    char header[] = "\x93NUMPY\x01\x00\x46\x00{'descr': '<i2', 'fortran_order': False, 'shape': (46, 44), }        \n";
+    char header[] = "\x93NUMPY\x01\x00\x46\x00{'descr': '<i2', 'fortran_order': False, 'shape': (1, 5), }          \n";
     FILE* fid;
     FILE* lock_fid;
     const int N_bytes = 2128;
@@ -650,6 +670,56 @@ int write_quicklook_image(char* obs_filepath, uint16_t data[BEAM_ROWS][BEAM_COLS
             //printf("%02d ",data[i][j]);
         }
         //printf("\n");
+    }
+    fclose(fid);
+    remove(lock_filename);
+    return 0;
+}
+
+int write_quicklook_image_v2(char* obs_filepath, uint16_t data[BEAM_ROWS][BEAM_COLS],int sec)
+{
+    char bin_path[STR_SIZE] = "bin/";
+    char obs_filename_root[STR_SIZE];
+    char obs_filename[STR_SIZE];
+    char npy_filename[STR_SIZE];
+    char obs_path[STR_SIZE];
+    char lock_filename[STR_SIZE];
+    char header[] = "\x93NUMPY\x01\x00\x46\x00{'descr': '<i2', 'fortran_order': False, 'shape': (1, 5), }          \n";
+    FILE* fid;
+    FILE* lock_fid;
+    const int N_bytes = 2128;
+    int i = 0;
+    int j = 0;
+    int success = 0;
+    get_obs_path(obs_path,obs_filename,obs_filepath);
+    sscanf(obs_filename,"%[^.].h5",obs_filename_root);
+    sprintf(npy_filename,"%s_%d.txt",obs_filename_root,sec);
+    sprintf(lock_filename,"lock.%d",sec);
+    append_path(obs_path,bin_path);
+    append_path(bin_path, npy_filename);
+    append_path(bin_path, lock_filename);
+    fid  = fopen(npy_filename,"wb");
+    lock_fid  = fopen(lock_filename,"w");
+    if (lock_fid > 0)
+        fclose(lock_fid);
+    if (fid <= 0)
+    {
+        success = mkdir(bin_path,0777);
+        fid = fopen(npy_filename,"wb");
+        lock_fid  = fopen(lock_filename,"w");
+        fclose(lock_fid);
+        if (fid <= 0 || success != 0)
+            error("Error creating npy file");
+        
+    }
+    fseek(fid,0,SEEK_SET);
+    for(i = 0; i < BEAM_ROWS; ++i)
+    {
+        for (j = 0; j < BEAM_COLS; ++j)
+        {
+	  fprintf(fid, "%d ", data[i][j]);
+        }
+        fprintf(fid,"\n");
     }
     fclose(fid);
     remove(lock_filename);
@@ -971,7 +1041,7 @@ void write_sec_data(char* obs_filepath,char* pixel_dataset_name,int sec[NROACHES
                 quicklook_image[row][col] = photon_counts[current_sec][channel];
             }
         }
-        write_quicklook_image(obs_filepath,quicklook_image,current_sec);
+        write_quicklook_image_v2(obs_filepath,quicklook_image,current_sec);
     }
     if (status != 0)
     {
@@ -1025,8 +1095,10 @@ void write_obstime(char* obs_filepath,double obs_time)
     {        fprintf(stderr,"Error opening obs file %s",obs_filepath);
         error("");
     }
+    printf("write_obstime:  before H5TBwrite_fields_name\n");
     status = H5TBwrite_fields_name(obs_file,"/header/header","unixtime",write_start,write_nrecords,sizeof(double),write_offset,obstime_sizes,&obs_time);
     if (status < 0)
         error("Error writing ut to obs file header");
+    printf("write_obstime:   after H5TBwrite_fields_name\n");
     status = H5Fclose(obs_file);
 }
