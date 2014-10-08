@@ -20,6 +20,8 @@ from lib import iqsweep
 #DONE...toggle button to save longsnapshot data
 #DONE..read pulses does not write to a "sean" directory; plot histograms of peak heights
 
+# Added logic to dump threshold information to pkl file after '(4)load thresholds' button pushed.
+# 
 
 class AppForm(QMainWindow):
     def __init__(self, parent=None):
@@ -225,6 +227,17 @@ class AppForm(QMainWindow):
         steps = int(self.textbox_timeLengths.text())
         L = 2**10
         scale_to_angle = 360./2**16*4/numpy.pi
+        threshInfo = {}
+        threshInfo['roachNum'] = roachNum
+        threshInfo['scaleToAngle'] = scale_to_angle
+        threshInfo['N_freqs'] = N_freqs
+        now = datetime.datetime.now()
+        threshInfo['now'] = now
+        threshInfo['nowAscii'] = datetime.datetime.strftime(now,"%c")
+        threshInfo['phase'] = {}
+        threshInfo['phaseHg'] = {}
+        threshInfo['phaseBins'] = {}
+
         for ch in range(N_freqs):
             bin_data_phase = ''
             for n in range(steps):
@@ -241,10 +254,13 @@ class AppForm(QMainWindow):
                 phase.append(struct.unpack('>h', bin_data_phase[m*4+2:m*4+4])[0])
                 phase.append(struct.unpack('>h', bin_data_phase[m*4+0:m*4+2])[0])
             phase = numpy.array(phase)
+            threshInfo['phase'][ch] = phase.copy()
             #phase_avg = numpy.median(self.phase)
             #sigma = self.phase.std()
 
             n,bins= numpy.histogram(phase,bins=100)
+            threshInfo['phaseHg'][ch] = n.copy()
+            threshInfo['phaseBins'][ch] = bins.copy()
             n = numpy.array(n,dtype='float32')/numpy.sum(n)
             tot = numpy.zeros(len(bins))
             for i in xrange(len(bins)):
@@ -274,8 +290,14 @@ class AppForm(QMainWindow):
             self.roach.write_int('capture_load_thresh', (ch<<1)+(0<<0))
             print "channel: ", ch, "median: ", scale_to_angle*med, "threshold: ", scale_to_angle*threshold
             #print "channel: ", ch, "avg: ", scale_to_angle*phase_avg, "sigma: ", scale_to_angle*sigma, "threshold: ", scale_to_angle*threshold
-        
-        self.status_text.setText('Thresholds loaded')
+
+        threshInfo['medians'] = self.medians.copy()
+        threshInfo['thresholds'] = self.thresholds.copy()
+        nowStr = datetime.datetime.strftime(now,"%Y%m%d-%H%M%S")
+        pklFileName = "thresh_%d_%s.pkl"%(roachNum,nowStr)
+        print 'Dump threshold infomation to ',os.path.join(os.environ['MKID_DATA_DIR'],pklFileName)
+        pickle.dump(threshInfo,open(os.path.join(os.environ['MKID_DATA_DIR'],pklFileName),'wb'))
+        self.status_text.setText('Thresholds loaded and written to %s'%pklFileName)
         print 'Done loading thresholds'
 
     def loadSingleThreshold(self,ch):
