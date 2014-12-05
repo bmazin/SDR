@@ -1,5 +1,6 @@
 #!/bin/bash
-ROACHES=(0 1 2 3 4 5 6 7)
+#ROACHES=(0 1 2 3 4 5 6 7)
+ROACHES=$MKID_ROACHES
 CLK="512"
 #BOF="chan_if_acc_x_2011_Aug_02_0713.bof" #Palomar 2011 firmware,has deadtime lockout bug, 3-pt trigger bug
 #BOF="chan_dtrig_v2_2012_Aug_28_1956.bof" #Has short low pass filter baseline, plus Palomar 2011 bugs

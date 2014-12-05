@@ -69,7 +69,6 @@ class StartQt4(QMainWindow):
         self.Res1=IQsweep()
         self.Res1.LoadPowers(str(self.openfile), 'r0', self.freq[self.resnum])
         self.ui.res_num.setText(str(self.resnum))
-        #chris S. self.resfreq = self.resnum
         self.resfreq = self.freq[self.resnum]
         self.ui.frequency.setText(str(self.resfreq))
         self.NAttens = len(self.Res1.atten1s)
@@ -143,13 +142,12 @@ class StartQt4(QMainWindow):
             if guess_atten_idx[0][0]+rule_of_thumb_offset < len(self.Res1.atten1s):
                 guess_atten_idx[0][0] += rule_of_thumb_offset
             guess_atten = self.Res1.atten1s[guess_atten_idx[0][0]]
-            print 'in loadres:  Guessing attenuation is ',guess_atten
-            #Chris S. self.select_atten(guess_atten)
+            self.select_atten(guess_atten)
             self.ui.atten.setValue(round(guess_atten))
         else:
-            print 'in loadres:  Defaulting guess attenuation to center'
-            #Chris S. self.select_atten(self.Res1.atten1s[self.NAttens/2])
+            self.select_atten(self.Res1.atten1s[self.NAttens/2])
             self.ui.atten.setValue(round(self.Res1.atten1s[self.NAttens/2]))
+
     def guess_res_freq(self):
         guess_idx = argmax(self.res1_iq_vels[self.iAtten])
         #The longest edge is identified, choose which vertex of the edge
