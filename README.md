@@ -9,6 +9,8 @@ Required external software components:
 ---------------------
 
 Enthought Python Distribution (EPD) 7.3 (http://www.enthought.com/products/epd.php)
+
+PyQt
  
 PyEphem (http://rhodesmill.org/pyephem/) 
 

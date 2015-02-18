@@ -26,10 +26,10 @@ binBaseKq=castBin(baseKq,quantization='Round',nBits=18,binaryPoint=16,format='ui
 print 'Kf:',baseKf,binBaseKf
 print 'Kq:',baseKq,binBaseKq
 print 'using old base:',bOldBase==1
-roaches = [0,1,2,3,4,5,6]
+roaches = os.environ['MKID_ROACHES']
 for i in roaches:
-    print 'roach ',i
-    roach = corr.katcp_wrapper.FpgaClient('10.0.0.1%d'%i,7147)
+    print 'in set_svf:  roach ',i
+    roach = corr.katcp_wrapper.FpgaClient('10.0.0.1%s'%i,7147)
     time.sleep(.2)
     roach.write_int('capture_base_Kf',binBaseKf)
     roach.write_int('capture_base_Kq',binBaseKq)
