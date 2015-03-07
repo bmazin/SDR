@@ -425,6 +425,7 @@ class AppForm(QMainWindow):
         numQDRSamples=2**19
         numBytesPerSample=4
         nLongsnapSamples = numQDRSamples*2*steps # 2 16-bit samples per 32-bit QDR word
+ 
         bin_data_phase = ''
         qdr_data_str = ''
         for n in range(steps):
@@ -510,8 +511,7 @@ class AppForm(QMainWindow):
             self.axes0.set_xlabel('Freq (Hz)')
             self.axes0.set_ylabel('FFT of snapshot, nAverages=%d'%nFFTAverages)
             self.canvas.draw()
-
-            self.longsnapshotInfo = {"channel":ch_we,"startTime":startTime,"phase":phase}
+            self.longsnapshotInfo = {"channel":ch_we,"startTime":startTime,"phase":qdr_phase_values}
             self.writeSnapshotData()
         print "longsnapshot taken"
 
@@ -1046,7 +1046,7 @@ class AppForm(QMainWindow):
                     pfn = "longsnapshot-%s.pkl"%ymdhms
                     ffn = os.path.join(os.environ['MKID_DATA_DIR'],pfn)
                     pickle.dump(lsi,open(ffn,'wb'))
-                    print "pickle file written",ffn
+                    print "pickle file written",ffn,"with nPhases=",len(lsi['phase'])
         except AttributeError:
             pass
 
