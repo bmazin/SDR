@@ -22,6 +22,20 @@ def readMemory(roach,memName,nSamples,nBytesPerSample=4,bQdrFlip=False):
         memValues = np.right_shift(memValues,32)+np.left_shift(np.bitwise_and(memValues, int('1'*32,2)),32)
     return list(memValues)
 
+def writeQdr(roach,memName,valuesToWrite,nBytesPerSample=4,start=0,bQdrFlip=False):
+    if nBytesPerSample == 4:
+        formatChar = 'L'
+    elif nBytesPerSample == 8:
+        formatChar = 'Q'
+    else:
+        raise TypeError('nBytesPerSample must be 4 or 8')
+
+    memValues = np.array(valuesToWrite)
+    if bQdrFlip:
+        memValues = np.right_shift(memValues,32)+np.left_shift(np.bitwise_and(memValues, int('1'*32,2)),32)
+    toWriteStr = struct.pack('>{}{}'.format(nQdrRows,formatChar),*memValues)
+    roach.blindwrite(qdrMemName,toWriteStr,start)
+
 def loadQdrInFirmware(roach,loadChoice=0):
     """
     load the qdr with values within the fpga
@@ -49,19 +63,21 @@ if __name__=='__main__':
     ip='10.0.0.112'
     bCorr = False
     bRoach2 = True
-    bQdrCal = False
+    bQdrCal = True
+    calVerbosity = 0
     qdrMemName = 'qdr0_memory'
 
     if bCorr:
         roach = corr.katcp_wrapper.FpgaClient(ip,7147,timeout=20.)
     else:
         roach = casperfpga.katcp_fpga.KatcpFpga(ip,timeout=40.)
+        print 'Fpga Clock Rate:',roach.estimate_fpga_clock()
         if bQdrCal:
 
             roach.get_system_information()
             results = {}
             for qdr in roach.qdrs:
-                results[qdr.name] = qdr.qdr_cal(fail_hard=False,verbosity=100)
+                results[qdr.name] = qdr.qdr_cal(fail_hard=False,verbosity=calVerbosity)
 
             print 'qdr cal results:',results
 
@@ -178,12 +194,14 @@ if __name__=='__main__':
     print ' dataOut and read-by-katcp should be a sequence from 0 to 1048575'
     print ' dataOut may be offset by one'
     toWrite = np.arange(nQdrRows)
+    print 'katcp-to-write','\t',toWrite[0:nSnapSamples],'\t',toWrite[-nSnapSamples:]
+    writeQdr(roach,qdrMemName,toWrite,nBytesPerQdrSample,bQdrFlip=True)
     #toWrite = np.ones(nQdrSamples)
     #toWrite = np.zeros(nQdrSamples)
-    toWriteStr = struct.pack('>{}{}'.format(nQdrRows,qdrFormatCode),*toWrite)
-    qdrValues = struct.unpack('>{}{}'.format(nQdrRows,qdrFormatCode),toWriteStr)
-    print 'katcp-to-write','\t',qdrValues[0:nSnapSamples],'\t',qdrValues[-nSnapSamples:]
-    roach.blindwrite(qdrMemName,toWriteStr)
+#    toWriteStr = struct.pack('>{}{}'.format(nQdrRows,qdrFormatCode),*toWrite)
+#    qdrValues = struct.unpack('>{}{}'.format(nQdrRows,qdrFormatCode),toWriteStr)
+#    print 'katcp-to-write','\t',qdrValues[0:nSnapSamples],'\t',qdrValues[-nSnapSamples:]
+#    roach.blindwrite(qdrMemName,toWriteStr)
     time.sleep(.5)
     readAllMem(roach)
 
@@ -219,11 +237,12 @@ if __name__=='__main__':
     print ' dataIn should be all zeros'
     print ' other values should be',byteSortVal,'which is ',bin(byteSortVal)
     toWrite = np.ones(nQdrRows,dtype=np.uint64)*byteSortVal
-    print toWrite[0]
-    toWriteStr = struct.pack('>{}{}'.format(nQdrRows,qdrFormatCode),*toWrite)
-    qdrValues = list(struct.unpack('>{}{}'.format(nQdrRows,qdrFormatCode),toWriteStr))
-    print 'katcp-to-write','\t',qdrValues[0:nSnapSamples],'\t',qdrValues[-nSnapSamples:]
-    roach.blindwrite(qdrMemName,toWriteStr)
+    print 'katcp-to-write','\t',toWrite[0:nSnapSamples],'\t',toWrite[-nSnapSamples:]
+
+    writeQdr(roach,qdrMemName,toWrite,nBytesPerQdrSample,bQdrFlip=True)
+    #print toWrite[0]
+    #toWriteStr = struct.pack('>{}{}'.format(nQdrRows,qdrFormatCode),*toWrite)
+    #roach.blindwrite(qdrMemName,toWriteStr)
     time.sleep(.5)
     readAllMem(roach)
 
