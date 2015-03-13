@@ -42,21 +42,21 @@ def countReadErrors(roach):
     time.sleep(.1)
 
     nGood = roach.read_int('n_good')
-    print nGood,' total good reads'
+    print 'total good reads:',nGood
     nBad = roach.read_int('n_errs')
-    print nBad,' total bad reads'
-    print 'errors in comparisons qdr0-qdr3, qdr1-qdr3, qdr2-qdr3:'
+    print 'total bad reads:',nBad
+    print 'errors in comparisons qdr0-qdr3, qdr1-qdr3, qdr2-qdr3:',
     print roach.read_int('n_errs0'),roach.read_int('n_errs1'),roach.read_int('n_errs2')
 
     print 'wait 5s'
     time.sleep(5)
 
     nGood = roach.read_int('n_good')
-    print nGood,' total good reads'
+    print 'total good reads:',nGood
     nBad = roach.read_int('n_errs')
-    print nBad,' total bad reads'
+    print 'total bad reads:',nBad
 
-    print 'errors in comparisons qdr0-qdr3, qdr1-qdr3, qdr2-qdr3:'
+    print 'errors in comparisons qdr0-qdr3, qdr1-qdr3, qdr2-qdr3:',
     print roach.read_int('n_errs0'),roach.read_int('n_errs1'),roach.read_int('n_errs2')
     roach.write_int('read_qdr',0)
 
@@ -124,7 +124,7 @@ if __name__=='__main__':
     else:
         nBytesPerQdrSample=4
         qdrFormatCode = 'L'
-    nSnapSamples = 5 #2**5
+    nSnapSamples = 4 #2**5
     nBytesPerSnapSample=4
     qdrSize=2**20*nBytesPerSample
 
