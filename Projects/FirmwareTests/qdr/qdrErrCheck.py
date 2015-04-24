@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import casperfpga
 import corr
 import logging
+from myQdr import Qdr as myQdr
+import types
 
 def readMemory(roach,memName,nSamples,nBytesPerSample=4,bQdrFlip=False):
     """
@@ -88,7 +90,9 @@ if __name__=='__main__':
     bCorr = False
     bRoach2 = True
     bQdrCal = True
+    bQdrCal2 = True
     bQdrFlip = True
+    bFailHard = False
     calVerbosity = 1
     qdrMemName = 'qdr0_memory'
     qdrNames = ['qdr0_memory','qdr1_memory','qdr2_memory','qdr3_memory']
@@ -104,7 +108,11 @@ if __name__=='__main__':
             roach.get_system_information()
             results = {}
             for qdr in roach.qdrs:
-                results[qdr.name] = qdr.qdr_cal(fail_hard=True,verbosity=calVerbosity)
+                if bQdrCal2:
+                    mqdr = myQdr.from_qdr(qdr)
+                    results[qdr.name] = mqdr.qdr_cal2(fail_hard=bFailHard,verbosity=calVerbosity)
+                else:
+                    results[qdr.name] = qdr.qdr_cal(fail_hard=bFailHard,verbosity=calVerbosity)
 
             print 'qdr cal results:',results
             for qdrName in ['qdr0','qdr1','qdr2','qdr3']:

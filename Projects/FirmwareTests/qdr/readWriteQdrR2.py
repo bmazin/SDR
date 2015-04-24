@@ -64,11 +64,12 @@ if __name__=='__main__':
     bCorr = False
     bRoach2 = True
     bQdrCal = True
-    calVerbosity = 0
+    calVerbosity = 1
     qdrMemName = 'qdr0_memory'
 
     if bCorr:
         roach = corr.katcp_wrapper.FpgaClient(ip,7147,timeout=20.)
+        print 'Fpga Clock Rate:',roach.estimate_fpga_clock()
     else:
         roach = casperfpga.katcp_fpga.KatcpFpga(ip,timeout=40.)
         print 'Fpga Clock Rate:',roach.estimate_fpga_clock()
@@ -146,7 +147,7 @@ if __name__=='__main__':
         for bram in snapBrams:
             print bram,'\t',valDict[bram],'\t',valDictEnd[bram]
 
-        qdrVals = readMemory(roach,qdrMemName,nQdrSamples,nBytesPerQdrSample,bQdrFlip=bRoach2)
+        qdrVals = readMemory(roach,qdrMemName,nQdrSamples,nBytesPerQdrSample,bQdrFlip=True)
         roach.write_int('read_qdr',0)
         #just print the first few and last few
         print 'read-by-katcp','\t',qdrVals[0:nSnapSamples],'\t',qdrVals[-nSnapSamples:]
