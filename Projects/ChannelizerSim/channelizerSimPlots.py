@@ -1,9 +1,31 @@
+# File: channelizerSimPlots.py
+# Author: Matt Strader
+# This script simulates the functionality of the channelizer firmware
+# used to read out ARCONS and similar MKID instruments
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.signal
     
 
 def tone(freq,nSamples,sampleRate,initialPhase=0.):
+    '''Creates an array of samples from a pure tone
+
+    Parameters
+    ----------
+    freq : float
+        The frequency of the tone in the same units as sampleRate
+    nSamples : int
+        number of samples of generated tone
+    sampleRate : float
+        the number of times the tone is sampled per unit of time.  Any appropriate units will work if consistent with freq
+    initialPhase : float
+        an optional phase offset for the beginning of the tone in radians
+    
+    Returns
+    -------
+    out : array of floats, length nSamples
+        the generated tone
+    '''
     dt = 1/sampleRate
     time = np.arange(0,nSamples)*dt
     out = np.exp(1.j*(2*np.pi*freq*time+initialPhase))
@@ -11,18 +33,73 @@ def tone(freq,nSamples,sampleRate,initialPhase=0.):
     return out
 
 def toneWithPhasePulse(freq,nSamples,sampleRate=512.e6,pulseAmpDeg=-35.,decayTime=30.e-6,riseTime=.5e-6,pulseArrivalTime=50.e-6,initialPhase=0.):
+    '''Creates an array of samples from a tone with a phase pulse
+
+    At a designated time, there is an exponential pulse in the sampled tone as might be seen in a readout tone passed
+    through an MKID while a photon has struck. The amplitude portion of a photon hit is not simulated. 
+    If the sampleRate is in Hz, all times (decayTime, riseTime, pulseArrivalTime) should be in seconds.
+
+    Parameters
+    ----------
+    freq : float
+        The frequency of the tone in the same units as sampleRate
+    nSamples : int
+        number of samples of generated tone
+    sampleRate : float
+        the number of times the tone is sampled per unit of time.  Any appropriate units will work if consistent with freq
+    pulseAmpDeg : float
+        the amplitude of the phase pulse in degrees
+    decayTime : float
+        the exponential decay time of the pulse
+    riseTime : float
+        the exponential rise time of the pulse
+    pulseArrivalTime : float
+        The time at which the phase pulse should occur.
+    initialPhase : float
+        an optional phase offset for the beginning of the tone in radians
+    
+    Returns
+    -------
+    out : array of floats, length nSamples
+        the generated tone with the phase pulse
+    '''
     dt = 1./sampleRate
     time = np.arange(0,nSamples)*dt
     pulseArrivalIndex = pulseArrivalTime//dt
     pulseAmp = np.pi/180.*pulseAmpDeg
+    #create a decaying exponential for the tail
     pulse = np.exp(-time[0:nSamples-pulseArrivalIndex]/decayTime)
+    #create an exponential and reverse it for the inital rise of the pulse
     rise = np.exp(-time[0:pulseArrivalIndex]/riseTime)[::-1]
+    #create the combined pulse
     paddedPulse = np.append(rise,pulse)
     phase = pulseAmp*paddedPulse
     out = np.exp(1.j*(2*np.pi*freq*time+phase+initialPhase))
     return out
     
 def pfb(x,nTaps=4,fftSize=512,binWidthScale=2.5,windowType='hanning'):
+    '''Peforms a polyphase filter bank on input data
+
+    A PFB is applied to data before performing an fft to change the frequency response characteristics of the fft
+    In particular, the frequency response near the center of an fft bin can be made flatter with near unity gain
+    and lessens the leakage from side lobes
+
+    Parameters
+    ----------
+    x : array of floats
+        The data to be filtered
+    nTaps : int
+        number of taps in the pfb
+    binWidthScale : float
+        values greater than one expand the width of the fft bin
+    windowType : string
+        at the moment accepted values are 'hanning' or None
+    
+    Returns
+    -------
+    out : array of floats
+        the result of applying the pfb to x
+    '''
     windowSize = nTaps*fftSize
     angles = np.arange(-nTaps/2.,nTaps/2.,1./fftSize)
     window = np.sinc(binWidthScale*angles)
@@ -37,20 +114,13 @@ def pfb(x,nTaps=4,fftSize=512,binWidthScale=2.5,windowType='hanning'):
         out[i:i+fftSize] = windowedChunk.reshape(nTaps,fftSize).sum(axis=0)
     return out
 
-def dftBin(k,k0,m,N=512):
-    return np.exp(1.j*m*np.pi*k0)*(1-np.exp(1.j*2*np.pi*k0))/(1-np.exp(1.j*2*np.pi/N*(k0-k)))
 
-def dftSingle(signal,n,freqIndex):
-    indices = np.arange(0,n)
-    signalCropped = signal[0:n]
-    dft = np.sum(signalCropped*np.exp(-2*np.pi*1.j*indices*freqIndex/N))
-    return dft
-
+#Choose the instrument to simulate
 instrument = 'arcons'#'darkness'
 if instrument == 'arcons':
     fftSize=512 
     nPfbTaps=4
-    sampleRate = 512.e6
+    sampleRate = 512.e6 #512 MHz
     clockRate = 256.e6
     bFlipSigns = True
     lpfCutoff = 250.e3# 125 kHz in old firmware, should probably be 250 kHz
@@ -63,7 +133,7 @@ elif instrument == 'darkness':
     sampleRate = 1.8e9
     clockRate = 225.e6
     bFlipSigns = True
-    lpfCutoff = 250.e3# 125 kHz in old firmware, should probably be 250 kHz
+    lpfCutoff = 250.e3
     nLpfTaps = 20
     binOversamplingRate = 2. #number of samples from the same bin used in a clock cycle
     downsample = 1
@@ -75,7 +145,6 @@ print nSimultaneousInputs,' consecutive inputs'
 print binSpacing/1.e6, 'MHz between bin centers'
 print binSampleRate/1.e6, 'MHz sampling of fft bin'
 
-lpf = scipy.signal.firwin(nLpfTaps, cutoff=lpfCutoff, nyq=binSampleRate/2.,window='hanning')
 
 #Define the resonant frequency of interest
 #resFreq = 10.99e6 #[Hz]
@@ -85,6 +154,7 @@ binFreq = binIndex*binSpacing #center frequency of bin at binIndex
 print 'binFreq',binFreq
 
 #Define some additional nearby resonant frequencies.  These should be filtered out of the channel of interest.
+#later we'll make some readout tones at these frequencies, add them in, and channelize to see that they're filtered
 resSpacing = .501e6 #250 kHz minimum space between resonators
 resFreq2 = resFreq-resSpacing#[Hz] Resonator frequency
 resFreq3 = resFreq+resSpacing#[Hz] Resonator frequency
@@ -97,16 +167,20 @@ print 'freq2',resFreq2/1.e6,'MHz k0',resFreqIndex2
 print 'freq3',resFreq3/1.e6,'MHz k0',resFreqIndex3
 
 nSamples = 4*nPfbTaps*fftSize
-#Simulate the frequency response for a range of frequencies
+#Calculate the frequency response for a range of frequencies
 freqStep = 0.01e6
 freqResponseBandwidth = 8.e6
-#1st stage, apply pfb and fft
+#Frequency response for 1st stage of channelizer, apply pfb and fft to coarsely divide up frequency space
+
+#make a list of frequencies for which we'll check the response
 freqList = np.arange(binFreq-freqResponseBandwidth/2, binFreq+freqResponseBandwidth/2, freqStep)
 nFreq = len(freqList)
 freqResponseFft = np.zeros(nFreq,dtype=np.complex128)
 freqResponsePfb = np.zeros(nFreq,dtype=np.complex128)
 #sweep through frequencies
 for iFreq,freq in enumerate(freqList):
+    #for each frequency, see how much of it makes it into the fft bin of interest
+    # for a standard fft and for a pfb
     signal = tone(freq,nSamples,sampleRate)
 
     fft = (np.fft.fft(signal,fftSize))
@@ -123,29 +197,26 @@ for iFreq,freq in enumerate(freqList):
 freqResponseFftDb = 10*np.log10(np.abs(freqResponseFft))
 freqResponsePfbDb = 10*np.log10(np.abs(freqResponsePfb))
 
-#2nd stage, shift res freq to zero and apply low pass filter
-normFreqStep = freqStep*2*np.pi/binSampleRate
-#binBandNormFreqs = np.arange(-np.pi-10*normFreqStep,np.pi,normFreqStep)
+#Frequency response for 2nd stage of channelizer, shift res freq to zero and apply low pass filter
+#this narrows the bin around the desired readout frequency
+lpf = scipy.signal.firwin(nLpfTaps, cutoff=lpfCutoff, nyq=binSampleRate/2.,window='hanning')
+
 binBandNormFreqs = (freqList-resFreq)*2*np.pi/binSampleRate # frequencies in bandwidth of a fft bin[rad/sample]
 _,freqResponseLpf = scipy.signal.freqz(lpf, worN=binBandNormFreqs)
 freqResponseLpfDb = 10*np.log10(np.abs(freqResponseLpf))
 binBandFreqs = resFreq+binBandNormFreqs*binSampleRate/(2.*np.pi)
 
+#for the overall response after the lpf and pfb, multiply the curves we calculated earlier
 freqResponse = freqResponseLpf*freqResponsePfb
 phaseResponse = np.rad2deg(np.unwrap(np.angle(freqResponse)))
 phaseResponseLpf = np.rad2deg(np.unwrap(np.angle(freqResponseLpf)))
 phaseResponsePfb = np.rad2deg(np.unwrap(np.angle(freqResponsePfb)))
-#phaseResponse = np.angle(freqResponse,deg=True)
-#phaseResponseLpf = np.angle(freqResponseLpf,deg=True)
-#phaseResponsePfb = np.angle(freqResponsePfb,deg=True)
 freqResponseDb = 10.*np.log10(np.abs(freqResponse))
 
 freqListMHz = freqList/1.e6
 #Plot Response vs Frequency for 1st and 2nd stages
 def f(fig,ax):
     ax.plot(freqListMHz,freqResponsePfbDb,label='FFT bin')
-    #ax.plot(freqListMHz,freqResponseFftDb)
-    #ax.plot(freqListMHz,freqResponseLpfDb)
     ax.plot(freqListMHz,freqResponseDb,label='final channel')
     ax.axvline(resFreq/1.e6,color='.5',label='resonant freq')
     ax.axvline(resFreq2/1.e6,color='.8')
@@ -174,14 +245,16 @@ f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 ###################################################################
-#Now we'll simulate the full channelizer with a probe tone at the resonant frequency
+#Now we'll simulate the full channelizer by 
+# generating a sampled probe tone at the resonant frequency,
+# applying the 2 stages of channelization
+# and inspecting the phase of the channel corresponding to the resonant frequency
 nSamples = 100*nPfbTaps*fftSize
 
-
-#signal = tone(resFreq,nSamples,sampleRate)
+# here's the signal we're interested in.  Use defaults to include phase pulse that we'll try to recover
 signal = toneWithPhasePulse(resFreq,nSamples,sampleRate)
 
-#add in other tones
+#add in other tones with their own pulses.  We don't want those pulses to show up in this channel
 signal += toneWithPhasePulse(resFreq2,nSamples,sampleRate,pulseAmpDeg=-90.,pulseArrivalTime=200.e-6,initialPhase=2.)
 signal += toneWithPhasePulse(resFreq3,nSamples,sampleRate,pulseAmpDeg=-80.,pulseArrivalTime=300.e-6,initialPhase=1.)
 #signal += tone(resFreq3,nSamples,sampleRate,initialPhase=1.)
