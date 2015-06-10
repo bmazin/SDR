@@ -18,6 +18,7 @@ def peaks(y,nsig, m=2, returnDict=False):
     peaks which are NSIG above the sigma of all peaks are selected.
 
     """
+    print "begin Peaks.peaks with nsig,m=",nsig,m
     d0 = y - np.roll(y,-1)
     d1 = y - np.roll(y,1)
     pk = np.arange(y.size)[np.logical_and(d0>0, d1>0)]
