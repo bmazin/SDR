@@ -1,19 +1,16 @@
 ## supports roach2 rev 1 (derived from roach2_rev1.ucf)
 # VRN/VRP sharing
 
-INST "c250_bb2_XSG_core_config/c250_bb2_XSG_core_config/c250_bb2_x0/pfb/pfb_2751b4544b/pfb_fir1_2fb4caab69" AREA_GROUP = "pfb_fir";
-INST "c250_bb2_XSG_core_config/c250_bb2_XSG_core_config/c250_bb2_x0/pfb/pfb_2751b4544b/pfb_fir_b946daf1fa" AREA_GROUP = "pfb_fir";
+INST "*pfb_fir*" AREA_GROUP = "pfb_fir";
 AREA_GROUP "pfb_fir" RANGE=SLICE_X0Y302:SLICE_X107Y359;
 AREA_GROUP "pfb_fir" RANGE=DSP48_X0Y122:DSP48_X6Y143;
 AREA_GROUP "pfb_fir" RANGE=RAMB18_X0Y122:RAMB18_X6Y143;
 AREA_GROUP "pfb_fir" RANGE=RAMB36_X0Y61:RAMB36_X6Y71;
 
-INST "c250_bb2_XSG_core_config/c250_bb2_XSG_core_config/c250_bb2_x0/pfb/pfb_2751b4544b/fft_851954a002/fft_biplex_5b7def33b2/biplex_core_e3e7319f55/fft_stage_3_6d127907e6" AREA_GROUP = "fft_stg1to3";
-INST "c250_bb2_XSG_core_config/c250_bb2_XSG_core_config/c250_bb2_x0/pfb/pfb_2751b4544b/fft_851954a002/fft_biplex_5b7def33b2/biplex_core_e3e7319f55/fft_stage_1_f44bbe0632" AREA_GROUP = "fft_stg1to3";
-INST "c250_bb2_XSG_core_config/c250_bb2_XSG_core_config/c250_bb2_x0/pfb/pfb_2751b4544b/fft_851954a002/fft_biplex_5b7def33b2/biplex_core_e3e7319f55/fft_stage_2_5f12b5d6d1" AREA_GROUP = "fft_stg1to3";
-INST "c250_bb2_XSG_core_config/c250_bb2_XSG_core_config/c250_bb2_x0/pfb/pfb_2751b4544b/fft1_63d2464ba2/fft_biplex_93e9040692/biplex_core_e3e7319f55/fft_stage_1_f44bbe0632" AREA_GROUP = "fft_stg1to3";
-INST "c250_bb2_XSG_core_config/c250_bb2_XSG_core_config/c250_bb2_x0/pfb/pfb_2751b4544b/fft1_63d2464ba2/fft_biplex_93e9040692/biplex_core_e3e7319f55/fft_stage_2_5f12b5d6d1" AREA_GROUP = "fft_stg1to3";
-INST "c250_bb2_XSG_core_config/c250_bb2_XSG_core_config/c250_bb2_x0/pfb/pfb_2751b4544b/fft1_63d2464ba2/fft_biplex_93e9040692/biplex_core_e3e7319f55/fft_stage_3_6d127907e6" AREA_GROUP = "fft_stg1to3";
+INST "*fft_stage_3_*" AREA_GROUP = "fft_stg1to3";
+INST "*fft_stage_1_*" AREA_GROUP = "fft_stg1to3";
+INST "*fft_stage_2_*" AREA_GROUP = "fft_stg1to3";
+INST "*fft_stage_1_*" AREA_GROUP = "fft_stg1to3";
 AREA_GROUP "fft_stg1to3" RANGE=SLICE_X0Y236:SLICE_X107Y299;
 AREA_GROUP "fft_stg1to3" RANGE=DSP48_X0Y96:DSP48_X6Y119;
 AREA_GROUP "fft_stg1to3" RANGE=RAMB18_X0Y96:RAMB18_X6Y119;
