@@ -37,8 +37,8 @@ class nearestDistClass:
                 self.coordinates[jj] = 0
         return result
 
-top = np.loadtxt('top.txt')
-bottom = np.loadtxt('bottom.txt')
+top = np.loadtxt('d1_top.txt')
+bottom = np.loadtxt('d1_bottom.txt')
 nRow,nCol= np.shape(top)
 
 topFreqs = np.sort(np.reshape(top,(-1,)))

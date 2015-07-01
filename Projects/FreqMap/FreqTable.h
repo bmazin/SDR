@@ -16,6 +16,7 @@ class FreqTable
 	double** clean_table;
 	double** real_table;
 	double required_min_neighbor_separation;
+	double required_max_neighbor_separation;
 	double collision_threshold;
 	double scatter_stddev;
 	double gradient_magnitude;
@@ -38,7 +39,9 @@ class FreqTable
 	std::vector<RectConstraint> rect_constraints;
 	std::vector<EdgeConstraint> edge_constraints;
 
-	bool check_cell_neighbor_separation(int r, int c, double center_value,bool check_row_below);
+	bool check_min_neighbor_separation(int r, int c, double center_value,bool check_row_below);
+    bool check_max_neighbor_separation(int r, int c, double center_value,bool check_row_below);
+    
 	void build_freq_list();
 	void set_random_grad_angle();
 	void initialize_clean_table(bool work_backward);
@@ -62,6 +65,9 @@ class FreqTable
 	int get_num_cols() {return NCOLS;}
 	double get_cell_freq(int row,int col) {return real_table[row][col];}
 	void set_requirements(int num_rows,int num_cols,double bandwidth,double min_n_sep,double start_f,bool if_hole);
+    void set_basic_requirements(int num_rows,int num_cols);
+    void set_freq_requirements(double bandwidth,double start_f,bool if_hole);
+    void add_neighbor_constraint(double neighbor_separation,bool separation_is_a_minimum);
 	friend class EdgeConstraint;
 };
 

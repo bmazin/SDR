@@ -15,7 +15,7 @@
 using namespace std;
 
 FreqTable::FreqTable(unsigned int seed)
-	:required_min_neighbor_separation(60),collision_threshold(0.5),scatter_stddev(0.5),gradient_magnitude(0),gradient_angle(0),num_bad_pixels(0),min_neighbor_separation(0),MAX_FREQ(512),NROWS(46),NCOLS(6),num_attempts_to_solve(0),solution_found(false),has_if_hole(false)
+	:required_min_neighbor_separation(60),required_max_neighbor_separation(NULL),collision_threshold(0.5),scatter_stddev(0.5),gradient_magnitude(0),gradient_angle(0),num_bad_pixels(0),min_neighbor_separation(0),MAX_FREQ(512),NROWS(46),NCOLS(6),num_attempts_to_solve(0),solution_found(false),has_if_hole(false)
 {
 	clean_table = NULL;
 	real_table = NULL;
@@ -54,14 +54,46 @@ void FreqTable::set_requirements(int num_rows,int num_cols,double bandwidth,doub
 	build_freq_list();
 }
 
+
+void FreqTable::set_basic_requirements(int num_rows,int num_cols) 
+{
+	NROWS = num_rows;
+	NCOLS = num_cols;
+	clean_table = new double*[NROWS];
+	real_table = new double*[NROWS];
+
+	for (int r = 0; r < NROWS; ++r)
+	{
+		clean_table[r] = new double[NCOLS];
+		real_table[r] = new double[NCOLS];
+	}
+}
+
+void FreqTable::set_freq_requirements(double bandwidth,double start_f,bool if_hole) 
+{
+	MAX_FREQ = start_f+bandwidth;
+	start_freq = start_f;
+	has_if_hole = if_hole;
+	build_freq_list();
+}
+
+void FreqTable::add_neighbor_constraint(double neighbor_separation,bool separation_is_a_minimum) 
+{
+    if (separation_is_a_minimum)
+        required_min_neighbor_separation = neighbor_separation;
+    else
+        required_max_neighbor_separation = neighbor_separation;
+}
+
 void FreqTable::remove_constraints()
 {
 	edge_constraints.clear();
 	rect_constraints.clear();
 }
-bool FreqTable::check_cell_neighbor_separation(int r, int c, double center_value,bool check_row_below)
+
+bool FreqTable::check_min_neighbor_separation(int r, int c, double center_value,bool check_row_below)
 {
-	double min_dist = 1000;
+	double min_dist = 100000;
 	int r_neighbors[] = {-1,-1,-1,0};
 	int c_neighbors[] = {-1,0,1,-1};
 
@@ -95,6 +127,38 @@ bool FreqTable::check_cell_neighbor_separation(int r, int c, double center_value
 		}
 	}
 	return min_dist > required_min_neighbor_separation;
+}
+
+bool FreqTable::check_max_neighbor_separation(int r, int c, double center_value,bool check_row_below)
+{
+	double max_dist = 0;
+	int r_neighbors[] = {0};
+	int c_neighbors[] = {-1};
+
+	if (check_row_below == true)
+	{
+		r_neighbors[0] = 0;
+		c_neighbors[0] = 1;
+	}
+	int dr = 0;
+	int dc = 0;
+	double dist = 0;
+	int N_neighbors = 1;
+    
+	for (int i = 0; i < N_neighbors; ++i)
+	{
+		dr = r_neighbors[i];
+		dc = c_neighbors[i];
+		if (r+dr >= 0 && r+dr < NROWS && c+dc >=0 && c+dc < NCOLS)
+		{
+			dist = abs(real_table[r+dr][c+dc]-center_value);
+            //if (r == 16 || r == 17)
+                //cout << r+dr << " " << c+dc << " " << real_table[r+dr][c+dc] << " " << dist << endl;
+			if (dist > max_dist)
+				max_dist = dist;
+		}
+	}
+	return max_dist < required_max_neighbor_separation;
 }
 
 void FreqTable::find_layout_solution(bool work_backward)
@@ -155,7 +219,15 @@ void FreqTable::initialize_clean_table(bool work_backward)
 					give_up = N_tries >= available_freq_list.size()*3;
 					random_index = random_index_engine(random_engine) % available_freq_list.size();
 					freq = available_freq_list[random_index];
-					good_placement = check_cell_neighbor_separation(r,c,freq,work_backward);
+					good_placement = check_min_neighbor_separation(r,c,freq,work_backward);
+					good_placement = good_placement && check_max_neighbor_separation(r,c,freq,work_backward);
+
+                    /*
+					for (int iConstraint = 0; iConstraint < neighbor_constraints.size(); ++iConstraint)
+					{
+						good_placement = good_placement && neighbor_constraints[iConstraint].obeys_constraint(r,c,freq,work_backward);
+					}
+                    */
 
 					for (int iConstraint = 0; iConstraint < rect_constraints.size(); ++iConstraint)
 					{
@@ -206,13 +278,14 @@ void FreqTable::build_freq_list()
     cout << "start_freq " << start_freq << endl;
     cout << "max_freq " << MAX_FREQ << endl;
     cout << "num_freqs " << num_freqs << endl;
-    cout << "IF_freq_hole_lower_bound " << IF_freq_hole_lower_bound << endl;
+    if (has_if_hole == true)
+        cout << "IF_freq_hole_lower_bound " << IF_freq_hole_lower_bound << endl;
 
 	double BANDWIDTH_PER_CHANNEL = (MAX_FREQ-start_freq - IF_freq_hole_width)/(num_freqs-2);
-    cout << "bandwidth per channel " << BANDWIDTH_PER_CHANNEL << endl;
 	double IF_freq_hole_skip = IF_freq_hole_width-BANDWIDTH_PER_CHANNEL;
 	if (has_if_hole == false)
-		BANDWIDTH_PER_CHANNEL = (MAX_FREQ)/num_freqs;
+		BANDWIDTH_PER_CHANNEL = (MAX_FREQ-start_freq)/num_freqs;
+    cout << "bandwidth per channel " << BANDWIDTH_PER_CHANNEL << endl;
 	double freq = 0;
     bool found_IF_hole = false;
 	for (int r = 0; r < NROWS; ++r)
