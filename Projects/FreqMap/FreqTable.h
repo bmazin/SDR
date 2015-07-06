@@ -23,6 +23,7 @@ class FreqTable
 	double gradient_angle;
 	double intermediate_freq;
 	double start_freq;
+    double IF_freq_hole_width;
 	int MAX_FREQ;
 	int NROWS;
 	int NCOLS;
@@ -44,7 +45,7 @@ class FreqTable
     
 	void build_freq_list();
 	void set_random_grad_angle();
-	void initialize_clean_table(bool work_backward);
+	void initialize_clean_table(bool work_backward, bool seedCornerWithLowest);
 
 
 	public:
@@ -55,7 +56,7 @@ class FreqTable
 	void print_freq_list();
 
 	void clean_freq_table();
-	void find_layout_solution(bool work_backward);
+	void find_layout_solution(bool work_backward, bool seedCornerWithLowest);
 
 
 	void add_rect_constraint(int r_lb,int r_ub,int c_lb,int c_ub,int f_lb,int f_ub,bool inclusive);
@@ -65,8 +66,8 @@ class FreqTable
 	int get_num_cols() {return NCOLS;}
 	double get_cell_freq(int row,int col) {return real_table[row][col];}
 	void set_requirements(int num_rows,int num_cols,double bandwidth,double min_n_sep,double start_f,bool if_hole);
-    void set_basic_requirements(int num_rows,int num_cols);
-    void set_freq_requirements(double bandwidth,double start_f,bool if_hole);
+    void set_basic_requirements(int num_rows,int num_cols, double bandwidth, double start_if);
+    void set_if_hole(bool if_hole, double if_hole_width = 0.);
     void add_neighbor_constraint(double neighbor_separation,bool separation_is_a_minimum);
 	friend class EdgeConstraint;
 };
