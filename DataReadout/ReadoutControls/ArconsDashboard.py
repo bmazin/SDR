@@ -486,11 +486,24 @@ class StartQt4(QMainWindow):
             meFile.write("#define BEAM_COLS %d\n"%beamCols)
             meFile.close()
 
+            # make the bin directory if it does not exist
+            try:
+                os.mkdir("bin")
+            except OSError:
+                pass
+
             proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMaster.c",shell=True)
             #proc = subprocess.Popen("h5cc -shlib -pthread -o bin/PacketMaster lib/PacketMasterR1.c",shell=True)
             proc.wait()
             filePath = os.path.join(self.datadir,self.obsfile)
             pmCommand = "sudo nice -n -10 bin/PacketMaster %s %s >> %s"%(filePath,self.beammapfile,logfile)
+
+
+            # make the logs directory if it does not exist
+            try:
+                os.mkdir("logs")
+            except OSError:
+                pass
             print "Start PacketMaster like this: ",pmCommand
             self.pulseMasterProc = subprocess.Popen(pmCommand,shell=True)
             print "PacketMaster process started with logfile %s" % logfile
@@ -646,65 +659,68 @@ class StartQt4(QMainWindow):
         self.int_time = self.ui.int_time_spinBox.value()
         ti = tf-self.int_time
 
-        #print 'rawdata shape ', shape(rawdata)
-        newcounts = reshape(rawdata,(1,self.nxpix*self.nypix))
-        #self.counts= append(self.counts,newcounts,axis=0)
-        #self.rotated_counts = append(self.rotated_counts, rotated, axis=0)
 
-        self.counts[self.image_time] = newcounts
-        self.rotated_counts[self.image_time] = rotated
+        try:
+            newcounts = reshape(rawdata,(1,self.nxpix*self.nypix))
+            #self.counts= append(self.counts,newcounts,axis=0)
+            #self.rotated_counts = append(self.rotated_counts, rotated, axis=0)
 
-        #print 'shape of counts', shape(self.counts)
-        if ti<0:
-            ti = 0
-        if tf==0 or tf==ti:
-            image_counts = newcounts
-        else:
-            image_counts = sum(self.counts[ti:tf],axis=0)
-            image_counts = reshape(image_counts,(1,self.nxpix*self.nypix))
+            self.counts[self.image_time] = newcounts
+            self.rotated_counts[self.image_time] = rotated
 
-        if self.sky_subtraction == True:
-            image_counts = image_counts-reshape(self.skyrate*(tf-ti),(1,self.nxpix*self.nypix))
+            #print 'shape of counts', shape(self.counts)
+            if ti<0:
+                ti = 0
+            if tf==0 or tf==ti:
+                image_counts = newcounts
+            else:
+                image_counts = sum(self.counts[ti:tf],axis=0)
+                image_counts = reshape(image_counts,(1,self.nxpix*self.nypix))
 
-        photon_count = reshape(image_counts,rawshape)
-        #print photon_count.shape
-        photon_count = flipud(photon_count)
-        #photon_count = rot90(photon_count)
-        #photon_count = rot90(photon_count)
-        #photon_count = rot90(photon_count)
+            if self.sky_subtraction == True:
+                image_counts = image_counts-reshape(self.skyrate*(tf-ti),(1,self.nxpix*self.nypix))
 
-        if self.ui.flat_field_radioButton.isChecked():
-            photon_count *= self.flatFactors
+            photon_count = reshape(image_counts,rawshape)
+            #print photon_count.shape
+            photon_count = flipud(photon_count)
+            #photon_count = rot90(photon_count)
+            #photon_count = rot90(photon_count)
+            #photon_count = rot90(photon_count)
 
-        if self.ui.contrast_mode.isChecked():
-            self.vmin = self.ui.vmin.value()
-            self.vmax = self.ui.vmax.value()
-        else:
-            indices = sort(image_counts)
-            brightest = self.ui.brightpix.value()
-            self.vmin = 0
-            self.vmax = indices[0,-1*(brightest)]
+            if self.ui.flat_field_radioButton.isChecked():
+                photon_count *= self.flatFactors
 
-        #fig = plt.figure(figsize=(.44,.46), dpi=100, frameon=False)
-        fig = plt.figure(figsize=(0.01*numXPixel,0.01*numYPixel), dpi=100, frameon=False)
-        im = plt.figimage(photon_count, cmap='gray',vmin = self.vmin, vmax = self.vmax)
+            if self.ui.contrast_mode.isChecked():
+                self.vmin = self.ui.vmin.value()
+                self.vmax = self.ui.vmax.value()
+            else:
+                indices = sort(image_counts)
+                brightest = self.ui.brightpix.value()
+                self.vmin = 0
+                self.vmax = indices[0,-1*(brightest)]
 
-        if tf==ti:
-            self.redpix = where(photon_count > 2000)
-        else:
-            self.redpix = where(photon_count > 2000*(tf-ti))
-        #im = plt.figimage(rawdata, cmap='gray')
-        plt.savefig("Arcons_frame.png", pad_inches=0)
-        #try:
-        #    print '# redpix= ',len(self.redpix[0])
-        #except:
-        #    print '# redpix= 0'
-        self.image_time+=1
-        self.update_image()
-        if self.taking_sky == True:
-            if self.image_time == self.skytime:
-                self.taking_sky = False
-                self.skyrate = self.skycount/self.skytime
+            #fig = plt.figure(figsize=(.44,.46), dpi=100, frameon=False)
+            fig = plt.figure(figsize=(0.01*numXPixel,0.01*numYPixel), dpi=100, frameon=False)
+            im = plt.figimage(photon_count, cmap='gray',vmin = self.vmin, vmax = self.vmax)
+
+            if tf==ti:
+                self.redpix = where(photon_count > 2000)
+            else:
+                self.redpix = where(photon_count > 2000*(tf-ti))
+            #im = plt.figimage(rawdata, cmap='gray')
+            plt.savefig("Arcons_frame.png", pad_inches=0)
+            #try:
+            #    print '# redpix= ',len(self.redpix[0])
+            #except:
+            #    print '# redpix= 0'
+            self.image_time+=1
+            self.update_image()
+            if self.taking_sky == True:
+                if self.image_time == self.skytime:
+                    self.taking_sky = False
+                    self.skyrate = self.skycount/self.skytime
+        except ValueError:
+            print 'Warning:  shape(rawdata)= ', shape(rawdata), "self nxpix,nypix=",self.nxpix,self.nypix
 
     def makepixmap(self, imagefile, scalex=1, scaley=1):
         '''Given an image file this function converts them to pixmaps to be displayed by QT gui'''
