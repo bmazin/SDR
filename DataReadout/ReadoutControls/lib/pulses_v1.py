@@ -72,9 +72,14 @@ class ObsHeader(IsDescription):
     target = StringCol(80)
     datadir = StringCol(80)             # directory where observation data is stored
     calfile = StringCol(80)             # path and filename of calibration file
+    beammappath = StringCol(80)
     beammapfile = StringCol(80)         # path and filename of beam map file
     version = StringCol(80)
     instrument = StringCol(80)
+    boffile = StringCol(80)
+    firmware = StringCol(80)
+    customFIR = StringCol(80)
+    freqpath = StringCol(80)
     description = StringCol(400)
     telescope = StringCol(80)
     filt = StringCol(80)
@@ -84,6 +89,7 @@ class ObsHeader(IsDescription):
     dec = Float64Col()
     alt = Float64Col()
     az = Float64Col()
+    seeing = Float64Col()
     airmass = Float64Col()
     equinox = Float64Col()
     epoch = Float64Col()
