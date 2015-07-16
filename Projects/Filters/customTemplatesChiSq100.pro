@@ -87,8 +87,9 @@ fit = t1f
 end
 
 ; make templates and noise spectra from SDR pulses
-path = '/home/kids/filterData/20131204/'
-nrows = 33 ; <= number of lines in snap_list.txt
+;path = '/home/kids/filterData/20131204/'
+path = '/mnt/star/filterData/20131208/'
+nrows = 1441 ; <= number of lines in snap_list.txt
 
 listpath = path+'snap_list.txt'
 openr,2,listpath
@@ -147,12 +148,13 @@ for ipixel=0,nrows-1 do begin
     endif
   endfor
       
+  pcountThreshold=500
   data=0  ; free data memory
-  if(pcount GT 0) then begin
+  if(pcount GT pcountThreshold) then begin
     ; run quicktemplategen on pulses
     t1 = dblarr(2000)
     noiseFT = dblarr(pcount,800)
-    noiseFT26 = dblarr(pcount,26)
+    noiseFT100 = dblarr(pcount,100)
     ch1 = dblarr(pcount)
     n1c = 0
     print,roach_str+pixel_str+' pcount: '+string(pcount)
@@ -179,7 +181,7 @@ for ipixel=0,nrows-1 do begin
         ;n1 += ABS(FFT(P1[0:799], -1))^2
         ;n1c += 1.0
         noiseFT[n1c,*] = ABS(FFT(P1[0:799]*!Pi/180.0, -1))^2
-        noiseFT26[n1c,*] = ABS(FFT(P1[0:25]*!Pi/180.0, -1))^2
+        noiseFT100[n1c,*] = ABS(FFT(P1[0:99]*!Pi/180.0, -1))^2
         n1c += 1.0
         
         ;set_plot,'X'
@@ -190,13 +192,13 @@ for ipixel=0,nrows-1 do begin
     
     t1 = t1/max(t1)
     n1 = median(noiseFT[0:n1c-1,*],DIMENSION=1)
-    n1_26 = median(noiseFT26[0:n1c-1,*],DIMENSION=1)
+    n1_100 = median(noiseFT100[0:n1c-1,*],DIMENSION=1)
     ; normalize FFT
     n1 *= (1.0d-6*800.0)
-    n1_26 *= (1.0d-6*26.0)    
+    n1_100 *= (1.0d-6*100.0)    
     idx = dindgen(2000)
     
-    n1_26[0] = n1_26[1]*2.0
+    n1_100[0] = n1_100[1]*2.0
     
     set_plot,'ps'
     device,/color,encapsulated=0
@@ -225,14 +227,14 @@ for ipixel=0,nrows-1 do begin
     Fa[N21a] = N21a -Na + FINDGEN(N21a-2) 
     Fa = Fa/(Na*T) 
     
-    Na26 = 26
-    N21a26 = Na26/2 + 1 
-    Fa26 = INDGEN(Na26) 
-    Fa26[N21a26] = N21a26 -Na26 + FINDGEN(N21a26-2) 
-    Fa26 = Fa26/(Na26*T) 
+    Na100 = 100
+    N21a100 = Na100/2 + 1 
+    Fa100 = INDGEN(Na100) 
+    Fa100[N21a100] = N21a100 -Na100 + FINDGEN(N21a100-2) 
+    Fa100 = Fa100/(Na100*T) 
     
     OPLOT, SHIFT(Fa, -N21a), 10.0*alog10(SHIFT(n1,-N21a)),psym=10,color=200 
-    OPLOT, SHIFT(Fa26, -N21a26), 10.0*alog10(SHIFT(n1_26,-N21a26)),psym=10,color=100    
+    OPLOT, SHIFT(Fa100, -N21a100), 10.0*alog10(SHIFT(n1_100,-N21a100)),psym=10,color=100    
     close,1
     
     ; output templates and noise spectra
@@ -248,9 +250,9 @@ for ipixel=0,nrows-1 do begin
     endfor
     close,2
     
-    openw,2,path+roach_str+pixel_str+'NoiseSpectra26.dat'
-    for i=0,25 do begin
-      printf,2,Fa26[i],n1_26[i]
+    openw,2,path+roach_str+pixel_str+'NoiseSpectra100.dat'
+    for i=0,99 do begin
+      printf,2,Fa100[i],n1_100[i]
     endfor
     close,2
     
