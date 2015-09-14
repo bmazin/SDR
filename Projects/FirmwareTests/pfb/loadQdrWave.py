@@ -53,14 +53,19 @@ def readMemory(roach,memName,nSamples,nBytesPerSample=4,bQdrFlip=False):
         memValues = np.roll(memValues,1)
     return list(memValues)
 
+def writeBram(fpga,memName,valuesToWrite,start=0,nRows=2**10):
+    nBytesPerSample = 8
+    formatChar = 'Q'
+    memValues = np.array(valuesToWrite,dtype=np.uint64) #cast signed values
+    nValues = len(valuesToWrite)
+    toWriteStr = struct.pack('>{}{}'.format(nValues,formatChar),*memValues)
+    fpga.blindwrite(memName,toWriteStr,start)
+
 def writeQdr(fpga,memName,valuesToWrite,start=0,bQdrFlip=True,nQdrRows=2**20):
     nBytesPerSample = 8
     formatChar = 'Q'
     memValues = np.array(valuesToWrite,dtype=np.uint64) #cast signed values
     nValues = len(valuesToWrite)
-#    if nValues < nQdrRows:
-#        memValues = np.append(memValues,np.zeros(nQdrRows-nValues,dtype=np.uint64))
-#        nValues = nQdrRows
     if bQdrFlip: #For some reason, on Roach2 with the current qdr calibration, the 64 bit word seen in firmware
         #has the first and second 32 bit chunks swapped compared to the 64 bit word sent by katcp, so to accomadate
         #we swap those chunks here, so they will be in the right order in firmware
@@ -107,7 +112,7 @@ def generateTones(freqs,nSamples=2**23,amplitudes=None,phases=None,sampleRate=2e
 
     return {'I':iValues,'Q':qValues,'quantizedFreqs':quantFreqs}
 
-def formatWaveForQdr(iVals,qVals,nBitsPerSamplePair=24,nSamplesPerCycle=8,nQdrs=3,nBitsPerQdrRow=64):
+def formatWaveForMem(iVals,qVals,nBitsPerSamplePair=24,nSamplesPerCycle=8,nMems=3,nBitsPerMemRow=64):
     nBitsPerSampleComponent = nBitsPerSamplePair / 2
     #I vals and Q vals are 12 bits, combine them into 24 bit vals
     iqVals = (iVals << nBitsPerSampleComponent) + qVals
@@ -119,39 +124,42 @@ def formatWaveForQdr(iVals,qVals,nBitsPerSamplePair=24,nSamplesPerCycle=8,nQdrs=
     #Now we have 2**20 row values, each is 192 bits and contain 8 IQ pairs 
     #next we have divide these 192 bit rows into three 64-bit qdr rows
 
-    #Qdr0 has the most significant bits
-    qdrRowBitmask = int('1'*nBitsPerQdrRow,2)
-    qdrMaskShifts = nBitsPerQdrRow*np.arange(nQdrs,dtype=object)[::-1]
+    #Mem0 has the most significant bits
+    memRowBitmask = int('1'*nBitsPerMemRow,2)
+    memMaskShifts = nBitsPerMemRow*np.arange(nMems,dtype=object)[::-1]
     #now do bitwise_and each value with the mask, and shift back down
-    qdrRowVals = (iqRowVals[:,np.newaxis] >> qdrMaskShifts) & qdrRowBitmask
+    memRowVals = (iqRowVals[:,np.newaxis] >> memMaskShifts) & memRowBitmask
 
     #now each column contains the 64-bit qdr values to be sent to a particular qdr
-    return qdrRowVals
+    return memRowVals
 
-def loadWaveToQdr(fpga,waveFreqs=[10.4e6],phases=None,sampleRate=2.e9,nSamplesPerCycle=8,nSamples=2**23,nBytesPerQdrSample=8,nBitsPerSamplePair=24,qdrMemNames = ['qdr0_memory','qdr1_memory','qdr2_memory'],dynamicRange=1.):
+def loadWaveToMem(fpga,waveFreqs=[10.4e6],phases=None,sampleRate=2.e9,nSamplesPerCycle=8,nSamples=2**23,nBytesPerMemSample=8,nBitsPerSamplePair=24,memNames = ['qdr0_memory','qdr1_memory','qdr2_memory'],memType='qdr',dynamicRange=1.):
     #define some globals
-    startRegisterName = 'run'
+    #startRegisterName = 'run'
     #startRegisterName = 'test_load_qdr'
-    nBitsPerQdrRow = nBytesPerQdrSample*8 #64
+    nBitsPerMemRow = nBytesPerMemSample*8 #64
     nBitsPerSampleComponent = nBitsPerSamplePair/2
-    nQdrs = len(qdrMemNames)
-    nQdrRowsToUse = nSamples/nSamplesPerCycle
+    nMems = len(memNames)
+    nMemRowsToUse = nSamples/nSamplesPerCycle
 
     tone = generateTones(waveFreqs,phases=phases,nSamples=nSamples,sampleRate=sampleRate,dynamicRange=dynamicRange)
     complexTone = tone['I'] + 1j*tone['Q']
     iVals,qVals = tone['I'],tone['Q']
-    qdrVals = formatWaveForQdr(iVals,qVals,nQdrs=nQdrs,nBitsPerSamplePair=nBitsPerSamplePair,nSamplesPerCycle=nSamplesPerCycle,nBitsPerQdrRow=nBitsPerQdrRow)
-    fpga.write_int(startRegisterName,0) #halt reading from qdr while writing
+    memVals = formatWaveForMem(iVals,qVals,nMems=nMems,nBitsPerSamplePair=nBitsPerSamplePair,nSamplesPerCycle=nSamplesPerCycle,nBitsPerMemRow=nBitsPerMemRow)
+    #fpga.write_int(startRegisterName,0) #halt reading from mem while writing
     time.sleep(.1)
-    loadQdrInFirmware(fpga,loadChoice=0) #clear qdr
-    fpga.write_int('dds_lut_n_qdr_rows',nQdrRowsToUse)
-    for iQdr in xrange(nQdrs):
-        writeQdr(fpga,memName=qdrMemNames[iQdr],valuesToWrite=qdrVals[:,iQdr],bQdrFlip=True)
+    #loadQdrInFirmware(fpga,loadChoice=0) #clear mem
+    fpga.write_int('dds_lut_n_qdr_rows',nMemRowsToUse)
+    for iMem in xrange(nMems):
+        if memType == 'qdr':
+            writeQdr(fpga,memName=memNames[iMem],valuesToWrite=memVals[:,iMem],bQdrFlip=(memType=='qdr'))
+        elif memType == 'bram':
+            writeBram(fpga,memName=memNames[iMem],valuesToWrite=memVals[:,iMem])
     time.sleep(.5)
-    fpga.write_int(startRegisterName,1) #start reading from qdr in firmware
-    #np.savez('tone.npz',complexTone=complexTone,tone=tone,sampleRate=sampleRate,qdrVals=qdrVals,waveFreqs=waveFreqs,quantFreqs=tone['quantizedFreqs'])
+    #fpga.write_int(startRegisterName,1) #start reading from mem in firmware
+    #np.savez('tone.npz',complexTone=complexTone,tone=tone,sampleRate=sampleRate,memVals=memVals,waveFreqs=waveFreqs,quantFreqs=tone['quantizedFreqs'])
 
-    return {'tone':complexTone,'qdrVals':qdrVals,'quantFreqs':tone['quantizedFreqs']}
+    return {'tone':complexTone,'memVals':memVals,'quantFreqs':tone['quantizedFreqs']}
 
 
 if __name__=='__main__':
@@ -171,26 +179,30 @@ if __name__=='__main__':
     np.random.seed(0)
 
     instrument = 'darkness'
+    memType = 'bram'
+    #memType = 'qdr'
     if instrument == 'arcons':
         sampleRate = 512.e6
         nSamplesPerCycle = 2
         nBins = 512
         snapshotNames = ['bin0','bin1']
-        qdrMemNames = ['qdr0_memory']
-        startRegisterName = 'run'
+        if memType == 'qdr':
+            memNames = ['qdr0_memory']
     elif instrument == 'darkness':
         sampleRate = 2.e9
         nSamplesPerCycle = 8
         nBins = 2048
         snapshotNames = ['bin0','bin1','bin2','bin3','bin4','bin5','bin6','bin7']
-        qdrMemNames = ['qdr0_memory','qdr1_memory','qdr2_memory']
-        startRegisterName = 'test_load_qdr'
+        if memType == 'qdr':
+            memNames = ['qdr0_memory','qdr1_memory','qdr2_memory']
+        elif memType == 'bram':
+            memNames = ['dds_lut_mem0','dds_lut_mem1','dds_lut_mem2']
     else:
         print 'unrecognized instrument',instrument
         exit(1)
 
     
-    nQdrRowsToUse = 2**9
+    nQdrRowsToUse = 2**10
     nQdrRows = 2**20
     nBytesPerQdrSample = 8
     nBitsPerSamplePair = 24
@@ -198,7 +210,13 @@ if __name__=='__main__':
 
     binSpacing = sampleRate/nBins
     freq = 10.*binSpacing
-    loadDict = loadWaveToQdr(fpga,waveFreqs=[freq],phases=None,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerQdrSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,qdrMemNames = qdrMemNames,nSamples=nSamples)
+    startRegisterName = 'run'
+    if memType == 'qdr':
+        fpga.write_int(startRegisterName,0) #halt reading from mem while writing
+    elif memType == 'bram':
+        fpga.write_int(startRegisterName,1) #halt firmware writing from mem while writing
+    loadDict = loadWaveToMem(fpga,waveFreqs=[freq],phases=None,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerMemSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,memNames = memNames,nSamples=nSamples,memType=memType)
+    fpga.write_int(startRegisterName,1) #halt reading from mem while writing
     #should be running
 
 #    fill = np.zeros(1024)
@@ -207,7 +225,7 @@ if __name__=='__main__':
 #    fpga.write_int(startRegisterName,1)
     
 
-    qdrVals = loadDict['qdrVals']
+    memVals = loadDict['memVals']
 
     snapNames = ['dds_lut_dataOut0','dds_lut_dataOut1','dds_lut_dataOut2','dds_lut_addr']
     snaps = [fpga.snapshots[name] for name in snapNames]
@@ -222,21 +240,19 @@ if __name__=='__main__':
     snapData = snapData.T
     fpga.write_int('dds_lut_snap',0)#trigger snapshots
     
-    readQ = readMemory(fpga,'qdr0_memory',nSamples=nQdrRowsToUse,nBytesPerSample=8,bQdrFlip=True)
+    readQ = readMemory(fpga,memNames[0],nSamples=nQdrRowsToUse,nBytesPerSample=8,bQdrFlip=(memType=='qdr'))
     readQ = np.array(readQ,dtype=object)
     readQ = readQ[:,np.newaxis]
 
     print 'snap','qdrOut','katcpRead'
-    print snapData[0,:],qdrVals[0,:],readQ[0,:]
+    print snapData[0,:],memVals[0,:],readQ[0,:]
 
-
-
-    print '%X'%qdrVals[0,0],'is',qdrVals[0,0]
+    #print '%X'%memVals[0,0],'is',memVals[0,0]
     
-    np.savetxt('qdrVals.txt',qdrVals,fmt='%X')
+    np.savetxt('memVals.txt',memVals,fmt='%X')
     np.savetxt('snapData.txt',snapData,fmt='%X')
 
-    print 'Error Count:',np.sum(snapData[:nQdrRowsToUse,:-1] != qdrVals[:,:])
+    print 'Error Count:',np.sum(snapData[:nQdrRowsToUse,:-1] != memVals[:,:])
 
     print 'done!'
 
