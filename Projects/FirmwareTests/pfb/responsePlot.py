@@ -9,7 +9,8 @@ import types
 import sys
 from Utils import bin
 import functools
-from loadQdrWave import loadWaveToQdr
+from loadWaveLut import loadWaveToMem
+from fftContent import parseBinData as parseBinData2
 
 def parseBinData(binData,nBitsPerSampleComponent=18,nBitsAfterBinPt=17):
     componentMask = int('1'*nBitsPerSampleComponent,2)
@@ -61,33 +62,46 @@ if __name__=='__main__':
         nBins = 2048
         snapshotNames = ['bin0','bin1','bin2','bin3','bin4','bin5','bin6','bin7']
         qdrMemNames = ['qdr0_memory','qdr1_memory','qdr2_memory'] 
-        dynamicRange = .01
+        memType = 'qdr'
+        dynamicRange = .05
     else:
         print 'unrecognized instrument',instrument
         exit(1)
 
-    nQdrRowsToUse = 2**15
+    startRegisterName = 'run'
+    nQdrRowsToUse = 2**12
     nSamples=nSamplesPerCycle*nQdrRowsToUse
     nBytesPerQdrSample = 8
     nBitsPerSamplePair = 24
     fftSize = nBins
     binSpacing = sampleRate/fftSize
+    lutFreqResolution = sampleRate / (nQdrRowsToUse*nSamplesPerCycle)
+    print 'freq resolution',lutFreqResolution/1.e6,'MHz'
 
-    binIndexToSweep = 50
-    fpga.write_int('bin',binIndexToSweep+8) # there's sometimes an n bin/cycle offset I don't understand
+    binIndexToSweep = 8
+    fpga.write_int('bin',binIndexToSweep) 
     centerFreq = binIndexToSweep * binSpacing
 
-    freqSweepWidth = 20.e6
-    nFreqs = 300
+    freqSweepWidth = 10.e6
+    nFreqs = 1000
 
     freqList = np.linspace(centerFreq - freqSweepWidth/2.,centerFreq + freqSweepWidth/2., nFreqs)
     snapshotBin = fpga.snapshots['selected_bin']
 
+    print 'bin',binIndexToSweep
+    print 'center freq',centerFreq/1.e6,'MHz'
+    print freqList
+#    print 'freq range',freqList[0]/1.e6,freqList[-1]/1.e6
+#    print 'freq step',(freqList[1]-freqList[0])/1.e6
+
     avgs = []
     for iFreq,freq in enumerate(freqList):
-        #if iFreq % 25 == 0:
-        print iFreq
-        loadWaveToQdr(fpga,waveFreqs=[freq],phases=[0.],sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nSamples=nSamples,nBytesPerQdrSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,qdrMemNames = qdrMemNames,dynamicRange=dynamicRange)
+        if iFreq % 25 == 0:
+            print iFreq
+        fpga.write_int(startRegisterName,0) #halt reading from mem while writing
+        loadWaveToMem(fpga,waveFreqs=[freq],phases=[0.],sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nSamples=nSamples,nBytesPerMemSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,memNames = qdrMemNames,dynamicRange=dynamicRange,memType=memType)
+        time.sleep(.1)
+        fpga.write_int(startRegisterName,1) #halt reading from mem while writing
         time.sleep(.1)
 
         snapshotBin.arm()
@@ -98,12 +112,20 @@ if __name__=='__main__':
 
         fpga.write_int('snap_fft',0)#trigger snapshots
         parsedBin = parseBinData(binData)
+
+        print 'freq',freq
         absBin = np.abs(parsedBin)
         avgs.append(np.mean(absBin))
 
+        plt.show()
+
     freqListMHz = freqList/1.e6
-    plt.plot(freqListMHz,np.array(avgs))
-    np.savez('freqResponse2.npz',freqList=freqList,sampleRate=sampleRate,binIndexToSweep=binIndexToSweep,centerFreq=centerFreq,responseList=np.array(avgs))
+
+    fig,ax = plt.subplots(1,1)
+    responseList = np.array(avgs)
+    dbResponse = 20.*np.log10(responseList)
+    ax.plot(freqListMHz,dbResponse)
+    np.savez('freqResponse3.npz',freqList=freqList,sampleRate=sampleRate,binIndexToSweep=binIndexToSweep,centerFreq=centerFreq,responseList=np.array(avgs),dbResponse=dbResponse)
     plt.show()
 
 
