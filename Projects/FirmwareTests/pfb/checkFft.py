@@ -19,7 +19,7 @@ import types
 import sys
 from Utils import bin
 import functools
-from loadQdrWave import loadWaveToQdr
+from loadWaveLut import loadWaveToMem
 
 def signedValue(binData,nBits):
     componentMask = int('1'*nBits,2)
@@ -92,18 +92,23 @@ if __name__=='__main__':
     
     fpga.get_system_information()
 
-    instrument = 'arcons'
+    instrument = 'darkness'
+    memType = 'bram'
+    startRegisterName = 'run'
     if instrument == 'arcons':
         sampleRate = 512.e6
         nSamplesPerCycle = 2
         nBins = 512
-        qdrMemNames = ['qdr0_memory'] 
+        memNames = ['qdr0_memory'] 
     elif instrument == 'darkness':
         sampleRate = 2.e9
         nSamplesPerCycle = 8
         nBins = 2048
         snapshotNames = ['bin0','bin1','bin2','bin3','bin4','bin5','bin6','bin7']
-        qdrMemNames = ['qdr0_memory','qdr1_memory','qdr2_memory'] 
+        if memType == 'qdr':
+            memNames = ['qdr0_memory','qdr1_memory','qdr2_memory'] 
+        elif memType == 'bram':
+            memNames = ['dds_lut_mem0','dds_lut_mem1','dds_lut_mem2']
     else:
         print 'unrecognized instrument',instrument
         exit(1)
@@ -121,10 +126,17 @@ if __name__=='__main__':
     #waveFreqs = np.random.uniform(0,512,nFreqs)*binSpacing
     nFreqs = 100
     waveFreqs = np.linspace(10,nBins-10,nFreqs)*binSpacing
-    loadDict = loadWaveToQdr(fpga,waveFreqs=waveFreqs,phases=None,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerQdrSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,qdrMemNames = qdrMemNames,nSamples=nSamples,dynamicRange=1.)
+
+    if memType == 'qdr':
+        fpga.write_int(startRegisterName,0) #halt firmware from writing to qdr while writing
+    elif memType == 'bram':
+        fpga.write_int(startRegisterName,1) #halt reading from mem while writing
+
+    loadDict = loadWaveToMem(fpga,waveFreqs=waveFreqs,phases=None,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerMemSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,memNames = memNames,nSamples=nSamples,dynamicRange=1.,memType=memType)
+    fpga.write_int(startRegisterName,1) #start firmware reading from mem
 
     originalTone = loadDict['tone'][0:2**11]
-    qdrVals = loadDict['qdrVals'][0:2**11,:]
+    qdrVals = loadDict['memVals'][0:2**11,:]
 
     snapshotNames = ['PFB_I00','PFB_Q00','PFB_I01','PFB_Q01','PFB_outI00','PFB_outQ00','PFB_outI01','PFB_outQ01']
     snapshotList = [fpga.snapshots[name] for name in snapshotNames]

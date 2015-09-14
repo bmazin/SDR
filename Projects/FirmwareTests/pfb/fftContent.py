@@ -9,7 +9,7 @@ import types
 import sys
 from Utils import bin
 import functools
-from loadQdrWave import loadWaveToQdr
+from loadWaveLut import loadWaveToMem
 
 def parseComplexBinArray(binData,nBitsPerSampleComponent=18,nBitsAfterBinPt=17):
     componentMask = int('1'*nBitsPerSampleComponent,2)
@@ -38,7 +38,7 @@ def parseBinData(binData,nBitsPerSampleComponent=18,nBitsAfterBinPt=17,nBinsInDa
 
     parsedBin = (binData[:,np.newaxis] >> shifts) & componentMask
     #separate real and imaginary parts into columns
-    parsedBin.reshape((-1,2))
+    parsedBin = np.reshape(parsedBin,(-1,2))
     signBits = np.array(parsedBin >> nBitsPerSampleComponent-1,dtype=np.bool)
 
     #convert 2's complement binary to floats
@@ -73,6 +73,8 @@ if __name__=='__main__':
     fpga.get_system_information()
 
     instrument = 'darkness'
+    memType = 'qdr'
+    startRegisterName = 'run'
     if instrument == 'arcons':
         sampleRate = 512.e6
         nSamplesPerCycle = 2
@@ -85,8 +87,11 @@ if __name__=='__main__':
         nSamplesPerCycle = 8
         nBins = 2048
         snapshotNames = ['bin0','bin1','bin2','bin3','bin4','bin5','bin6','bin7']
-        qdrMemNames = ['qdr0_memory','qdr1_memory','qdr2_memory'] 
-        dynamicRange = .1
+        if memType == 'qdr':
+            memNames = ['qdr0_memory','qdr1_memory','qdr2_memory'] 
+        elif memType == 'bram':
+            memNames = ['dds_lut_mem0','dds_lut_mem1','dds_lut_mem2']
+        dynamicRange = .05
     else:
         print 'unrecognized instrument',instrument
         exit(1)
@@ -97,14 +102,23 @@ if __name__=='__main__':
     nSamples=nSamplesPerCycle*nQdrRowsToUse
 
     binSpacing = sampleRate/nBins
-    freq = 10.1*binSpacing
+    #waveFreqs = np.arange(0.,1000,5)*binSpacing
+    waveFreqs = [50.*binSpacing]
     print 'Fpga Clock Rate:',fpga.estimate_fpga_clock()
-    loadWaveToQdr(fpga,waveFreqs=[freq],phases=None,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerQdrSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,qdrMemNames = qdrMemNames,nSamples=nSamples,dynamicRange=dynamicRange)
+    if memType == 'qdr':
+        fpga.write_int(startRegisterName,0) #halt reading from mem while writing
+    elif memType == 'bram':
+        fpga.write_int(startRegisterName,1) #halt firmware writing from mem while writing
+    loadDict = loadWaveToMem(fpga,waveFreqs=waveFreqs,phases=None,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerMemSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,memNames = memNames,nSamples=nSamples,memType=memType,dynamicRange=dynamicRange)
+    fpga.write_int(startRegisterName,1) #start reading from mem 
 
     snapshotList = [fpga.snapshots[name] for name in snapshotNames]
+    #overSnapshot = fpga.snapshots['over']
 
     for snap in snapshotList:
         snap.arm()
+    #overSnapshot.arm()
+
     fpga.write_int('snap_fft',1)#trigger snapshots
     #fpga.write_int('PFB_snap',1)#trigger snapshots
     time.sleep(.1)
@@ -114,16 +128,22 @@ if __name__=='__main__':
     parsedData = np.array(parsedData)
     parsedData = parsedData.flatten('F') #read down a column, then the next column to put fft bins in order
     #fpga.write_int('PFB_snap',0)#trigger snapshots
+    #overData = overSnapshot.read(timeout=10)['data']['data']
     fpga.write_int('snap_fft',0)#trigger snapshots
 
     absData = np.abs(parsedData)
     fig,ax = plt.subplots(1,1)
     ax.plot(absData)
-    plt.show()
+
+    selectBinIndex = 50
+    fig,ax = plt.subplots(1,1)
+    ax.plot(np.real(parsedData[selectBinIndex::nBins]))
+    ax.plot(np.imag(parsedData[selectBinIndex::nBins]))
 
 #    fig,ax = plt.subplots(1,1)
-#    ax.plot(overflowData)
-#    ax.set_title('of')
+#    #ax.plot(overData)
+#    ax.set_title('overflow')
+    plt.show()
 
     print 'done!'
 
