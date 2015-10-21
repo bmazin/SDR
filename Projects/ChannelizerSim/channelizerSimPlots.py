@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import scipy.signal
     
 
-def tone(freq,nSamples,sampleRate,initialPhase=0.):
+def tone(freq,nSamples,sampleRate,initialPhase=0.,toneAmp=1.):
     '''Creates an array of samples from a pure tone
 
     Parameters
@@ -28,11 +28,11 @@ def tone(freq,nSamples,sampleRate,initialPhase=0.):
     '''
     dt = 1/sampleRate
     time = np.arange(0,nSamples)*dt
-    out = np.exp(1.j*(2*np.pi*freq*time+initialPhase))
+    out = toneAmp*np.exp(1.j*(2*np.pi*freq*time+initialPhase))
     #out = np.cos(2*np.pi*freq*time)
     return out
 
-def toneWithPhasePulse(freq,nSamples,sampleRate=512.e6,pulseAmpDeg=-35.,decayTime=30.e-6,riseTime=.5e-6,pulseArrivalTime=50.e-6,initialPhase=0.):
+def toneWithPhasePulse(freq,nSamples,sampleRate=512.e6,pulseAmpDeg=-35.,decayTime=30.e-6,riseTime=.5e-6,pulseArrivalTime=50.e-6,initialPhase=0.,toneAmp=1.):
     '''Creates an array of samples from a tone with a phase pulse
 
     At a designated time, there is an exponential pulse in the sampled tone as might be seen in a readout tone passed
@@ -74,7 +74,7 @@ def toneWithPhasePulse(freq,nSamples,sampleRate=512.e6,pulseAmpDeg=-35.,decayTim
     #create the combined pulse
     paddedPulse = np.append(rise,pulse)
     phase = pulseAmp*paddedPulse
-    out = np.exp(1.j*(2*np.pi*freq*time+phase+initialPhase))
+    out = toneAmp*np.exp(1.j*(2*np.pi*freq*time+phase+initialPhase))
     return out
     
 def pfb(x,nTaps=4,fftSize=512,binWidthScale=2.5,windowType='hanning'):
@@ -116,7 +116,7 @@ def pfb(x,nTaps=4,fftSize=512,binWidthScale=2.5,windowType='hanning'):
 
 
 #Choose the instrument to simulate
-instrument = 'arcons'#'darkness'
+instrument = 'darkness'#'darkness'
 if instrument == 'arcons':
     fftSize=512 
     nPfbTaps=4
@@ -127,16 +127,20 @@ if instrument == 'arcons':
     nLpfTaps = 20
     binOversamplingRate = 2. #number of samples from the same bin used in a clock cycle
     downsample = 2
+    pfbBinWidthScale = 2.5
+    toneAmp=1.
 elif instrument == 'darkness':
-    fftSize=2**12#2048 #2**11
+    fftSize=2**11#2048 #2**11
     nPfbTaps=4
-    sampleRate = 1.8e9
-    clockRate = 225.e6
+    sampleRate = 2.e9
+    clockRate = 250.e6
     bFlipSigns = True
     lpfCutoff = 250.e3
     nLpfTaps = 20
     binOversamplingRate = 2. #number of samples from the same bin used in a clock cycle
     downsample = 1
+    pfbBinWidthScale = 2.5
+    toneAmp = 1.0
 nSimultaneousInputs = sampleRate/clockRate #number of consecutive samples (from consecutive channels) used in a clock cycle
 binSpacing = sampleRate/fftSize #space between fft bin centers
 binSampleRate = binOversamplingRate*nSimultaneousInputs*clockRate/fftSize #each fft bin is sampled at this rate
@@ -148,7 +152,7 @@ print binSampleRate/1.e6, 'MHz sampling of fft bin'
 
 #Define the resonant frequency of interest
 #resFreq = 10.99e6 #[Hz]
-resFreq = 10.4e6 #[Hz]
+resFreq = 7.4e6 #[Hz]
 binIndex = round(resFreq/binSpacing) #nearest FFT freq bin to resFreq
 binFreq = binIndex*binSpacing #center frequency of bin at binIndex
 print 'binFreq',binFreq
@@ -156,7 +160,7 @@ print 'binFreq',binFreq
 #Define some additional nearby resonant frequencies.  These should be filtered out of the channel of interest.
 #later we'll make some readout tones at these frequencies, add them in, and channelize to see that they're filtered
 resSpacing = .501e6 #250 kHz minimum space between resonators
-resFreq2 = resFreq-resSpacing#[Hz] Resonator frequency
+resFreq2 = 9.66e6#resFreq-resSpacing#[Hz] Resonator frequency
 resFreq3 = resFreq+resSpacing#[Hz] Resonator frequency
 resFreqIndex = fftSize*resFreq/sampleRate
 resFreqIndex2 = fftSize*resFreq2/sampleRate
@@ -181,14 +185,14 @@ freqResponsePfb = np.zeros(nFreq,dtype=np.complex128)
 for iFreq,freq in enumerate(freqList):
     #for each frequency, see how much of it makes it into the fft bin of interest
     # for a standard fft and for a pfb
-    signal = tone(freq,nSamples,sampleRate)
+    signal = tone(freq,nSamples,sampleRate,toneAmp=toneAmp)
 
     fft = (np.fft.fft(signal,fftSize))
     fft /= fftSize
     fftBin = fft[binIndex]
     freqResponseFft[iFreq] = fftBin
 
-    fft = (np.fft.fft(pfb(signal,fftSize=fftSize,nTaps=nPfbTaps),fftSize))
+    fft = (np.fft.fft(pfb(signal,fftSize=fftSize,nTaps=nPfbTaps,binWidthScale=pfbBinWidthScale),fftSize))
     fft /= fftSize
     fftBin = fft[binIndex]
     freqResponsePfb[iFreq] = fftBin
@@ -227,6 +231,31 @@ def f(fig,ax):
     ax.legend(loc='lower left')
 fig,ax = plt.subplots(1,1)
 f(fig,ax)
+
+def f(fig,ax):
+    ax.plot(freqListMHz,freqResponseFftDb,label='FFT bin')
+    ax.axvline(resFreq/1.e6,color='.5',label='resonant freq')
+    ax.axvline(resFreq2/1.e6,color='.8')
+    ax.axvline(resFreq3/1.e6,color='.8')
+    ax.set_ylim(-50,0)
+    ax.set_ylabel('response (dB)')
+    ax.set_xlabel('frequency (MHz)')
+    ax.legend(loc='lower left')
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
+
+def f(fig,ax):
+    ax.plot(freqListMHz,freqResponseFft,label='FFT bin')
+    ax.plot(freqListMHz,np.abs(freqResponsePfb),label='PFB bin')
+    ax.axvline(resFreq/1.e6,color='.5',label='resonant freq')
+    ax.axvline(resFreq2/1.e6,color='.8')
+    ax.axvline(resFreq3/1.e6,color='.8')
+    ax.set_ylabel('fft response')
+    ax.set_xlabel('frequency (MHz)')
+    ax.legend(loc='lower left')
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
+np.savez('responseTheory.npz',freqListMHz=freqListMHz,freqResponsePfbDb=freqResponsePfbDb,freqResponseDb=freqResponseDb,freqResponse=freqResponse,phaseResponse=phaseResponse,freqResponseLpf=freqResponseLpf,freqResponsePfb=freqResponsePfb,freqResponseFft=freqResponseFft,freqResponseFftDb=freqResponseFftDb)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 #Plot Response vs Phase for 1st and 2nd stages
@@ -240,8 +269,8 @@ def f(fig,ax):
     ax.set_ylabel('phase response ($^\circ$)')
     ax.set_xlabel('frequency (MHz)')
     ax.legend(loc='best')
-fig,ax = plt.subplots(1,1)
-f(fig,ax)
+#fig,ax = plt.subplots(1,1)
+#f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 ###################################################################
@@ -281,8 +310,8 @@ def f(fig,ax):
     ax.set_title('Frequency Content of\nraw signal')
     ax.set_xlim((resFreq-2.*resSpacing)/1.e6,(resFreq+2.*resSpacing)/1.e6)
     ax.set_ylim(-35,5)
-fig,ax = plt.subplots(1,1)
-f(fig,ax)
+#fig,ax = plt.subplots(1,1)
+#f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 filteredSignal0 = pfb(signal[:-fftSize/2],fftSize=fftSize,nTaps=nPfbTaps)
@@ -338,8 +367,8 @@ def f(fig,ax):
     ax.set_xlabel('Freq/$f_s$')
     ax.set_ylabel('Amp (dB)')
     ax.set_title('Frequency Content of\nsampled FFT bin')
-fig,ax = plt.subplots(1,1)
-f(fig,ax)
+#fig,ax = plt.subplots(1,1)
+#f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 ddsTimestream = tone(freq=binFreq-resFreq,nSamples=len(binTimestream),sampleRate=binSampleRate)
@@ -349,8 +378,8 @@ def f(fig,ax):
     ax.plot(time,np.abs(channelTimestream),color='b')
     ax.plot(time,np.angle(channelTimestream,deg=True),color='r')
     ax.set_title('After DDS')
-fig,ax = plt.subplots(1,1)
-f(fig,ax)
+#fig,ax = plt.subplots(1,1)
+#f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 
@@ -374,8 +403,8 @@ def f(fig,ax):
     ax.set_xlabel('Freq/$f_s$')
     ax.set_ylabel('Amp (dB)')
     ax.set_title('Frequency Content of\nDDS mixer output')
-fig,ax = plt.subplots(1,1)
-f(fig,ax)
+#fig,ax = plt.subplots(1,1)
+#f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 
@@ -404,8 +433,8 @@ def f(fig,ax):
     ax.set_xlabel('Freq/$f_s$')
     ax.set_ylabel('Amp (dB)')
     ax.set_title('Frequency Content of\nLPF output')
-fig,ax = plt.subplots(1,1)
-f(fig,ax)
+#fig,ax = plt.subplots(1,1)
+#f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 phase = np.angle(channelTimestream,deg=True)[1:-1]
@@ -423,8 +452,8 @@ def f(fig,ax):
     ax.set_xlabel('Time (us)')
     ax.set_ylabel('Phase ($^{\circ}$)')
     ax.set_title('Output Phase')
-fig,ax = plt.subplots(1,1)
-f(fig,ax)
+#fig,ax = plt.subplots(1,1)
+#f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 plt.show()
 
