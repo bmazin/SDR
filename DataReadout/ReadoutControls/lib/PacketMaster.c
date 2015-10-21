@@ -613,8 +613,8 @@ int connect_to_roach(int roachno)
     serveraddr.sin_port = htons(portno);
 
     /* connect: create a connection with the server */
-    if (connect(sockfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0) 
-        error("ERROR connecting");
+    if (connect(sockfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0)
+        error("PacketMaster.c:  ERROR connecting");
         
     //socket_flags=fcntl(sockfd,F_GETFL,0);              // Get socket flags
     //fcntl(sockfd,F_SETFL,socket_flags | O_NONBLOCK);   // Add non-blocking flag

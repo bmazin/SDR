@@ -87,8 +87,8 @@ fit = t1f
 end
 
 ; make templates and noise spectra from SDR pulses
-path = '/home/kids/filterData/20131123/'
-nrows = 1430
+path = '/home/kids/filterData/20131204/'
+nrows = 33 ; <= number of lines in snap_list.txt
 
 listpath = path+'snap_list.txt'
 openr,2,listpath
@@ -104,7 +104,7 @@ for ipixel=0,nrows-1 do begin
   roach_str = 'r'+strtrim(roach,trim_both_ends)
   pixel = pixel_list[1,ipixel]
   pixel_str = 'p'+strtrim(pixel,trim_both_ends)
-  nsecs = 20
+  nsecs = 12
   secs_str = strtrim(nsecs,trim_both_ends)
   phasedata = 'ch_snap_'+roach_str+pixel_str+'_'+secs_str+'secs.dat'
   max_pulse_count = 30000

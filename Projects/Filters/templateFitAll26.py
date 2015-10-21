@@ -7,23 +7,22 @@ import matplotlib.pyplot as plt
 
 size = 26
 finalSize = 26
-initialOffset = 1
-offset=1
-path = '/Scratch/filterData/20131123/'
-pixelList = np.loadtxt(os.path.join(path,'filter_list.txt'))
+initialOffset = 0
+offset=0
+path = '/mnt/star/filterData/20131208/'
 fig = plt.figure()
 ax1 = fig.add_subplot(111)
 NRoach = 8
 NPixel = 256
-defaultFilter = np.loadtxt('matched_50us.txt')
+defaultFilter = np.loadtxt('matched_30us.txt')
 defaultFilter /= np.sum(defaultFilter)
 for roachNum in xrange(NRoach):
     allMatched = []
-    savefile =os.path.join(path,'dblexp20131125r%d.txt'%roachNum)
+    savefile =os.path.join(path,'fit20131208r%d.txt'%roachNum)
     for pixelNum in xrange(NPixel):
         print roachNum,pixelNum 
         try:
-            template = np.loadtxt(os.path.join(path,'r%dp%dTemplateFit-2pass26a.dat'%(roachNum,pixelNum)))
+            template = np.loadtxt(os.path.join(path,'r%dp%dTemplateFit-3pass.dat'%(roachNum,pixelNum)))
             template = np.array(template)[1000-initialOffset:1000-initialOffset+size,1]
 
             #   Define matched filter, g.

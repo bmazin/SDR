@@ -672,7 +672,11 @@ class AppForm(QMainWindow):
                     w.Save(savefile,'r0', 'a')
         self.axes0.clear()
         self.axes1.clear()
-        self.axes0.semilogy(f_span, (I**2 + Q**2)**.5, '.-')
+        try:
+            self.axes0.semilogy(f_span, (I**2 + Q**2)**.5, '.-')
+        except ValueError:
+            pass
+            
         self.axes1.plot(I, Q, '.-', self.iq_centers.real[0:self.N_freqs], self.iq_centers.imag[0:self.N_freqs], '.', self.I_on_res, self.Q_on_res, '.')
         self.canvas.draw()
 
@@ -683,6 +687,8 @@ class AppForm(QMainWindow):
                 self.roach.write_int('startDAC', 1)
                 time.sleep(1)
                 while self.roach.read_int('DRAM_LUT_rd_valid') != 0:
+                    time.sleep(0.25)
+                    print "DRAM_LUD_rd_valid is not zero",self.roach.read_int('DRAM_LUT_rd_valid') 
                     self.roach.write_int('startDAC', 0)
                     time.sleep(0.25)
                     self.roach.write_int('startDAC', 1)
