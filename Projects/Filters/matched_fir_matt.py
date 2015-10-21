@@ -6,7 +6,6 @@ from scipy import optimize
 import matplotlib.pyplot as mpl
 #import pylab
 import random, math
-import sim_utilities
 
 
 ############################################################################################
@@ -20,7 +19,7 @@ dt = 1.#us
 lifetime = lifetime_us/dt
 time = numpy.array([i*dt for i in range(size)])
 sigma = 10.
-savefile ='/home/sean/data/common/matched_%dus.txt' % lifetime
+savefile ='matched_%dus.txt' % lifetime
 
 ############################################################################################
 #   Define noise correlation function
