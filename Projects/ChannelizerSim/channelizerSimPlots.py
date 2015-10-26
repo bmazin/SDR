@@ -77,7 +77,7 @@ def toneWithPhasePulse(freq,nSamples,sampleRate=512.e6,pulseAmpDeg=-35.,decayTim
     out = toneAmp*np.exp(1.j*(2*np.pi*freq*time+phase+initialPhase))
     return out
     
-def pfb(x,nTaps=4,fftSize=512,binWidthScale=2.5,windowType='hanning'):
+def pfb(x,nTaps=4,fftSize=512,binWidthScale=2.5,windowType='hamming'):
     '''Peforms a polyphase filter bank on input data
 
     A PFB is applied to data before performing an fft to change the frequency response characteristics of the fft
@@ -105,6 +105,8 @@ def pfb(x,nTaps=4,fftSize=512,binWidthScale=2.5,windowType='hanning'):
     window = np.sinc(binWidthScale*angles)
     if windowType == 'hanning':
         window *= np.hanning(windowSize)
+    elif windowType == 'hamming':
+        window *= np.hamming(windowSize)
 
     nFftChunks = len(x)//fftSize
     #it takes a windowSize worth of x values to get the first out value, so there will be windowsize fewer values in out, assuming x divides evenly by fftSize
@@ -192,14 +194,14 @@ for iFreq,freq in enumerate(freqList):
     fftBin = fft[binIndex]
     freqResponseFft[iFreq] = fftBin
 
-    fft = (np.fft.fft(pfb(signal,fftSize=fftSize,nTaps=nPfbTaps,binWidthScale=pfbBinWidthScale),fftSize))
+    fft = (np.fft.fft(pfb(signal,fftSize=fftSize,nTaps=nPfbTaps,binWidthScale=pfbBinWidthScale,windowType='hamming'),fftSize))
     fft /= fftSize
     fftBin = fft[binIndex]
     freqResponsePfb[iFreq] = fftBin
 
 
-freqResponseFftDb = 10*np.log10(np.abs(freqResponseFft))
-freqResponsePfbDb = 10*np.log10(np.abs(freqResponsePfb))
+freqResponseFftDb = 20*np.log10(np.abs(freqResponseFft))
+freqResponsePfbDb = 20*np.log10(np.abs(freqResponsePfb))
 
 #Frequency response for 2nd stage of channelizer, shift res freq to zero and apply low pass filter
 #this narrows the bin around the desired readout frequency
@@ -207,7 +209,7 @@ lpf = scipy.signal.firwin(nLpfTaps, cutoff=lpfCutoff, nyq=binSampleRate/2.,windo
 
 binBandNormFreqs = (freqList-resFreq)*2*np.pi/binSampleRate # frequencies in bandwidth of a fft bin[rad/sample]
 _,freqResponseLpf = scipy.signal.freqz(lpf, worN=binBandNormFreqs)
-freqResponseLpfDb = 10*np.log10(np.abs(freqResponseLpf))
+freqResponseLpfDb = 20*np.log10(np.abs(freqResponseLpf))
 binBandFreqs = resFreq+binBandNormFreqs*binSampleRate/(2.*np.pi)
 
 #for the overall response after the lpf and pfb, multiply the curves we calculated earlier
@@ -215,7 +217,7 @@ freqResponse = freqResponseLpf*freqResponsePfb
 phaseResponse = np.rad2deg(np.unwrap(np.angle(freqResponse)))
 phaseResponseLpf = np.rad2deg(np.unwrap(np.angle(freqResponseLpf)))
 phaseResponsePfb = np.rad2deg(np.unwrap(np.angle(freqResponsePfb)))
-freqResponseDb = 10.*np.log10(np.abs(freqResponse))
+freqResponseDb = 20.*np.log10(np.abs(freqResponse))
 
 freqListMHz = freqList/1.e6
 #Plot Response vs Frequency for 1st and 2nd stages
@@ -269,8 +271,8 @@ def f(fig,ax):
     ax.set_ylabel('phase response ($^\circ$)')
     ax.set_xlabel('frequency (MHz)')
     ax.legend(loc='best')
-#fig,ax = plt.subplots(1,1)
-#f(fig,ax)
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 ###################################################################
@@ -300,7 +302,7 @@ def f(fig,ax):
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 rawFftSize=100000
-rawFft = 10*np.log10(np.fft.fftshift(np.abs(np.fft.fft(signal,n=rawFftSize)/rawFftSize)))
+rawFft = 20*np.log10(np.fft.fftshift(np.abs(np.fft.fft(signal,n=rawFftSize)/rawFftSize)))
 rawFreqs = sampleRate*np.fft.fftshift(np.fft.fftfreq(rawFftSize))/1.e6
 #plot fft of raw signal
 def f(fig,ax):
@@ -310,8 +312,8 @@ def f(fig,ax):
     ax.set_title('Frequency Content of\nraw signal')
     ax.set_xlim((resFreq-2.*resSpacing)/1.e6,(resFreq+2.*resSpacing)/1.e6)
     ax.set_ylim(-35,5)
-#fig,ax = plt.subplots(1,1)
-#f(fig,ax)
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 filteredSignal0 = pfb(signal[:-fftSize/2],fftSize=fftSize,nTaps=nPfbTaps)
@@ -348,7 +350,7 @@ def f(fig,ax):
 
 
 binFftSize=100 #Now for checking shifted frequencies in a bin
-binFft = 10*np.log10(np.fft.fftshift(np.abs(np.fft.fft(binTimestream,n=binFftSize)/binFftSize)))
+binFft = 20*np.log10(np.fft.fftshift(np.abs(np.fft.fft(binTimestream,n=binFftSize)/binFftSize)))
 binFreqs = (binFreq+np.fft.fftshift(np.fft.fftfreq(binFftSize))*binSampleRate)/1.e6#MHz
 
 #plot fft of signal coming out of FFT bin with frequencies shifted to show the resonant frequency
@@ -367,8 +369,8 @@ def f(fig,ax):
     ax.set_xlabel('Freq/$f_s$')
     ax.set_ylabel('Amp (dB)')
     ax.set_title('Frequency Content of\nsampled FFT bin')
-#fig,ax = plt.subplots(1,1)
-#f(fig,ax)
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 ddsTimestream = tone(freq=binFreq-resFreq,nSamples=len(binTimestream),sampleRate=binSampleRate)
@@ -378,13 +380,13 @@ def f(fig,ax):
     ax.plot(time,np.abs(channelTimestream),color='b')
     ax.plot(time,np.angle(channelTimestream,deg=True),color='r')
     ax.set_title('After DDS')
-#fig,ax = plt.subplots(1,1)
-#f(fig,ax)
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 
 channelFftSize=100 #Now for checking shifted frequencies in a bin
-channelFft = 10*np.log10(np.fft.fftshift(np.abs(np.fft.fft(channelTimestream,n=channelFftSize)/channelFftSize)))
+channelFft = 20*np.log10(np.fft.fftshift(np.abs(np.fft.fft(channelTimestream,n=channelFftSize)/channelFftSize)))
 channelFreqs = (resFreq+np.fft.fftshift(np.fft.fftfreq(channelFftSize))*binSampleRate)/1.e6#MHz
 
 #plot fft of signal coming out of DDS mixer with frequencies shifted to show the resonant frequency
@@ -403,8 +405,8 @@ def f(fig,ax):
     ax.set_xlabel('Freq/$f_s$')
     ax.set_ylabel('Amp (dB)')
     ax.set_title('Frequency Content of\nDDS mixer output')
-#fig,ax = plt.subplots(1,1)
-#f(fig,ax)
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 
@@ -414,7 +416,7 @@ channelTimestream = channelTimestream[::downsample]
 time=time[::downsample]
 
 finalFftSize=200 #Now for checking shifted frequencies in a bin
-finalFft = 10*np.log10(np.fft.fftshift(np.abs(np.fft.fft(channelTimestream,n=finalFftSize)/finalFftSize)))
+finalFft = 20*np.log10(np.fft.fftshift(np.abs(np.fft.fft(channelTimestream,n=finalFftSize)/finalFftSize)))
 finalFreqs = (resFreq+np.fft.fftshift(np.fft.fftfreq(finalFftSize))*binSampleRate)/1.e6#MHz
 
 #plot fft of signal coming out of DDS mixer with frequencies shifted to show the resonant frequency
@@ -433,8 +435,8 @@ def f(fig,ax):
     ax.set_xlabel('Freq/$f_s$')
     ax.set_ylabel('Amp (dB)')
     ax.set_title('Frequency Content of\nLPF output')
-#fig,ax = plt.subplots(1,1)
-#f(fig,ax)
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
 phase = np.angle(channelTimestream,deg=True)[1:-1]
@@ -452,8 +454,8 @@ def f(fig,ax):
     ax.set_xlabel('Time (us)')
     ax.set_ylabel('Phase ($^{\circ}$)')
     ax.set_title('Output Phase')
-#fig,ax = plt.subplots(1,1)
-#f(fig,ax)
+fig,ax = plt.subplots(1,1)
+f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 plt.show()
 
