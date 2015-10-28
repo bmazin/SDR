@@ -68,8 +68,10 @@ if __name__=='__main__':
         print 'unrecognized instrument',instrument
         exit(1)
 
+    bUsePfb = 1
+    fpga.write_int('use_pfb',bUsePfb)
     startRegisterName = 'run'
-    nQdrRowsToUse = 2**12
+    nQdrRowsToUse = 2**14
     nSamples=nSamplesPerCycle*nQdrRowsToUse
     nBytesPerQdrSample = 8
     nBitsPerSamplePair = 24
@@ -82,19 +84,22 @@ if __name__=='__main__':
     fpga.write_int('bin',binIndexToSweep) 
     centerFreq = binIndexToSweep * binSpacing
 
-    freqSweepWidth = 10.e6
-    nFreqs = 1000
+    freqSweepWidth = 6.e6
+    nFreqs = 300
 
     freqList = np.linspace(centerFreq - freqSweepWidth/2.,centerFreq + freqSweepWidth/2., nFreqs)
-    snapshotBin = fpga.snapshots['selected_bin']
+    snapshotBin = fpga.snapshots['snp1_sel_bin']
+    snapshotOverflow = fpga.snapshots['snp1_over']
 
     print 'bin',binIndexToSweep
     print 'center freq',centerFreq/1.e6,'MHz'
-    print freqList
+    #print freqList
 #    print 'freq range',freqList[0]/1.e6,freqList[-1]/1.e6
 #    print 'freq step',(freqList[1]-freqList[0])/1.e6
 
     avgs = []
+    responseVals = []
+    oflws = []
     for iFreq,freq in enumerate(freqList):
         if iFreq % 25 == 0:
             print iFreq
@@ -105,27 +110,39 @@ if __name__=='__main__':
         time.sleep(.1)
 
         snapshotBin.arm()
+        snapshotOverflow.arm()
         fpga.write_int('snap_fft',1)#trigger snapshots
         time.sleep(.05)
 
         binData = np.array(snapshotBin.read(timeout=10)['data']['data'],dtype=object)
+        oflwData = np.array(snapshotBin.read(timeout=10)['data']['data'],dtype=object)
 
         fpga.write_int('snap_fft',0)#trigger snapshots
         parsedBin = parseBinData(binData)
 
-        print 'freq',freq
         absBin = np.abs(parsedBin)
         avgs.append(np.mean(absBin))
+        responseVals.append(absBin[0])
+        oflws.append(np.sum(oflwData))
 
         plt.show()
 
     freqListMHz = freqList/1.e6
 
-    fig,ax = plt.subplots(1,1)
-    responseList = np.array(avgs)
+    responseList = np.array(responseVals)
+    avgResponseList = np.array(avgs)
+    overflowList = np.array(oflws)
     dbResponse = 20.*np.log10(responseList)
+    dbAvgResponse = 20.*np.log10(avgResponseList)
+    fig,ax = plt.subplots(1,1)
     ax.plot(freqListMHz,dbResponse)
-    np.savez('freqResponse3.npz',freqList=freqList,sampleRate=sampleRate,binIndexToSweep=binIndexToSweep,centerFreq=centerFreq,responseList=np.array(avgs),dbResponse=dbResponse)
+    ax.plot(freqListMHz,dbAvgResponse)
+    fig,ax = plt.subplots(1,1)
+    ax.plot(freqListMHz,responseList)
+    ax.plot(freqListMHz,avgResponseList)
+    fig,ax = plt.subplots(1,1)
+    ax.plot(freqListMHz,overflowList)
+    np.savez('freqResponse_dr0.05_pfb.npz',freqList=freqList,sampleRate=sampleRate,binIndexToSweep=binIndexToSweep,centerFreq=centerFreq,responseList=responseList,dbResponse=dbResponse,avgResponseList=avgResponseList,dbAvgResponse=dbAvgResponse,overflows=overflowList)
     plt.show()
 
 
