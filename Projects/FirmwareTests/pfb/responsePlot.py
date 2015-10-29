@@ -81,15 +81,15 @@ if __name__=='__main__':
     print 'freq resolution',lutFreqResolution/1.e6,'MHz'
 
     binIndexToSweep = 8
-    fpga.write_int('bin',binIndexToSweep) 
+    fpga.write_int('snap_fft_sel_bin',binIndexToSweep) 
     centerFreq = binIndexToSweep * binSpacing
 
     freqSweepWidth = 6.e6
-    nFreqs = 300
+    nFreqs = 50
 
     freqList = np.linspace(centerFreq - freqSweepWidth/2.,centerFreq + freqSweepWidth/2., nFreqs)
-    snapshotBin = fpga.snapshots['snp1_sel_bin']
-    snapshotOverflow = fpga.snapshots['snp1_over']
+    snapshotBin = fpga.snapshots['snap_fft_snp1_sel_bin_ss']
+    snapshotOverflow = fpga.snapshots['snap_fft_snp1_co_ss']
 
     print 'bin',binIndexToSweep
     print 'center freq',centerFreq/1.e6,'MHz'
@@ -103,24 +103,38 @@ if __name__=='__main__':
     for iFreq,freq in enumerate(freqList):
         if iFreq % 25 == 0:
             print iFreq
-        fpga.write_int(startRegisterName,0) #halt reading from mem while writing
+        if memType == 'qdr':
+            fpga.write_int(startRegisterName,0) #halt reading from mem while writing
+        elif memType == 'bram':
+            fpga.write_int(startRegisterName,1) #halt firmware writing from mem while writing
+
         loadWaveToMem(fpga,waveFreqs=[freq],phases=[0.],sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nSamples=nSamples,nBytesPerMemSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,memNames = qdrMemNames,dynamicRange=dynamicRange,memType=memType)
         time.sleep(.1)
-        fpga.write_int(startRegisterName,1) #halt reading from mem while writing
-        time.sleep(.1)
+        fpga.write_int(startRegisterName,1) #start reading from mem
 
         snapshotBin.arm()
         snapshotOverflow.arm()
-        fpga.write_int('snap_fft',1)#trigger snapshots
+        time.sleep(.1)
+
+        fpga.write_int('snap_fft_trig',1)#trigger snapshots
         time.sleep(.05)
 
-        binData = np.array(snapshotBin.read(timeout=10)['data']['data'],dtype=object)
-        oflwData = np.array(snapshotBin.read(timeout=10)['data']['data'],dtype=object)
+        binData = snapshotBin.read(timeout=10)['data']
+        i0 = np.array(binData['i0'])
+        i1 = np.array(binData['i1'])
+        q0 = np.array(binData['q0'])
+        q1 = np.array(binData['q1'])
 
-        fpga.write_int('snap_fft',0)#trigger snapshots
-        parsedBin = parseBinData(binData)
 
-        absBin = np.abs(parsedBin)
+        #interleave (i,q)(t=0) and (i,q)(t=1)
+        binVals = np.vstack((i0+1.j*q0,i1+1.j*q1)).flatten('F')
+
+        oflwData = snapshotOverflow.read(timeout=10,man_valid=True)['data']['over']
+
+        fpga.write_int('snap_fft_trig',0)#trigger snapshots
+        #parsedBin = parseBinData(binData)
+
+        absBin = np.abs(binVals)
         avgs.append(np.mean(absBin))
         responseVals.append(absBin[0])
         oflws.append(np.sum(oflwData))
@@ -142,7 +156,7 @@ if __name__=='__main__':
     ax.plot(freqListMHz,avgResponseList)
     fig,ax = plt.subplots(1,1)
     ax.plot(freqListMHz,overflowList)
-    np.savez('freqResponse_dr0.05_pfb.npz',freqList=freqList,sampleRate=sampleRate,binIndexToSweep=binIndexToSweep,centerFreq=centerFreq,responseList=responseList,dbResponse=dbResponse,avgResponseList=avgResponseList,dbAvgResponse=dbAvgResponse,overflows=overflowList)
+    np.savez('freqResponse_dr{:.2f}_pfb.npz'.format(dynamicRange),freqList=freqList,sampleRate=sampleRate,binIndexToSweep=binIndexToSweep,centerFreq=centerFreq,responseList=responseList,dbResponse=dbResponse,avgResponseList=avgResponseList,dbAvgResponse=dbAvgResponse,overflows=overflowList,dynamicRange=dynamicRange)
     plt.show()
 
 
