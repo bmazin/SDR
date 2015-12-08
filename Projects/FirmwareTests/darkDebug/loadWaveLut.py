@@ -64,11 +64,17 @@ def readMemory(roach,memName,nSamples,nBytesPerSample=4,bQdrFlip=False):
         memValues = np.roll(memValues,1)
     return list(memValues)
 
-def writeBram(fpga,memName,valuesToWrite,start=0,nRows=2**10):
+def writeBram(fpga,memName,valuesToWrite,start=0,nRows=2**10,nBytesPerSample=8):
     """format values and write them to bram"""
-    nBytesPerSample = 8
-    formatChar = 'Q'
-    memValues = np.array(valuesToWrite,dtype=np.uint64) #cast signed values
+    if nBytesPerSample == 4:
+        formatChar = 'L'
+        memValues = np.array(valuesToWrite,dtype=np.uint32) #cast signed values
+    elif nBytesPerSample == 8:
+        formatChar = 'Q'
+        memValues = np.array(valuesToWrite,dtype=np.uint64) #cast signed values
+    else:
+        raise TypeError('nBytesPerSample must be 4 or 8')
+
     nValues = len(valuesToWrite)
     toWriteStr = struct.pack('>{}{}'.format(nValues,formatChar),*memValues)
     fpga.blindwrite(memName,toWriteStr,start)
@@ -206,7 +212,7 @@ def loadWaveToMem(fpga,waveFreqs=[10.4e6],phases=None,sampleRate=2.e9,nSamplesPe
             writeBram(fpga,memName=memNames[iMem],valuesToWrite=memVals[:,iMem])
     time.sleep(.5)
 
-    return {'tone':complexTone,'memVals':memVals,'quantFreqs':tone['quantizedFreqs']}
+    return {'tone':complexTone,'memVals':memVals,'quantizedFreqs':tone['quantizedFreqs']}
 
 def loadDdsToMem(fpga,waveFreqs=np.zeros(1024),phases=None,sampleRate=1.953125e6,nSamplesPerCycle=2,nSamples=2**21,nBytesPerMemSample=8,nBitsPerSamplePair=32,memNames = ['qdr0_memory','qdr1_memory','qdr2_memory','qdr3_memory'],dynamicRange=1.):
     """Form a look-up table of interleaved frequencies and load it to memory"""

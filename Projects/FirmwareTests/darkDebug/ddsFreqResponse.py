@@ -194,7 +194,7 @@ if __name__=='__main__':
     dacFreqResolution = sampleRate/nSamples
 
     #set the frequency of what the resonator would be. We will set the ddc to target this frequency
-    resFreq = 7.375e6
+    resFreq = 7.32421875e6 #already quantized
     quantizedResFreq = np.round(resFreq/dacFreqResolution)*dacFreqResolution
 
     genBinIndex = resFreq/binSpacing
@@ -223,7 +223,7 @@ if __name__=='__main__':
     ddsFreqs = np.zeros(nChannels)
     ddsFreqs[selChanIndex] = ddsFreq
     ddsPhases = np.zeros(nChannels)
-
+    print 'dac freq resoluton',dacFreqResolution
     print 'resonator freq',resFreq/MHz
     print 'quantized resonator freq',quantizedResFreq/MHz
     print 'bin center freq',binCenterFreq/MHz
@@ -250,13 +250,16 @@ if __name__=='__main__':
         print 'loading dds freqs'
         fpga.write_int(startRegisterName,0) #do not read from qdr while writing
         loadDict = loadDdsToMem(fpga,waveFreqs=ddsFreqs,phases=ddsPhases,sampleRate=ddsSampleRate,nSamplesPerCycle=nDdsSamplesPerCycle,nBitsPerSamplePair=nBitsPerDdsSamplePair,nSamples=nDdsSamples)
+        print 'dds quant freq',loadDict['quantizedFreqs'][0]
     fpga.write_int(startRegisterName,1) 
-
 
     #set parameters for the frequencies to sweep
     freqSweepWidth = 6.e6
     startFreq = binCenterFreq - freqSweepWidth/2.
     endFreq = binCenterFreq +freqSweepWidth/2.
+    #quantize the start/end freqs
+    startFreq = np.round(startFreq/dacFreqResolution)*dacFreqResolution
+    endFreq = np.round(endFreq/dacFreqResolution)*dacFreqResolution
     
     #the space between frequencies should be the tone freq resolution
     freqList = np.arange(startFreq,endFreq+dacFreqResolution, dacFreqResolution)
@@ -267,34 +270,39 @@ if __name__=='__main__':
     ddcResponses = np.zeros(nFreqs)
     rawFftResponses = np.zeros(nFreqs)
     rawDdcResponses = np.zeros(nFreqs)
+    quantFreqList = np.zeros(nFreqs)
     for iFreq,freq in enumerate(freqList):
         print 'freq {} of {}: {} MHz'.format(iFreq,nFreqs,freq/1.e6)
         waveFreqs = [freq]
         #next load up the signal LUT for the given frequency
         loadDict = loadWaveToMem(fpga,waveFreqs=waveFreqs,phases=None,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerMemSample=nBytesPerMemSample,nBitsPerSamplePair=nBitsPerSamplePair,memNames = memNames,nSamples=nSamples,memType=memType,dynamicRange=dynamicRange)
+        quantFreqList[iFreq] = loadDict['quantizedFreqs'][0]
 
         fpga.write_int('sel_bch',selChanIndex)
         snapDict = snapDdc(bSnapAll=False,selBinIndex=selBinIndex,selChanIndex=selChanIndex,selChanStream=selChanStream,ddsAddrTrig=ddsAddrTrig)
         ddcResponses[iFreq] = np.mean(np.abs(snapDict['ddcOut']))
         rawDdcResponses[iFreq] = np.abs(snapDict['ddcOut'])[0]
 
-        fftResponses[iFreq] = np.mean(np.abs(snapDict['chan']))
-        rawFftResponses[iFreq] = np.abs(snapDict['chan'])[0]
+        fftResponses[iFreq] = np.mean(np.abs(snapDict['bin']))
+        rawFftResponses[iFreq] = np.abs(snapDict['bin'])[0]
 
     dbFftResponse = 20.*np.log10(fftResponses)
     dbRawFftResponse = 20.*np.log10(rawFftResponses)
     dbDdcResponse = 20.*np.log10(ddcResponses)
     dbRawDdcResponse = 20.*np.log10(rawDdcResponses)
 
+    print 'diff freqList',freqList-quantFreqList
+    quantFreqListMHz = quantFreqList/MHz
+
     fig,ax = plt.subplots(1,1)
-    ax.plot(freqListMHz,dbFftResponse,color='b',label='fft')
-    ax.plot(freqListMHz,dbDdcResponse,color='g',label='ddc')
+    ax.plot(quantFreqListMHz,dbFftResponse,color='b',label='fft')
+    ax.plot(quantFreqListMHz,dbDdcResponse,color='g',label='ddc')
     ax.axvline(resFreq/1.e6,color='.5',label='resonant freq')
     ax.set_xlabel('Frequency (MHz)')
     ax.set_ylabel('Response (dB)')
     ax.legend(loc='best')
 
-    np.savez('freqResponses_dr{}_{}.npz'.format(dynamicRange,'ddc'),freqResponseFftDb=dbFftResponse,freqResponseDdcDb=dbDdcResponse,freqResponseFft=fftResponses, freqResponseDdc=ddcResponses,freqListMHz=freqListMHz)
+    np.savez('freqResponses_dr{}_{}.npz'.format(dynamicRange,'ddc3'),freqResponseFftDb=dbFftResponse,freqResponseDdcDb=dbDdcResponse,freqResponseFft=fftResponses, freqResponseDdc=ddcResponses,freqListMHz=freqListMHz,quantFreqListMHz=quantFreqListMHz,resFreq=resFreq,quantResFreq=quantizedResFreq)
 
     print 'done!'
     plt.show()

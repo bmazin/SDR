@@ -11,8 +11,10 @@ and actual values from firmware (using SDR/Projects/FirmwareTests/darkDebug/ddsF
 import matplotlib.pyplot as plt
 import numpy as np
 
+MHz = 1.e6 #MHz/Hz
+
 #load theory values
-suffix = 'ddc'
+suffix = 'ddc3'
 dynamicRange = '0.05'
 theoryData = np.load('responseTheory.npz')
 freqListMHz = theoryData['freqListMHz']
@@ -30,6 +32,8 @@ expFreqResponseDdc = expData['freqResponseDdc']
 expFreqResponseDdcDb = 20.*np.log10(expFreqResponseDdc)
 #adjust the zero point, due to the limited dynamic range used in the firmware test
 # and the normalization in the fft block
+
+resFreq = expData['resFreq'] #the center of the 2nd stage (mixer/lpf) channel
 expFreqResponseFftDb -= 4.
 expFreqResponseDdcDb -= 4.
 
@@ -38,6 +42,7 @@ def f(fig,ax):
     ax.plot(expFreqListMHz,expFreqResponseFftDb,'o',color='b',label='exp')
     ax.plot(freqListMHz,freqResponseDdcDb,color='g',label='theory')
     ax.plot(expFreqListMHz,expFreqResponseDdcDb,'o',color='g',label='exp')
+    ax.axvline(resFreq/MHz,color='.5',label='resonant freq')
     ax.set_ylim(-70,0)
     ax.set_ylabel('response (dB)')
     ax.set_xlabel('frequency (MHz)')
@@ -50,6 +55,7 @@ def f(fig,ax):
     ax.plot(expFreqListMHz,expFreqResponseFft,'o',color='b',label='exp')
     ax.plot(freqListMHz,freqResponseDdc,color='g',label='theory')
     ax.plot(expFreqListMHz,expFreqResponseDdc,'o',color='g',label='exp')
+    ax.axvline(resFreq/MHz,color='.5',label='resonant freq')
     ax.set_ylabel('response')
     ax.set_xlabel('frequency (MHz)')
     ax.legend(loc='best')
