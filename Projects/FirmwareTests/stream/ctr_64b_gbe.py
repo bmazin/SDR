@@ -1,9 +1,10 @@
 """
-File:      ctr_8b_gbe.py
+File:      ctr_64b_gbe.py
 Author:    Matt Strader
 Date:      Jan 6, 2016
-Firmware:  ctr_8b_gbe_2016_Jan_06_1053.fpg
+Firmware:  ctr_64b_gbe_2016_Jan_12_1653.fpg
 
+Tells the firmware to start sending udp packets along with what rate to send them.
 """
 
 import matplotlib, time, struct
@@ -32,9 +33,10 @@ if __name__=='__main__':
     fpga.get_system_information()
 
     dest_ip  =167772210 #corresponds to IP 10.0.0.50
-    fabric_port=34939
+    fabric_port=50000
     pktPeriod = 2**5
-    pktsPerFrame = 170
+    pktsPerFrame = 100
+    runTime = 100
 
     fpga.write_int('run',0)
 
@@ -62,14 +64,14 @@ if __name__=='__main__':
     time.sleep(1)
     fpga.write_int('run',1)
 
-    time.sleep(1)
+    time.sleep(runTime)
 
     bytesSent = fpga.read_int('byte_cnt')
     eofSent = fpga.read_int('eof_cnt')
     almostFullTxBuffers = fpga.read_int('gbe64_tx_afull')
     overrunTxBuffers = fpga.read_int('gbe64_tx_overrun')
 
-    print 'after 1 sec'
+    print 'after {} sec'.format(runTime)
     print bytesSent, 'packs sent'
     print eofSent, 'frames sent'
     print 'almost full:',almostFullTxBuffers
@@ -84,6 +86,6 @@ if __name__=='__main__':
     fpga.write_int('trig',0)
 
     snpData = fpga.snapshots['snp_ss'].read(timeout=10,arm=False)['data']
-    #fpga.write_int('run',0)
+    fpga.write_int('run',0)
     for key in snpData:
         print key,snpData[key][0:20]
