@@ -86,6 +86,7 @@ def generateTones(freqs,nSamples=2**23,amplitudes=None,phases=None,sampleRate=2e
     #make a list of frequencies that we can generate with our limited frequency resolution that are closest
     # to the requested frequencies
     quantFreqs = freqResolution * np.round(freqs/freqResolution)
+    print quantFreqs
 
     maxValue = int(np.round(dynamicRange*2**(nBitsPerSampleComponent - 1)-1)) #1 bit for sign
 

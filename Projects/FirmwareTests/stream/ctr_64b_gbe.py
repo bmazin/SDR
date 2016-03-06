@@ -36,12 +36,12 @@ if __name__=='__main__':
     fabric_port=50000
     pktPeriod = 2**5
     pktsPerFrame = 100
-    runTime = 100
+    runTime = 1
 
     fpga.write_int('run',0)
 
-    bytesSent = fpga.read_int('byte_cnt')
-    eofSent = fpga.read_int('eof_cnt')
+    bytesSent = fpga.read_int('gbe64_word_ctr')
+    eofSent = fpga.read_int('gbe64_frame_ctr')
     almostFullTxBuffers = fpga.read_int('gbe64_tx_afull')
     overrunTxBuffers = fpga.read_int('gbe64_tx_overrun')
     print 'since start'
@@ -54,20 +54,20 @@ if __name__=='__main__':
     fpga.write_int('gbe64_dest_ip',dest_ip)
     fpga.write_int('gbe64_dest_port',fabric_port)
     fpga.write_int('pkt_period',pktPeriod)
-    fpga.write_int('pkts_per_frame',pktsPerFrame)
+    fpga.write_int('gbe64_words_per_frame',pktsPerFrame)
 
     time.sleep(.1)
-    fpga.write_int('gbe64_rst',1)
+    fpga.write_int('gbe64_rst_core',1)
     time.sleep(.1)
-    fpga.write_int('gbe64_rst',0)
+    fpga.write_int('gbe64_rst_core',0)
 
     time.sleep(1)
     fpga.write_int('run',1)
 
     time.sleep(runTime)
 
-    bytesSent = fpga.read_int('byte_cnt')
-    eofSent = fpga.read_int('eof_cnt')
+    bytesSent = fpga.read_int('gbe64_word_ctr')
+    eofSent = fpga.read_int('gbe64_frame_ctr')
     almostFullTxBuffers = fpga.read_int('gbe64_tx_afull')
     overrunTxBuffers = fpga.read_int('gbe64_tx_overrun')
 

@@ -105,10 +105,13 @@ if __name__=='__main__':
 
     binSpacing = sampleRate/nBins
     #waveFreqs = np.arange(0.,1000,5)*binSpacing
-    binIndex = 8
+    binIndex = 8.4999
     fpga.write_int('snap_fft_sel_bin',binIndex)
 
-    waveFreqs = [1.002*binIndex*binSpacing]
+    #waveFreqs = [1.002*binIndex*binSpacing]
+    waveFreqs = [binIndex*binSpacing]
+    print 'binSpacing',binSpacing
+    print 'desired',waveFreqs
     print 'Fpga Clock Rate:',fpga.estimate_fpga_clock()
     if memType == 'qdr':
         fpga.write_int(startRegisterName,0) #halt reading from mem while writing

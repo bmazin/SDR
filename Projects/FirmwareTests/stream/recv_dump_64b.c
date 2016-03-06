@@ -1,15 +1,14 @@
 /*
- * File:      recv_64b.c
+ * File:      recv_dump_64b.c
  * Author:    Matt Strader
- * Date:      Jan 12, 2016
- * Firmware:  ctr_64b_gbe_2016_Jan_12_1653.fpg
+ * Date:      Feb 18, 2016
+ * Firmware:  pgbe0_2016_Feb_16_1906.fpg
  *
  * Compile with
- * cc recv_64b.c -o recv64
+ * cc recv_dump_64b.c -o recv64
  * 
  * Mostly taken from https://www.abc.se/~m6695/udp.html
- * This receives udp packets.  It assumes that the packets each have
- * 100 64 bit counter values.  It counts any values that are missed
+ * This receives udp packets and dumps them to a file
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +30,6 @@
 #include <sys/stat.h>
 
 #define BUFLEN 51200
-#define NPACK 10000
 #define PORT 50000
 
 void diep(char *s)
@@ -60,10 +58,12 @@ int need_to_stop()//Checks for a stop file and returns true if found, else retur
 
 int main(void)
 {
+  //set up a socket connection
   struct sockaddr_in si_me, si_other;
   int s, i, slen=sizeof(si_other);
   unsigned char buf[BUFLEN];
   ssize_t nBytesReceived = 0;
+  ssize_t nTotalBytes = 0;
 
   if ((s=socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
     diep("socket");
@@ -94,20 +94,16 @@ int main(void)
   if (retval == -1)
     diep("set receive buffer size");
 
-
-  uint64_t pack = 0;
-  uint64_t lastPack = 0;
-  uint64_t packDiff = 0;
-  uint64_t expectedPackDiff = 100;
-  uint64_t nLostFrames = 0;
   uint64_t nFrames = 0;
+
+  FILE* dump_file;
+  dump_file = fopen("phaseDump.bin","ab");
   while (need_to_stop() == 0)
   {
-    if (nFrames % 10000 == 0)
+    if (nFrames % 1000 == 0)
     {
-        printf("Frame %d Word %d\n",nFrames,pack);
+        printf("Frame %d\n",nFrames);
     }
-    //if (recvfrom(s, buf, BUFLEN, 0, &si_other, &slen)==-1)
     nBytesReceived = recv(s, buf, BUFLEN, 0);
     if (nBytesReceived == -1)
     {
@@ -119,11 +115,14 @@ int main(void)
       else
         diep("recvfrom()");
     }
+    nTotalBytes += nBytesReceived;
 //    printf("Received packet from %s:%d\nData: %s\n\n", 
 //           inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
     //printf("Received %d bytes. Data: ",nBytesReceived);
     ++nFrames; 
+    fwrite(buf,sizeof(char),nBytesReceived,dump_file);
 
+    /*
     pack = buf[7]+(buf[6]<<8)+(buf[5]<<16)+(buf[4]<<24)+((uint64_t)buf[3]<<32)+((uint64_t)buf[2]<<40)+((uint64_t)buf[1]<<48)+((uint64_t)buf[0]<<56);
     packDiff = pack - lastPack;
     if ((packDiff > expectedPackDiff) && (pack != 0))
@@ -133,9 +132,11 @@ int main(void)
     }
 
     lastPack = pack;
+    */
   }
 
-  printf("lost %d frames total of %d\n",nLostFrames,nFrames);
+  fclose(dump_file);
+  printf("received %d frames, %d bytes\n",nFrames,nTotalBytes);
   close(s);
   return 0;
 }
