@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import casperfpga
 import sys
 
-def snapZdok(fpga):
+def snapZdok(fpga,nRolls=0):
     snapshotNames = fpga.snapshots.names()
 
     fpga.write_int('trig',0)#initialize trigger
@@ -33,7 +33,24 @@ def snapZdok(fpga):
     bus1 = np.array([adcData2['data_i4'],adcData2['data_i5'],adcData3['data_i6'],adcData3['data_i7']]).flatten('F')
     bus2 = np.array([adcData0['data_q0'],adcData0['data_q1'],adcData1['data_q2'],adcData1['data_q3']]).flatten('F')
     bus3 = np.array([adcData2['data_q4'],adcData2['data_q5'],adcData3['data_q6'],adcData3['data_q7']]).flatten('F')
-    return {'bus0':bus0,'bus1':bus1,'bus2':bus2,'bus3':bus3}
+
+    adcData = dict()
+    adcData.update(adcData0)
+    adcData.update(adcData1)
+    adcData.update(adcData2)
+    adcData.update(adcData3)
+    iDataKeys = ['data_i0','data_i1','data_i2','data_i3','data_i4','data_i5','data_i6','data_i7']
+    iDataKeys = np.roll(iDataKeys,nRolls)
+    #collate
+    iValList = np.array([adcData[key] for key in iDataKeys])
+    iVals = iValList.flatten('F')
+    qDataKeys = ['data_q0','data_q1','data_q2','data_q3','data_q4','data_q5','data_q6','data_q7']
+    qDataKeys = np.roll(qDataKeys,nRolls)
+    #collate
+    qValList = np.array([adcData[key] for key in qDataKeys])
+    qVals = qValList.flatten('F')
+
+    return {'bus0':bus0,'bus1':bus1,'bus2':bus2,'bus3':bus3,'adcData':adcData,'iVals':iVals,'qVals':qVals}
 
 def checkCurrentGlitches(fpga,xarr,nBits=12,bPlot=False):
     startIndex = 0
@@ -41,23 +58,19 @@ def checkCurrentGlitches(fpga,xarr,nBits=12,bPlot=False):
     maxRampVal = 2**(nBits)
     deriv = np.diff(xarr)
     while not foundGoodStart:
-        if ((deriv[startIndex] == 1) and (startIndex % 2 == 0)) or ((deriv[startIndex] == 0) and (startIndex % 2 == 1)):
-            startRelVal = 0.5
-        elif ((deriv[startIndex] == 0) and (startIndex % 2 == 0)) or ((deriv[startIndex] == 1) and (startIndex % 2 == 1)):
-            startRelVal = 0.
-        else:
-            startIndex += 1
-            continue
-        stepSize = 0.5
-        rampModel = xarr[startIndex]-np.ceil(startIndex/2.)+np.floor(np.arange(startRelVal,len(xarr)/2.+startRelVal,stepSize))
+        #assuming a ramp that increases by one each clock cycle
+        startRelVal = 0
+        stepSize = 1
+        rampModel = xarr[startIndex]-startIndex+np.arange(0,len(xarr),stepSize)
         rampModel = np.array(rampModel,dtype=np.int) % maxRampVal
+#        print len(xarr),len(rampModel)
 
-        x = np.arange(len(xarr))
-        fig,(ax,ax2) = plt.subplots(2,1)
-        ax.step(x,xarr)
-        ax.step(x,rampModel)
-        ax2.step(x,xarr-rampModel)
-        plt.show()
+#        x = np.arange(len(xarr))
+#        fig,(ax,ax2) = plt.subplots(2,1)
+#        ax.step(x,xarr)
+#        ax.step(x,rampModel)
+#        ax2.step(x,xarr-rampModel)
+#        plt.show()
 
         if np.median(rampModel - xarr) != 0:
             startIndex += 1
@@ -145,34 +158,54 @@ if __name__=='__main__':
     print 'Fpga Clock Rate:',fpga.estimate_fpga_clock()
 
     fpga.write_int('run_adc',1)#send ready signals
-    time.sleep(.1)
+    time.sleep(1)
 
-    print 'bus0'
-    findCalPattern(fpga,busName='bus0')
-    print 'bus1'
-    findCalPattern(fpga,busName='bus1')
-    print 'bus2'
-    findCalPattern(fpga,busName='bus2')
-    print 'bus3'
-    findCalPattern(fpga,busName='bus3')
+    delayLut0 = zip(np.arange(0,12),np.ones(12)*14)
+    delayLut1 = zip(np.arange(14,26),np.ones(12)*18)
+    delayLut2 = zip(np.arange(28,40),np.ones(12)*14)
+    delayLut3 = zip(np.arange(42,54),np.ones(12)*13)
+    loadDelayCal(fpga,delayLut0)
+    loadDelayCal(fpga,delayLut1)
+    loadDelayCal(fpga,delayLut2)
+    loadDelayCal(fpga,delayLut3)
 
-    delayLut = np.array([[0,10],[1,9],[2,7],[3,5],[4,9],[5,6],[6,4],[7,8],[8,14],[9,14],[10,10],[11,13],
-                          [14,22],[15,22],[16,20],[17,21],[18,21],[19,21],[20,21],[21,21],[22,23],[23,24],[24,23],[25,23],
-                          [28,18],[29,15],[30,14],[31,14],[32,9],[33,22],[34,15],[35,26],[36,22],[37,10],[38,19],[39,19],
-                          [42,17],[43,17],[44,17],[45,19],[46,17],[47,17],[48,15],[49,17],[50,17],[51,18],[52,18],[53,18]])
-    loadDelayCal(fpga,delayLut)
-    snapDict = snapZdok(fpga)
-    print 'With best cal:'
-    print 'bus0',checkCurrentGlitches(fpga,xarr=snapDict['bus0'],nBits=12)['failPatternStr']
-    print 'bus1',checkCurrentGlitches(fpga,xarr=snapDict['bus1'],nBits=12)['failPatternStr']
-    print 'bus2',checkCurrentGlitches(fpga,xarr=snapDict['bus2'],nBits=12)['failPatternStr']
-    print 'bus3',checkCurrentGlitches(fpga,xarr=snapDict['bus3'],nBits=12)['failPatternStr']
+    snapDict = snapZdok(fpga,nRolls=0)
     fig,ax = plt.subplots(1,1)
     x = np.arange(len(snapDict['bus0']))
     ax.step(x,snapDict['bus0'],color='b')
     ax.step(x,snapDict['bus1']+.1,color='g')
     ax.step(x,snapDict['bus2']+.2,color='k')
     ax.step(x,snapDict['bus3']+.3,color='r')
+    fig,ax = plt.subplots(1,1)
+    x = np.arange(len(snapDict['adcData']['data_i0']))
+    ax.step(x,snapDict['adcData']['data_i0'],label='0')
+    ax.step(x,snapDict['adcData']['data_i1'],label='1')
+    ax.step(x,snapDict['adcData']['data_i2'],label='2')
+    ax.step(x,snapDict['adcData']['data_i3'],label='3')
+    ax.step(x,snapDict['adcData']['data_i4'],label='4')
+    ax.step(x,snapDict['adcData']['data_i5'],label='5')
+    ax.step(x,snapDict['adcData']['data_i6'],label='6')
+    ax.step(x,snapDict['adcData']['data_i7'],label='7',color='gray')
+    ax.set_title('I individuals')
+    ax.legend(loc='best')
+    fig,ax = plt.subplots(1,1)
+    x = np.arange(len(snapDict['adcData']['data_q0']))
+    ax.step(x,snapDict['adcData']['data_q0'],label='0')
+    ax.step(x,snapDict['adcData']['data_q1'],label='1')
+    ax.step(x,snapDict['adcData']['data_q2'],label='2')
+    ax.step(x,snapDict['adcData']['data_q3'],label='3')
+    ax.step(x,snapDict['adcData']['data_q4'],label='4')
+    ax.step(x,snapDict['adcData']['data_q5'],label='5')
+    ax.step(x,snapDict['adcData']['data_q6'],label='6')
+    ax.step(x,snapDict['adcData']['data_q7'],label='7',color='gray')
+    ax.set_title('Q individuals')
+    ax.legend(loc='best')
+    fig,ax = plt.subplots(1,1)
+    x = np.arange(len(snapDict['iVals']))
+    ax.step(x,snapDict['iVals'])
+    ax.step(x,snapDict['qVals'])
+    ax.legend(loc='best')
+    np.savez('adcData',**snapDict)
     plt.show()
 
 
