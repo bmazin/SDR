@@ -42,14 +42,14 @@ import numpy as np
 import sys, os, time, shutil
 from multiprocessing import Process
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 import matplotlib
 from functools import partial
 from scipy import signal
 from scipy.signal import filter_design as fd
 from scipy.interpolate import UnivariateSpline
-import Peaks as Peaks
+#import Peaks as Peaks
 from WideSweepFile import WideSweepFile
 
 class WideAna(QMainWindow):
@@ -135,11 +135,12 @@ class WideAna(QMainWindow):
             bestWsfIndex = self.wsf.pk[bestIndex]
             bestX = self.wsf.x[bestWsfIndex]
             if pressed == "d":
-                if self.peakMask[bestWsfIndex]:
-                    self.peakMask[bestWsfIndex] = False
-                    self.setCountLabel()
-                    self.replot()
-                    self.writeToGoodFile()
+                #if self.peakMask[bestWsfIndex]:
+                #self.peakMask[bestWsfIndex] = False
+                self.peakMask[bestWsfIndex-4:bestWsfIndex+4] = False # larger area of indicies to pinpoint false resonator location
+                self.setCountLabel()
+                self.replot()
+                self.writeToGoodFile()
 
             if pressed == "a":
                 if not self.peakMask[bestWsfIndex]:
@@ -352,7 +353,6 @@ class WideAna(QMainWindow):
         super(WideAna,self).show()
         if self.parent == None:
             self.app.exec_()
-
 
 def main(initialFile=None):
     form = WideAna(showMe=False,title='WideSweep',initialFile=initialFile)

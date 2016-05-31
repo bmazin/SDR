@@ -18,6 +18,7 @@ def peaks(y,nsig, m=2, returnDict=False):
     peaks which are NSIG above the sigma of all peaks are selected.
 
     """
+
     print "begin Peaks.peaks with nsig,m=",nsig,m
     d0 = y - np.roll(y,-1)
     d1 = y - np.roll(y,1)
@@ -28,10 +29,31 @@ def peaks(y,nsig, m=2, returnDict=False):
     delta = np.abs(yp - np.median(yp))
     mdev = np.median(delta)
     s = delta/mdev if mdev else 0
-    ypGood = y[s<m]
+    ypGood = y[np.where(s<m)] # using a subset of y
     mn = ypGood.mean()
     sig = ypGood.std()
     big = pk[yp > mn + nsig*sig]
+    
+    #to remove multiple identifications of the same peak (not collisions)
+    minPeakDist = 60
+    cluster = []
+    clusters=[]
+    for pks in range(len(big)-1):
+        vel = abs(big[pks]-big[pks+1])
+        cluster.append(pks)
+        if vel > minPeakDist:
+            clusters.append(cluster)
+            cluster=[]
+
+    indrem=[]
+    for c in range(len(clusters)):
+        try:
+            trueind = np.argmax( y[big[clusters[c]]] )
+            falseind = np.where(big[clusters[c]] != big[clusters[c]][trueind])[0]
+            indrem = np.concatenate((indrem, np.array(clusters[c])[falseind]))
+        except ValueError:
+            pass
+    big = np.delete(big,indrem)
 
     if returnDict:
         return {"big":big, "pk":pk, "yp":yp, "m":m}
