@@ -39,9 +39,9 @@ def peaks(y,nsig, m=2, returnDict=False):
     cluster = []
     clusters=[]
     for pks in range(len(big)-1):
-        vel = abs(big[pks]-big[pks+1])
+        dist = abs(big[pks]-big[pks+1])
         cluster.append(pks)
-        if vel > minPeakDist:
+        if dist > minPeakDist:
             clusters.append(cluster)
             cluster=[]
 
