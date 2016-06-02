@@ -1,10 +1,14 @@
-''' A replacement for WideAna.py which uses tensor flow to identify the
-positions of peaks using an image classification algorithm.
+''' A script to eliminate (or vastly reduce) the monotonous task of
+clicking resonators. This is accomplished through the use of tensor flow to
+identify the positions of peaks using an image classification algorithm.
 
 
 Usage:  python WideAna_ml.py test/Asteria_FL1_100mK_ws.txt
 
+Output: Asteria_FL1_100mK_ws-ml.txt   - to be used with WideAna.py
+        Asteria_FL1_100mK_ws-good.txt - to be used with autofit.py
 
+How it works:
 The script requires a series of images to train and test the algorithm with. If
 it exists the image data will be loaded from a pkl file
 
@@ -21,13 +25,16 @@ files) and reloaded
 The machine is then trained and its ability to predict the type of image is
 validated
 
-The weights applied to each class and used to make predictions can be displayed
-using the plotWeights function
+The weights used to make predictions for each class can be displayed using
+the plotWeights function
 
 A window the size of the training/testing images scans across the inference
-spectrum and the locations of peaks and collisions are identified
+spectrum and the locations of peaks and collisions are identified and printed to
+file. This can either be in the format read by autofit if the user believes all
+the peaks have been found or WideAna.py is automatically loaded and the
+remianing peaks can be identified by hand
 
-
+Note of training optimisation:
 Smaller window widths are better for spectra with many collisions but bad for
 those with low average Qi When subtracting the baseline be the spectra does not
 have overdriven asymetric resonators as this can make the wings of resonators
@@ -38,18 +45,13 @@ Rupert Dodkins
 to do: gui '''
 
 from WideSweepFile import WideSweepFile
+import WideAna as WideAna
 import numpy as np
-import sys, os
+import sys, os, time, shutil
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import pickle
 import random
-import time
-
-#from PyQt4 import QtGui
-#from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-#from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-#from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 
 class mlClassification():
     def __init__(self, inferenceFile=None, base_corr=False):
@@ -57,7 +59,7 @@ class mlClassification():
         
         self.baseFile = ('.').join(inferenceFile.split('.')[:-1])
         self.goodFile = self.baseFile + '-good.txt'
-        
+        self.mlFile = self.baseFile + '-ml.txt'
         self.wsf = WideSweepFile(inferenceFile)
         self.wsf.fitFilter(wn=0.01)
         self.wsf.findPeaks()
@@ -149,15 +151,11 @@ class mlClassification():
             colls_thresh = self.xWidth/2    # two peaks in one frame
         else: 
             colls_thresh= 70                # true collision threshold
-        print colls_thresh
         colls = peaks[np.where( peakVel < colls_thresh)[0]]#7
        
         random.shuffle(colls)
-        print colls
-        print len(peaks)
         # to stop multiple peaks appearing in training data
         peaks = peaks[np.where( peakVel >= self.xWidth)[0]] 
-        print len(peaks)
         class_steps = trainSteps/self.nClasses
         
         # not enough frequency collisions to bother training the model to recognise them
@@ -346,7 +344,7 @@ class mlClassification():
             plt.title('class %i' % nc)
             plt.show()
 
-    def findPeaks(self, inferenceFile, steps =50, start=1000, searchWholeSpec=False):
+    def findPeaks(self, inferenceFile, steps =50, start=1000, searchWholeSpec=False, useWideAna=True):
         try:
             self.sess
         except AttributeError:
@@ -391,7 +389,7 @@ class mlClassification():
         peakLocations=[]
         scores = np.zeros((len(stdLabels)))
         peaks = np.where(np.logical_or(stdLabels ==2, stdLabels ==4) )
-        peaks = np.split(peaks[0], np.where(np.diff(peaks[0]) >= 2)[0]+1)
+        peaks = np.split(peaks[0], np.where(np.diff(peaks[0]) >= 3)[0]+1)
 
         if len(peaks[0]) == 0:
             print 'No peaks found in search range'
@@ -402,33 +400,43 @@ class mlClassification():
                     middle = (p[0]+p[len(p)-1]) /2
                     peakLocations.append(middle)
 
-        #peakLocations = np.array(peakLocations)
         centers = np.array(centers)
         dist = abs(np.roll(centers[peakLocations], -1) - centers[peakLocations])
         peakLocations = np.delete(peakLocations,np.where(dist<100))
 
         print 'Number of resonators located:', len(peakLocations)
 
-        plt.plot(self.wsf.x[centers[start:start+steps]], self.wsf.mag[centers[start:start+steps]])#- self.wsf.baseline[centers[start:start+steps]])
-        if peakLocations != []:
-            for pl in peakLocations:
-                plt.axvline(self.wsf.x[centers[pl+start]], color='r')
-                
-        plt.xlabel('Frequency (GHz)')
-        plt.ylabel('Transmitance')
-        plt.show()
+        #plt.plot(self.wsf.x[centers[start:start+steps]], self.wsf.mag[centers[start:start+steps]])#- self.wsf.baseline[centers[start:start+steps]])
+        #if peakLocations != []:
+        #    for pl in peakLocations:
+        #        plt.axvline(self.wsf.x[centers[pl+start]], color='r')
+        #plt.xlabel('Frequency (GHz)')
+        #plt.ylabel('Transmitance')
+        #plt.show()
+        #plt.close()
 
-        if os.path.isfile(self.goodFile):
-            self.goodFile = self.goodFile + time.strftime("-%Y-%m-%d-%H-%M-%S")
+        if useWideAna:
+            if os.path.isfile(self.mlFile):
+                shutil.copy(self.mlFile, self.mlFile+time.strftime("-%Y-%m-%d-%H-%M-%S"))
+            mlf = open(self.mlFile,'wb')
+            if peakLocations != []:
+                for pl in peakLocations:
+                    line = "%12d\n" % centers[pl]
+                    mlf.write(line)
+                mlf.close()
+            WideAna.main(initialFile=self.inferenceFile)
+            os.remove(self.mlFile)
         
-        gf = open(self.goodFile,'wb')
-        id = 0
-        if peakLocations != []:
-            for pl in peakLocations:
-                line = "%8d %12d %16.7f\n"%(id,centers[pl],self.wsf.x[centers[pl]])
-                gf.write(line)
-                id += 1
-            gf.close()
+        else:
+            gf = open(self.goodFile,'wb')
+            id = 0
+            if peakLocations != []:
+                for pl in peakLocations:
+                    line = "%8d %12d %16.7f\n"%(id,centers[pl],self.wsf.x[centers[pl]])
+                    gf.write(line)
+                    id += 1
+                gf.close()
+        
 
 def next_batch(trainImages, trainLabels, batch_size):
     perm = random.sample(range(len(trainImages)), batch_size)
@@ -460,14 +468,9 @@ def main(inferenceFile=None):
     mlClass = mlClassification(inferenceFile=inferenceFile,base_corr=False)
     #mlClass.makeTrainData(trainSteps =20)
     
-    start_time = time.clock()
     mlClass.mlClass()
     #mlClass.plotWeights()
-    #mlClass.findPeaks(inferenceFile, searchWholeSpec=True)
-    mlClass.findPeaks(inferenceFile, start=0, steps= 2000)
-
-    print 'run time %f seconds' % (time.clock()-start_time)
-    
+    mlClass.findPeaks(inferenceFile, steps=200, useWideAna=True)    
 
 if __name__ == "__main__":
     inferenceFile= None

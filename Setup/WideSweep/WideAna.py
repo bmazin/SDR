@@ -79,7 +79,6 @@ class WideAna(QMainWindow):
         if showMe == True:
             self.show()
 
-
         self.load_file(initialFile)
         # make the PDF file
 
@@ -89,7 +88,6 @@ class WideAna(QMainWindow):
         else:
             print "Overview PDF file already on disk:",self.pdfFile
         # plot the first segment
-
         self.deltaXDisplay = 0.100 # display width in GHz
         self.zoomFactor = 1.0
         self.segment = 0
@@ -259,7 +257,12 @@ class WideAna(QMainWindow):
         self.wsf.fitFilter(wn=0.01)
         self.wsf.findPeaks(m=2)
         self.peakMask = np.zeros(len(self.wsf.x),dtype=np.bool)
-        self.peakMask[self.wsf.peaks] = True
+        if os.path.isfile(self.baseFile+"-ml.txt"):             # update: use machine learning peak loacations if they exist
+            peaks = np.loadtxt(self.baseFile+"-ml.txt")
+            peaks = map(int,peaks)
+            self.peakMask[peaks] = True
+        else:
+            self.peakMask[self.wsf.peaks] = True
         self.setCountLabel()
         self.writeToGoodFile()
 
@@ -309,6 +312,7 @@ class WideAna(QMainWindow):
         dx = self.deltaXDisplay/self.zoomFactor
         self.xMin = xMiddle-dx/2.0
         self.xMax = xMiddle+dx/2.0
+
     def plotSegment(self):
         ydText = self.yDisplay.text()
         if self.wsf != None:
@@ -331,9 +335,6 @@ class WideAna(QMainWindow):
             self.axes.set_title("segment=%.1f/%.1f"%(self.segment,self.segmentMax))
             self.axes.legend().get_frame().set_alpha(0.5)
             self.draw()
-
-
-
 
     def yDisplayClicked(self, value):
         if value:
