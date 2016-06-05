@@ -257,7 +257,7 @@ class WideAna(QMainWindow):
         self.wsf.fitFilter(wn=0.01)
         self.wsf.findPeaks(m=2)
         self.peakMask = np.zeros(len(self.wsf.x),dtype=np.bool)
-        if os.path.isfile(self.baseFile+"-ml.txt"):             # update: use machine learning peak loacations if they exist
+        if os.path.isfile(self.baseFile+"-ml.txt"):             # update: use machine learning peak loacations if they've been made
             peaks = np.loadtxt(self.baseFile+"-ml.txt")
             peaks = map(int,peaks)
             self.peakMask[peaks] = True

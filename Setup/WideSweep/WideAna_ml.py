@@ -54,7 +54,7 @@ import pickle
 import random
 
 class mlClassification():
-    def __init__(self, inferenceFile=None, base_corr=False):
+    def __init__(self, inferenceFile=None):
         self.nClasses = 5
         
         self.baseFile = ('.').join(inferenceFile.split('.')[:-1])
@@ -65,16 +65,11 @@ class mlClassification():
         self.wsf.findPeaks()
 
         self.xWidth =150
-        if base_corr:
-            self.trans = self.wsf.mag - self.wsf.baseline
-            self.trainFile = 'train_w%i_c%i_bc.pkl' % (self.xWidth, self.nClasses)
-            self.testFile = 'test_w%i_c%i_bc.pkl' % (self.xWidth, self.nClasses)
-            rescaling_factor = 1.5
-        else:
-            self.trans = self.wsf.mag
-            self.trainFile = 'train_w%i_c%i.pkl' % (self.xWidth, self.nClasses)
-            self.testFile = 'test_w%i_c%i.pkl' % (self.xWidth, self.nClasses)
-            rescaling_factor = 3.5
+        
+        self.trans = self.wsf.mag
+        self.trainFile = 'train_w%i_c%i.pkl' % (self.xWidth, self.nClasses)
+        self.testFile = 'test_w%i_c%i.pkl' % (self.xWidth, self.nClasses)
+        rescaling_factor = 3.5
         
         self.yLims=[min(self.trans), max(self.trans)]
         self.trainFrac = 0.8
@@ -88,7 +83,7 @@ class mlClassification():
         start = int(xCenter - self.xWidth/2)
         end = int(xCenter + self.xWidth/2)
         
-        trans = self.trans_adjusted[start:end]#-sum(self.baseline_adjusted[start:end]/self.xWidth))
+        trans = self.trans_adjusted[start:end]
         trans = map(int, np.array(trans) + (self.xWidth*4.5/5)-np.median(trans) )
 
         if showFrames:
@@ -132,14 +127,15 @@ class mlClassification():
         return image
         
 
-    def makeTrainData(self, trainSteps=20, saveFile=True):
+    def makeTrainData(self, trainSteps=20, useGood=False, saveFile=True):
         self.yLims=[min(self.trans), max(self.trans)]
 
         trainImages, trainLabels, testImages, testLabels = [], [], [], []
         
-        if os.path.isfile(self.goodFile):
-            print 'loading peak location data from %s' % self.goodFile
-            peaks = np.loadtxt(self.goodFile)[:,1]
+        if useGood:
+            if os.path.isfile(self.goodFile):
+                print 'loading peak location data from %s' % self.goodFile
+                peaks = np.loadtxt(self.goodFile)[:,1]
 
         else:
             print 'using WideSweepFile.py to predict where the peaks are'
@@ -158,8 +154,8 @@ class mlClassification():
         peaks = peaks[np.where( peakVel >= self.xWidth)[0]] 
         class_steps = trainSteps/self.nClasses
         
-        # not enough frequency collisions to bother training the model to recognise them
         if len(colls) < class_steps or self.nClasses == 4:
+            print 'not enough collisions detected within the frame width to create 5th class'
             colls=[]
             self.nClasses=4
 
@@ -343,8 +339,9 @@ class mlClassification():
             plt.imshow(weights[:,:, nc])
             plt.title('class %i' % nc)
             plt.show()
+            plt.close()
 
-    def findPeaks(self, inferenceFile, steps =50, start=1000, searchWholeSpec=False, useWideAna=True):
+    def findPeaks(self, inferenceFile, steps =50, start=0, searchWholeSpec=False, useWideAna=True):
         try:
             self.sess
         except AttributeError:
@@ -402,7 +399,7 @@ class mlClassification():
 
         centers = np.array(centers)
         dist = abs(np.roll(centers[peakLocations], -1) - centers[peakLocations])
-        peakLocations = np.delete(peakLocations,np.where(dist<100))
+        peakLocations = np.delete(peakLocations,np.where(dist<70))
 
         print 'Number of resonators located:', len(peakLocations)
 
@@ -421,9 +418,10 @@ class mlClassification():
             mlf = open(self.mlFile,'wb')
             if peakLocations != []:
                 for pl in peakLocations:
-                    line = "%12d\n" % centers[pl]
+                    line = "%12d\n" % centers[pl+start]
                     mlf.write(line)
                 mlf.close()
+            #on ubuntu 14.04 and matplotlib-1.5.1 backend 'Qt4Agg' running matplotlib.show() prior to this causes segmentation fault
             WideAna.main(initialFile=self.inferenceFile)
             os.remove(self.mlFile)
         
@@ -465,12 +463,11 @@ def loadPkl(filename):
     return images, labels 
 
 def main(inferenceFile=None):
-    mlClass = mlClassification(inferenceFile=inferenceFile,base_corr=False)
-    #mlClass.makeTrainData(trainSteps =20)
-    
+    mlClass = mlClassification(inferenceFile=inferenceFile)
+    mlClass.makeTrainData(trainSteps =10)
     mlClass.mlClass()
-    #mlClass.plotWeights()
-    mlClass.findPeaks(inferenceFile, steps=200, useWideAna=True)    
+    mlClass.plotWeights()
+    mlClass.findPeaks(inferenceFile, searchWholeSpec=True,  useWideAna=True)
 
 if __name__ == "__main__":
     inferenceFile= None
