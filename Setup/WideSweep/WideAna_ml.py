@@ -35,14 +35,10 @@ the peaks have been found or WideAna.py is automatically loaded and the
 remianing peaks can be identified by hand
 
 Note of training optimisation:
-Smaller window widths are better for spectra with many collisions but bad for
-those with low average Qi When subtracting the baseline be the spectra does not
-have overdriven asymetric resonators as this can make the wings of resonators
-look like peaks
+Smaller window widths are better for spectra with many collisions but worse for
+those with low average Q
 
-Rupert Dodkins
-
-to do: gui '''
+Rupert Dodkins'''
 
 from WideSweepFile import WideSweepFile
 import WideAna as WideAna
@@ -158,7 +154,9 @@ class mlClassification():
             print 'not enough collisions detected within the frame width to create 5th class'
             colls=[]
             self.nClasses=4
-
+            self.trainFile = 'train_w%i_c%i.pkl' % (self.xWidth, self.nClasses)
+            self.testFile = 'test_w%i_c%i.pkl' % (self.xWidth, self.nClasses)
+        
         noise = range(len(self.wsf.x))
         lefts = peaks+self.xWidth/3
         centrals = peaks
@@ -440,7 +438,6 @@ def next_batch(trainImages, trainLabels, batch_size):
     perm = random.sample(range(len(trainImages)), batch_size)
     trainImages = np.array(trainImages)[perm,:]
     trainLabels = np.array(trainLabels)[perm,:]
-
     return trainImages, trainLabels
 
 def loadPkl(filename):
