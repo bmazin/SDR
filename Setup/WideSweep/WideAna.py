@@ -42,14 +42,14 @@ import numpy as np
 import sys, os, time, shutil
 from multiprocessing import Process
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 import matplotlib
 from functools import partial
 from scipy import signal
 from scipy.signal import filter_design as fd
 from scipy.interpolate import UnivariateSpline
-import Peaks as Peaks
+#import Peaks as Peaks
 from WideSweepFile import WideSweepFile
 
 class WideAna(QMainWindow):
@@ -79,7 +79,6 @@ class WideAna(QMainWindow):
         if showMe == True:
             self.show()
 
-
         self.load_file(initialFile)
         # make the PDF file
 
@@ -89,7 +88,6 @@ class WideAna(QMainWindow):
         else:
             print "Overview PDF file already on disk:",self.pdfFile
         # plot the first segment
-
         self.deltaXDisplay = 0.100 # display width in GHz
         self.zoomFactor = 1.0
         self.segment = 0
@@ -135,11 +133,12 @@ class WideAna(QMainWindow):
             bestWsfIndex = self.wsf.pk[bestIndex]
             bestX = self.wsf.x[bestWsfIndex]
             if pressed == "d":
-                if self.peakMask[bestWsfIndex]:
-                    self.peakMask[bestWsfIndex] = False
-                    self.setCountLabel()
-                    self.replot()
-                    self.writeToGoodFile()
+                #if self.peakMask[bestWsfIndex]:
+                #self.peakMask[bestWsfIndex] = False
+                self.peakMask[bestWsfIndex-4:bestWsfIndex+4] = False # larger area of indicies to pinpoint false resonator location
+                self.setCountLabel()
+                self.replot()
+                self.writeToGoodFile()
 
             if pressed == "a":
                 if not self.peakMask[bestWsfIndex]:
@@ -258,7 +257,12 @@ class WideAna(QMainWindow):
         self.wsf.fitFilter(wn=0.01)
         self.wsf.findPeaks(m=2)
         self.peakMask = np.zeros(len(self.wsf.x),dtype=np.bool)
-        self.peakMask[self.wsf.peaks] = True
+        if os.path.isfile(self.baseFile+"-ml.txt"):             # update: use machine learning peak loacations if they've been made
+            peaks = np.loadtxt(self.baseFile+"-ml.txt")
+            peaks = map(int,peaks)
+            self.peakMask[peaks] = True
+        else:
+            self.peakMask[self.wsf.peaks] = True
         self.setCountLabel()
         self.writeToGoodFile()
 
@@ -308,6 +312,7 @@ class WideAna(QMainWindow):
         dx = self.deltaXDisplay/self.zoomFactor
         self.xMin = xMiddle-dx/2.0
         self.xMax = xMiddle+dx/2.0
+
     def plotSegment(self):
         ydText = self.yDisplay.text()
         if self.wsf != None:
@@ -331,9 +336,6 @@ class WideAna(QMainWindow):
             self.axes.legend().get_frame().set_alpha(0.5)
             self.draw()
 
-
-
-
     def yDisplayClicked(self, value):
         if value:
             self.yDisplay.setText("diff")
@@ -352,7 +354,6 @@ class WideAna(QMainWindow):
         super(WideAna,self).show()
         if self.parent == None:
             self.app.exec_()
-
 
 def main(initialFile=None):
     form = WideAna(showMe=False,title='WideSweep',initialFile=initialFile)

@@ -5,6 +5,7 @@ import math
 import random
 import matplotlib.pyplot as plt
 import matplotlib
+
 class Resonator:
     def __init__(self, freq, I, Ierr, Q, Qerr):
         self.freq = freq
