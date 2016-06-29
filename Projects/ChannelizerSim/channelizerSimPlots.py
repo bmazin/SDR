@@ -125,7 +125,7 @@ if instrument == 'arcons':
     sampleRate = 512.e6 #512 MHz
     clockRate = 256.e6
     bFlipSigns = True
-    lpfCutoff = 250.e3# 125 kHz in old firmware, should probably be 250 kHz
+    lpfCutoff = 125.e3#250.e3# 125 kHz in old firmware, should probably be 250 kHz
     nLpfTaps = 20
     binOversamplingRate = 2. #number of samples from the same bin used in a clock cycle
     downsample = 2
@@ -137,11 +137,11 @@ elif instrument == 'darkness':
     sampleRate = 2.e9
     clockRate = 250.e6
     bFlipSigns = True
-    lpfCutoff = 250.e3
+    lpfCutoff = 125.e3
     nLpfTaps = 20
     binOversamplingRate = 2. #number of samples from the same bin used in a clock cycle
-    downsample = 1
-    pfbBinWidthScale = 2.5
+    downsample = 2
+    pfbBinWidthScale = 2.
     toneAmp = 1.0
 nSimultaneousInputs = sampleRate/clockRate #number of consecutive samples (from consecutive channels) used in a clock cycle
 binSpacing = sampleRate/fftSize #space between fft bin centers
@@ -154,7 +154,8 @@ print binSampleRate/1.e6, 'MHz sampling of fft bin'
 
 #Define the resonant frequency of interest
 #resFreq = 10.99e6 #[Hz]
-resFreq = 7.4e6 #[Hz]
+resFreq = 7.32421875e6 #(7.+3/8.)*1.e6 #[Hz]
+#resFreq = 7.5*binSpacing
 binIndex = round(resFreq/binSpacing) #nearest FFT freq bin to resFreq
 binFreq = binIndex*binSpacing #center frequency of bin at binIndex
 print 'binFreq',binFreq
@@ -162,7 +163,7 @@ print 'binFreq',binFreq
 #Define some additional nearby resonant frequencies.  These should be filtered out of the channel of interest.
 #later we'll make some readout tones at these frequencies, add them in, and channelize to see that they're filtered
 resSpacing = .501e6 #250 kHz minimum space between resonators
-resFreq2 = 9.66e6#resFreq-resSpacing#[Hz] Resonator frequency
+resFreq2 = 9.0e6#resFreq-resSpacing#[Hz] Resonator frequency
 resFreq3 = resFreq+resSpacing#[Hz] Resonator frequency
 resFreqIndex = fftSize*resFreq/sampleRate
 resFreqIndex2 = fftSize*resFreq2/sampleRate
@@ -206,6 +207,9 @@ freqResponsePfbDb = 20*np.log10(np.abs(freqResponsePfb))
 #Frequency response for 2nd stage of channelizer, shift res freq to zero and apply low pass filter
 #this narrows the bin around the desired readout frequency
 lpf = scipy.signal.firwin(nLpfTaps, cutoff=lpfCutoff, nyq=binSampleRate/2.,window='hanning')
+arconsLpf = scipy.signal.firwin(nLpfTaps, cutoff=125.e3, nyq=1.e6,window='hanning')
+print lpf
+print arconsLpf
 
 binBandNormFreqs = (freqList-resFreq)*2*np.pi/binSampleRate # frequencies in bandwidth of a fft bin[rad/sample]
 _,freqResponseLpf = scipy.signal.freqz(lpf, worN=binBandNormFreqs)
@@ -227,7 +231,7 @@ def f(fig,ax):
     ax.axvline(resFreq/1.e6,color='.5',label='resonant freq')
     ax.axvline(resFreq2/1.e6,color='.8')
     ax.axvline(resFreq3/1.e6,color='.8')
-    ax.set_ylim(-50,0)
+    ax.set_ylim(-90,0)
     ax.set_ylabel('response (dB)')
     ax.set_xlabel('frequency (MHz)')
     ax.legend(loc='lower left')
@@ -286,8 +290,8 @@ nSamples = 100*nPfbTaps*fftSize
 signal = toneWithPhasePulse(resFreq,nSamples,sampleRate)
 
 #add in other tones with their own pulses.  We don't want those pulses to show up in this channel
-signal += toneWithPhasePulse(resFreq2,nSamples,sampleRate,pulseAmpDeg=-90.,pulseArrivalTime=200.e-6,initialPhase=2.)
-signal += toneWithPhasePulse(resFreq3,nSamples,sampleRate,pulseAmpDeg=-80.,pulseArrivalTime=300.e-6,initialPhase=1.)
+#signal += toneWithPhasePulse(resFreq2,nSamples,sampleRate,pulseAmpDeg=-90.,pulseArrivalTime=200.e-6,initialPhase=2.)
+#signal += toneWithPhasePulse(resFreq3,nSamples,sampleRate,pulseAmpDeg=-80.,pulseArrivalTime=300.e-6,initialPhase=1.)
 #signal += tone(resFreq3,nSamples,sampleRate,initialPhase=1.)
 
 time = np.arange(nSamples)/sampleRate/1.e-6 #in us
@@ -316,8 +320,8 @@ fig,ax = plt.subplots(1,1)
 f(fig,ax)
 #pop(plotFunc=lambda gui: f(fig=gui.fig,ax=gui.axes))
 
-filteredSignal0 = pfb(signal[:-fftSize/2],fftSize=fftSize,nTaps=nPfbTaps)
-filteredSignal1 = pfb(signal[fftSize/2:],fftSize=fftSize,nTaps=nPfbTaps)
+filteredSignal0 = pfb(signal[:-fftSize/2],fftSize=fftSize,nTaps=nPfbTaps,binWidthScale=pfbBinWidthScale)
+filteredSignal1 = pfb(signal[fftSize/2:],fftSize=fftSize,nTaps=nPfbTaps,binWidthScale=pfbBinWidthScale)
 #trim off end if the length doesn't evenly divide by fftSize
 nFfts = len(filteredSignal0)//fftSize
 filteredSignal0 = filteredSignal0[:nFfts*fftSize]

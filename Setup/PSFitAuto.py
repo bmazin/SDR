@@ -115,10 +115,19 @@ class StartQt4(QMainWindow):
         self.ui.plot_1.canvas.draw()
 
         max_ratio_threshold = 1.5
-        guess_atten_idx = where(self.res1_max_ratio < max_ratio_threshold)
-        rule_of_thumb_offset = 1
+        rule_of_thumb_offset = 2
+        
+         # require ROTO adjacent elements to be all below the MRT
+        bool_remove = np.ones(len(self.res1_max_ratio))
+        for ri in range(len(self.res1_max_ratio)-rule_of_thumb_offset-2):
+            bool_remove[ri] = bool((self.res1_max_ratio[ri:ri+rule_of_thumb_offset+1]< max_ratio_threshold).all())
+        guess_atten_idx = np.extract(bool_remove,np.arange(len(self.res1_max_ratio)))
+
+        # require the attenuation value to be past the initial peak in MRT
+        guess_atten_idx = guess_atten_idx[where(guess_atten_idx > argmax(self.res1_max_ratio) )[0]]
+
         if size(guess_atten_idx) >= 1:
-            guess_atten = self.Res1.atten1s[guess_atten_idx[0][0]+rule_of_thumb_offset]
+            guess_atten = self.Res1.atten1s[guess_atten_idx[0]+rule_of_thumb_offset]
             print 'Guessing attenuation is ',guess_atten
             self.select_atten(guess_atten)
         else:

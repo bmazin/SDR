@@ -86,7 +86,6 @@ if __name__=='__main__':
         sampleRate = 2.e9
         nSamplesPerCycle = 8
         nBins = 2048
-        snapshotNames = ['bin0','bin1','bin2','bin3','bin4','bin5','bin6','bin7']
         if memType == 'qdr':
             memNames = ['qdr0_memory','qdr1_memory','qdr2_memory'] 
         elif memType == 'bram':
@@ -96,14 +95,23 @@ if __name__=='__main__':
         print 'unrecognized instrument',instrument
         exit(1)
 
-    nQdrRowsToUse = 2**10
+    nQdrRowsToUse = 2**18
     nBytesPerQdrSample = 8
     nBitsPerSamplePair = 24
     nSamples=nSamplesPerCycle*nQdrRowsToUse
 
+    bUsePfb = 0
+    fpga.write_int('skip_pfb',bUsePfb)
+
     binSpacing = sampleRate/nBins
     #waveFreqs = np.arange(0.,1000,5)*binSpacing
-    waveFreqs = [50.*binSpacing]
+    binIndex = 8.4999
+    fpga.write_int('snap_fft_sel_bin',binIndex)
+
+    #waveFreqs = [1.002*binIndex*binSpacing]
+    waveFreqs = [binIndex*binSpacing]
+    print 'binSpacing',binSpacing
+    print 'desired',waveFreqs
     print 'Fpga Clock Rate:',fpga.estimate_fpga_clock()
     if memType == 'qdr':
         fpga.write_int(startRegisterName,0) #halt reading from mem while writing
@@ -112,37 +120,74 @@ if __name__=='__main__':
     loadDict = loadWaveToMem(fpga,waveFreqs=waveFreqs,phases=None,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerMemSample=nBytesPerQdrSample,nBitsPerSamplePair=nBitsPerSamplePair,memNames = memNames,nSamples=nSamples,memType=memType,dynamicRange=dynamicRange)
     fpga.write_int(startRegisterName,1) #start reading from mem 
 
-    snapshotList = [fpga.snapshots[name] for name in snapshotNames]
-    #overSnapshot = fpga.snapshots['over']
+    snapshotNames = ['snap_fft_snp1_b02_ss','snap_fft_snp1_b35_ss','snap_fft_snp1_b67_ss','snap_fft_snp1_sel_bin_ss']
+    for name in snapshotNames:
+        fpga.snapshots[name].arm()
 
-    for snap in snapshotList:
-        snap.arm()
-    #overSnapshot.arm()
+    coSnapshot = fpga.snapshots['snap_fft_snp1_co_ss']
+    coSnapshot.arm()
+    time.sleep(.1)
 
-    fpga.write_int('snap_fft',1)#trigger snapshots
+    fpga.write_int('snap_fft_trig',1)#trigger snapshots
     #fpga.write_int('PFB_snap',1)#trigger snapshots
     time.sleep(.1)
-    #overflowData = fpga.snapshots['PFB_of'].read(timeout=10)['data']['data']
+    #coData = coSnapshot.read(timeout=10,man_valid=True)['data']
+    coData = coSnapshot.read(timeout=5)['data']
+    overflowData = coData['over']
+    binCtr = coData['ctr']
 
-    parsedData = [parseBinData(np.array(snap.read(timeout=10)['data']['data'],dtype=object)) for snap in snapshotList]
-    parsedData = np.array(parsedData)
-    parsedData = parsedData.flatten('F') #read down a column, then the next column to put fft bins in order
-    #fpga.write_int('PFB_snap',0)#trigger snapshots
-    #overData = overSnapshot.read(timeout=10)['data']['data']
-    fpga.write_int('snap_fft',0)#trigger snapshots
+    fftVals = []
+    data = fpga.snapshots['snap_fft_snp1_b02_ss'].read(timeout=10)['data']
+    fftVals.append(np.array(data['i0'])+1.j*np.array(data['q0']))
+    fftVals.append(np.array(data['i1'])+1.j*np.array(data['q1']))
+    fftVals.append(np.array(data['i2'])+1.j*np.array(data['q2']))
+    data = fpga.snapshots['snap_fft_snp1_b35_ss'].read(timeout=10)['data']
+    fftVals.append(np.array(data['i3'])+1.j*np.array(data['q3']))
+    fftVals.append(np.array(data['i4'])+1.j*np.array(data['q4']))
+    fftVals.append(np.array(data['i5'])+1.j*np.array(data['q5']))
+    data = fpga.snapshots['snap_fft_snp1_b67_ss'].read(timeout=10)['data']
+    fftVals.append(np.array(data['i6'])+1.j*np.array(data['q6']))
+    fftVals.append(np.array(data['i7'])+1.j*np.array(data['q7']))
+    fftVals = np.array(fftVals).flatten('F')
 
-    absData = np.abs(parsedData)
+    selBinData = fpga.snapshots['snap_fft_snp1_sel_bin_ss'].read(timeout=10)['data']
+    i0 = np.array(selBinData['i0'])
+    i1 = np.array(selBinData['i1'])
+    q0 = np.array(selBinData['q0'])
+    q1 = np.array(selBinData['q1'])
+    #interleave t=0 and t=1
+    selBinVals = np.vstack((i0+1.j*q0,i1+1.j*q1)).flatten('F')
+
+    
+
+#    for snap in snapshotList:
+#        binData = snap.read(timeout=10)['data']
+#        binVals = np.array(binData['i0'])+1.j*np.array(binData['q0'])
+#        fftVals.append(binVals)
+    #read down a column, then the next column to put fft bins in order
+        
+    fpga.write_int('snap_fft_trig',0)#reset trigger for next time
+
+    absData = np.abs(fftVals)
     fig,ax = plt.subplots(1,1)
     ax.plot(absData)
 
-    selectBinIndex = 50
     fig,ax = plt.subplots(1,1)
-    ax.plot(np.real(parsedData[selectBinIndex::nBins]))
-    ax.plot(np.imag(parsedData[selectBinIndex::nBins]))
+    ax.plot(np.real(fftVals))
+    ax.plot(np.imag(fftVals))
 
-#    fig,ax = plt.subplots(1,1)
-#    #ax.plot(overData)
-#    ax.set_title('overflow')
+    fig,ax = plt.subplots(1,1)
+    ax.plot(np.real(selBinVals))
+    ax.plot(np.imag(selBinVals))
+    ax.plot(np.abs(selBinVals))
+
+   # fig,ax = plt.subplots(1,1)
+   # ax.plot(overflowData)
+   # ax.set_title('overflow')
+   # fig,ax = plt.subplots(1,1)
+   # ax.plot(binCtr,'o-')
+   # ax.set_title('bin counter')
+
     plt.show()
 
     print 'done!'

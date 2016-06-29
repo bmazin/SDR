@@ -83,6 +83,7 @@ class WideSweepFile():
             x0 = self.x[i0]
             x1 = self.x[i1]
             iPeak += 1
+
     def filter(self, order=4, rs=40, wn=0.1):
         b,a = signal.cheby2(order, rs, wn, btype="high", analog=False)
         self.filtered = signal.filtfilt(b,a,self.mag)
@@ -123,6 +124,3 @@ class WideSweepFile():
         else:
             iZero = self.Iz2
             qZero = self.Qz2
-
-
-
