@@ -1,10 +1,10 @@
 """
-File:      phaseStreamTest.py
+File:      a2gPhaseStreamTest.py
 Author:    Matt Strader
-Date:      Feb 18, 2016
-Firmware:  pgbe0_2016_Feb_19_2018.fpg
+Date:      Jun 29, 2016
+Firmware:  darksc5.fpg
 
-This script inserts a phase pulse in the qdr dds table and sets up the fake adc lut.  It checks snap blocks for each stage of the channelization process.  In the end the phase pulse should be recovered in the phase timestream of the chosen channel.
+This script inserts a phase pulse in the qdr dds table.  It checks snap blocks for each stage of the channelization process.  In the end the phase pulse should be recovered in the phase timestream of the chosen channel.
 """
 
 
@@ -45,12 +45,13 @@ def snapDdc(fpga,bSnapAll=False,bPlot=False,selBinIndex=0,selChanIndex=0,selChan
             'mix'.
     """
     #set up the snapshots to record the selected bin/channel
-    fpga.write_int('sel_bin',selBinIndex)
+    #fpga.write_int('sel_bin',selBinIndex)
     fpga.write_int('sel_bch',selChanIndex)
-    fpga.write_int('sel_stream',selChanStream)
+    #fpga.write_int('sel_stream',selChanStream)
     fpga.write_int('sel_ctr',ddsAddrTrig)
 
-    snapshotNames = ['snp2_bin_ss','snp2_ch_ss','snp2_dds_ss','snp2_mix_ss','snp2_ctr_ss','snp3_ddc_ss','snp3_cap_ss']
+    #snapshotNames = ['snp2_bin_ss','snp2_ch_ss','snp2_dds_ss','snp2_mix_ss','snp2_ctr_ss','snp3_ddc_ss','snp3_cap_ss']
+    snapshotNames = ['snp3_ddc_ss','snp3_cap_ss']
     for name in snapshotNames:
         fpga.snapshots[name].arm(man_valid=bSnapAll)
 
@@ -61,42 +62,6 @@ def snapDdc(fpga,bSnapAll=False,bPlot=False,selBinIndex=0,selChanIndex=0,selChan
 
     #in most of the snapshots, we get two IQ values per cycle (I[t=0],Q[t=0]) and (I[t=1],Q[t=1])
     #Retrieve them separately and then interleave them
-    binData = fpga.snapshots['snp2_bin_ss'].read(timeout=5,arm=False, man_valid=bSnapAll)['data']
-    i0 = np.array(binData['i0'])
-    i1 = np.array(binData['i1'])
-    q0 = np.array(binData['q0'])
-    q1 = np.array(binData['q1'])
-    #interleave values from alternating cycles (I0,Q0) and (I1,Q1)
-    bi = np.vstack((i0,i1)).flatten('F')
-    bq = np.vstack((q0,q1)).flatten('F')
-
-    chanData = fpga.snapshots['snp2_ch_ss'].read(timeout=5,arm=False, man_valid=bSnapAll)['data']
-    ci0 = np.array(chanData['i0'])
-    ci1 = np.array(chanData['i1'])
-    cq0 = np.array(chanData['q0'])
-    cq1 = np.array(chanData['q1'])
-    ci = np.vstack((ci0,ci1)).flatten('F')
-    cq = np.vstack((cq0,cq1)).flatten('F')
-
-    ddsData = fpga.snapshots['snp2_dds_ss'].read(timeout=5,arm=False, man_valid=bSnapAll)['data']
-    di0 = np.array(ddsData['i0'])
-    di1 = np.array(ddsData['i1'])
-    dq0 = np.array(ddsData['q0'])
-    dq1 = np.array(ddsData['q1'])
-    #interleave i0 and i1 values
-    di = np.vstack((di0,di1)).flatten('F')
-    dq = np.vstack((dq0,dq1)).flatten('F')
-
-    expectedMix = (ci+1.j*cq)*(di-1.j*dq)
-
-    mixerData = fpga.snapshots['snp2_mix_ss'].read(timeout=5,arm=False, man_valid=bSnapAll)['data']
-    mi0 = np.array(mixerData['i0'])
-    mi1 = np.array(mixerData['i1'])
-    mq0 = np.array(mixerData['q0'])
-    mq1 = np.array(mixerData['q1'])
-    #interleave i0 and i1 values
-    mi = np.vstack((mi0,mi1)).flatten('F')
-    mq = np.vstack((mq0,mq1)).flatten('F')
 
     #The low-pass filter in the DDC stage downsamples by 2, so we only get one sample per cycle here
     ddcData = fpga.snapshots['snp3_ddc_ss'].read(timeout=5,arm=False, man_valid=bSnapAll)['data']
@@ -105,34 +70,33 @@ def snapDdc(fpga,bSnapAll=False,bPlot=False,selBinIndex=0,selChanIndex=0,selChan
     rawPhase = np.array(ddcData['raw_phase'])
 
     phaseData = fpga.snapshots['snp3_cap_ss'].read(timeout=5,arm=False,man_valid=bSnapAll)['data']
-    filtPhase = np.array(phaseData['phase'])
+    phase = np.array(phaseData['phase'])
     basePhase = np.array(phaseData['base'])
+    subPhase = np.array(phaseData['filtered'])
     trig = np.array(phaseData['trig'],dtype=np.bool)
-    trig2 = np.array(phaseData['trig_raw'],dtype=np.bool)
+    peakTrig = np.array(phaseData['peak_trig'],dtype=np.bool)
+    threshTrig = np.array(phaseData['thresh_trig'],dtype=np.bool)
+    deadTrig = np.array(phaseData['dead_trig'],dtype=np.bool)
+    limTrig = np.array(phaseData['lim_trig'],dtype=np.bool)
+    posDerivTrig = np.array(phaseData['pos_deriv_trig'],dtype=np.bool)
+    negDerivTrig = np.array(phaseData['neg_deriv_trig'],dtype=np.bool)
 
-
-    ctrData = fpga.snapshots['snp2_ctr_ss'].read(timeout=5,arm=False, man_valid=bSnapAll)['data']
-    ctr = np.array(ctrData['ctr']) #the channel counter (0-256)
-    dctr = np.array(ctrData['dctr']) #the dds lut address counter (0-2**20)
+    #trig2 = np.array(phaseData['trig_raw'],dtype=np.bool)
 
     if bPlot:
         #we have the same number of samples from the lpf/downsample as everything else, but the each one
         #corresponds to every other timesample in the others. So leave off the second half of lpf samples
         #so the samples we have correspond to the same time period as the others, at least when plotting.
-        liSample = li[0:len(mi)/2]
 
         fig,ax = plt.subplots(1,1)
-        ax.plot(di,'r.-',label='dds')
-        ax.plot(bi,'bv-',label='bin')
-        ax.plot(ci,'g.-',label='channel')
-        ax.plot(mi,'mo-',label='mix')
-        ddcTimes = 2.*np.arange(0,len(liSample))
-        ax.plot(ddcTimes,liSample,'k.-',label='ddcOut')
+        ddcTimes = 2.*np.arange(0,len(li))
+        ax.plot(ddcTimes,li,'k.-',label='ddcOut')
+        ax.plot(ddcTimes,lq,'m.-',label='ddcOut')
         ax.set_title('I')
         ax.legend(loc='best')
 
 
-    return {'bin':(bi+1.j*bq),'chan':(ci+1.j*cq),'dds':(di+1.j*dq),'mix':(mi+1.j*mq),'ddcOut':(li+1.j*lq),'chanCtr':ctr,'ddsCtr':dctr,'expectedMix':expectedMix,'rawPhase':rawPhase,'filtPhase':filtPhase,'trig':trig,'trig2':trig2,'basePhase':basePhase}
+    return {'ddcOut':(li+1.j*lq),'rawPhase':rawPhase,'phase':phase,'trig':trig,'basePhase':basePhase,'subPhase':subPhase,'peakTrig':peakTrig,'threshTrig':threshTrig,'deadTrig':deadTrig,'limTrig':limTrig,'posDerivTrig':posDerivTrig,'negDerivTrig':negDerivTrig}#,'trig2':trig2}#,'basePhase':basePhase}
 
 
 def setSingleChanSelection(fpga,selBinNums=[0,0,0,0],chanNum=0):
@@ -175,29 +139,50 @@ def startStream(fpga,selChanIndex=0):
 
     #configure the gbe core, 
     print 'restarting'
-    fpga.write_int('stream_phase_gbe64_dest_ip',dest_ip)
-    fpga.write_int('stream_phase_gbe64_dest_port',fabric_port)
-    fpga.write_int('stream_phase_gbe64_words_per_frame',pktsPerFrame)
+    fpga.write_int('gbe64_dest_ip',dest_ip)
+    fpga.write_int('gbe64_dest_port',fabric_port)
+    fpga.write_int('gbe64_words_per_frame',pktsPerFrame)
     #reset the core to make sure it's in a clean state
-    fpga.write_int('stream_phase_gbe64_rst_core',1)
+    fpga.write_int('gbe64_rst',1)
     time.sleep(.1)
-    fpga.write_int('stream_phase_gbe64_rst_core',0)
+    fpga.write_int('gbe64_rst',0)
 
     #choose what channel to stream
-    fpga.write_int('stream_phase_ch_we',selChanIndex)
-    #reset the counter for how many packets are waiting to send
-    fpga.write_int('stream_phase_ctr_rst',1)
-    time.sleep(.1)
-    fpga.write_int('stream_phase_ctr_rst',0)
+    fpga.write_int('phase_dmp_ch_we',selChanIndex)
     #turn it on
-    fpga.write_int('stream_phase_on',1)
+    fpga.write_int('start_cap',0)#make sure we're not streaming photons
+    fpga.write_int('phase_dmp_on',1)
 
-def setThresh(fpga,thresholdDeg = -15.):
+def startPhotonStream(fpga,selChanIndex=0):
+    """initiates streaming of photon words to 1Gbit ethernet
+    """
+    dest_ip  =167772210 #corresponds to IP 10.0.0.50
+    fabric_port=50000
+    pktsPerFrame = 100 #how many 8byte words to accumulate before sending a frame
+    maxFramePeriod = 500000 #cycles, 2 ms
+
+    #configure the gbe core, 
+    print 'restarting'
+    fpga.write_int('gbe64_dest_ip',dest_ip)
+    fpga.write_int('gbe64_dest_port',fabric_port)
+    fpga.write_int('gbe64_words_per_frame',pktsPerFrame)
+    fpga.write_int('gbe64_max_frame_period',maxFramePeriod)
+    #reset the core to make sure it's in a clean state
+    fpga.write_int('gbe64_rst',1)
+    time.sleep(.1)
+    fpga.write_int('gbe64_rst',0)
+
+    #turn it on
+    fpga.write_int('phase_dmp_on',0)
+    fpga.write_int('start_cap',1)
+
+def setThresh(fpga,thresholdDeg = -15.,chanNum=None,cpsLimit=2500):
     """Sets the phase threshold and baseline filter for photon pulse detection triggers in each channel
 
     INPUTS:
         thresholdDeg: The threshold in degrees.  The phase must drop below this value to trigger a photon
             event
+        chanNum: the channel to set. If None, sets all channels to this threshold
     """
     #convert deg to radians
     thresholdRad = thresholdDeg * np.pi/180.
@@ -223,11 +208,19 @@ def setThresh(fpga,thresholdDeg = -15.):
     #load the values in
     fpga.write_int('capture0_base_kf',binBaseKf)
     fpga.write_int('capture0_base_kq',binBaseKq)
+    fpga.write_int('capture0_cps_lim',cpsLimit)
 
-    fpga.write_int('capture0_threshold',binThreshold)
-    fpga.write_int('capture0_load_thresh',1)
-    time.sleep(.1)
-    fpga.write_int('capture0_load_thresh',0)
+    if chanNum is None:
+        for chanNum in range(0,256):
+            fpga.write_int('capture0_threshold',binThreshold)
+            fpga.write_int('capture0_load_thresh',1+(chanNum<<1))
+            time.sleep(.1)
+            fpga.write_int('capture0_load_thresh',0)
+    else:
+            fpga.write_int('capture0_threshold',binThreshold)
+            fpga.write_int('capture0_load_thresh',1+(chanNum<<1))
+            time.sleep(.1)
+            fpga.write_int('capture0_load_thresh',0)
 
 def stopStream(fpga):
     """stops streaming of phase timestream (after prog_fir) to the 1Gbit ethernet
@@ -235,13 +228,14 @@ def stopStream(fpga):
     INPUTS:
         fpga: the casperfpga instance
     """
-    fpga.write_int('stream_phase_on',0)
+    fpga.write_int('phase_dmp_on',0)
+    fpga.write_int('start_cap',0)
 
 if __name__=='__main__':
 
     #Get the IP of the casperfpga from the command line
     if len(sys.argv) > 1:
-        ip = sys.argv[1]
+        ip = '10.0.0.'+sys.argv[1]
     else:
         ip='10.0.0.112'
     print ip
@@ -260,6 +254,7 @@ if __name__=='__main__':
     bLoadDac = False #load probe tones into bram for dac/adc simulation block
     bSetThresh = False #set the photon phase trigger threshold in the capture block
     bStreamPhase = False #initiate stream of phase timestream to ethernet for selected channel
+    bStreamPhotons = True #initiate stream of photon triggers to ethernet
 
     instrument = 'darkness'
     startRegisterName = 'run'
@@ -285,12 +280,13 @@ if __name__=='__main__':
     dacFreqResolution = sampleRate/nSamples
 
     #set the frequency of what the resonator would be. We will set the ddc to target this frequency
-    resFreq = 7.32421875e6 #already quantized
+    #resFreq = 7.32421875e6 #already quantized
+    resFreq = 135620117.1875 #Hz, freqIndex=1111 in pps0.xpr
     quantizedResFreq = np.round(resFreq/dacFreqResolution)*dacFreqResolution
 
     genBinIndex = resFreq/binSpacing
     selBinIndex = np.round(genBinIndex)
-    selChanIndex = 0
+    selChanIndex = 33
     selChanStream = 0
     ddsAddrTrig = 0 
     binCenterFreq = selBinIndex*binSpacing
@@ -305,7 +301,7 @@ if __name__=='__main__':
 
     ddsSampleRate = nDdsSamplesPerCycle * fpgaClockRate / nCyclesToLoopToSameChannel
     nDdsSamples = nDdsSamplesPerCycle*nQdrRows/nCyclesToLoopToSameChannel
-    print 'N dds samples',nDdsSamples
+    print 'N dds samples per channel',nDdsSamples
     ddsFreqResolution = 1.*ddsSampleRate/nDdsSamples
 
     ddsFreq = quantizedResFreq - binCenterFreq
@@ -327,26 +323,39 @@ if __name__=='__main__':
     print 'channel',selChanIndex
 
     #set the delay between the dds lut and the end of the fft block (firmware dependent)
-    ddsShift = 76+256
+    #ddsShift = 76+256-8
+    ddsShift = 68 #darksc5_2016_Jun_30_1057.fpg
+    fpga.write_int(startRegisterName,1)
+    fpga.write_int('dds_shift',0)
+    fpga.write_int('check_lag_latch',1)
+    fpga.write_int('check_lag_latch',0)
+    print 'data_ch',fpga.read_int('check_lag_data_ch')
+    print 'dds_ch',fpga.read_int('check_lag_dds_ch')
+    print 'loading shift',ddsShift
     fpga.write_int('dds_shift',ddsShift)
+    fpga.write_int('check_lag_latch',1)
+    fpga.write_int('check_lag_latch',0)
+    print 'data_ch',fpga.read_int('check_lag_data_ch')
+    print 'dds_ch',fpga.read_int('check_lag_dds_ch')
+    print 'oflow',fpga.read_int('pfb_fft_check_fft_oflow')
+    fpga.write_int('pfb_fft_check_rst',1)
+    fpga.write_int('pfb_fft_check_rst',0)
 
     #set list of bins to save in the channel selection block
-
-
-
     if bLoadAddr:
         setSingleChanSelection(fpga,selBinNums=[selBinIndex,0,0,0],chanNum=selChanIndex)
     
 
     if bLoadDds:
-        pulseDict = {'ampDeg':30.,'arrivalTime':50.e-6}
-        otherPulseDict = {'arrivalTime':0}
-        pulseDicts = np.append(pulseDict,[otherPulseDict]*(len(ddsFreqs)-1))
+        injectPulseDict = {'ampDeg':30.,'arrivalTime':50.e-6,'decayTime':40.e-6}
+        nullPulseDict = {'arrivalTime':0}
+        pulseDicts = [nullPulseDict]*(len(ddsFreqs))
+        pulseDicts[selChanIndex] = injectPulseDict
         print 'loading dds freqs'
         fpga.write_int(startRegisterName,0) #do not read from qdr while writing
-        loadDict = loadDdsToMem(fpga,waveFreqs=ddsFreqs,phases=ddsPhases,sampleRate=ddsSampleRate,nSamplesPerCycle=nDdsSamplesPerCycle,nBitsPerSamplePair=nBitsPerDdsSamplePair,nSamples=nDdsSamples,phasePulseDicts=pulseDicts)
+        loadDdsDict = loadDdsToMem(fpga,waveFreqs=ddsFreqs,phases=ddsPhases,sampleRate=ddsSampleRate,nSamplesPerCycle=nDdsSamplesPerCycle,nBitsPerSamplePair=nBitsPerDdsSamplePair,nSamples=nDdsSamples,phasePulseDicts=pulseDicts)
 
-    nTaps = 26
+    nTaps = 30
     nFirBits = 12
     firBinPt = 9
     if bLoadFir:
@@ -355,12 +364,13 @@ if __name__=='__main__':
             print iChan
             fpga.write_int('prog_fir0_load_chan',0)
             time.sleep(.1)
-            fir = np.loadtxt('/home/kids/SDR/Projects/Filters/matched_50us.txt')
+            fir = np.loadtxt('/home/kids/SDR/Projects/Filters/matched30_50.0us.txt')
             #fir = np.arange(nTaps,dtype=np.uint32)
             #firInts = np.left_shift(fir,5)
             #fir = np.zeros(nTaps)
             #fir = np.ones(nTaps)
             #fir[1] = 1./(1.+iChan)
+            #fir[1] = 1.
             #nSmooth=4
             #fir[-nSmooth:] = 1./nSmooth
 
@@ -370,7 +380,7 @@ if __name__=='__main__':
             loadVal = (1<<8) + iChan #first bit indicates we will write, next 8 bits is the chan number
             fpga.write_int('prog_fir0_load_chan',loadVal)
             time.sleep(.1)
-            fpga.write_int('prog_fir0_load_chan',0)
+            fpga.write_int('prog_fir0_load_chan',selChanIndex)
 
 
     toneFreq = quantizedResFreq #resFreq + dacFreqResolution
@@ -381,45 +391,73 @@ if __name__=='__main__':
         loadDict = loadWaveToMem(fpga,waveFreqs=waveFreqs,phases=phases,sampleRate=sampleRate,nSamplesPerCycle=nSamplesPerCycle,nBytesPerMemSample=nBytesPerMemSample,nBitsPerSamplePair=nBitsPerSamplePair,memNames = memNames,nSamples=nSamples,memType=memType,dynamicRange=dynamicRange)
 
     if bSetThresh:
-        setThresh(fpga)
+        thresholdDeg = -15.
+        cpsLim=2500
+        setThresh(fpga,thresholdDeg=thresholdDeg,chanNum=selChanIndex,cpsLimit=cpsLim)
         
-
-    if bStreamPhase:
-        startStream(fpga)
-
     fpga.write_int(startRegisterName,1) 
 
-    #fpga.write_int('sel_bch',selChanIndex)
-    snapDict = snapDdc(fpga,bSnapAll=False,selBinIndex=selBinIndex,selChanIndex=0,selChanStream=selChanStream,ddsAddrTrig=ddsAddrTrig,bPlot=True)
+    if bStreamPhase:
+        startStream(fpga,selChanIndex=selChanIndex)
+    if bStreamPhotons:
+        startPhotonStream(fpga)
+
+
+    'setting bch',selChanIndex
+    fpga.write_int('sel_bch',selChanIndex)
+    snapDict = snapDdc(fpga,bSnapAll=False,selBinIndex=selBinIndex,selChanIndex=selChanIndex,selChanStream=selChanStream,ddsAddrTrig=ddsAddrTrig,bPlot=True)
+    #return {'ddcOut':(li+1.j*lq),'rawPhase':rawPhase,'phase':phase,'trig':trig,'basePhase':basePhase,'subPhase':subPhase,'peakTrig':peakTrig,'threshTrig':threshTrig,'deadTrig':deadTrig,'limTrig':limTrig,'posDerivTrig':posDerivTrig,'negDerivTrig':negDerivTrig}#,'trig2':trig2}#,'basePhase':basePhase}
 
     rawPhase = snapDict['rawPhase']
-    mix = snapDict['mix']
-    filtPhase = snapDict['filtPhase']
+    phase = snapDict['phase']
     basePhase = snapDict['basePhase']
-    trig = np.roll(snapDict['trig'],-2) #there is an extra 2 cycle delay in firmware between we_out and phase
-    trig2 = np.roll(snapDict['trig2'],-2)
-    print np.sum(trig),np.sum(trig2)
+    subPhase = snapDict['subPhase']
+    trig = snapDict['trig']
+    peakTrig = snapDict['peakTrig']
+    threshTrig = snapDict['threshTrig']
+    deadTrig = snapDict['deadTrig']
+    limTrig = snapDict['limTrig']
+    posDerivTrig = snapDict['posDerivTrig']
+    negDerivTrig = snapDict['negDerivTrig']
+    #basePhase = snapDict['basePhase']
+    #trig = np.roll(snapDict['trig'],-2) #there is an extra 2 cycle delay in firmware between we_out and phase
+    #trig2 = np.roll(snapDict['trig2'],-2)
+    print 'photon triggers',np.sum(trig)#,np.sum(trig2)
 
-    mixPhaseDeg = 180./np.pi*np.angle(mix)
     rawPhaseDeg = 180./np.pi*rawPhase
-    filtPhaseDeg = 180./np.pi*filtPhase
+    phaseDeg = 180./np.pi*phase
     basePhaseDeg = 180./np.pi*basePhase
-    trigPhases = filtPhaseDeg[trig]
-    trig2Phases = filtPhaseDeg[trig2]
+    subPhaseDeg = 180./np.pi*subPhase
+    trigPhases = subPhaseDeg[trig]
+    peakTrigPhases = subPhaseDeg[peakTrig]
+    threshTrigPhases = subPhaseDeg[threshTrig]
+    deadTrigPhases = subPhaseDeg[deadTrig]
+    limTrigPhases = subPhaseDeg[limTrig]
+    posDerivTrigPhases = subPhaseDeg[posDerivTrig]
+    negDerivTrigPhases = subPhaseDeg[negDerivTrig]
 
     dt = nChannelsPerStream/fpgaClockRate
     t = dt*np.arange(len(rawPhase))
-    t2 = (dt/2.)*np.arange(len(mixPhaseDeg)) #two IQ points per cycle are snapped
-    t3 = dt*np.arange(len(filtPhase))
-    trigTimes = t3[trig]
-    trig2Times = t3[trig2]
+
+    trigTimes = t[trig]
+    peakTrigTimes = t[peakTrig]
+    threshTrigTimes = t[threshTrig]
+    deadTrigTimes = t[deadTrig]
+    limTrigTimes = t[limTrig]
+    posDerivTrigTimes = t[posDerivTrig]
+    negDerivTrigTimes = t[negDerivTrig]
+    #trig2Times = t3[trig2]
     fig,ax = plt.subplots(1,1)
-    ax.plot(t/1.e-6,rawPhaseDeg,'k.-',label='raw')
-    ax.plot(t2/1.e-6,mixPhaseDeg,'r.-',label='mix')
-    ax.plot(t3/1.e-6,filtPhaseDeg,'b.-',label='filt')
-    ax.plot(t3/1.e-6,basePhaseDeg,'m.--',label='filt')
-    ax.plot(trigTimes/1.e-6,trigPhases,'mo',label='trig')
-    ax.plot(trig2Times/1.e-6,trig2Phases,'gv')
+    ax.plot(t/1.e-6,rawPhaseDeg,'.-',color='gray',label='raw')
+    ax.plot(t/1.e-6,phaseDeg,'.-',color='darkblue',label='opt filt')
+    ax.plot(t/1.e-6,basePhaseDeg,'m.-',label='base')
+    ax.plot(t/1.e-6,subPhaseDeg,'k.-',label='sub')
+    ax.plot(t/1.e-6,phaseDeg-basePhaseDeg,'r.-',label='expected sub')
+    ax.plot(trigTimes/1.e-6,trigPhases,'mo',markersize=20,label='trig')
+    #ax.plot(threshTrigTimes/1.e-6,threshTrigPhases,'r^',markersize=15,label='thresh')
+    ax.plot(peakTrigTimes/1.e-6,peakTrigPhases,'bv',markersize=13,label='peak')
+    ax.plot(deadTrigTimes/1.e-6,deadTrigPhases,'m.',markersize=12,label='dead')
+    ax.plot(limTrigTimes/1.e-6,limTrigPhases,'g.',markersize=10,label='lim')
     ax.set_ylabel('phase ($^{\circ}$)')
     ax.set_xlabel('time ($\mu$s)')
     ax.legend(loc='best')

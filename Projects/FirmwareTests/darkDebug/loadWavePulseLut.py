@@ -168,7 +168,7 @@ def generateTones(freqs,nSamples=2**23,amplitudes=None,phases=None,sampleRate=2e
     for iFreq,freq in enumerate(quantFreqs):
         if not (phasePulseDicts is None):
             phasePulseDict = phasePulseDicts[iFreq]
-            decayTime = phasePulseDict.get('decayTime',30.e-6)
+            decayTime = phasePulseDict.get('decayTime',40.e-6)
             riseTime = phasePulseDict.get('riseTime',.5e-6)
             pulseArrivalIndex = phasePulseDict.get('arrivalTime',0.)//dt
             pulseAmp = np.pi/180.*phasePulseDict.get('ampDeg',0.)
