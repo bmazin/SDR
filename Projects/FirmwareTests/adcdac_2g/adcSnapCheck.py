@@ -123,7 +123,7 @@ if __name__=='__main__':
 #    ax.step(x,snapDict['qVals'],label='Q')
 #    ax.legend(loc='best')
 #    ax.set_title('IQ')
-    path = '/Scratch/debugData/iqsnaps/'
+    path = '/mnt/data0/plots/iqsnaps/'
     freqLabel = '{:.2f}MHz'.format(specDict['peakFreq'])
     timeLabel = time.strftime("%Y%m%d-%H%M%S",time.localtime())
     print timeLabel
@@ -156,8 +156,8 @@ if __name__=='__main__':
 
 
     np.savez(os.path.join(path,'adcData_{}_{}.npz'.format(freqLabel,timeLabel)),**snapDict)
-    fig.savefig(os.path.join(path,'iqSpec_{}_{}.png'.format(freqLabel,timeLabel)))
-    fig2.savefig(os.path.join(path,'iq_{}_{}.png'.format(freqLabel,timeLabel)))
+    fig.savefig(os.path.join(path,'iqSpec_{}_{}.png'.format(timeLabel,freqLabel)))
+    fig2.savefig(os.path.join(path,'iq_{}_{}.png'.format(timeLabel,freqLabel)))
     plt.show()
 
 
