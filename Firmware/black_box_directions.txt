@@ -1,0 +1,44 @@
+Blackbox Instructions
+
+make an mdl with the block and gateway in and gateway out blocks
+save as name_core.slx
+open system generator, set target directory to ./name_core/sysgen, turn off Include Clock Wrapper,
+click Generate
+call resynth_netlist('name_core/sysgen','name_core.ngc') #resynth with -lc off
+in Matlab cd to name_core/sysgen, do
+ extract_entity('name_core.ngc')
+this creates a name_core.vhd.  This is used in the name_core_config.m
+
+drop blackbox block in design, wizard pops up.
+Choose vhd file above
+Inputs and outputs appear
+adjust core_config.m to reorder input/outputs or change input/output types
+
+put a yellow pcore block at the top of the design. Enter the sysgen/name_core.ngc file
+
+Compile
+
+
+Planahead Instructions
+
+Compile. cd to XPS_BASE_ROACH2. Run casper_create_ppr.sh
+cd planahead
+call planAhead file.ppr
+Use search to find components to put into pblock
+
+rename/copy impl_1
+
+create a ucf file, put in ucf folder, and rerun Casper workflow
+
+Or, to compile in planAhead:
+Go to Flow->Implementation Settings
+Under bistream settings, in More options enter -g Binary:Yes
+Flow->Run implementation
+Flow->Generate Bitstream
+This makes file.runs/impl_1/system.bin
+Turn system.bin into an fpg following XPS_BASE_ROACH2/gen_prog_files
+
+
+
+
+
