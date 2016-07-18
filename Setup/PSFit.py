@@ -130,8 +130,8 @@ class StartQt4(QMainWindow):
 
 
         # Chris S:  seems that button_press_event causes click_plot_1 to be called more than once sometimes.
-        #cid=self.ui.plot_1.canvas.mpl_connect('button_press_event', self.click_plot_1)
-        cid=self.ui.plot_1.canvas.mpl_connect('button_release_event', self.click_plot_1)
+        cid=self.ui.plot_1.canvas.mpl_connect('button_press_event', self.click_plot_1)
+        #cid=self.ui.plot_1.canvas.mpl_connect('button_release_event', self.click_plot_1)
         #self.ui.plot_1.canvas.format_labels()
         self.ui.plot_1.canvas.draw()
 
@@ -180,6 +180,8 @@ class StartQt4(QMainWindow):
             self.scale = k['scale'][0]
             #print "Scale factor is ", self.scale
             self.freq=append(self.freq,[k['f0'][0]])
+        self.freqList = np.zeros(len(k['f0']))
+        self.attenList = np.zeros(len(self.freqList)) - 1
         hd5file.close()
         self.loadres()
     
@@ -288,15 +290,21 @@ class StartQt4(QMainWindow):
         self.select_atten(self.ui.atten.value())
 
     def savevalues(self):
-        if self.resnum == 0:
-            self.f = open(str(self.savefile), 'a')
-            self.f.write(str(self.scale)+'\t'+str(self.scale)+'\t'+str(self.scale)+'\t'+str(self.scale)+'\n')
-            self.f.close()
-        Icen=0
-        Qcen=0
-        self.f = open(str(self.savefile), 'a')
-        self.f.write(str(self.resfreq)+'\t'+str(Icen)+'\t'+str(Qcen)+'\t'+str(self.atten)+'\n')
-        self.f.close()
+        #if self.resnum == 0:
+        #    self.f = open(str(self.savefile), 'a')
+        #    self.f.write(str(self.scale)+'\t'+str(self.scale)+'\t'+str(self.scale)+'\t'+str(self.scale)+'\n')
+        #    self.f.close()
+        #Icen=0
+        #Qcen=0
+        self.freqList[self.resnum] = self.resfreq
+        self.attenList[self.resnum] = self.atten
+        data = np.transpose([self.freqList[np.where(self.attenList >=0)], self.attenList[np.where(self.attenList >=0)]])
+        numpy.savetxt(self.savefile, data, "%10.9e %4i")
+        
+        #self.f = open(str(self.savefile), 'a')
+        #self.f.write(str(self.resfreq)+'\t'+str(Icen)+'\t'+str(Qcen)+'\t'+str(self.atten)+'\n')
+        #self.f.write(str(self.resfreq)+'\t'+str(self.atten)+'\n')
+        #self.f.close()
         print " ....... Saved to file:  resnum=",self.resnum," resfreq=",self.resfreq," atten=",self.atten
         self.resnum += 1
         self.atten = -1
