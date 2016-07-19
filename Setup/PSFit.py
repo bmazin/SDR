@@ -180,7 +180,9 @@ class StartQt4(QMainWindow):
             self.scale = k['scale'][0]
             #print "Scale factor is ", self.scale
             self.freq=append(self.freq,[k['f0'][0]])
-        self.freqList = np.zeros(len(k['f0']))
+        #self.freqList = np.zeros(len(k['f0']))
+        #self.attenList = np.zeros(len(self.freqList)) - 1
+        self.freqList = np.zeros(2000)
         self.attenList = np.zeros(len(self.freqList)) - 1
         hd5file.close()
         self.loadres()
@@ -299,7 +301,7 @@ class StartQt4(QMainWindow):
         self.freqList[self.resnum] = self.resfreq
         self.attenList[self.resnum] = self.atten
         data = np.transpose([self.freqList[np.where(self.attenList >=0)], self.attenList[np.where(self.attenList >=0)]])
-        numpy.savetxt(self.savefile, data, "%10.9e %4i")
+        numpy.savetxt(str(self.savefile), data, "%10.9e %4i")
         
         #self.f = open(str(self.savefile), 'a')
         #self.f.write(str(self.resfreq)+'\t'+str(Icen)+'\t'+str(Qcen)+'\t'+str(self.atten)+'\n')
