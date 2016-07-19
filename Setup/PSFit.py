@@ -301,6 +301,13 @@ class StartQt4(QMainWindow):
         self.freqList[self.resnum] = self.resfreq
         self.attenList[self.resnum] = self.atten
         data = np.transpose([self.freqList[np.where(self.attenList >=0)], self.attenList[np.where(self.attenList >=0)]])
+        
+        try:
+            dataCurrent = np.atleast_2d(np.loadtxt(str(self.savefile)))
+            data = np.append(dataCurrent,data,axis=0)
+        except:
+            pass
+        
         numpy.savetxt(str(self.savefile), data, "%10.9e %4i")
         
         #self.f = open(str(self.savefile), 'a')
