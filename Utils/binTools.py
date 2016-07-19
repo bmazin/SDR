@@ -1,5 +1,5 @@
 import numpy as np
-def binMask(nBits):
+def bitmask(nBits):
     return int('1'*nBits,2)
 
 def bin12_9ToDeg(binOffset12_9):
@@ -47,3 +47,18 @@ def castBin(value,nBits=12,binaryPoint=9,quantization='Truncate',format='uint'):
             value = value*180.0/np.pi
     return value
 
+def reinterpretBin(values,nBits=12,binaryPoint=9):
+    bitmask = int('1' * nBits,2)
+    values = values & bitmask #take out bits before beginning of string
+    values = np.array(values,dtype=np.uint64)
+    #extract the first bit, to find which values are negative
+    signBits = np.array(values // (2**(nBits-1)),dtype=np.bool)
+    #for the negative values, apply 2's complement to find it's positive magnitude
+    values[signBits] = ((~values[signBits]) & bitmask)+1
+    #change data type to handle sign and fraction
+    values = np.array(values,dtype=np.double)
+    #make the ones that should be negative into negatives
+    values[signBits] = -values[signBits]
+    #now shift down to the binary point
+    values = values / 2.**binaryPoint
+    return values
