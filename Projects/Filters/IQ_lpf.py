@@ -21,7 +21,7 @@ sampleRate = 2.e6/1.024 #Hz a bit less than a 2 MHz
 print 'sampleRate',sampleRate
 nyquistFreq = sampleRate / 2.
 print 'nyquist',nyquistFreq
-desiredCutoff = 125.e3 #Hz
+desiredCutoff = 250.e3 #Hz
 
 
 n = 20

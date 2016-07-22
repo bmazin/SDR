@@ -12,14 +12,14 @@ import random, math
 #   some constants
 ###########################################################################################
 #size = 50
-size = 76
+size = 50
 lifetime_us = int(sys.argv[1]) #microseconds
 #size = 500
 dt = 1.#us
 lifetime = lifetime_us/dt
 time = numpy.array([i*dt for i in range(size)])
 sigma = 10.
-savefile ='matched76_%dus.txt' % lifetime
+savefile ='matched{}_{}us.txt'.format(size, lifetime)
 
 ############################################################################################
 #   Define noise correlation function
