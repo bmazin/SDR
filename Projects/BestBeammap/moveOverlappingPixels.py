@@ -30,7 +30,8 @@ if __name__=='__main__':
         ys = np.floor(segmentLocationData[:,3]) + yOffset
         preciseXs = segmentLocationData[:,2]
         preciseYs = segmentLocationData[:,3]+yOffset
-        goodMask = (~fails) & (preciseXs != -1)
+        originalPreciseYs = segmentLocationData[:,3]
+        goodMask = (~fails) & (preciseXs >= 0) & (originalPreciseYs >= 0)
         ax.scatter(xs[goodMask],ys[goodMask],label=label,color=colors[iLabel])
         for (x,y) in zip(xs[goodMask],ys[goodMask]):
             if 0 <= x and x < nCols and 0 <= y and y < nRows:
@@ -55,7 +56,8 @@ if __name__=='__main__':
         preciseXs = locationData[iLabel][:,2]
         preciseYs = locationData[iLabel][:,3]+yOffset
         fails = np.array(locationData[iLabel][:,1],dtype=np.bool)
-        goodMask = (~fails) & (preciseXs != -1)
+        originalPreciseYs = locationData[iLabel][:,3]
+        goodMask = (~fails) & (preciseXs >= 0) & (originalPreciseYs >= 0)
         print 'good',np.sum(goodMask)
         print 'res',np.min(resIds[goodMask]),np.max(resIds[goodMask])
         
