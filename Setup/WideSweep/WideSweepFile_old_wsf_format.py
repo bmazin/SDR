@@ -18,22 +18,17 @@ class WideSweepFile():
     """
     def __init__(self,fileName):
         file = open(fileName,'r')
-        #(self.fr1,self.fspan1,self.fsteps1,self.atten1) = \
-        #    file.readline().split()
-        #(self.fr2,self.fspan2,self.fsteps2,self.atten2) = \
-        #    file.readline().split()
-        #(self.ts,self.te) = file.readline().split()
-        #(self.Iz1,self.Izsd1) = [float(x) for x in file.readline().split()]
-        #(self.Qz1,self.Qzsd1) = [float(x) for x in file.readline().split()]
-        #(self.Iz2,self.Izsd2) = [float(x) for x in file.readline().split()]
-        #(self.Qz2,self.Qzsd2) = [float(x) for x in file.readline().split()]
-        (self.ts,self.te) = 0.100, 0.100
-        (self.Iz1,self.Izsd1) = 0.000, 0.000
-        (self.Qz1,self.Qzsd1) = 0.000, 0.000
-        (self.Iz2,self.Izsd2) = 0.000, 0.000
-        (self.Qz2,self.Qzsd2) = 0.000, 0.000
+        (self.fr1,self.fspan1,self.fsteps1,self.atten1) = \
+            file.readline().split()
+        (self.fr2,self.fspan2,self.fsteps2,self.atten2) = \
+            file.readline().split()
+        (self.ts,self.te) = file.readline().split()
+        (self.Iz1,self.Izsd1) = [float(x) for x in file.readline().split()]
+        (self.Qz1,self.Qzsd1) = [float(x) for x in file.readline().split()]
+        (self.Iz2,self.Izsd2) = [float(x) for x in file.readline().split()]
+        (self.Qz2,self.Qzsd2) = [float(x) for x in file.readline().split()]
         file.close()
-        self.data1 = np.loadtxt(fileName, skiprows=3)
+        self.data1 = np.loadtxt(fileName, skiprows=7)
         self.loadedFileName=fileName
         self.x = self.data1[:,0]
         self.n = len(self.x)
@@ -41,10 +36,10 @@ class WideSweepFile():
         Iz = np.where(ind<self.n/2, self.Iz1, self.Iz2)
         self.I = self.data1[:,1]
         self.I = self.I - Iz
-        self.Ierr = 0.001000000 #self.data1[:,2]
+        self.Ierr = self.data1[:,2]
         Qz = np.where(ind<self.n/2, self.Qz1, self.Qz2)
         self.Q = self.data1[:,2] - Qz
-        self.Qerr = 0.001000000#self.data1[:,4]
+        self.Qerr = self.data1[:,4]
         self.mag = np.sqrt(np.power(self.I,2) + np.power(self.Q,2))
 
     def fitSpline(self, splineS=1, splineK=3):

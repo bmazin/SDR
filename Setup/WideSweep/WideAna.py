@@ -33,6 +33,7 @@ The view window is controlled by:
 
 Matt Strader
 Chris Stoughton
+Rupert Dodkins
 """
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -64,8 +65,8 @@ class WideAna(QMainWindow):
         self.baseFile = ('.').join(initialFile.split('.')[:-1])
         self.goodFile = self.baseFile+"-good.txt"
         if os.path.exists(self.goodFile):
-            shutil.copy(self.goodFile,
-                        self.goodFile+time.strftime("-%Y-%m-%d-%H-%M-%S"))
+            self.goodFile = self.goodFile+time.strftime("-%Y-%m-%d-%H-%M-%S")
+            #shutil.copy(self.goodFile,self.goodFile+time.strftime("-%Y-%m-%d-%H-%M-%S"))
         self.pdfFile = self.baseFile+"-good.pdf"
         self.fitLineEdits = {}
         self.fitLabels = {}
@@ -99,7 +100,7 @@ class WideAna(QMainWindow):
         self.fig.canvas.draw()
 
     def on_key_press(self,event):
-        print "WideAna.on_key_press:  event.key=",event.key
+        #print "WideAna.on_key_press:  event.key=",event.key
         if event.key == "right" or event.key == 'r':
             self.segmentIncrement(None,0.1)
             return
@@ -135,7 +136,7 @@ class WideAna(QMainWindow):
             if pressed == "d":
                 #if self.peakMask[bestWsfIndex]:
                 #self.peakMask[bestWsfIndex] = False
-                self.peakMask[bestWsfIndex-4:bestWsfIndex+4] = False # larger area of indicies to pinpoint false resonator location
+                self.peakMask[bestWsfIndex-7:bestWsfIndex+7] = False # larger area of indicies to pinpoint false resonator location
                 self.setCountLabel()
                 self.replot()
                 self.writeToGoodFile()
@@ -239,8 +240,7 @@ class WideAna(QMainWindow):
         vbox.addWidget(self.mpl_toolbar)
 
         self.main_frame.setLayout(vbox)
-        self.setCentralWidget(self.main_frame)
-        
+        self.setCentralWidget(self.main_frame)        
 
     def updateBaselineBox(self):
         for i in range(self.baselineBox.count()):
@@ -257,12 +257,42 @@ class WideAna(QMainWindow):
         self.wsf.fitFilter(wn=0.01)
         self.wsf.findPeaks(m=2)
         self.peakMask = np.zeros(len(self.wsf.x),dtype=np.bool)
+        self.collMask = np.zeros(len(self.wsf.x),dtype=np.bool)
         if os.path.isfile(self.baseFile+"-ml.txt"):             # update: use machine learning peak loacations if they've been made
+            print 'loading peak location predictions from', self.baseFile+"-ml.txt"
             peaks = np.loadtxt(self.baseFile+"-ml.txt")
             peaks = map(int,peaks)
-            self.peakMask[peaks] = True
         else:
-            self.peakMask[self.wsf.peaks] = True
+            peaks = self.wsf.peaks
+        
+        #coll_thresh = self.wsf.x[0]
+        dist = abs(np.roll(peaks, -1) - peaks)
+        #colls = np.delete(peaks,np.where(dist>=9))
+
+        colls=[]
+        diff, coll_thresh = 0, 0
+        while diff <= 5e-4:
+            diff = self.wsf.x[coll_thresh]-self.wsf.x[0]
+            coll_thresh += 1
+        
+        print coll_thresh
+        for i in range(len(peaks)):
+            if dist[i]<coll_thresh:
+                if self.wsf.mag[peaks[i+1]] - self.wsf.mag[peaks[i]] > 1.5:
+                    colls.append(peaks[i+1])
+                    #print 'for ', self.wsf.x[peaks[i]], 'chosing the one before'
+                else:
+                    colls.append(peaks[i])
+                    #print 'for ', self.wsf.x[peaks[i]], 'chosing the this one'
+        print colls
+        if colls != []:
+            #colls=np.array(map(int,colls))
+            self.collMask[colls] = True # update: so unidentified peaks can be identified as unusable
+            
+        peaks = np.delete(peaks,colls) #remove collisions (peaks < 0.5MHz apart = < 9 steps apart)
+        #peaks = np.delete(peaks,np.where(dist<9)) #remove collisions (peaks < 0.5MHz apart = < 9 steps apart)
+        self.peakMask[peaks] = True
+
         self.setCountLabel()
         self.writeToGoodFile()
 
@@ -330,6 +360,9 @@ class WideAna(QMainWindow):
             for x in self.wsf.x[self.peakMask]:
                 if x > self.xMin and x < self.xMax:
                     self.axes.axvline(x=x,color='r')
+            for c in self.wsf.x[self.collMask]:
+                if c > self.xMin and c < self.xMax:
+                    self.axes.axvline(x=c,color='g')
 
             self.axes.set_xlim((self.xMin,self.xMax))
             self.axes.set_title("segment=%.1f/%.1f"%(self.segment,self.segmentMax))
