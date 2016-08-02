@@ -45,6 +45,8 @@ class Ui_MainWindow(object):
         self.open_browse.setObjectName(_fromUtf8("open_browse"))
         self.gridLayout.addWidget(self.open_browse, 0, 0, 1, 1)
         self.jumptonum = QtGui.QSpinBox(self.widget)
+        self.jumptonum.setGeometry(QtCore.QRect(810, 690, 57, 31))
+        self.jumptonum.setMaximum(9999)
         self.jumptonum.setObjectName(_fromUtf8("jumptonum"))
         self.gridLayout.addWidget(self.jumptonum, 1, 1, 1, 1)
         self.frequency = QtGui.QLabel(self.widget)

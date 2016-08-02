@@ -138,27 +138,37 @@ class StartQt4(QMainWindow):
         max_ratio_threshold = 1.5
         rule_of_thumb_offset = 2
 
-        # require ROTO adjacent elements to be all below the MRT
-        bool_remove = np.ones(len(self.res1_max_ratio))
-        for ri in range(len(self.res1_max_ratio)-rule_of_thumb_offset-2):
-            bool_remove[ri] = bool((self.res1_max_ratio[ri:ri+rule_of_thumb_offset+1]< max_ratio_threshold).all())
-        guess_atten_idx = np.extract(bool_remove,np.arange(len(self.res1_max_ratio)))
-
-        # require the attenuation value to be past the initial peak in MRT
-        guess_atten_idx = guess_atten_idx[where(guess_atten_idx > argmax(self.res1_max_ratio) )[0]]
-
-        if size(guess_atten_idx) >= 1:
-            if guess_atten_idx[0]+rule_of_thumb_offset < len(self.Res1.atten1s):
-                guess_atten_idx[0] += rule_of_thumb_offset
-            guess_atten = self.Res1.atten1s[guess_atten_idx[0]]
+        mlFile = ('.').join(str(self.openfile).split('.')[:-1])+"-ml.txt"
+        if os.path.isfile(mlFile):             # update: use machine learning peak loacations if they've been made
+            print 'loading attenuation predictions from', mlFile
+            guess_atten_idx = np.loadtxt(mlFile)[self.resnum]
+            #print guess_atten_idx
+            guess_atten = self.Res1.atten1s[guess_atten_idx]
             self.select_atten(guess_atten)
             self.ui.atten.setValue(round(guess_atten))
         else:
-            self.select_atten(self.Res1.atten1s[self.NAttens/2])
-            self.ui.atten.setValue(round(self.Res1.atten1s[self.NAttens/2]))
+            # require ROTO adjacent elements to be all below the MRT
+            bool_remove = np.ones(len(self.res1_max_ratio))
+            for ri in range(len(self.res1_max_ratio)-rule_of_thumb_offset-2):
+                bool_remove[ri] = bool((self.res1_max_ratio[ri:ri+rule_of_thumb_offset+1]< max_ratio_threshold).all())
+            guess_atten_idx = np.extract(bool_remove,np.arange(len(self.res1_max_ratio)))
+
+            # require the attenuation value to be past the initial peak in MRT
+            guess_atten_idx = guess_atten_idx[where(guess_atten_idx > argmax(self.res1_max_ratio) )[0]]
+
+            if size(guess_atten_idx) >= 1:
+                if guess_atten_idx[0]+rule_of_thumb_offset < len(self.Res1.atten1s):
+                    guess_atten_idx[0] += rule_of_thumb_offset
+                guess_atten = self.Res1.atten1s[guess_atten_idx[0]]
+                self.select_atten(guess_atten)
+                self.ui.atten.setValue(round(guess_atten))
+            else:
+                self.select_atten(self.Res1.atten1s[self.NAttens/2])
+                self.ui.atten.setValue(round(self.Res1.atten1s[self.NAttens/2]))
 
     def guess_res_freq(self):
         guess_idx = argmax(self.res1_iq_vels[self.iAtten])
+        print 'guess idx', guess_idx
         #The longest edge is identified, choose which vertex of the edge
         #is the resonant frequency by checking the neighboring edges            
         #len(IQ_vels[ch]) == len(f_span)-1, so guess_idx is the index
@@ -194,7 +204,7 @@ class StartQt4(QMainWindow):
         self.ui.frequency.setText(str(self.resfreq))
         self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx],'bo')
         self.ui.plot_3.canvas.ax.plot(self.Res1.I[self.indx],self.Res1.Q[self.indx],'bo')
-        self.indx=where(self.Res1.freq >= self.resfreq)[0][0]
+        self.indx= where(self.Res1.freq >= self.resfreq)[0][0]
         self.ui.plot_2.canvas.ax.plot(self.Res1.freq[self.indx],self.res1_iq_vel[self.indx],'ro')
         self.ui.plot_2.canvas.draw()
         self.ui.plot_3.canvas.ax.plot(self.Res1.I[self.indx],self.Res1.Q[self.indx],'ro')
@@ -253,6 +263,7 @@ class StartQt4(QMainWindow):
             self.ui.plot_3.canvas.ax.clear()
             if self.iAtten >0:
                 self.ui.plot_3.canvas.ax.plot(self.Res1.Is[self.iAtten-1],self.Res1.Qs[self.iAtten-1],'g.-')
+                #print self.Res1.Is[self.iAtten-1], np.shape(self.Res1.Is[self.iAtten-1])
                 self.ui.plot_3.canvas.ax.lines[0].set_alpha(.6)
             if self.iAtten > 1:
                 self.ui.plot_3.canvas.ax.plot(self.Res1.Is[self.iAtten-2],self.Res1.Qs[self.iAtten-2],'g.-')
@@ -295,13 +306,13 @@ class StartQt4(QMainWindow):
         Icen=0
         Qcen=0
         self.f = open(str(self.savefile), 'a')
-        self.f.write(str(self.resfreq)+'\t'+str(Icen)+'\t'+str(Qcen)+'\t'+str(self.atten)+'\n')
+        self.f.write("%10.9e \t %4i \n" % (self.resfreq, self.atten))
         self.f.close()
         print " ....... Saved to file:  resnum=",self.resnum," resfreq=",self.resfreq," atten=",self.atten
         self.resnum += 1
         self.atten = -1
         self.loadres()
-                
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         from lib.PSFit_GUI_v2 import Ui_MainWindow

@@ -4,15 +4,14 @@
 ;     This program is designed to do an autmatic analysis of widesweep 
 ; data to get resonance fit data.  This program fits the resonators.
 ;
-;Made some changes here to account for new GUI format -R Dodkins
 ;***************************************************************************
 
 
-fname='Ukko_DARKNESS_FL1-1'
-outlabel = '-good'
+fname='FL2'
+outlabel = '-right'
 filename = fname + '.txt'
-datapath = '/Scratch/labData/20160706/'
-outpath = '/Scratch/labData/20160706/'
+datapath = '/Scratch/wideAna/20131016adr/'
+outpath = '/Scratch/wideAna/20131016adr/'
 
 swpname = fname + '.txt'
 resloc = fname + outlabel+'.txt'
@@ -44,35 +43,16 @@ if( lines LE 100 ) then begin
   print,'File' + datapath + 'is missing or corrupt.'
   stop
 endif
-
+      
 openr,1,resfile
-;readf,1,fr1,fspan1,fsteps1,atten1
-;readf,1,fr2,fspan2,fsteps2,atten2
-;readf,1,ts,te
-;readf,1,Iz1,Izsd1
-;readf,1,Qz1,Qzsd1
-;readf,1,Iz2,Izsd2
-;readf,1,Qz2,Qzsd2
-
-header = STRARR(3) 
-readf,1,header
-
-;readf,1,power, power_val
-;readf,1,if_b, if_b_val
-;readf,1,ave, ave_val
-
-ts = 0.100
-te = 0.100
-Iz1 =0.000
-Izsd1 =0.000
-Qz1 =0.000
-Qzsd1 =0.000
-Iz2= 0.000
-Izsd2=0.000
-Qz2= 0.000
-Qzsd2=0.000
-
-data1 = dblarr(3,lines)
+readf,1,fr1,fspan1,fsteps1,atten1
+readf,1,fr2,fspan2,fsteps2,atten2
+readf,1,ts,te
+readf,1,Iz1,Izsd1
+readf,1,Qz1,Qzsd1
+readf,1,Iz2,Izsd2
+readf,1,Qz2,Qzsd2
+data1 = dblarr(5,lines)
 readf,1,data1
 close,1
 
@@ -85,26 +65,26 @@ if( data1[0,0] GT data1[0,10] ) then begin
   data1[0,0:m] = reverse(data1[0,0:m],2)
   data1[1,0:m] = reverse(data1[1,0:m],2)
   data1[2,0:m] = reverse(data1[2,0:m],2)
-  ;data1[3,0:m] = reverse(data1[3,0:m],2)
-  ;data1[4,0:m] = reverse(data1[4,0:m],2)
+  data1[3,0:m] = reverse(data1[3,0:m],2)
+  data1[4,0:m] = reverse(data1[4,0:m],2)
 
   data1[0,m+1:lines-1] = reverse(data1[0,m+1:lines-1],2)
   data1[1,m+1:lines-1] = reverse(data1[1,m+1:lines-1],2)
   data1[2,m+1:lines-1] = reverse(data1[2,m+1:lines-1],2)
-  ;data1[3,m+1:lines-1] = reverse(data1[3,m+1:lines-1],2)
-  ;data1[4,m+1:lines-1] = reverse(data1[4,m+1:lines-1],2)    
+  data1[3,m+1:lines-1] = reverse(data1[3,m+1:lines-1],2)
+  data1[4,m+1:lines-1] = reverse(data1[4,m+1:lines-1],2)    
 endif
     
 ;data1a = dblarr(5,lines)
 ;data1a[*,*] = 0.0
 
 ; get rid of any zeros in errors
-;if(where(data1[2,*] LT 1d-6) NE -1 ) then data1[2, where(data1[2,*] LT 1d-6) ] = 1d-6
-;if(where(data1[4,*] LT 1d-6) NE -1 ) then data1[4, where(data1[4,*] LT 1d-6) ] = 1d-6
+if(where(data1[2,*] LT 1d-6) NE -1 ) then data1[2, where(data1[2,*] LT 1d-6) ] = 1d-6
+if(where(data1[4,*] LT 1d-6) NE -1 ) then data1[4, where(data1[4,*] LT 1d-6) ] = 1d-6
 ;data1[2, * ] = 1d-6
 ;data1[4, * ] = 1d-6
 
-data1a = dblarr(3,lines)
+data1a = dblarr(5,lines)
 data1a[*,*] = 0.0
 
 ;set_plot,'X'
@@ -114,7 +94,7 @@ data1a[*,*] = 0.0
 ;A = FINDGEN(17) * (!PI*2/16.)
 ;USERSYM, COS(A), SIN(A), /FILL
 
-openw,1, strcompress(outpath + fname + outlabel+'-fits.txt',/remove_all)
+openw,1, strcompress(outpath + fname + outlabel+'-fits2.txt',/remove_all)
 ;print,n_elements(data1[0,*])
 ;loop over all the resonators
 print,n-1
@@ -141,7 +121,7 @@ for j=0,n-1 do begin
   
   f = data1[0, indStart:indEnd ]
   I = data1[1, indStart:indEnd ]
-  Q = data1[2, indStart:indEnd ]  
+  Q = data1[3, indStart:indEnd ]  
 
   ;plot,I,Q,psym=8
   cent = findel( res[1,j]/1d9, data1[0,*] )
