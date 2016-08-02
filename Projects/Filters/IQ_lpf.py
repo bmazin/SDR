@@ -17,16 +17,16 @@ def mfreqz(b,a=1):
     title(r'Frequency response')
 
 
+sampleRate = 2.e6/1.024 #Hz a bit less than a 2 MHz
+print 'sampleRate',sampleRate
+nyquistFreq = sampleRate / 2.
+print 'nyquist',nyquistFreq
+desiredCutoff = 250.e3 #Hz
 
-#Lowpass FIR filter 
-#figure(1)
-#n = 11
-#a = signal.firwin(n, cutoff = .00390625, window = "hanning")
-#mfreqz(a)
 
-n = 16
+n = 20
 #n = 20
-b = signal.firwin(n, cutoff = .125, window = "hanning")
+b = signal.firwin(n, cutoff = desiredCutoff, nyq=nyquistFreq, window = "hanning")
 mfreqz(b)
 
 
@@ -35,7 +35,7 @@ mfreqz(b)
 #mfreqz(c)
 
 for i,c in enumerate(b):
-    print i,c
+    print c
 
 #sig = numpy.array([0.19, -2.95]*13)
 #print numpy.correlate(sig, b)

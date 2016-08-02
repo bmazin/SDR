@@ -1,0 +1,230 @@
+/*
+ *
+ * Xilinx, Inc.
+ * XILINX IS PROVIDING THIS DESIGN, CODE, OR INFORMATION "AS IS" AS A 
+ * COURTESY TO YOU.  BY PROVIDING THIS DESIGN, CODE, OR INFORMATION AS
+ * ONE POSSIBLE   IMPLEMENTATION OF THIS FEATURE, APPLICATION OR 
+ * STANDARD, XILINX IS MAKING NO REPRESENTATION THAT THIS IMPLEMENTATION 
+ * IS FREE FROM ANY CLAIMS OF INFRINGEMENT, AND YOU ARE RESPONSIBLE 
+ * FOR OBTAINING ANY RIGHTS YOU MAY REQUIRE FOR YOUR IMPLEMENTATION
+ * XILINX EXPRESSLY DISCLAIMS ANY WARRANTY WHATSOEVER WITH RESPECT TO 
+ * THE ADEQUACY OF THE IMPLEMENTATION, INCLUDING BUT NOT LIMITED TO 
+ * ANY WARRANTIES OR REPRESENTATIONS THAT THIS IMPLEMENTATION IS FREE 
+ * FROM CLAIMS OF INFRINGEMENT, IMPLIED WARRANTIES OF MERCHANTABILITY 
+ * AND FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/*
+ * 
+ *
+ * This file is a generated sample test application.
+ *
+ * This application is intended to test and/or illustrate some 
+ * functionality of your system.  The contents of this file may
+ * vary depending on the IP in your system and may use existing
+ * IP driver functions.  These drivers will be generated in your
+ * SDK application project when you run the "Generate Libraries" menu item.
+ *
+ */
+
+#include <stdio.h>
+#include "xparameters.h"
+#include "xil_cache.h"
+#include "xspi.h"
+#include "spi_header.h"
+#include "axidma_header.h"
+#include "xgpio.h"
+#include "gpio_header.h"
+#include "uartlite_header.h"
+int main() 
+{
+   Xil_ICacheEnable();
+   Xil_DCacheEnable();
+   print("---Entering main---\n\r");
+   
+
+   {
+      XStatus status;
+      
+      print("\r\n Runnning SpiSelfTestExample() for adc0_spi_1...\r\n");
+      
+      status = SpiSelfTestExample(XPAR_ADC0_SPI_1_DEVICE_ID);
+      
+      if (status == 0) {
+         print("SpiSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("SpiSelfTestExample FAILED\r\n");
+      }
+   }
+   
+
+   {
+      XStatus status;
+      
+      print("\r\n Runnning SpiSelfTestExample() for adc1_spi_2...\r\n");
+      
+      status = SpiSelfTestExample(XPAR_ADC1_SPI_2_DEVICE_ID);
+      
+      if (status == 0) {
+         print("SpiSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("SpiSelfTestExample FAILED\r\n");
+      }
+   }
+   
+
+   {
+      XStatus status;
+      
+      print("\r\n Runnning SpiSelfTestExample() for attn_spi_5...\r\n");
+      
+      status = SpiSelfTestExample(XPAR_ATTN_SPI_5_DEVICE_ID);
+      
+      if (status == 0) {
+         print("SpiSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("SpiSelfTestExample FAILED\r\n");
+      }
+   }
+   
+
+   {
+      int status;
+
+
+      print("\r\n Running AxiDMASelfTestExample() for axi_dma_0...\r\n");
+
+      status = AxiDMASelfTestExample(XPAR_AXI_DMA_0_DEVICE_ID);
+
+      if (status == 0) {
+         print("AxiDMASelfTestExample PASSED\r\n");
+      }
+      else {
+         print("AxiDMASelfTestExample FAILED\r\n");
+      }
+   }
+   
+   /*
+    * Peripheral SelfTest will not be run for axi_uartlite_0
+    * because it has been selected as the STDOUT device
+    */
+
+   
+
+   {
+      XStatus status;
+      
+      print("\r\n Runnning SpiSelfTestExample() for dac_spi_3...\r\n");
+      
+      status = SpiSelfTestExample(XPAR_DAC_SPI_3_DEVICE_ID);
+      
+      if (status == 0) {
+         print("SpiSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("SpiSelfTestExample FAILED\r\n");
+      }
+   }
+   
+
+   {
+      u32 status;
+      
+      print("\r\nRunning GpioOutputExample() for gpio_jesd...\r\n");
+
+      status = GpioOutputExample(XPAR_GPIO_JESD_DEVICE_ID,2);
+      
+      if (status == 0) {
+         print("GpioOutputExample PASSED.\r\n");
+      }
+      else {
+         print("GpioOutputExample FAILED.\r\n");
+      }
+   }
+   
+
+   {
+      u32 status;
+      
+      print("\r\nRunning GpioOutputExample() for gpio_leds...\r\n");
+
+      status = GpioOutputExample(XPAR_GPIO_LEDS_DEVICE_ID,8);
+      
+      if (status == 0) {
+         print("GpioOutputExample PASSED.\r\n");
+      }
+      else {
+         print("GpioOutputExample FAILED.\r\n");
+      }
+   }
+   
+
+   {
+      u32 status;
+      
+      print("\r\nRunning GpioOutputExample() for gpio_leds1...\r\n");
+
+      status = GpioOutputExample(XPAR_GPIO_LEDS1_DEVICE_ID,7);
+      
+      if (status == 0) {
+         print("GpioOutputExample PASSED.\r\n");
+      }
+      else {
+         print("GpioOutputExample FAILED.\r\n");
+      }
+   }
+   
+
+   {
+      XStatus status;
+      
+      print("\r\n Runnning SpiSelfTestExample() for lmk_spi_0...\r\n");
+      
+      status = SpiSelfTestExample(XPAR_LMK_SPI_0_DEVICE_ID);
+      
+      if (status == 0) {
+         print("SpiSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("SpiSelfTestExample FAILED\r\n");
+      }
+   }
+   
+
+   {
+      XStatus status;
+      
+      print("\r\n Runnning SpiSelfTestExample() for lo_spi_4...\r\n");
+      
+      status = SpiSelfTestExample(XPAR_LO_SPI_4_DEVICE_ID);
+      
+      if (status == 0) {
+         print("SpiSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("SpiSelfTestExample FAILED\r\n");
+      }
+   }
+   
+
+   {
+      int status;
+      
+      print("\r\nRunning UartLiteSelfTestExample() for uart_2_zdok...\r\n");
+      status = UartLiteSelfTestExample(XPAR_UART_2_ZDOK_DEVICE_ID);
+      if (status == 0) {
+         print("UartLiteSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("UartLiteSelfTestExample FAILED\r\n");
+      }
+      
+   }
+   print("---Exiting main---\n\r");
+   Xil_DCacheDisable();
+   Xil_ICacheDisable();
+   return 0;
+}

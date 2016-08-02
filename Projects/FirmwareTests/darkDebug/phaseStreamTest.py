@@ -258,7 +258,7 @@ if __name__=='__main__':
     bLoadDds = False #compute and load dds table into qdr memory
     bLoadFir = False #load fir coefficients into prog_fir block for each channel
     bLoadDac = False #load probe tones into bram for dac/adc simulation block
-    bSetThresh = True #set the photon phase trigger threshold in the capture block
+    bSetThresh = False #set the photon phase trigger threshold in the capture block
     bStreamPhase = False #initiate stream of phase timestream to ethernet for selected channel
 
     instrument = 'darkness'
@@ -390,7 +390,7 @@ if __name__=='__main__':
     fpga.write_int(startRegisterName,1) 
 
     #fpga.write_int('sel_bch',selChanIndex)
-    snapDict = snapDdc(fpga,bSnapAll=False,selBinIndex=selBinIndex,selChanIndex=0,selChanStream=selChanStream,ddsAddrTrig=ddsAddrTrig,bPlot=False)
+    snapDict = snapDdc(fpga,bSnapAll=False,selBinIndex=selBinIndex,selChanIndex=0,selChanStream=selChanStream,ddsAddrTrig=ddsAddrTrig,bPlot=True)
 
     rawPhase = snapDict['rawPhase']
     mix = snapDict['mix']

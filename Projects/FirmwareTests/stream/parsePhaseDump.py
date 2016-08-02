@@ -19,7 +19,7 @@ with open(path,'r') as dumpFile:
 nBytes = len(data)
 nWords = nBytes/8 #64 bit words
 #break into 64 bit words
-words = np.array(struct.unpack('>{:d}Q'.format(nWords), data))
+words = np.array(struct.unpack('>{:d}Q'.format(nWords), data),dtype=object)
 nBitsPerPhase = 12
 binPtPhase = 9
 nPhasesPerWord = 5
@@ -31,6 +31,9 @@ bitshifts = nBitsPerPhase*np.arange(nPhasesPerWord)
 
 #add an axis so we can broadcast
 #and shift away the bits we don't keep for each row
+print np.shape(words[:,np.newaxis]),words.dtype
+print bitshifts
+print words[0:10]
 phases = (words[:,np.newaxis]) >> bitshifts
 phases = phases & bitmask
 
@@ -40,6 +43,7 @@ phases = phases & bitmask
 phases = phases.flatten(order='C')
 phases = np.array(phases,dtype=np.uint64)
 signBits = np.array(phases / (2**(nBitsPerPhase-1)),dtype=np.bool)
+print signBits[0:10]
 
 #check the sign bits to see what values should be negative
 #for the ones that should be negative undo the 2's complement, and flip the sign
@@ -51,7 +55,7 @@ phases = phases / 2**binPtPhase
 
 #convert from radians to degrees
 phases = 180./np.pi * phases
-plt.plot(phases[0:2**15],'.-')
+plt.plot(phases[-2**15:],'.-')
 
 photonPeriod = 4096 #timesteps (us)
 
