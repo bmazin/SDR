@@ -1,32 +1,32 @@
 from matplotlib import rcParams, rc
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
-from fitFunctions import gaussian
-import scipy.interpolate
-import scipy.signal
 from baselineIIR import IirFilter
-import makeNoiseSpectrum_nz as mNS
+import makeNoiseSpectrum as mNS
 import makeArtificialData as mAD
 
 reload(mNS)
 reload(mAD)
 
 def makeTemplate(rawdata):
+
     #hipass filter data to remove any baseline
     data = hpFilter(rawdata)
     
-    #trigger on pulses in data (need to work in Chi2 cuts so that we can set the trigger level lower)
-    peakDict = sigmaTrigger(data,nSigmaTrig=4.)
+    #trigger on pulses in data (could work in a Chi2 cut so that we can set the trigger level lower)
+    peakDict = sigmaTrigger(data,nSigmaTrig=2.)
+    
+    #remove pulses with additional triggers in the pulse window
+    peakIndices = cleanPulses(peakDict['peakMaxIndices'])
+        
+    #Create rough template
+    roughTemplate, _ = averagePulses(data, peakIndices)
     
     #create noise spectrum from pre-pulse data for filter
-    noiseSpectDict = mNS.makeWienerNoiseSpectrum(data, peakDict['peakMaxIndices'])
-    
-    #Create rough template
-    roughTemplate, _ = averagePulses(data, peakDict['peakMaxIndices'])
+    noiseSpectDict = mNS.makeWienerNoiseSpectrum(data,peakIndices)
     
     #Correct for errors in peak offsets due to noise
-    peakIndices = correctPeakOffs(data, peakDict['peakMaxIndices'], noiseSpectDict, roughTemplate, 'wiener')
+    peakIndices = correctPeakOffs(data, peakIndices, noiseSpectDict, roughTemplate, 'wiener')
     
     #Calculate final template
     finalTemplate, time = averagePulses(data, peakIndices,isoffset=True)
@@ -34,6 +34,7 @@ def makeTemplate(rawdata):
     return finalTemplate, time, roughTemplate, noiseSpectDict
 
 def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
+
     f=2*np.sin(np.pi*criticalFreq/sampleRate)
     Q=.7
     q=1./Q
@@ -41,13 +42,14 @@ def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
     data = hpSvf.filterData(rawdata)
     return data
 
-def sigmaTrigger(data,nSigmaTrig=5.,deadTime=1000,decayTime=30):
+def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30):
+
     #deadTime in ticks (us)
     #decayTime in tics (us)
     data = np.array(data)
     med = np.median(data)
     #print 'sdev',np.std(data),'med',med,'max',np.max(data)
-    trigMask = data > (med + np.std(data)*nSigmaTrig)
+    trigMask = np.logical_or( data > (med + np.std(data)*nSigmaTrig) , data < (med - np.std(data)*nSigmaTrig) )
     if np.sum(trigMask) > 0:
         peakIndices = np.where(trigMask)[0]
         i = 0
@@ -59,7 +61,7 @@ def sigmaTrigger(data,nSigmaTrig=5.,deadTime=1000,decayTime=30):
                 peakData = data[p:p+decayTime]
             else:
                 peakData = data[p:]
-            peakMaxIndices = np.append(peakMaxIndices, np.argmax(peakData)+p)
+            peakMaxIndices = np.append(peakMaxIndices, np.argmax(np.abs(peakData))+p)
                             
             i+=1
             if i < len(peakIndices):
@@ -69,12 +71,29 @@ def sigmaTrigger(data,nSigmaTrig=5.,deadTime=1000,decayTime=30):
          
             
     else:
-        raise ValueError('sigmaTrigger: No triggers found')
-        return {'peakIndices':np.array([]), 'peakMaxIndices':np.array([])}
-        
+        raise ValueError('sigmaTrigger: No triggers found in dataset')
+    
+    print 'triggered on', len(peakIndices), 'pulses'    
     return {'peakIndices':peakIndices, 'peakMaxIndices':peakMaxIndices}
 
+def cleanPulses(peakIndices,window=900):
+    peakIndices=np.array(peakIndices)
+    newPeakIndices=np.array([])
+    #check that no peaks are near current peak and then add to new indices variable
+    for iPeak, peakIndex in enumerate(peakIndices):
+        if np.min(np.abs(peakIndices[np.arange(len(peakIndices))!=iPeak]-peakIndex))>window:
+            newPeakIndices=np.append(newPeakIndices,peakIndex)
+
+    if len(newPeakIndices)==0:
+        raise ValueError('cleanPulses: no pulses passed the pileup cut')       
+    
+    print len(peakIndices)-len(newPeakIndices), 'indices cut due to pileup'
+    
+    return newPeakIndices
+    
+
 def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsAfter=700, decayTime=30, sampleRate=1e6):
+
     numPeaks = 0
     template=np.zeros(nPointsBefore+nPointsAfter)
     for iPeak,peakIndex in enumerate(peakIndices):
@@ -83,9 +102,9 @@ def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsA
             peakData = data[peakIndex-decayTime:peakIndex+decayTime]
             
             if isoffset:
-                peakRecord/=data[peakIndex]
+                peakRecord/=np.abs(data[peakIndex])
             else:
-                peakHeight = np.max(peakData)
+                peakHeight = np.max(np.abs(peakData))
                 peakRecord /= peakHeight
             template += peakRecord
             numPeaks += 1
@@ -98,7 +117,7 @@ def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsA
     
 
 def makeWienerFilter(noiseSpectDict, template):
-    template /= np.max(template) #should be redundant
+    template /= np.max(np.abs(template)) #should be redundant
     noiseSpectrum = noiseSpectDict['noiseSpectrum']
     templateFft = np.fft.fft(template)/len(template)
     wienerFilter = np.conj(templateFft)/noiseSpectrum
@@ -117,14 +136,17 @@ def correctPeakOffs(data, peakIndices, noiseSpectDict, template, filterType, off
     nPointsTotal = nPointsBefore + nPointsAfter
     filterSet = np.zeros((nOffsets,nPointsTotal),dtype=np.complex64)
     newPeakIndices = []
+    
+    #Create a set of filters from different template offsets
     for i,offset in enumerate(offsets):
         templateOffs = np.roll(template, offset)
         filterSet[i] = makeFilter(noiseSpectDict, templateOffs)
-        
+    
+    #find which template offset is the best    
     for iPeak,peakIndex in enumerate(peakIndices):
         if peakIndex > nPointsBefore+np.min(offsets) and peakIndex < len(data)-(nPointsAfter+np.max(offsets)):
             peakRecord = data[peakIndex-nPointsBefore:peakIndex+nPointsAfter]
-            peakRecord = peakRecord / np.max(peakRecord)
+            peakRecord = peakRecord / np.max(np.abs(peakRecord))
             #check which time shifted filter results in the biggest signal
             peakRecordFft = np.fft.fft(peakRecord)/nPointsTotal
             convSums = np.abs(np.sum(filterSet*peakRecordFft,axis=1))
@@ -140,6 +162,7 @@ if __name__=='__main__':
     #Turn plotting on or off
     isPlot=True 
     isPlotPoisson=False  
+    isTestPlot=False
     
     #Starting template values
     sampleRate=1e6
@@ -152,6 +175,11 @@ if __name__=='__main__':
     #get fake poissonian distributed pulse data
     rawdata, rawtime = mAD.makePoissonData(totalTime=2*131.072e-3)
     
+    if isTestPlot:
+      plt.figure()
+      plt.plot(rawtime,rawdata)
+      plt.show()
+      
     if isPlotPoisson:
         fig1=plt.figure(0)
         plt.plot(rawtime,rawdata)
@@ -172,10 +200,14 @@ if __name__=='__main__':
         ax1.plot(time*1e6,realTemplate-roughTemplate,'r',linewidth=2)
         ax1.plot(time*1e6,realTemplate-finalTemplate,'g',linewidth=2)
         
-        ax1.set_xlabel(r'time [$\mu$s]')
+        ax1.set_xlabel('time [$\mu$s]')
         ax0.set_ylabel('normalized pulse height')
         ax1.set_ylabel('residuals')
-        ax0.legend((h1,h2,h3),('initial template','offset corrected template','real pulse shape'),'upper right')
-        
+        print type(h1)
+        if np.max(realTemplate)>0:
+            ax0.legend((h1,h2,h3),('initial template','offset corrected template','real pulse shape'),'upper right')
+        else:
+            ax0.legend((h1,h2,h3),('initial template','offset corrected template','real pulse shape'),'lower right')
         plt.show()   
+        
     

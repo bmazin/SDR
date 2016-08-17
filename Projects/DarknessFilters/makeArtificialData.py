@@ -21,6 +21,7 @@ def makePoissonData(rate=1./5e-3,totalTime=65.536e-3, maxSignalToNoise=10. , ris
     #add noise
     data+=np.random.rand(len(time))
 
+    print len(pulseTimes), 'peaks generated'
     return data, time
 
 def makePulse(time,t0,riseTime,fallTime,sampleRate=1e6):
@@ -30,7 +31,7 @@ def makePulse(time,t0,riseTime,fallTime,sampleRate=1e6):
     endTime=startTime+6*fallTime
     t=np.arange(startTime,endTime,dt)
     
-    pulse=(1-np.exp(-(t-t0)/riseTime))*np.exp(-(t-t0)/fallTime)
+    pulse= -(1-np.exp(-(t-t0)/riseTime))*np.exp(-(t-t0)/fallTime)
     
     pulseTemplate=np.zeros(time.shape)
     startIndex=np.where(time>=startTime)[0][0]
@@ -39,7 +40,7 @@ def makePulse(time,t0,riseTime,fallTime,sampleRate=1e6):
        endIndex=len(time)
        
     pulseTemplate[startIndex:endIndex]=pulse
-    pulseTemplate/=np.max(pulseTemplate)
+    pulseTemplate/=np.max(np.abs(pulseTemplate))
     
     return pulseTemplate
 

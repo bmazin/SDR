@@ -1,7 +1,6 @@
 from matplotlib import rcParams, rc
 import numpy as np
 import sys
-from fitFunctions import gaussian
 import scipy.interpolate
 import scipy.signal
 from baselineIIR import IirFilter
@@ -9,14 +8,31 @@ from baselineIIR import IirFilter
 
 def makeWienerNoiseSpectrum(data, peakIndices=[], numBefore=100, numAfter=700, noiseOffsetFromPeak=200, sampleRate=1e6, prePulseDetect=True):
     nFftPoints = numBefore + numAfter
+    peakIndices=np.array(peakIndices).astype(int)
+    
+    #If no peaks, choose random indices to make spectrum 
+    if len(peakIndices)==0:
+        print 'warning: makeWienerNoiseSpectrum was not passed any peakIndices. Generating random indicies now'
+        peakIndices=np.array([0])
+        rate = len(data)/nFftPoints/10
+        while peakIndices[-1]<(len(data)-1):
+            prob=np.random.rand()
+            currentIndex=peakIndices[-1]
+            peakIndices=np.append(peakIndices,currentIndex+np.ceil(-np.log(prob)/rate).astype(int))
+        peakIndices=peakIndices[:-2]      
+    if len(peakIndices)==0:
+        raise ValueError('makeWienerNoiseSpectrum: input data set is too short for the number of FFT points specified')
+    
+    #Calculate noise spectra for the defined area before each pulse
     noiseSpectra = np.zeros((len(peakIndices), nFftPoints))
     sigma = np.zeros(len(peakIndices))    
     for iPeak,peakIndex in enumerate(peakIndices):
-        if peakIndex > nFftPoints-noiseOffsetFromPeak and peakIndex < len(data)-numAfter:
+        if peakIndex > nFftPoints+noiseOffsetFromPeak and peakIndex < len(data)-numAfter:
             noiseData = data[peakIndex-nFftPoints-noiseOffsetFromPeak:peakIndex-noiseOffsetFromPeak]
             sigma[iPeak] = np.std(noiseData)
             noiseSpectra[iPeak] = np.abs(np.fft.fft(data[peakIndex-nFftPoints-noiseOffsetFromPeak:peakIndex-noiseOffsetFromPeak])/nFftPoints)**2 
-
+    
+    #Remove indicies with pulses in the area used for noise .. this is rough. Data should be pre-checked for this (use cleanPulses).
     if prePulseDetect:    
         sigmaMask = (sigma-np.mean(sigma))>2*np.std(sigma)
         sigmaRejectInd = np.where(sigmaMask)

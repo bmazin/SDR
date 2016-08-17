@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-from fitFunctions import gaussian
 import scipy.interpolate
 import scipy.signal
 import makeNoiseSpectrum as noise
@@ -39,7 +38,7 @@ if __name__=='__main__':
     noiseCov = noise.covFromData(data-np.mean(data), 100)['covMatrix']
 
     filt, filtRev = makeMatchedFilter(template, noiseCov, 100)
-    plt.plot(template)
-    plt.plot(10*filt)
-    plt.plot(10*filtRev)
+    plt.plot(template,'r')
+    plt.plot(10*filt,'g')
+    plt.plot(10*filtRev,'b')
     plt.show()
