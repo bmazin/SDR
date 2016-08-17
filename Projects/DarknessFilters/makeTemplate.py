@@ -6,7 +6,7 @@ from fitFunctions import gaussian
 import scipy.interpolate
 import scipy.signal
 from baselineIIR import IirFilter
-import makeNoiseSpectrum_nz as mNS
+import makeNoiseSpectrum as mNS
 import makeArtificialData as mAD
 
 reload(mNS)
