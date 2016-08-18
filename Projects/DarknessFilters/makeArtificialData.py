@@ -1,6 +1,6 @@
 import numpy as np
 
-def makePoissonData(rate=1./5e-3,totalTime=65.536e-3, maxSignalToNoise=10. , riseTime=2e-6, fallTime=50e-6, sampleRate=1e6):
+def makePoissonData(rate=1./5e-3,totalTime=65.536e-3, maxSignalToNoise=10. , riseTime=2e-6, fallTime=50e-6, sampleRate=1e6,isVerbose=False):
     dt  = 1./sampleRate    
     time = np.arange(0,totalTime+dt,dt)
     data = np.zeros(time.shape)
@@ -19,9 +19,10 @@ def makePoissonData(rate=1./5e-3,totalTime=65.536e-3, maxSignalToNoise=10. , ris
         data+= amplitude*makePulse(time,peak,riseTime,fallTime)
     
     #add noise
-    data+=np.random.rand(len(time))
-
-    print len(pulseTimes), 'peaks generated'
+    data+=(np.random.rand(len(time))-.5)
+    
+    if isVerbose:
+        print len(pulseTimes), 'peaks generated'
     return data, time
 
 def makePulse(time,t0,riseTime,fallTime,sampleRate=1e6):
@@ -36,10 +37,10 @@ def makePulse(time,t0,riseTime,fallTime,sampleRate=1e6):
     pulseTemplate=np.zeros(time.shape)
     startIndex=np.where(time>=startTime)[0][0]
     endIndex=startIndex+len(pulse)
-    if endIndex>len(time):
-       endIndex=len(time)
-       
-    pulseTemplate[startIndex:endIndex]=pulse
+    if endIndex>=len(time):
+       endIndex=len(time)-1
+    
+    pulseTemplate[startIndex:endIndex]=pulse[:len(pulseTemplate[startIndex:endIndex])]
     norm=fallTime/(riseTime+fallTime)*(riseTime/(riseTime+fallTime))**(riseTime/fallTime)
     pulseTemplate/=norm
     

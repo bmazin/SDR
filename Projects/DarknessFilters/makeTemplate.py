@@ -9,27 +9,29 @@ import makeArtificialData as mAD
 reload(mNS)
 reload(mAD)
 
-def makeTemplate(rawdata, numOffsCorrIters=1):
+def makeTemplate(rawdata, numOffsCorrIters=1 , isVerbose=False):
     '''
     Make a matched filter template using a raw phase timestream
     INPUTS:
     rawdata - noisy phase timestream with photon pulses
     numOffsCorrIters - number of pulse offset corrections to perform
+    isVerbose - print information about the template fitting process
 
     OUTPUTS:
     finalTemplate - template of pulse shape
     time - use as x-axis when plotting template
     noiseSpectDict - dictionary containing noise spectrum and corresponding frequencies
+    templateList - list of template itterations by correcting offsets
     '''
 
     #hipass filter data to remove any baseline
     data = hpFilter(rawdata)
-    
+
     #trigger on pulses in data (could work in a Chi2 cut so that we can set the trigger level lower)
-    peakDict = sigmaTrigger(data,nSigmaTrig=2.)
+    peakDict = sigmaTrigger(data,nSigmaTrig=2.,isVerbose=isVerbose)
     
     #remove pulses with additional triggers in the pulse window
-    peakIndices = cleanPulses(peakDict['peakMaxIndices'])
+    peakIndices = cutPulsePileup(peakDict['peakMaxIndices'], isVerbose=isVerbose)
         
     #Create rough template
     roughTemplate, time = averagePulses(data, peakIndices)
@@ -38,15 +40,15 @@ def makeTemplate(rawdata, numOffsCorrIters=1):
     noiseSpectDict = mNS.makeWienerNoiseSpectrum(data,peakIndices)
     
     #Correct for errors in peak offsets due to noise
-    filterList = [roughTemplate]
+    templateList = [roughTemplate]
     for i in range(numOffsCorrIters):
         peakIndices = correctPeakOffs(data, peakIndices, noiseSpectDict, roughTemplate, 'wiener')
         roughTemplate, time = averagePulses(data, peakIndices,isoffset=True) #calculate a new corrected template
-        filterList.append(roughTemplate)
+        templateList.append(roughTemplate)
     
     finalTemplate = roughTemplate
 
-    return finalTemplate, time, noiseSpectDict, filterList
+    return finalTemplate, time, noiseSpectDict, templateList
 
 def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
     '''
@@ -66,7 +68,7 @@ def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
     data = hpSvf.filterData(rawdata)
     return data
 
-def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30):
+def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30,isVerbose=False):
     '''
     Detects pulses in raw phase timestream
     INPUTS:
@@ -74,6 +76,12 @@ def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30):
     nSigmaTrig - threshold to detect pulse in terms of standard deviation of data
     deadTime - minimum amount of time between any two pulses (units: ticks (1 us assuming 1 MHz sample rate))
     decayTime - expected pulse decay time (units: ticks)
+    isVerbose - print information about the template fitting process
+    
+    OUTPUTS:
+    peakDict - dictionary of trigger indicies 
+               peakIndices: initial trigger index
+               peakMaxIndices: index of the max near the initial trigger
     '''
     data = np.array(data)
     med = np.median(data)
@@ -102,10 +110,13 @@ def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30):
     else:
         raise ValueError('sigmaTrigger: No triggers found in dataset')
     
-    print 'triggered on', len(peakIndices), 'pulses'    
-    return {'peakIndices':peakIndices, 'peakMaxIndices':peakMaxIndices}
+    if isVerbose:
+        print 'triggered on', len(peakIndices), 'pulses'    
+    
+    peakDict={'peakIndices':peakIndices, 'peakMaxIndices':peakMaxIndices}
+    return peakDict
 
-def cleanPulses(peakIndices,window=900):
+def cutPulsePileup(peakIndices,window=900,isVerbose=False):
     '''
     Removes any pulses that have another pulse within 'window' (in ticks) This is
     to ensure that template data is not contaminated by extraneous pulses.
@@ -113,6 +124,7 @@ def cleanPulses(peakIndices,window=900):
     INPUTS:
     peakIndices - list of pulse positions
     window - size of pulse removal window (in ticks (us))
+    isVerbose - print information about the template fitting process    
 
     OUTPUS:
     newPeakIndices - list of pulse positions, with unwanted pulses deleted
@@ -125,9 +137,10 @@ def cleanPulses(peakIndices,window=900):
             newPeakIndices=np.append(newPeakIndices,peakIndex)
 
     if len(newPeakIndices)==0:
-        raise ValueError('cleanPulses: no pulses passed the pileup cut')       
+        raise ValueError('cutPulsePileup: no pulses passed the pileup cut')       
     
-    print len(peakIndices)-len(newPeakIndices), 'indices cut due to pileup'
+    if isVerbose:
+        print len(peakIndices)-len(newPeakIndices), 'indices cut due to pileup'
     
     return newPeakIndices
     
@@ -144,6 +157,7 @@ def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsA
     nPointsAfter - number of points after peakIndex to include in template
     decayTime - expected pulse decay time (in ticks (us))
     sampleRate - sample rate of 'data'
+    
 
     OUTPUTS:
     template - caluculated pulse template
@@ -313,7 +327,7 @@ if __name__=='__main__':
     t0=tmax+riseTime*np.log(riseTime/(riseTime+fallTime)) 
     
     #get fake poissonian distributed pulse data
-    rawdata, rawtime = mAD.makePoissonData(totalTime=2*131.072e-3)
+    rawdata, rawtime = mAD.makePoissonData(totalTime=2*131.072e-3,isVerbose=True)
       
     if isPlotPoisson:
         fig1=plt.figure(0)
@@ -321,7 +335,7 @@ if __name__=='__main__':
         plt.show()
     
     #calculate templates    
-    finalTemplate, time , _, templateList = makeTemplate(rawdata)
+    finalTemplate, time , _, templateList = makeTemplate(rawdata,numOffsCorrIters=2,isVerbose=True)
     roughTemplate = templateList[0]
     
     #make fitted template
@@ -342,7 +356,6 @@ if __name__=='__main__':
         ax1.set_xlabel('time [$\mu$s]')
         ax0.set_ylabel('normalized pulse height')
         ax1.set_ylabel('residuals')
-        print type(h1)
         if np.max(realTemplate)>0:
             ax0.legend((h1,h2,h3),('initial template','offset corrected template','real pulse shape'),'upper right')
         else:
