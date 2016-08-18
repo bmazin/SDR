@@ -29,7 +29,7 @@ def makePulse(time,t0,riseTime,fallTime,sampleRate=1e6):
     time=np.array(time) #double check time is np array
     dt=1./sampleRate
     startTime=t0+(dt-np.remainder(t0,dt))  #round up to nearest dt
-    endTime=startTime+6*fallTime
+    endTime=startTime+10*fallTime
     t=np.arange(startTime,endTime,dt)
     
     pulse= -(1-np.exp(-(t-t0)/riseTime))*np.exp(-(t-t0)/fallTime)
