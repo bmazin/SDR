@@ -6,16 +6,16 @@ from baselineIIR import IirFilter
 import makeNoiseSpectrum as mNS
 import makeArtificialData as mAD
 
-reload(mNS)
-reload(mAD)
-
-def makeTemplate(rawdata, numOffsCorrIters=1 , isVerbose=False):
+def makeTemplate(rawdata, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVerbose=False, isPlot=False):
     '''
     Make a matched filter template using a raw phase timestream
     INPUTS:
     rawdata - noisy phase timestream with photon pulses
     numOffsCorrIters - number of pulse offset corrections to perform
+    decayTime - approximate decay time of pulses (units: ticks)
+    nSigmaTrig - threshold to detect pulse in terms of standard deviation of data
     isVerbose - print information about the template fitting process
+    isPlot - plot information about Chi2 cut
 
     OUTPUTS:
     finalTemplate - template of pulse shape
@@ -27,14 +27,17 @@ def makeTemplate(rawdata, numOffsCorrIters=1 , isVerbose=False):
     #hipass filter data to remove any baseline
     data = hpFilter(rawdata)
 
-    #trigger on pulses in data (could work in a Chi2 cut so that we can set the trigger level lower)
-    peakDict = sigmaTrigger(data,nSigmaTrig=2.,isVerbose=isVerbose)
+    #trigger on pulses in data 
+    peakDict = sigmaTrigger(data,nSigmaTrig=nSigmaTrig, decayTime=decayTime,isVerbose=isVerbose)
     
     #remove pulses with additional triggers in the pulse window
-    peakIndices = cutPulsePileup(peakDict['peakMaxIndices'], isVerbose=isVerbose)
+    peakIndices = cutPulsePileup(peakDict['peakMaxIndices'], decayTime=decayTime, isVerbose=isVerbose)
+    
+    #remove pulses with a large chi squared value
+    peakIndices = cutChiSquared(data,peakIndices,sigPass=1, decayTime=decayTime, isVerbose=isVerbose, isPlot=isPlot)
         
     #Create rough template
-    roughTemplate, time = averagePulses(data, peakIndices)
+    roughTemplate, time = averagePulses(data, peakIndices, decayTime=decayTime)
     
     #create noise spectrum from pre-pulse data for filter
     noiseSpectDict = mNS.makeWienerNoiseSpectrum(data,peakIndices)
@@ -43,7 +46,8 @@ def makeTemplate(rawdata, numOffsCorrIters=1 , isVerbose=False):
     templateList = [roughTemplate]
     for i in range(numOffsCorrIters):
         peakIndices = correctPeakOffs(data, peakIndices, noiseSpectDict, roughTemplate, 'wiener')
-        roughTemplate, time = averagePulses(data, peakIndices,isoffset=True) #calculate a new corrected template
+        #calculate a new corrected template
+        roughTemplate, time = averagePulses(data, peakIndices,isoffset=True, decayTime=decayTime) 
         templateList.append(roughTemplate)
     
     finalTemplate = roughTemplate
@@ -116,19 +120,26 @@ def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30,isVerbose=False):
     peakDict={'peakIndices':peakIndices, 'peakMaxIndices':peakMaxIndices}
     return peakDict
 
-def cutPulsePileup(peakIndices,window=900,isVerbose=False):
+def cutPulsePileup(peakIndices, nPointsBefore= 100, nPointsAfter = 700 , decayTime=50, isVerbose=False):
     '''
     Removes any pulses that have another pulse within 'window' (in ticks) This is
     to ensure that template data is not contaminated by extraneous pulses.
     
     INPUTS:
     peakIndices - list of pulse positions
-    window - size of pulse removal window (in ticks (us))
+    nPointsBefore - number of points before peakIndex included in template
+    nPointsAfter - number of points after peakIndex included in template
+    decayTime - expected pulse decay time (units: ticks)    
     isVerbose - print information about the template fitting process    
 
     OUTPUS:
     newPeakIndices - list of pulse positions, with unwanted pulses deleted
     '''
+    #set window for pulse rejection
+    window=nPointsBefore+nPointsAfter
+    if window<10*decayTime:
+        window=10*decayTime
+        
     peakIndices=np.array(peakIndices)
     newPeakIndices=np.array([])
     #check that no peaks are near current peak and then add to new indices variable
@@ -143,8 +154,75 @@ def cutPulsePileup(peakIndices,window=900,isVerbose=False):
         print len(peakIndices)-len(newPeakIndices), 'indices cut due to pileup'
     
     return newPeakIndices
-    
 
+def cutChiSquared(data,peakIndices,sigPass=1, decayTime=50, nPointsBefore= 100, nPointsAfter=700, isVerbose=False, isPlot=False):   
+    '''
+    Removes a fraction of pulses (1-fPass) with the worst Chi Squared fit to 
+    the exponential tail. This should remove any triggers that don't look like 
+    pulses. Currently not optimized to fit in the frequency domain.
+    
+    INPUTS:
+    data - raw phase timestream
+    peakIndices - list of pulse positions
+    fPass - fraction of pulses selected to pass the cut
+    decayTime - expected pulse decay time (units: ticks)
+    nPointsBefore - number of points before peakIndex included in template
+    nPointsAfter - number of points after peakIndex included in template
+    isVerbose - print information about the template fitting process    
+    
+    OUTPUTS:
+    newPeakIndices - list of pulse positions, with unwanted pulses deleted
+    '''
+    
+    chiSquared=np.zeros(len(peakIndices))
+    for iPeak, peakIndex in enumerate(peakIndices):
+        time=np.arange(0,len(data[peakIndex+int(decayTime/2):peakIndex+nPointsAfter]))
+        currentData=data[peakIndex+int(decayTime/2):peakIndex+nPointsAfter]
+        ampGuess=currentData[np.argmax(np.abs(currentData))]
+        expCoef, _ = opt.curve_fit(lambda t, a, tau: a*np.exp(-t/tau) , time, currentData , [ampGuess, decayTime] )
+        ampFit=expCoef[0]
+        decayFit=expCoef[1]
+        chiSquared[iPeak]=np.sum((currentData-ampFit*np.exp(-time/decayFit))**2)
+     
+    chi2Median=np.median(chiSquared)
+    chi2Sig=np.std(chiSquared)
+     
+    newPeakIndices=np.array([])
+    newChiSquared=np.array([])
+    for iPeak, peakIndex in enumerate(peakIndices):
+        if np.abs(chiSquared[iPeak]-chi2Median)<sigPass*chi2Sig:
+            newPeakIndices=np.append(newPeakIndices,peakIndex)
+            newChiSquared=np.append(newChiSquared,chiSquared[iPeak])
+            
+    
+    if isVerbose:
+        print len(peakIndices)-len(newPeakIndices), 'indices cut with worst Chi Squared value'
+        
+    if len(newPeakIndices)==0:
+        raise ValueError('cutChiSquared: no pulses passed the Chi Squared cut') 
+        
+    if isPlot:
+        worstDataIndex=np.argmax(np.abs(newChiSquared-chi2Median))
+        fig = plt.figure()
+        plt.plot(data[newPeakIndices[worstDataIndex]-nPointsBefore:newPeakIndices[worstDataIndex]+nPointsAfter])
+        plt.title('Worst pulse not cut by $\chi^2$ cut')
+        plt.show()    
+        
+        worstDataIndex=np.argmax(np.abs(chiSquared-chi2Median))
+        fig=plt.figure()
+        plt.plot(data[peakIndices[worstDataIndex]-nPointsBefore:peakIndices[worstDataIndex]+nPointsAfter])
+        plt.title('Worst pulse cut by $\chi^2$ cut')
+        plt.show()
+        
+        fig =plt.figure()
+        plt.hist(chiSquared,10)
+        ax = plt.gca()
+        ax.set_xlabel('$\chi^2$')
+        plt.show()
+                
+    return newPeakIndices
+    
+    
 def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsAfter=700, decayTime=30, sampleRate=1e6):
     '''
     Average together pulse data to make a template
@@ -158,7 +236,6 @@ def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsA
     decayTime - expected pulse decay time (in ticks (us))
     sampleRate - sample rate of 'data'
     
-
     OUTPUTS:
     template - caluculated pulse template
     time - time markers indexing data points in 'template'
@@ -308,62 +385,10 @@ def pulseFitFun(x,t0,t1,t2):
     
     heaviside=np.zeros(len(x))
     heaviside[x>t0]=1;
-    norm=t2/(t1+t2)*(t1/(t1+t2))**(t1/t2)
+
+    if t1<0 or t2<0:
+        norm=1
+    else: 
+        norm=t2/(t1+t2)*(t1/(t1+t2))**(t1/t2)
+        
     return (1-np.exp(-(x-t0)/t1))*np.exp(-(x-t0)/t2)/norm*heaviside
-       
-if __name__=='__main__':
-    
-    #Turn plotting on or off
-    isPlot=True 
-    isPlotPoisson=False 
-    isPlotFit=False 
-    
-    #Starting template values
-    sampleRate=1e6
-    nPointsBefore=100.
-    riseTime=2e-6
-    fallTime=50e-6
-    tmax=nPointsBefore/sampleRate
-    t0=tmax+riseTime*np.log(riseTime/(riseTime+fallTime)) 
-    
-    #get fake poissonian distributed pulse data
-    rawdata, rawtime = mAD.makePoissonData(totalTime=2*131.072e-3,isVerbose=True)
-      
-    if isPlotPoisson:
-        fig1=plt.figure(0)
-        plt.plot(rawtime,rawdata)
-        plt.show()
-    
-    #calculate templates    
-    finalTemplate, time, _, templateList, _ = makeTemplate(rawdata,numOffsCorrIters=2,isVerbose=True)
-    roughTemplate = templateList[0]
-    
-    #make fitted template
-    fittedTemplate, startFit, riseFit, fallFit = makeFittedTemplate(finalTemplate,time,riseGuess=3.e-6,fallGuess=55.e-6)
-    
-    #calculate real template
-    realTemplate = mAD.makePulse(time,t0,riseTime,fallTime)
-    
-    if isPlot:
-        fig, (ax0, ax1) = plt.subplots(nrows=2, sharex=True)
-        h1, = ax0.plot(time*1e6,roughTemplate,'r',linewidth=2)
-        h2, = ax0.plot(time*1e6,finalTemplate,'g',linewidth=2)
-        h3, = ax0.plot(time*1e6,realTemplate,'b', linewidth=2)
-        
-        ax1.plot(time*1e6,realTemplate-roughTemplate,'r',linewidth=2)
-        ax1.plot(time*1e6,realTemplate-finalTemplate,'g',linewidth=2)
-        
-        ax1.set_xlabel('time [$\mu$s]')
-        ax0.set_ylabel('normalized pulse height')
-        ax1.set_ylabel('residuals')
-        if np.max(realTemplate)>0:
-            ax0.legend((h1,h2,h3),('initial template','offset corrected template','real pulse shape'),'upper right')
-        else:
-            ax0.legend((h1,h2,h3),('initial template','offset corrected template','real pulse shape'),'lower right')
-        plt.show()   
-    if isPlotFit:
-        fig2=plt.figure(2)
-        plt.plot(time,finalTemplate)
-        plt.plot(time,fittedTemplate)
-        plt.show()
-    
