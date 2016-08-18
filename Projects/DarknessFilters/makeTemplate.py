@@ -1,6 +1,7 @@
 from matplotlib import rcParams, rc
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy.optimize as opt
 from baselineIIR import IirFilter
 import makeNoiseSpectrum as mNS
 import makeArtificialData as mAD
@@ -156,13 +157,68 @@ def correctPeakOffs(data, peakIndices, noiseSpectDict, template, filterType, off
             newPeakIndices=np.append(newPeakIndices, peakIndex+bestOffset)
 
     return newPeakIndices
+def makeFittedTemplate(template,time,riseGuess=3.e-6, fallGuess=55.e-6, peakGuess=100*1e-6):
+    ''''
+    Fit template to double exponential pulse
+    INPUTS:
+    template - somewhat noisy template to be fitted
+    time - time variable for template
+    riseGuess - guess for pulse rise time in same units as 'time' variable
+    fallGuess - guess for pulse fall time in same units as 'time' variable
+    peakGuess - guess for what time in your template the fitted peak will be 
+                in same units as 'time' variable
+  
+    OUTPUTS:
+    fittedTemplate - fitted template with double exponential pulse
+    startFit - fitted value of peakGuess
+    riseFit - fitted value of riseGuess
+    fallFit - fitted value of fallGuess
+    '''
     
+    if template[np.argmax(np.abs(template))]>0:
+        pos_neg=1
+    else:
+        pos_neg=-1
+        
+    startGuess=peakGuess+riseGuess*np.log(riseGuess/(riseGuess+fallGuess))
+    coef, coefCov =opt.curve_fit(pulseFitFun , time,pos_neg*template,[startGuess,riseGuess,fallGuess])
+    
+    startFit=coef[0]
+    riseFit=coef[1]
+    fallFit=coef[2]
+    fittedTemplate=pos_neg*pulseFitFun(time,startFit,riseFit,fallFit)
+    
+    return fittedTemplate, startFit, riseFit, fallFit 
+
+def pulseFitFun(x,t0,t1,t2):
+    '''
+    double exponential pulse function normalized to one
+    INPUTS:
+    x - time array
+    t0 - pulse start time
+    t1 - pulse rise time
+    t2 - pulse fall time
+    
+    OUTPUTS:
+    y - double exponential pulse array
+    '''
+    
+    x=np.array(x)
+    t0=float(t0)
+    t1=float(t1)
+    t2=float(t2)
+    
+    heaviside=np.zeros(len(x))
+    heaviside[x>t0]=1;
+    norm=t2/(t1+t2)*(t1/(t1+t2))**(t1/t2)
+    return (1-np.exp(-(x-t0)/t1))*np.exp(-(x-t0)/t2)/norm*heaviside
+       
 if __name__=='__main__':
     
     #Turn plotting on or off
     isPlot=True 
-    isPlotPoisson=False  
-    isTestPlot=False
+    isPlotPoisson=False 
+    isPlotFit=False 
     
     #Starting template values
     sampleRate=1e6
@@ -174,11 +230,6 @@ if __name__=='__main__':
     
     #get fake poissonian distributed pulse data
     rawdata, rawtime = mAD.makePoissonData(totalTime=2*131.072e-3)
-    
-    if isTestPlot:
-      plt.figure()
-      plt.plot(rawtime,rawdata)
-      plt.show()
       
     if isPlotPoisson:
         fig1=plt.figure(0)
@@ -188,9 +239,12 @@ if __name__=='__main__':
     #calculate template    
     finalTemplate, time , roughTemplate, _ = makeTemplate(rawdata)
     
+    #make fitted template
+    fittedTemplate, startFit, riseFit, fallFit = makeFittedTemplate(finalTemplate,time,riseGuess=3.e-6,fallGuess=55.e-6)
+    
     #calculate real template
     realTemplate = mAD.makePulse(time,t0,riseTime,fallTime)
-
+    
     if isPlot:
         fig, (ax0, ax1) = plt.subplots(nrows=2, sharex=True)
         h1, = ax0.plot(time*1e6,roughTemplate,'r',linewidth=2)
@@ -209,5 +263,9 @@ if __name__=='__main__':
         else:
             ax0.legend((h1,h2,h3),('initial template','offset corrected template','real pulse shape'),'lower right')
         plt.show()   
-        
+    if isPlotFit:
+        fig2=plt.figure(2)
+        plt.plot(time,finalTemplate)
+        plt.plot(time,fittedTemplate)
+        plt.show()
     
