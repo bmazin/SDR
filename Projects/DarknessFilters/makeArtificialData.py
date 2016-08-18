@@ -40,7 +40,8 @@ def makePulse(time,t0,riseTime,fallTime,sampleRate=1e6):
        endIndex=len(time)
        
     pulseTemplate[startIndex:endIndex]=pulse
-    pulseTemplate/=np.max(np.abs(pulseTemplate))
+    norm=fallTime/(riseTime+fallTime)*(riseTime/(riseTime+fallTime))**(riseTime/fallTime)
+    pulseTemplate/=norm
     
     return pulseTemplate
 
