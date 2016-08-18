@@ -48,7 +48,7 @@ def makeTemplate(rawdata, numOffsCorrIters=1 , isVerbose=False):
     
     finalTemplate = roughTemplate
 
-    return finalTemplate, time, noiseSpectDict, templateList
+    return finalTemplate, time, noiseSpectDict, templateList, peakIndices
 
 def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
     '''
@@ -335,7 +335,7 @@ if __name__=='__main__':
         plt.show()
     
     #calculate templates    
-    finalTemplate, time , _, templateList = makeTemplate(rawdata,numOffsCorrIters=2,isVerbose=True)
+    finalTemplate, time, _, templateList, _ = makeTemplate(rawdata,numOffsCorrIters=2,isVerbose=True)
     roughTemplate = templateList[0]
     
     #make fitted template
