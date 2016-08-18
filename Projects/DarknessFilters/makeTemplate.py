@@ -37,7 +37,7 @@ def makeTemplate(rawdata, numOffsCorrIters=1):
     noiseSpectDict = mNS.makeWienerNoiseSpectrum(data,peakIndices)
     
     #Correct for errors in peak offsets due to noise
-    filterList = []
+    filterList = [roughTemplate]
     for i in range(numOffsCorrIters):
         peakIndices = correctPeakOffs(data, peakIndices, noiseSpectDict, roughTemplate, 'wiener')
         roughTemplate, time = averagePulses(data, peakIndices,isoffset=True) #calculate a new corrected template
@@ -228,7 +228,7 @@ def correctPeakOffs(data, peakIndices, noiseSpectDict, template, filterType, off
     #   apply each offset to the pulse, then determine which offset 
     #   maximizes the pulse amplitude after application of the filter
     for iPeak,peakIndex in enumerate(peakIndices):
-        if peakIndex > nPointsBefore+np.min(offsets) and peakIndex < len(data)-(nPointsAfter+np.max(offsets)):
+        if peakIndex > nPointsBefore-np.min(offsets) and peakIndex < len(data)-(nPointsAfter+np.max(offsets)):
             peakRecord = data[peakIndex-nPointsBefore:peakIndex+nPointsAfter]
             peakRecord = peakRecord / np.max(np.abs(peakRecord))
             #check which time shifted filter results in the biggest signal
@@ -270,9 +270,9 @@ if __name__=='__main__':
         plt.show()
     
     #calculate templates    
-    finalTemplate, time , _ = makeTemplate(rawdata)
-    roughTemplate, time, _ = makeTemplate(rawdata,0)
-    
+    finalTemplate, time , _, templateList = makeTemplate(rawdata)
+    roughTemplate = templateList[0]
+
     #calculate real template
     realTemplate = mAD.makePulse(time,t0,riseTime,fallTime)
 
