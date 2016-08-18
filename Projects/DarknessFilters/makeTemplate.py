@@ -32,7 +32,7 @@ def makeTemplate(rawdata, numOffsCorrIters=1):
     peakIndices = cleanPulses(peakDict['peakMaxIndices'])
         
     #Create rough template
-    roughTemplate, _ = averagePulses(data, peakIndices)
+    roughTemplate, time = averagePulses(data, peakIndices)
     
     #create noise spectrum from pre-pulse data for filter
     noiseSpectDict = mNS.makeWienerNoiseSpectrum(data,peakIndices)
@@ -321,8 +321,8 @@ if __name__=='__main__':
         plt.show()
     
     #calculate templates    
-    finalTemplate, time , _ = makeTemplate(rawdata)
-    roughTemplate, time, _ = makeTemplate(rawdata,0)
+    finalTemplate, time , _ , _ = makeTemplate(rawdata)
+    roughTemplate, time, _ , _ = makeTemplate(rawdata,numOffsCorrIters=0)
     
     #make fitted template
     fittedTemplate, startFit, riseFit, fallFit = makeFittedTemplate(finalTemplate,time,riseGuess=3.e-6,fallGuess=55.e-6)
