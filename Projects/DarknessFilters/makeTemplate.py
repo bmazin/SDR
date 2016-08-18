@@ -9,7 +9,18 @@ import makeArtificialData as mAD
 reload(mNS)
 reload(mAD)
 
-def makeTemplate(rawdata):
+def makeTemplate(rawdata, numOffsCorrIters=1):
+    '''
+    Make a matched filter template using a raw phase timestream
+    INPUTS:
+    rawdata - noisy phase timestream with photon pulses
+    numOffsCorrIters - number of pulse offset corrections to perform
+
+    OUTPUTS:
+    finalTemplate - template of pulse shape
+    time - use as x-axis when plotting template
+    noiseSpectDict - dictionary containing noise spectrum and corresponding frequencies
+    '''
 
     #hipass filter data to remove any baseline
     data = hpFilter(rawdata)
@@ -27,15 +38,27 @@ def makeTemplate(rawdata):
     noiseSpectDict = mNS.makeWienerNoiseSpectrum(data,peakIndices)
     
     #Correct for errors in peak offsets due to noise
-    peakIndices = correctPeakOffs(data, peakIndices, noiseSpectDict, roughTemplate, 'wiener')
+    filterList = []
+    for i in range(numOffsCorrIters):
+        peakIndices = correctPeakOffs(data, peakIndices, noiseSpectDict, roughTemplate, 'wiener')
+        roughTemplate, time = averagePulses(data, peakIndices,isoffset=True) #calculate a new corrected template
+        filterList.append(roughTemplate)
     
-    #Calculate final template
-    finalTemplate, time = averagePulses(data, peakIndices,isoffset=True)
-    
-    return finalTemplate, time, roughTemplate, noiseSpectDict
+    finalTemplate = roughTemplate
+
+    return finalTemplate, time, noiseSpectDict, filterList
 
 def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
+    '''
+    High pass filters the raw phase timestream
+    INPUTS:
+    rawdata - data to be filtered
+    criticalFreq - cutoff frequency of filter (in Hz)
+    sampleRate - sample rate of rawdata
 
+    OUTPUTS:
+    data - filtered data
+    '''
     f=2*np.sin(np.pi*criticalFreq/sampleRate)
     Q=.7
     q=1./Q
@@ -44,9 +67,14 @@ def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
     return data
 
 def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30):
-
-    #deadTime in ticks (us)
-    #decayTime in tics (us)
+    '''
+    Detects pulses in raw phase timestream
+    INPUTS:
+    data - phase timestream
+    nSigmaTrig - threshold to detect pulse in terms of standard deviation of data
+    deadTime - minimum amount of time between any two pulses (units: ticks (1 us assuming 1 MHz sample rate))
+    decayTime - expected pulse decay time (units: ticks)
+    '''
     data = np.array(data)
     med = np.median(data)
     #print 'sdev',np.std(data),'med',med,'max',np.max(data)
@@ -78,6 +106,17 @@ def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30):
     return {'peakIndices':peakIndices, 'peakMaxIndices':peakMaxIndices}
 
 def cleanPulses(peakIndices,window=900):
+    '''
+    Removes any pulses that have another pulse within 'window' (in ticks) This is
+    to ensure that template data is not contaminated by extraneous pulses.
+    
+    INPUTS:
+    peakIndices - list of pulse positions
+    window - size of pulse removal window (in ticks (us))
+
+    OUTPUS:
+    newPeakIndices - list of pulse positions, with unwanted pulses deleted
+    '''
     peakIndices=np.array(peakIndices)
     newPeakIndices=np.array([])
     #check that no peaks are near current peak and then add to new indices variable
@@ -94,7 +133,23 @@ def cleanPulses(peakIndices,window=900):
     
 
 def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsAfter=700, decayTime=30, sampleRate=1e6):
+    '''
+    Average together pulse data to make a template
+    
+    INPUTS:
+    data - raw phase timestream
+    peakIndices - list of pulse positions
+    isoffset - true if peakIndices are the locations of peak maxima
+    nPointsBefore - number of points before peakIndex to include in template
+    nPointsAfter - number of points after peakIndex to include in template
+    decayTime - expected pulse decay time (in ticks (us))
+    sampleRate - sample rate of 'data'
 
+    OUTPUTS:
+    template - caluculated pulse template
+    time - time markers indexing data points in 'template'
+           (use as x-axis when plotting)
+    '''
     numPeaks = 0
     template=np.zeros(nPointsBefore+nPointsAfter)
     for iPeak,peakIndex in enumerate(peakIndices):
@@ -118,6 +173,16 @@ def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsA
     
 
 def makeWienerFilter(noiseSpectDict, template):
+    '''
+    Calculate acausal Wiener Filter coefficients in the frequency domain
+    
+    INPUTS:
+    noiseSpectDict - Dictionary containing noise spectrum and list of corresponding frequencies
+    template - template of pulse shape
+    
+    OUTPUTS:
+    wienerFilter - list of Wiener Filter coefficients
+    '''
     template /= np.max(np.abs(template)) #should be redundant
     noiseSpectrum = noiseSpectDict['noiseSpectrum']
     templateFft = np.fft.fft(template)/len(template)
@@ -127,6 +192,23 @@ def makeWienerFilter(noiseSpectDict, template):
     return wienerFilter
 
 def correctPeakOffs(data, peakIndices, noiseSpectDict, template, filterType, offsets=np.arange(-20,21), nPointsBefore=100, nPointsAfter=700):
+    '''
+    Correct the list of peak indices to improve the alignment of photon pulses.  
+
+    INPUTS:
+    data - raw phase timestream
+    peakIndices - list of photon pulse indices
+    noiseSpectDict - dictionary containing noise spectrum and corresponding frequencies
+    template - template of pulse to use for filter
+    filterType - string specifying the type of filter to use
+    offsets - list of peak index offsets to check
+    nPointsBefore - number of points before peakIndex to include in pulse
+    nPointsAfter - number of points after peakIndex to include in pulse
+
+    OUTPUTS:
+    newPeakIndices - list of corrected peak indices
+    '''
+    
     if filterType=='wiener':
         makeFilter = makeWienerFilter
     
@@ -143,7 +225,9 @@ def correctPeakOffs(data, peakIndices, noiseSpectDict, template, filterType, off
         templateOffs = np.roll(template, offset)
         filterSet[i] = makeFilter(noiseSpectDict, templateOffs)
     
-    #find which template offset is the best    
+    #find which peak index offset is the best for each pulse:
+    #   apply each offset to the pulse, then determine which offset 
+    #   maximizes the pulse amplitude after application of the filter
     for iPeak,peakIndex in enumerate(peakIndices):
         if peakIndex > nPointsBefore+np.min(offsets) and peakIndex < len(data)-(nPointsAfter+np.max(offsets)):
             peakRecord = data[peakIndex-nPointsBefore:peakIndex+nPointsAfter]
@@ -236,8 +320,9 @@ if __name__=='__main__':
         plt.plot(rawtime,rawdata)
         plt.show()
     
-    #calculate template    
-    finalTemplate, time , roughTemplate, _ = makeTemplate(rawdata)
+    #calculate templates    
+    finalTemplate, time , _ = makeTemplate(rawdata)
+    roughTemplate, time, _ = makeTemplate(rawdata,0)
     
     #make fitted template
     fittedTemplate, startFit, riseFit, fallFit = makeFittedTemplate(finalTemplate,time,riseGuess=3.e-6,fallGuess=55.e-6)
