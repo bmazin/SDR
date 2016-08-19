@@ -262,26 +262,6 @@ def averagePulses(data, peakIndices, isoffset=False, nPointsBefore=100, nPointsA
     time = np.arange(0,nPointsBefore+nPointsAfter)/sampleRate
     return template, time
     
-
-def makeWienerFilter(noiseSpectDict, template):
-    '''
-    Calculate acausal Wiener Filter coefficients in the frequency domain
-    
-    INPUTS:
-    noiseSpectDict - Dictionary containing noise spectrum and list of corresponding frequencies
-    template - template of pulse shape
-    
-    OUTPUTS:
-    wienerFilter - list of Wiener Filter coefficients
-    '''
-    template /= np.max(np.abs(template)) #should be redundant
-    noiseSpectrum = noiseSpectDict['noiseSpectrum']
-    templateFft = np.fft.fft(template)/len(template)
-    wienerFilter = np.conj(templateFft)/noiseSpectrum
-    filterNorm = np.sum(np.abs(templateFft)**2/noiseSpectrum)
-    wienerFilter /= filterNorm
-    return wienerFilter
-
 def correctPeakOffs(data, peakIndices, noiseSpectDict, template, filterType, offsets=np.arange(-20,21), nPointsBefore=100, nPointsAfter=700):
     '''
     Correct the list of peak indices to improve the alignment of photon pulses.  
@@ -302,7 +282,9 @@ def correctPeakOffs(data, peakIndices, noiseSpectDict, template, filterType, off
     
     if filterType=='wiener':
         makeFilter = makeWienerFilter
-    
+    elif filterType=='matched':
+        #does not work yet 08/18/2016
+        makeFilter = makeMatchedFilter
     else:
         raise ValueError('makeFilterSet: Filter not defined')
     
@@ -332,8 +314,46 @@ def correctPeakOffs(data, peakIndices, noiseSpectDict, template, filterType, off
             newPeakIndices=np.append(newPeakIndices, peakIndex+bestOffset)
 
     return newPeakIndices
+    
+def makeWienerFilter(noiseSpectDict, template):
+    '''
+    Calculate acausal Wiener Filter coefficients in the frequency domain
+    
+    INPUTS:
+    noiseSpectDict - Dictionary containing noise spectrum and list of corresponding frequencies
+    template - template of pulse shape
+    
+    OUTPUTS:
+    wienerFilter - list of Wiener Filter coefficients
+    '''
+    template /= np.max(np.abs(template)) #should be redundant
+    noiseSpectrum = noiseSpectDict['noiseSpectrum']
+    templateFft = np.fft.fft(template)/len(template)
+    wienerFilter = np.conj(templateFft)/noiseSpectrum
+    filterNorm = np.sum(np.abs(templateFft)**2/noiseSpectrum)
+    wienerFilter /= filterNorm
+    return wienerFilter
+
+def makeMatchedFilter(noiseSpectDict, template):
+    '''
+    Calculate Matched Filter coefficients
+    Does not work yet 08/18/2016
+    
+    INPUTS:
+    noiseSpectDict - Dictionary containing noise spectrum and list of corresponding frequencies
+    template - template of pulse shape
+    
+    OUTPUTS:
+    matchedFilter - list of Matched Filter coefficients
+    '''
+    noiseSpectrum = noiseSpectDict['noiseSpectrum']
+    noiseCovInv = mNS.covFromPsd(noiseSpectrum)['covMatrixInv']    
+    filterNorm = np.sqrt(np.dot(template, np.dot(noiseCovInv, template))) #filterNorm not working correctly
+    matchedFilt = np.dot(noiseCovInv, template)/filterNorm
+    return matchedFilt
+        
 def makeFittedTemplate(template,time,riseGuess=3.e-6, fallGuess=55.e-6, peakGuess=100*1e-6):
-    ''''
+    '''
     Fit template to double exponential pulse
     INPUTS:
     template - somewhat noisy template to be fitted
