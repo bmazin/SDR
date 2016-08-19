@@ -14,7 +14,7 @@ reload(mT)
 ##### Plot true template vs calculated template #####
 if True:
     #Turn plotting on or off
-    isPlot=True 
+    isPlot=False 
     isPlotRes=True
     isPlotPoisson=False 
     isPlotFit=False 
@@ -36,7 +36,7 @@ if True:
         plt.show()
     
     #calculate templates    
-    finalTemplate, time , _, templateList = mT.makeTemplate(rawdata,nSigmaTrig=4.,numOffsCorrIters=2,isVerbose=True,isPlot=isPlot)
+    finalTemplate, time , _, templateList, _ = mT.makeTemplate(rawdata,nSigmaTrig=4.,numOffsCorrIters=2,isVerbose=True,isPlot=isPlot)
     roughTemplate = templateList[0]
     
     #make fitted template
@@ -83,7 +83,7 @@ if False:
         #generate raw data
         rawdata, rawtime = mAD.makePoissonData(totalTime=2*131.072e-3)      
         #calculate template
-        finalTemplate, time , _, templateList = mT.makeTemplate(rawdata,numOffsCorrIters=5,nSigmaTrig=4.)
+        finalTemplate, time , _, templateList, _ = mT.makeTemplate(rawdata,numOffsCorrIters=5,nSigmaTrig=4.)
         template0+=(templateList[0],)
         template1+=(templateList[1],)
         template2+=(templateList[2],)

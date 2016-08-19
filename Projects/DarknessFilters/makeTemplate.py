@@ -6,11 +6,11 @@ from baselineIIR import IirFilter
 import makeNoiseSpectrum as mNS
 import makeArtificialData as mAD
 
-def makeTemplate(rawdata, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVerbose=False, isPlot=False):
+def makeTemplate(rawData, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVerbose=False, isPlot=False):
     '''
     Make a matched filter template using a raw phase timestream
     INPUTS:
-    rawdata - noisy phase timestream with photon pulses
+    rawData - noisy phase timestream with photon pulses
     numOffsCorrIters - number of pulse offset corrections to perform
     decayTime - approximate decay time of pulses (units: ticks)
     nSigmaTrig - threshold to detect pulse in terms of standard deviation of data
@@ -22,10 +22,11 @@ def makeTemplate(rawdata, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVe
     time - use as x-axis when plotting template
     noiseSpectDict - dictionary containing noise spectrum and corresponding frequencies
     templateList - list of template itterations by correcting offsets
+    peakIndices - list of peak indicies from rawData used for template
     '''
 
     #hipass filter data to remove any baseline
-    data = hpFilter(rawdata)
+    data = hpFilter(rawData)
 
     #trigger on pulses in data 
     peakDict = sigmaTrigger(data,nSigmaTrig=nSigmaTrig, decayTime=decayTime,isVerbose=isVerbose)
@@ -54,13 +55,13 @@ def makeTemplate(rawdata, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVe
 
     return finalTemplate, time, noiseSpectDict, templateList, peakIndices
 
-def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
+def hpFilter(rawData, criticalFreq=20, sampleRate = 1e6):
     '''
     High pass filters the raw phase timestream
     INPUTS:
-    rawdata - data to be filtered
+    rawData - data to be filtered
     criticalFreq - cutoff frequency of filter (in Hz)
-    sampleRate - sample rate of rawdata
+    sampleRate - sample rate of rawData
 
     OUTPUTS:
     data - filtered data
@@ -69,7 +70,7 @@ def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
     Q=.7
     q=1./Q
     hpSvf = IirFilter(sampleFreqHz=sampleRate,numCoeffs=np.array([1,-2,1]),denomCoeffs=np.array([1+f**2, f*q-2,1-f*q]))
-    data = hpSvf.filterData(rawdata)
+    data = hpSvf.filterData(rawData)
     return data
 
 def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30,isVerbose=False):
@@ -117,7 +118,7 @@ def sigmaTrigger(data,nSigmaTrig=5.,deadTime=200,decayTime=30,isVerbose=False):
     if isVerbose:
         print 'triggered on', len(peakIndices), 'pulses'    
     
-    peakDict={'peakIndices':peakIndices, 'peakMaxIndices':peakMaxIndices}
+    peakDict={'peakIndices':peakIndices, 'peakMaxIndices':peakMaxIndices.astype(int)}
     return peakDict
 
 def cutPulsePileup(peakIndices, nPointsBefore= 100, nPointsAfter = 700 , decayTime=50, isVerbose=False):
@@ -376,16 +377,21 @@ def makeFittedTemplate(template,time,riseGuess=3.e-6, fallGuess=55.e-6, peakGues
         pos_neg=-1
         
     startGuess=peakGuess+riseGuess*np.log(riseGuess/(riseGuess+fallGuess))
-    coef, coefCov =opt.curve_fit(pulseFitFun , time,pos_neg*template,[startGuess,riseGuess,fallGuess])
+    coef, coefCov =opt.curve_fit(pulseFitFun , time,pos_neg*template,[startGuess,riseGuess,fallGuess, 1., 0.])
     
     startFit=coef[0]
     riseFit=coef[1]
     fallFit=coef[2]
-    fittedTemplate=pos_neg*pulseFitFun(time,startFit,riseFit,fallFit)
+    aFit=coef[3]
+    bFit=coef[4]
+    fittedTemplate=pos_neg*pulseFitFun(time,startFit,riseFit,fallFit,aFit,bFit)
+    
+    #renormalize template to 1 while keeping any small baseline offset imposed by hi-pass filter
+    fittedTemplate=(fittedTemplate-bFit)/(np.max(np.abs(fittedTemplate))-bFit)*(1+np.abs(bFit))+bFit
     
     return fittedTemplate, startFit, riseFit, fallFit 
 
-def pulseFitFun(x,t0,t1,t2):
+def pulseFitFun(x,t0,t1,t2,a,b):
     '''
     double exponential pulse function normalized to one
     INPUTS:
@@ -393,6 +399,8 @@ def pulseFitFun(x,t0,t1,t2):
     t0 - pulse start time
     t1 - pulse rise time
     t2 - pulse fall time
+    a - pulse amplitude
+    b - baseline offset
     
     OUTPUTS:
     y - double exponential pulse array
@@ -410,5 +418,6 @@ def pulseFitFun(x,t0,t1,t2):
         norm=1
     else: 
         norm=t2/(t1+t2)*(t1/(t1+t2))**(t1/t2)
-        
-    return (1-np.exp(-(x-t0)/t1))*np.exp(-(x-t0)/t2)/norm*heaviside
+    
+    y = a*(1-b/a)*(1-np.exp(-(x-t0)/t1))*np.exp(-(x-t0)/t2)/norm*heaviside + b*np.ones(len(x))    
+    return y

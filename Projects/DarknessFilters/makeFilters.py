@@ -14,13 +14,46 @@ def makeMatchedFilter(template, noiseSpectrum, nTaps=50, tempOffs=90):
     noiseSpectrum - noise PSD
     nTaps - number of filter coefficients
     tempOffs - offset of template subset to use for filter
+    
+    OUTPUTS
+    matchedFilt - matched filter that should be convolved with the data
+                  to get the pulse heights 
     '''
-    noiseCovInv = noise.covFromPsd(noiseSpectrum, nTaps)['covMatrixInv']    
+    noiseCovInv = noise.covFromPsd(noiseSpectrum, nTaps)['covMatrixInv']   
     template = template[tempOffs:tempOffs+nTaps]  #shorten template to length nTaps
-    filterNorm = np.sqrt(np.dot(template, np.dot(noiseCovInv, template)))
+    filterNorm = np.dot(template, np.dot(noiseCovInv, template))
     matchedFilt = np.dot(noiseCovInv, template)/filterNorm
+    matchedFilt=matchedFilt[::-1]
+    
     return matchedFilt
 
+def makeSuperMatchedFilter(template, noiseSpectrum, fallTime, nTaps=50, tempOffs=90):
+    '''
+    Make a matched filter that is robust against pulse pileup using prescription from
+    Alpert 2013 Rev. of Sci. Inst. 84
+    INPUTS:
+    template - array containing pulse template
+    noiseSpectrum - noise PSD
+    fallTime - pulse fall time to make fits robust to
+    nTaps - number of filter coefficients
+    tempOffs - offset of template subset to use for filter
+    
+    OUTPUTS
+    superMatchedFilt - super matched filter that should be convolved with 
+                       the data to get the pulse heights 
+    '''
+    noiseCovInv = noise.covFromPsd(noiseSpectrum, nTaps)['covMatrixInv']
+    template = template[tempOffs:tempOffs+nTaps]  #shorten template to length nTaps
+    exponential=np.exp(-np.arange(0,len(template)))
+    orthMat=np.array([template,exponential])
+    orthMat=orthMat.T
+    e1=np.array([1,0])
+    norm=np.linalg.inv(np.dot(orthMat.T,np.dot(noiseCovInv,orthMat)))
+    superMatchedFilter=np.dot(noiseCovInv,np.dot(orthMat,np.dot(norm,e1)))
+    
+    superMatchedFilter=superMatchedFilter[::-1]
+    return superMatchedFilter
+    
 def makeCausalWiener(template, rawPulse, nTaps=50):
     #template = template[tempOffs:tempOffs+nTaps*2]
     #rawPulse = rawPulse[tempOffs:tempOffs+nTaps*2]
