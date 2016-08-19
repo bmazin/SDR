@@ -52,7 +52,7 @@ def makeTemplate(rawdata, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVe
     
     finalTemplate = roughTemplate
 
-    return finalTemplate, time, noiseSpectDict, templateList
+    return finalTemplate, time, noiseSpectDict, templateList, peakIndices
 
 def hpFilter(rawdata, criticalFreq=20, sampleRate = 1e6):
     '''
@@ -405,6 +405,7 @@ def pulseFitFun(x,t0,t1,t2):
     
     heaviside=np.zeros(len(x))
     heaviside[x>t0]=1;
+
     if t1<0 or t2<0:
         norm=1
     else: 
