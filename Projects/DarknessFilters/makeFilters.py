@@ -27,7 +27,7 @@ def makeMatchedFilter(template, noiseSpectrum, nTaps=50, tempOffs=90):
     
     return matchedFilt
 
-def makeSuperMatchedFilter(template, noiseSpectrum, fallTime, nTaps=50, tempOffs=90):
+def makeSuperMatchedFilter(template, noiseSpectrum, fallTime, nTaps=50, tempOffs=90,sampleRate=1e6):
     '''
     Make a matched filter that is robust against pulse pileup using prescription from
     Alpert 2013 Rev. of Sci. Inst. 84
@@ -37,14 +37,25 @@ def makeSuperMatchedFilter(template, noiseSpectrum, fallTime, nTaps=50, tempOffs
     fallTime - pulse fall time to make fits robust to
     nTaps - number of filter coefficients
     tempOffs - offset of template subset to use for filter
+    sampleRate - sample rate of template in Hz
     
     OUTPUTS
     superMatchedFilt - super matched filter that should be convolved with 
                        the data to get the pulse heights 
     '''
+    #determine pulse direction 
+    if np.min(template)>np.max(template):
+        pos_neg=-1.
+    else:
+        pos_neg=1
+    #create covariance inverse matrix    
     noiseCovInv = noise.covFromPsd(noiseSpectrum, nTaps)['covMatrixInv']
-    template = template[tempOffs:tempOffs+nTaps]  #shorten template to length nTaps
-    exponential=np.exp(-np.arange(0,len(template)))
+    #shorten template to length nTaps
+    template = template[tempOffs:tempOffs+nTaps]  
+    #create exponential to be orthogonal to
+    exponential=pos_neg*np.exp(-np.arange(0,len(template))/fallTime/sampleRate)
+    
+    #create filter
     orthMat=np.array([template,exponential])
     orthMat=orthMat.T
     e1=np.array([1,0])
