@@ -7,14 +7,16 @@ import makeNoiseSpectrum as mNS
 import makeArtificialData as mAD
 import makeTemplate as mT
 import makeFilters as mF
-
+import extractRawData as eRD
+import triggerPhotons as tP
+import os
 reload(mNS)
 reload(mAD)
 reload(mT)
 reload(mF)
 
 ##### Find expected energy resolution of different filters #####
-if True:
+if False:
     isPlot=False
     isVerbose=False
     
@@ -149,5 +151,46 @@ if False:
     plt.legend()
     plt.show()
     
+#####Test energy resolution with real data.  Assumes constant photon energy#####    
+if True:
+    isPlot=False
+    isVerbose=False
     
+    #extract raw data
+    rawData = eRD.parseQDRPhaseSnap(os.path.join(os.getcwd(),'20140915/redLaser'),steps=30)
+    rawTemplateData = rawData[0:200000]
+    rawTestData = rawData[200000:400000]
+    #make template
+    finalTemplate, time , noiseSpectrumDict, _ , _ = mT.makeTemplate(rawTemplateData,nSigmaTrig=4.,numOffsCorrIters=2,isVerbose=isVerbose,isPlot=isPlot)
+    #fit to arbitrary pulse shape
+    fittedTemplate, startFit, riseFit, fallFit = mT.makeFittedTemplate(finalTemplate,time,riseGuess=3.e-6,fallGuess=55.e-6)
+    #make matched filter
+    matchedFilter=mF.makeMatchedFilter(fittedTemplate, noiseSpectrumDict['noiseSpectrum'], nTaps=50, tempOffs=75)
+    superMatchedFilter=mF.makeSuperMatchedFilter(fittedTemplate, noiseSpectrumDict['noiseSpectrum'], fallFit, nTaps=50, tempOffs=75)
+
+    #plot templates
+    plt.plot(time,finalTemplate)
+    plt.plot(time,fittedTemplate)
+    plt.show()
+
+    #filter data
+    data=mT.hpFilter(rawTestData) 
+    #convolve with filter
+    filteredData=np.convolve(data,matchedFilter,mode='same') 
+    superFilteredData=np.convolve(data,superMatchedFilter,mode='same')
+     
+    #find peak indices
+    peakDict=tP.detectPulses(filteredData)
+    superPeakDict=tP.detectPulses(superFilteredData)
+    
+    #find peak amplitudes
+    amps=filteredData[peakDict['peakIndices']]
+    superAmps=superFilteredData[superPeakDict['peakIndices']]
+    
+    #plot histogram
+    fig=plt.figure()
+    #plt.hist(amplitudes[np.logical_and(amplitudes<1.04 , amplitudes >.96)])
+    plt.hist(amps,int(np.max(amps)/0.1))
+    plt.hist(superAmps,int(np.max(superAmps)/0.1))
+    plt.show()
     
