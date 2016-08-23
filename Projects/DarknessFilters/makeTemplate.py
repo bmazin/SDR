@@ -6,7 +6,7 @@ from baselineIIR import IirFilter
 import makeNoiseSpectrum as mNS
 import makeArtificialData as mAD
 
-def makeTemplate(rawData, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVerbose=False, isPlot=False):
+def makeTemplate(rawData, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVerbose=False, isPlot=False,sigPass=1):
     '''
     Make a matched filter template using a raw phase timestream
     INPUTS:
@@ -16,6 +16,7 @@ def makeTemplate(rawData, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVe
     nSigmaTrig - threshold to detect pulse in terms of standard deviation of data
     isVerbose - print information about the template fitting process
     isPlot - plot information about Chi2 cut
+    sigPass - std of data left after Chi2 cut
 
     OUTPUTS:
     finalTemplate - template of pulse shape
@@ -35,7 +36,7 @@ def makeTemplate(rawData, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVe
     peakIndices = cutPulsePileup(peakDict['peakMaxIndices'], decayTime=decayTime, isVerbose=isVerbose)
     
     #remove pulses with a large chi squared value
-    peakIndices = cutChiSquared(data,peakIndices,sigPass=1, decayTime=decayTime, isVerbose=isVerbose, isPlot=isPlot)
+    peakIndices = cutChiSquared(data,peakIndices,sigPass=sigPass, decayTime=decayTime, isVerbose=isVerbose, isPlot=isPlot)
         
     #Create rough template
     roughTemplate, time = averagePulses(data, peakIndices, decayTime=decayTime)
@@ -180,13 +181,16 @@ def cutChiSquared(data,peakIndices,sigPass=1, decayTime=50, nPointsBefore= 100, 
         time=np.arange(0,len(data[peakIndex+int(decayTime/2):peakIndex+nPointsAfter]))
         currentData=data[peakIndex+int(decayTime/2):peakIndex+nPointsAfter]
         ampGuess=currentData[np.argmax(np.abs(currentData))]
-        expCoef, _ = opt.curve_fit(lambda t, a, tau: a*np.exp(-t/tau) , time, currentData , [ampGuess, decayTime] )
-        ampFit=expCoef[0]
-        decayFit=expCoef[1]
-        chiSquared[iPeak]=np.sum((currentData-ampFit*np.exp(-time/decayFit))**2)
+        try:
+            expCoef, _ = opt.curve_fit(lambda t, a, tau: a*np.exp(-t/tau) , time, currentData , [ampGuess, decayTime] )
+            ampFit=expCoef[0]
+            decayFit=expCoef[1]
+            chiSquared[iPeak]=np.sum((currentData-ampFit*np.exp(-time/decayFit))**2)
+        except RuntimeError:
+            chiSquared[iPeak]=np.nan
      
     chi2Median=np.median(chiSquared)
-    chi2Sig=np.std(chiSquared)
+    chi2Sig=np.std(chiSquared[np.invert(np.isnan(chiSquared))])
      
     newPeakIndices=np.array([])
     newChiSquared=np.array([])
@@ -215,11 +219,11 @@ def cutChiSquared(data,peakIndices,sigPass=1, decayTime=50, nPointsBefore= 100, 
         plt.title('Worst pulse cut by $\chi^2$ cut')
         plt.show()
         
-        fig =plt.figure()
-        plt.hist(chiSquared,10)
-        ax = plt.gca()
-        ax.set_xlabel('$\chi^2$')
-        plt.show()
+        #fig =plt.figure()
+        #plt.hist(chiSquared)
+        #ax = plt.gca()
+        #ax.set_xlabel('$\chi^2$')
+        #splt.show()
                 
     return newPeakIndices
     
@@ -371,7 +375,7 @@ def makeFittedTemplate(template,time,riseGuess=3.e-6, fallGuess=55.e-6, peakGues
     fallFit - fitted value of fallGuess
     '''
     
-    if template[np.argmax(np.abs(template))]>0:
+    if template[np.argmax(np.abs(template[1:len(template)-1]))]>0:
         pos_neg=1
     else:
         pos_neg=-1
