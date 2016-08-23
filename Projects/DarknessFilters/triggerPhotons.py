@@ -108,4 +108,24 @@ def detectPulses(data,threshold=None,nSigmaThreshold=3.,deadtime=10,nNegDerivChe
         peakHeights = -data[peakIndices] #flip back to positive sign
     return {'peakIndices':peakIndices,'peakHeights':peakHeights}
 
+def optimizeTrigCond(data, nPeaks, sigmaThreshList=[3.], nNegDerivChecksList=[10], negDerivLenienceList=[1], bNegativePulses=True):
+    minSigma = 1000
+    optSigmaThresh = 0
+    optNNegDerivChecks = 0
+    optNegDerivLenience = 0
+    optPeakDict = {'peakIndices':np.array([]), 'peakHeights':np.array([])}
+    
+    for sigmaThresh in sigmaThreshList:
+        for nNegDerivChecks in nNegDerivChecksList:
+            for negDerivLenience in negDerivLenienceList:
+                peakDict = detectPulses(data, nSigmaThreshold=sigmaThresh, nNegDerivChecks=nNegDerivChecks, negDerivLenience=negDerivLenience, bNegativePulses=bNegativePulses)
+                if(len(peakDict['peakIndices']>=nPeaks)):
+                    sigma = np.std(peakDict['peakHeights'])
+                    if(sigma<minSigma):
+                        minSigma = sigma
+                        optSigmaThresh = sigmaThresh
+                        optNNegDerivChecks = nNegDerivChecks
+                        optNegDerivLenience = negDerivLenience
+                        optPeakDict = peakDict
 
+    return optSigmaThresh, optNNegDerivChecks, optNegDerivLenience, minSigma, optPeakDict 
