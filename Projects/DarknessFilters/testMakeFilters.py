@@ -158,16 +158,17 @@ if True:
     isVerbose=False
     
     #extract raw data
-    rawData = eRD.parseQDRPhaseSnap(os.path.join(os.getcwd(),'20140915/redLaser'),pixelNum=1,steps=30)
-    rawTemplateData = rawData[0:200000]
-    rawTestData = rawData[200000:400000]
+    rawData = eRD.parseQDRPhaseSnap(os.path.join(os.getcwd(),'20140915/redLaser'),pixelNum=0,steps=30)
+    rawTemplateData = rawData[0:1000000]
+    rawTestData = rawData[1000000:2000000]
     #make template
-    finalTemplate, time , noiseSpectrumDict, _ , _ = mT.makeTemplate(rawTemplateData,nSigmaTrig=4.,numOffsCorrIters=2,isVerbose=isVerbose,isPlot=isPlot)
+    finalTemplate, time , noiseSpectrumDict, _ , tempPeakIndices = mT.makeTemplate(rawTemplateData,nSigmaTrig=4.,numOffsCorrIters=2,isVerbose=isVerbose,isPlot=isPlot)
     #fit to arbitrary pulse shape
     fittedTemplate, startFit, riseFit, fallFit = mT.makeFittedTemplate(finalTemplate,time,riseGuess=3.e-6,fallGuess=55.e-6)
+    noiseSpectrumDictCovMat = mNS.makeWienerNoiseSpectrum(rawTemplateData, tempPeakIndices, 8000, 1000)
     #make matched filter
-    matchedFilter=mF.makeMatchedFilter(fittedTemplate, noiseSpectrumDict['noiseSpectrum'], nTaps=50, tempOffs=75)
-    superMatchedFilter=mF.makeSuperMatchedFilter(fittedTemplate, noiseSpectrumDict['noiseSpectrum'], fallFit, nTaps=50, tempOffs=75)
+    matchedFilter=mF.makeMatchedFilter(finalTemplate, noiseSpectrumDictCovMat['noiseSpectrum'], nTaps=50, tempOffs=75)
+    superMatchedFilter=mF.makeSuperMatchedFilter(finalTemplate, noiseSpectrumDictCovMat['noiseSpectrum'], fallFit, nTaps=50, tempOffs=75)
 
     #plot templates
     plt.plot(time,finalTemplate)
@@ -175,12 +176,14 @@ if True:
     plt.show()
 
     #filter data
-    data=mT.hpFilter(rawTestData) 
+    #data=mT.hpFilter(rawTestData) 
+    data = rawTestData 
     #convolve with filter
     filteredData=np.convolve(data,matchedFilter,mode='same') 
     superFilteredData=np.convolve(data,superMatchedFilter,mode='same')
 
     #plot filtered data
+    fig=plt.figure()
     plt.plot(filteredData[0:10000])
     plt.plot(superFilteredData[0:10000])
     plt.plot(rawTestData[0:10000])
@@ -194,31 +197,54 @@ if True:
     amps=filteredData[peakDict['peakIndices']]
     superAmps=superFilteredData[superPeakDict['peakIndices']]
     
+    print 'default sigma:', np.std(amps)
+
     #plot histogram
     fig=plt.figure()
     #plt.hist(amplitudes[np.logical_and(amplitudes<1.04 , amplitudes >.96)])
     plt.hist(amps)
     plt.hist(superAmps)
     plt.show()
+ 
+    pulseHist, pulseHistBins = np.histogram(amps, bins='auto')
+    pulseHistS, pulseHistBinsS = np.histogram(superAmps, bins='auto')
+    plt.plot(pulseHistBins[:-1],pulseHist)
+    plt.plot(pulseHistBinsS[:-1],pulseHistS)
+    plt.show()
 
     #optimize trigger conditions
-    optSigmaThresh, optNNegDerivThresh, optNNegDerivLenience, minSigma, peakDict = tP.optimizeTrigCond(filteredData, 20, np.arange(2,5,0.5), np.arange(5,10,1), np.arange(1,4,1), False)    
-    optSigmaThreshS, optNNegDerivThreshS, optNNegDerivLenienceS, minSigmaS, superPeakDict = tP.optimizeTrigCond(superFilteredData, 20, np.arange(2,5,0.5), np.arange(5,10,1), np.arange(1,4,1), False)
+    #optSigmaThresh, optNNegDerivThresh, optNNegDerivLenience, minSigma, peakDict = tP.optimizeTrigCond(filteredData, 100, np.arange(3,10,0.5), np.arange(10,30,1), np.arange(1,4,1), False)    
+    #optSigmaThreshS, optNNegDerivThreshS, optNNegDerivLenienceS, minSigmaS, superPeakDict = tP.optimizeTrigCond(superFilteredData, 100, np.arange(3,10,0.5), np.arange(10,30,1), np.arange(1,4,1), False)
+
+    #find optimal sigma threshold
+    thresh, sigmaThresh = tP.findSigmaThresh(filteredData)
+    threshS, sigmaThreshS = tP.findSigmaThresh(filteredData)
+    
+    print 'Threshold:', thresh
+    print 'Sigma Thresh:', sigmaThresh
+    print 'Super Threshold:', threshS
+    print 'Super Matched Sigma Thresh:', sigmaThreshS
+
+    #find peak indices
+    peakDict=tP.detectPulses(filteredData, nSigmaThreshold = sigmaThresh, negDerivLenience = 1, bNegativePulses=False)
+    superPeakDict=tP.detectPulses(superFilteredData, nSigmaThreshold = sigmaThreshS, negDerivLenience = 1, bNegativePulses=False)
 
     amps=filteredData[peakDict['peakIndices']]
     superAmps=superFilteredData[superPeakDict['peakIndices']]
 
-    print 'Sigma Thresh:', optSigmaThresh
-    print 'N Neg Derivative Checks:', optNNegDerivThresh
-    print 'N Neg Derivative Lenience:', optNNegDerivLenience
-    print 'minSigma:', minSigma
-    print ''
-    print 'Super Matched Filter:'
-    print 'Sigma Thresh:', optSigmaThreshS
-    print 'N Neg Derivative Checks:', optNNegDerivThreshS
-    print 'N Neg Derivative Lenience:', optNNegDerivLenienceS
-    print 'minSigma:', minSigmaS
+    #print 'Sigma Thresh:', optSigmaThresh
+    #print 'N Neg Derivative Checks:', optNNegDerivThresh
+    #print 'N Neg Derivative Lenience:', optNNegDerivLenience
+    #print 'minSigma:', minSigma
+    #print ''
+    #print 'Super Matched Filter:'
+    #print 'Sigma Thresh:', optSigmaThreshS
+    #print 'N Neg Derivative Checks:', optNNegDerivThreshS
+    #print 'N Neg Derivative Lenience:', optNNegDerivLenienceS
+    #print 'minSigma:', minSigmaS
     
-    plt.hist(amps,alpha=0.5)
-    plt.hist(superAmps,alpha=0.5)
+    pulseHist, pulseHistBins = np.histogram(amps, bins='auto')
+    pulseHistS, pulseHistBinsS = np.histogram(superAmps, bins='auto')
+    plt.plot(pulseHistBins[:-1],pulseHist)
+    plt.plot(pulseHistBinsS[:-1],pulseHistS)
     plt.show()
