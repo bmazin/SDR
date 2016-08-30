@@ -7,15 +7,62 @@ import makeNoiseSpectrum as mNS
 import makeArtificialData as mAD
 import makeTemplate as mT
 import makeFilters as mF
+import struct
+
 import extractRawData as eRD
 import triggerPhotons as tP
 import os
+
 reload(mNS)
 reload(mAD)
 reload(mT)
 reload(mF)
 reload(tP)
 
+##### Test on real data #####
+if True:
+    isPlot=False
+    isVerbose=True
+    #get data
+    date='20140915'
+    subfolder='redLaser'
+    roachNum = 0
+    pixelNum = 0
+    nSecs=30
+    phaseFilename = os.path.join(os.path.join('./TestData/',date,subfolder),'ch_snap_r{}p{}_{}secs.dat'.format(roachNum,pixelNum,nSecs))
+    dataFile = open(phaseFilename,'r')
+    data = dataFile.read()
+    nQdrWords=2**19 #for firmware with  qdr longsnap
+    nBytesPerWord=4 #bytes in each qdr row/word
+    nBytesPerSample=2 #bytes in a fix16_13 phase sample
+    nSamples = nQdrWords*(nBytesPerWord/nBytesPerSample)*nSecs
+    intValues = struct.unpack('>%dh'%(nSamples),data)
+    phaseValuesRad = np.array(intValues,dtype=np.float32)/2**13 #move binary point
+    phaseValuesDeg = 180./np.pi*phaseValuesRad
+    template, time, noiseSpectrumDict, _, _ = mT.makeTemplate(phaseValuesDeg,nSigmaTrig=5.,numOffsCorrIters=3,isVerbose=isVerbose,isPlot=isPlot, sigPass=.5)
+    print "template made"
+    #make matched filter
+    matchedFilter=mF.makeMatchedFilter(template, noiseSpectrumDict['noiseSpectrum'], nTaps=50, tempOffs=75)
+    superMatchedFilter=mF.makeSuperMatchedFilter(template, noiseSpectrumDict['noiseSpectrum'], fallFit, nTaps=50, tempOffs=75)
+    print "filters made"
+    #convolve with filter
+    filteredData=np.convolve(phaseValuesDeg,matchedFilter,mode='same') 
+    superFilteredData=np.convolve(phaseValuesDeg,superMatchedFilter,mode='same')
+    print "data filtered" 
+    #find peak indices
+    peakDict=mT.sigmaTrigger(filteredData,nSigmaTrig=4.)
+    superPeakDict=mT.sigmaTrigger(superFilteredData,nSigmaTrig=4.)
+    print "peaks found"
+    #find peak amplitudes
+    amps=filteredData[peakDict['peakMaxIndices']]
+    superAmps=superFilteredData[superPeakDict['peakMaxIndices']]
+    print "amplitudes extracted"
+    fig=plt.figure()
+    #plt.plot(template)
+    plt.hist(amps,100,alpha=.7)
+    plt.hist(superAmps,100,alpha=.7)
+    plt.show()
+    
 ##### Find expected energy resolution of different filters #####
 if False:
     isPlot=False

@@ -19,6 +19,8 @@ def makeMatchedFilter(template, noiseSpectrum, nTaps=50, tempOffs=90):
     matchedFilt - matched filter that should be convolved with the data
                   to get the pulse heights 
     '''
+    #check normalized to 1
+    template/=np.abs(template[np.argmax(np.abs(template))])
     noiseCovInv = noise.covFromPsd(noiseSpectrum, nTaps)['covMatrixInv']   
     template = template[tempOffs:tempOffs+nTaps]  #shorten template to length nTaps
     filterNorm = np.dot(template, np.dot(noiseCovInv, template))
@@ -48,6 +50,8 @@ def makeSuperMatchedFilter(template, noiseSpectrum, fallTime, nTaps=50, tempOffs
         pos_neg=-1.
     else:
         pos_neg=1
+    #check normalized to 1
+    template/=np.abs(template[np.argmax(np.abs(template))])    
     #create covariance inverse matrix    
     noiseCovInv = noise.covFromPsd(noiseSpectrum, nTaps)['covMatrixInv']
     #shorten template to length nTaps
