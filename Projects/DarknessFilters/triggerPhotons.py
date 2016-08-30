@@ -146,17 +146,27 @@ def optimizeTrigCond(data, nPeaks, sigmaThreshList=[3.], nNegDerivChecksList=[10
 
     return optSigmaThresh, optNNegDerivChecks, optNegDerivLenience, minSigma, optPeakDict
 
-def findSigmaThresh(data, initSigmaThresh=2., tailSlack=0.):
+def findSigmaThresh(data, initSigmaThresh=2., tailSlack=0., isPlot=False):
     peakdict = sigmaTrigger(data, nSigmaTrig=initSigmaThresh)
-    peaksHist, peaksHistBins = np.histogram(data, bins='auto')
-    peaksHist = smooth.smooth(peaksHist, len(peaksHistBins)/10)
+    peaksHist, peaksHistBins = np.histogram(peakdict['peakHeights'], bins='auto')
+    if(isPlot):    
+        plt.plot(peaksHistBins[:-1], peaksHist)
+        plt.title('Unsmoothed Plot')
+        plt.show()
+    print 'peaksHistLen:', len(peaksHist)
+    peaksHist = smooth.smooth(peaksHist,(len(peaksHistBins)/20)*2+1)
+    print 'peaksHistSmoothLen:', len(peaksHist)
+    if(isPlot):
+        plt.plot(peaksHistBins[0:len(peaksHist)], peaksHist)
+        plt.title('smoothed plot')
+        plt.show()
     
     minima=np.ones(len(peaksHist))
     minimaCount = 1
     #while there are multiple local minima, look for the deepest one
     while(np.count_nonzero(minima)>1):      
-        minima = np.logical_and(minima, np.logical_and((peaksHist<np.roll(peaksHist,minimaCount)),(peaksHist<np.roll(peaksHist,-minimaCount))))
-        print 'minima array:', minima
+        minima = np.logical_and(minima, np.logical_and((peaksHist<=np.roll(peaksHist,minimaCount)),(peaksHist<=np.roll(peaksHist,-minimaCount))))
+        #print 'minima array:', minima
         minima[minimaCount-1]=0
         minima[len(minima)-minimaCount]=0 #get rid of boundary effects
         minimaCount += 1
