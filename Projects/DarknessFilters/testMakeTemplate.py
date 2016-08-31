@@ -28,7 +28,7 @@ if True:
     t0=tmax+riseTime*np.log(riseTime/(riseTime+fallTime)) 
     
     #get fake poissonian distributed pulse data
-    rawdata, rawtime = mAD.makePoissonData(totalTime=2*131.072e-3,isVerbose=True)
+    rawdata, rawtime = mAD.makePoissonData(totalTime=2*131.072e-3,isVerbose=True,maxSignalToNoise=2)
       
     if isPlotPoisson:
         fig1=plt.figure(0)

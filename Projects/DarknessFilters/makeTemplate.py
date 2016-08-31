@@ -42,7 +42,7 @@ def makeTemplate(rawData, numOffsCorrIters=1 , decayTime=50, nSigmaTrig=4., isVe
     roughTemplate, time = averagePulses(data, peakIndices, decayTime=decayTime)
     
     #create noise spectrum from pre-pulse data for filter
-    noiseSpectDict = mNS.makeWienerNoiseSpectrum(data,peakIndices)
+    noiseSpectDict = mNS.makeWienerNoiseSpectrum(data,peakIndices,template=roughTemplate, isVerbose=isVerbose)
     
     #Correct for errors in peak offsets due to noise
     templateList = [roughTemplate]

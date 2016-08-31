@@ -23,45 +23,49 @@ reload(tP)
 if True:
     isPlot=False
     isVerbose=True
-    #get data
-    date='20140915'
-    subfolder='redLaser'
-    roachNum = 0
-    pixelNum = 0
-    nSecs=30
-    phaseFilename = os.path.join(os.path.join('./TestData/',date,subfolder),'ch_snap_r{}p{}_{}secs.dat'.format(roachNum,pixelNum,nSecs))
-    dataFile = open(phaseFilename,'r')
-    data = dataFile.read()
-    nQdrWords=2**19 #for firmware with  qdr longsnap
-    nBytesPerWord=4 #bytes in each qdr row/word
-    nBytesPerSample=2 #bytes in a fix16_13 phase sample
-    nSamples = nQdrWords*(nBytesPerWord/nBytesPerSample)*nSecs
-    intValues = struct.unpack('>%dh'%(nSamples),data)
-    phaseValuesRad = np.array(intValues,dtype=np.float32)/2**13 #move binary point
-    phaseValuesDeg = 180./np.pi*phaseValuesRad
-    template, time, noiseSpectrumDict, _, _ = mT.makeTemplate(phaseValuesDeg,nSigmaTrig=5.,numOffsCorrIters=3,isVerbose=isVerbose,isPlot=isPlot, sigPass=.5)
+    #get data        
+    rawData = eRD.parseQDRPhaseSnap(os.path.join(os.getcwd(),'TestData/20140915/redLaser'),pixelNum=0,roachNum=0,steps=30)
+    #make fake data
+    #rawData, rawTime = mAD.makePoissonData(totalTime=10*131.072e-3,amplitudes='random',maxSignalToNoise=10,isVerbose=isVerbose)
+    #rawData*=2
+    print "data extracted"
+    
+    #make template
+    template, time, noiseSpectrumDict, _, _ = mT.makeTemplate(rawData,nSigmaTrig=5.,numOffsCorrIters=3,isVerbose=isVerbose,isPlot=isPlot, sigPass=.5)
     print "template made"
+    
+    #noiseSpectrumDict['noiseSpectrum']=np.ones(len(noiseSpectrumDict['noiseSpectrum']))
+    #noiseSpectrumDict['noiseSpectrum']=np.ones(len(noiseSpectrumDict['noiseSpectrum']))*3e3/np.abs(noiseSpectrumDict['noiseFreqs'])
+    #noiseSpectrumDict['noiseSpectrum'][0]=2*noiseSpectrumDict['noiseSpectrum'][1]
+    #noiseSpectrumDict['noiseSpectrum'][np.abs(noiseSpectrumDict['noiseFreqs'])>210000]=5e-5
+   
     #make matched filter
     matchedFilter=mF.makeMatchedFilter(template, noiseSpectrumDict['noiseSpectrum'], nTaps=50, tempOffs=75)
+    coef, _ = opt.curve_fit(lambda x, a, t0 : a*exp(-x/t0), time[len(time)*1/5:len(time)*4/5],template[len(time)*1/5:len(time)*4/5], [-1 , 30e-6])
+    fallFit=coef[1]
     superMatchedFilter=mF.makeSuperMatchedFilter(template, noiseSpectrumDict['noiseSpectrum'], fallFit, nTaps=50, tempOffs=75)
     print "filters made"
+    
     #convolve with filter
-    filteredData=np.convolve(phaseValuesDeg,matchedFilter,mode='same') 
-    superFilteredData=np.convolve(phaseValuesDeg,superMatchedFilter,mode='same')
+    filteredData=np.convolve(rawData,matchedFilter,mode='same') 
+    superFilteredData=np.convolve(rawData,superMatchedFilter,mode='same')
     print "data filtered" 
+    
     #find peak indices
-    peakDict=mT.sigmaTrigger(filteredData,nSigmaTrig=4.)
-    superPeakDict=mT.sigmaTrigger(superFilteredData,nSigmaTrig=4.)
+    peakDict=tP.detectPulses(filteredData, nSigmaThreshold = 3., negDerivLenience = 1, bNegativePulses=False)
+    superPeakDict=tP.detectPulses(superFilteredData, nSigmaThreshold = 3., negDerivLenience = 1, bNegativePulses=False)
     print "peaks found"
+    
     #find peak amplitudes
-    amps=filteredData[peakDict['peakMaxIndices']]
-    superAmps=superFilteredData[superPeakDict['peakMaxIndices']]
+    amps=filteredData[peakDict['peakIndices']]
+    superAmps=superFilteredData[superPeakDict['peakIndices']]
     print "amplitudes extracted"
-    fig=plt.figure()
+    
+    #fig=plt.figure()
     #plt.plot(template)
-    plt.hist(amps,100,alpha=.7)
-    plt.hist(superAmps,100,alpha=.7)
-    plt.show()
+    #plt.hist(amps,100,alpha=.7)
+    #plt.hist(superAmps,100,alpha=.7)
+    #plt.show()
     
 ##### Find expected energy resolution of different filters #####
 if False:
@@ -121,7 +125,7 @@ if False:
     pulses+=mAD.makePulse(time,50e-6,2e-6,50e-6)
     pulses+=mAD.makePulse(time,140e-6,2e-6,50e-6)
     pulses+=.6*(np.random.rand(len(pulses))-0.5)
-    pulse=mT.hpFilter(pulse)
+    pulses=mT.hpFilter(pulses)
     filteredData=np.convolve(pulses,matchedFilter,mode='same') 
     superFilteredData=np.convolve(pulses,superMatchedFilter,mode='same')
     
@@ -131,7 +135,7 @@ if False:
     
     fig=plt.figure()
     plt.plot(time,filteredData ,label = 'matched filter')
-    plt.plot(time,superFilteredData, label= 'super matched filter')
+    plt.plot(time,superFilteredData, label= 'pre-pulse robust matched filter')
     plt.legend()
     plt.show()
  
@@ -200,7 +204,7 @@ if False:
     plt.show()
     
 #####Test energy resolution with real data.  Assumes constant photon energy#####    
-if True:
+if False:
     isPlot=False
     isVerbose=False
     

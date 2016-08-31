@@ -1,7 +1,6 @@
 from matplotlib import rcParams, rc
 import numpy as np
 import sys
-from fitFunctions import gaussian
 import scipy.interpolate
 import scipy.signal
 from baselineIIR import IirFilter
@@ -106,6 +105,7 @@ def detectPulses(data,threshold=None,nSigmaThreshold=3.,deadtime=10,nNegDerivChe
         peakHeights = data[peakIndices]
     else:
         peakHeights = -data[peakIndices] #flip back to positive sign
+    peakIndices=peakIndices.astype(int)    
     return {'peakIndices':peakIndices,'peakHeights':peakHeights}
 
 def optimizeTrigCond(data, nPeaks, sigmaThreshList=[3.], nNegDerivChecksList=[10], negDerivLenienceList=[1], bNegativePulses=True):
