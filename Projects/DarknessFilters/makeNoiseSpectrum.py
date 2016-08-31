@@ -8,7 +8,7 @@ import triggerPhotons as tP
 from baselineIIR import IirFilter
 reload(tP)
 
-def makeWienerNoiseSpectrum(data, peakIndices=[], numBefore=100, numAfter=700, noiseOffsetFromPeak=200, sampleRate=1e6, template=[],isVerbose=False):
+def makeWienerNoiseSpectrum(data, peakIndices=[], numBefore=100, numAfter=700, noiseOffsetFromPeak=200, sampleRate=1e6, template=[],isVerbose=False,baselineSubtract=True):
     nFftPoints = numBefore + numAfter
     peakIndices=np.array(peakIndices).astype(int)
     
@@ -24,6 +24,14 @@ def makeWienerNoiseSpectrum(data, peakIndices=[], numBefore=100, numAfter=700, n
         peakIndices=peakIndices[:-2]      
     if len(peakIndices)==0:
         raise ValueError('makeWienerNoiseSpectrum: input data set is too short for the number of FFT points specified')
+   
+    #Baseline subtract noise data
+    if(baselineSubtract):
+        noiseStream = np.array([])
+        for iPeak,peakIndex in enumerate(peakIndices):
+            if peakIndex > nFftPoints+noiseOffsetFromPeak and peakIndex < len(data)-numAfter:
+                noiseStream = np.append(noiseStream, data[peakIndex-nFftPoints-noiseOffsetFromPeak:peakIndex-noiseOffsetFromPeak])
+        data = data - np.mean(noiseStream)
     
     #Calculate noise spectra for the defined area before each pulse
     noiseSpectra = np.zeros((len(peakIndices), nFftPoints))
@@ -43,9 +51,10 @@ def makeWienerNoiseSpectrum(data, peakIndices=[], numBefore=100, numAfter=700, n
         noiseSpectra = np.delete(noiseSpectra, rejectInd, axis=0)
     noiseFreqs = np.fft.fftfreq(nFftPoints,1./sampleRate)    
     noiseSpectrum = np.median(noiseSpectra,axis=0)
-    noiseSpectrum[0] = 2.*noiseSpectrum[1] #look into this later 8/15/16
+    #noiseSpectrum[0] = 2.*noiseSpectrum[1] #look into this later 8/15/16
     if isVerbose:
         print len(noiseSpectra[:,0]),'traces used to make noise spectrum', len(rejectInd), 'cut for pulse contamination'
+
     return {'noiseSpectrum':noiseSpectrum, 'noiseFreqs':noiseFreqs}
     
 def covFromData(data,size=800,nTrials=None):
