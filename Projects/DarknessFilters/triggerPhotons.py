@@ -129,8 +129,7 @@ def optimizeTrigCond(data, nPeaks, sigmaThreshList=[3.], nNegDerivChecksList=[10
     optSigmaThresh = 0
     optNNegDerivChecks = 0
     optNegDerivLenience = 0
-    optPeakDict = {'peakIndices':np.array([]), 'peakHeights':np.array([])}
-    
+    optPeakDict = {'peakIndices':np.array([]), 'peakHeights':np.array([])} 
     for sigmaThresh in sigmaThreshList:
         for nNegDerivChecks in nNegDerivChecksList:
             for negDerivLenience in negDerivLenienceList:
@@ -147,6 +146,21 @@ def optimizeTrigCond(data, nPeaks, sigmaThreshList=[3.], nNegDerivChecksList=[10
     return optSigmaThresh, optNNegDerivChecks, optNegDerivLenience, minSigma, optPeakDict
 
 def findSigmaThresh(data, initSigmaThresh=2., tailSlack=0., isPlot=False):
+    '''
+    Finds the optimal photon trigger threshold by cutting out the  noise tail
+    in the pulse height histogram.
+    
+    INPUTS:
+    data - filtered phase timestream data (positive pulses)
+    initSigmaThresh - sigma threshold to use when constructing initial
+        pulse height histogram
+    tailSlack - amount (in same units as data) to relax trigger threshold
+    isPlot - make peak height histograms if true
+
+    OUTPUTS:
+    threshold - trigger threshold in same units as data
+    sigmaThresh - trigger threshold in units sigma from median
+    '''
     peakdict = sigmaTrigger(data, nSigmaTrig=initSigmaThresh)
     peaksHist, peaksHistBins = np.histogram(peakdict['peakHeights'], bins='auto')
     if(isPlot):    
@@ -161,7 +175,7 @@ def findSigmaThresh(data, initSigmaThresh=2., tailSlack=0., isPlot=False):
         plt.title('smoothed plot')
         plt.show()
     
-    minima=np.ones(len(peaksHist))
+    minima=np.ones(len(peaksHist)) #keeps track of minima locations; element is 1 if minimum exists at that index
     minimaCount = 1
     #while there are multiple local minima, look for the deepest one
     while(np.count_nonzero(minima)>1):      
@@ -173,6 +187,6 @@ def findSigmaThresh(data, initSigmaThresh=2., tailSlack=0., isPlot=False):
 
     thresholdInd = np.where(minima)[0][0]
     threshold = peaksHistBins[thresholdInd]-tailSlack
-    sigmaThresh = threshold/np.std(data)
+    sigmaThresh = (threshold-np.median(data))/np.std(data)
     return threshold, sigmaThresh
 

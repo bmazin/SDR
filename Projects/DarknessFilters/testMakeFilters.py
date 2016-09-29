@@ -20,7 +20,7 @@ reload(mF)
 reload(tP)
 
 ##### Test on real data #####
-if True:
+if False:
     isPlot=False
     isVerbose=True
     #get data
@@ -205,7 +205,7 @@ if True:
     isVerbose=False
     
     #extract raw data
-    rawData = eRD.parseQDRPhaseSnap(os.path.join(os.getcwd(),'20140915/redLaser'),pixelNum=0,steps=30)
+    rawData = eRD.parseQDRPhaseSnap(os.path.join(os.getcwd(),'20140915/redLaser'),pixelNum=1,steps=30)
     rawTemplateData = rawData[0:1000000]
     rawTestData = rawData[1000000:2000000]
     #make template
@@ -259,10 +259,6 @@ if True:
     plt.plot(pulseHistBinsS[:-1],pulseHistS)
     plt.show()
 
-    #optimize trigger conditions
-    #optSigmaThresh, optNNegDerivThresh, optNNegDerivLenience, minSigma, peakDict = tP.optimizeTrigCond(filteredData, 100, np.arange(3,10,0.5), np.arange(10,30,1), np.arange(1,4,1), False)    
-    #optSigmaThreshS, optNNegDerivThreshS, optNNegDerivLenienceS, minSigmaS, superPeakDict = tP.optimizeTrigCond(superFilteredData, 100, np.arange(3,10,0.5), np.arange(10,30,1), np.arange(1,4,1), False)
-
     #find optimal sigma threshold
     thresh, sigmaThresh = tP.findSigmaThresh(filteredData)
     threshS, sigmaThreshS = tP.findSigmaThresh(filteredData)
@@ -271,6 +267,7 @@ if True:
     print 'Sigma Thresh:', sigmaThresh
     print 'Super Threshold:', threshS
     print 'Super Matched Sigma Thresh:', sigmaThreshS
+    print ''
 
     #find peak indices
     peakDict=tP.detectPulses(filteredData, nSigmaThreshold = sigmaThresh, negDerivLenience = 1, bNegativePulses=False)
@@ -278,20 +275,35 @@ if True:
 
     amps=filteredData[peakDict['peakIndices']]
     superAmps=superFilteredData[superPeakDict['peakIndices']]
-
-    #print 'Sigma Thresh:', optSigmaThresh
-    #print 'N Neg Derivative Checks:', optNNegDerivThresh
-    #print 'N Neg Derivative Lenience:', optNNegDerivLenience
-    #print 'minSigma:', minSigma
-    #print ''
-    #print 'Super Matched Filter:'
-    #print 'Sigma Thresh:', optSigmaThreshS
-    #print 'N Neg Derivative Checks:', optNNegDerivThreshS
-    #print 'N Neg Derivative Lenience:', optNNegDerivLenienceS
-    #print 'minSigma:', minSigmaS
     
     pulseHist, pulseHistBins = np.histogram(amps, bins='auto')
     pulseHistS, pulseHistBinsS = np.histogram(superAmps, bins='auto')
     plt.plot(pulseHistBins[:-1],pulseHist)
     plt.plot(pulseHistBinsS[:-1],pulseHistS)
+    plt.title('After optimizing sigma threshold')
+    plt.show()
+
+    #optimize trigger conditions
+    optSigmaThresh, optNNegDerivThresh, optNNegDerivLenience, minSigma, peakDict = tP.optimizeTrigCond(filteredData, 100, [sigmaThresh], np.arange(10,30,1), np.arange(1,4,1), False)    
+    optSigmaThreshS, optNNegDerivThreshS, optNNegDerivLenienceS, minSigmaS, superPeakDict = tP.optimizeTrigCond(superFilteredData, 100, [sigmaThreshS], np.arange(10,30,1), np.arange(1,4,1), False)
+
+    print 'Sigma Thresh:', optSigmaThresh
+    print 'N Neg Derivative Checks:', optNNegDerivThresh
+    print 'N Neg Derivative Lenience:', optNNegDerivLenience
+    print 'minSigma:', minSigma
+    print ''
+    print 'Super Matched Filter:'
+    print 'Sigma Thresh:', optSigmaThreshS
+    print 'N Neg Derivative Checks:', optNNegDerivThreshS
+    print 'N Neg Derivative Lenience:', optNNegDerivLenienceS
+    print 'minSigma:', minSigmaS
+    
+    amps=filteredData[peakDict['peakIndices']]
+    superAmps=superFilteredData[superPeakDict['peakIndices']]
+    
+    pulseHist, pulseHistBins = np.histogram(amps, bins='auto')
+    pulseHistS, pulseHistBinsS = np.histogram(superAmps, bins='auto')
+    plt.plot(pulseHistBins[:-1],pulseHist)
+    plt.plot(pulseHistBinsS[:-1],pulseHistS)
+    plt.title('After optimizing derivative trigger conditions')
     plt.show()
