@@ -22,6 +22,7 @@ def makeMatchedFilter(template, noiseSpectrum, nTaps=50, tempOffs=90):
     #check normalized to 1
     template/=np.abs(template[np.argmax(np.abs(template))])
     noiseCovInv = noise.covFromPsd(noiseSpectrum, nTaps)['covMatrixInv']   
+    #print np.dot(noise.covFromPsd(noiseSpectrum, nTaps)['covMatrixInv'] ,noise.covFromPsd(noiseSpectrum, nTaps)['covMatrix'] )
     template = template[tempOffs:tempOffs+nTaps]  #shorten template to length nTaps
     filterNorm = np.dot(template, np.dot(noiseCovInv, template))
     matchedFilt = np.dot(noiseCovInv, template)/filterNorm
