@@ -97,7 +97,7 @@ int main(void)
   uint64_t nFrames = 0;
 
   FILE* dump_file;
-  dump_file = fopen("phaseDump.bin","ab");
+  dump_file = fopen("photonDump.bin","ab");
   while (need_to_stop() == 0)
   {
     if (nFrames % 1000 == 0)
