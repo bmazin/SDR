@@ -276,7 +276,8 @@ class SBOptimizer:
                 specDict = adcSnap.streamSpectrum(snapDict['iVals'], snapDict['qVals'])
                 sbSuppressions[:,i,j] = specDict['spectrumDb'][freqLocs]-specDict['spectrumDb'][sbLocs]
         
-        np.savez('grid_search_data_'+str(len(freqs))+'freqs'+time.strftime("%Y%m%d-%H%M%S",time.localtime()), freqs=freqs, phases=phases, iqRatios=iqRatios, sbSuppressions=sbSuppressions)
+        np.savez('grid_search_data_'+str(len(freqs))+'freqs'+time.strftime("%Y%m%d-%H%M%S",time.localtime()), freqs=freqs, phases=phases, iqRatios=iqRatios, sbSuppressions=sbSuppressions, 
+            adcAtten=self.adcAtten, globalDacAtten=self.globalDacAtten, toneAtten=self.toneAtten)
 
     def setGlobalDacAtten(self, globalDacAtten):
         self.globalDacAtten=globalDacAtten 
@@ -319,20 +320,199 @@ def plotOffsVSDacAtten(freq, loFreq=5.e9, globalDacAttens=np.arange(20,30), save
     plt.plot(globalDacAttens, optIQRatios)
     plt.show()
 
+def loadGridTable(fileName):
+    '''
+    Loads exhaustive grid search data (made by makeGridPlot), finds optimal phase/iq ratio locations and loads
+    them into DAC LUT. Then takes adcSnap and finds SB suppression at each frequency
+    '''
+    data = np.load(fileName)
+    sbSupFlat = np.reshape(data['sbSuppressions'],(np.shape(data['sbSuppressions'])[0],-1))
+    sbMaxInds = np.argmax(sbSupFlat, axis=1)
+    sbMaxLocs = np.asarray([np.unravel_index(index, (len(data['phases']), len(data['iqRatios']))) for index in sbMaxInds])
+    phaseList = data['phases'][sbMaxLocs[:,0]]
+    iqRatioList = data['iqRatios'][sbMaxLocs[:,1]]
+
+    # plt.plot(data['freqs'], phaseList)
+    # plt.show()
+    # plt.plot(data['freqs'], iqRatioList)
+    # plt.show()
+     
+    sbo = SBOptimizer(globalDacAtten=11, toneAtten=45, adcAtten=31.75)
+    sbo.initRoach()
+    # phaseList = np.zeros(len(data['freqs'])) # uncomment these lines if you don't want to load in optimal phases, just frequencies
+    # iqRatioList = np.ones(len(data['freqs']))
+    sbo.loadLUT(freqList=data['freqs'], phaseList=phaseList, iqRatioList=iqRatioList)
+    
+    print 'phases', phaseList
+    print 'iqRatios', iqRatioList
+
+    nSamples = 4096.
+    sampleRate = 2000. #MHz
+    freqs = data['freqs']
+    quantFreqsMHz = np.array(freqs/1.e6-sbo.loFreq/1.e6)
+    quantFreqsMHz = np.round(quantFreqsMHz*nSamples/sampleRate)*sampleRate/nSamples
+    snapDict = sbo.takeAdcSnap()
+    specDict = adcSnap.streamSpectrum(snapDict['iVals'], snapDict['qVals'])        
+    findFreq = lambda freq: np.where(specDict['freqsMHz']==freq)[0][0]
+    print 'quantFreqsMHz', quantFreqsMHz
+    print 'spectDictFreqs', specDict['freqsMHz']
+    print 'nSamples', specDict['nSamples']
+    freqLocs = np.asarray(map(findFreq, quantFreqsMHz))
+    sbLocs = -1*freqLocs + len(specDict['freqsMHz'])
+    sbSuppressions = specDict['spectrumDb'][freqLocs]-specDict['spectrumDb'][sbLocs]
+    print sbSuppressions
+
+def optRawGridData(filename, freqInd=10, corrLen=20, threshold=40, sbSupScale=5, sbSupIncThresh=20):
+    data = np.load(filename)
+    sbSups = data['sbSuppressions'][freqInd]
+    sampledSBSups = np.zeros(np.shape(sbSups))
+
+    weights = np.ones(np.shape(sbSups))
+    print 'weightShape', np.shape(weights)
+    normWeights = weights/np.sum(weights)
+    flatInds = np.arange(len(weights.flatten()))
+    curSup = 0
+    counter = 0
+
+    baseRowCoords = np.tile(np.arange(np.shape(sbSups)[0]),(np.shape(sbSups)[1],1))
+    baseRowCoords = np.transpose(baseRowCoords)
+    baseColCoords = np.tile(np.arange(np.shape(sbSups)[1]),(np.shape(sbSups)[0],1))
+    while curSup<threshold:
+        print np.shape(flatInds)
+        print np.shape(normWeights.flatten())
+        print np.sum(normWeights.flatten())
+        flatInd = np.random.choice(flatInds, p=normWeights.flatten())
+        sbSupInd = np.unravel_index(flatInd, np.shape(sbSups))
+        sampledSBSups[sbSupInd] = sbSups[sbSupInd]
+        curSup = sbSups[sbSupInd]
+        weights[sbSupInd] = 0
+
+        #calculate addition to weights
+        if(curSup > sbSupIncThresh):
+            rowCoords = baseRowCoords - sbSupInd[0]
+            colCoords = baseColCoords - sbSupInd[1]
+            distMatrix = np.sqrt(rowCoords**2+colCoords**2) #compute the distance from each point to current point
+            weightAdditions = (curSup-sbSupIncThresh)/sbSupScale*np.exp(-distMatrix**2/corrLen**2)
+            weights *= weightAdditions
+            normWeights = weights/np.sum(weights)
+
+        counter += 1
+
+        print counter, 'iterations'
+        print 'sampledSBSups'
+        print 'curSup', curSup
+        print 'position', sbSupInd
+        #plt.imshow(normWeights)
+        #plt.colorbar()
+        #plt.show()
+    
+    plt.imshow(normWeights)
+    plt.colorbar()
+    plt.show()
+
+    plt.imshow(sampledSBSups)
+    plt.colorbar()
+    plt.show()
+      
+def optRawGridDataGrad(filename, freqInd=10, corrLen=20, threshold=40, gradScale=1):
+    data = np.load(filename)
+    sbSups = data['sbSuppressions'][freqInd] #exhaustive grid search array of SB suppressions
+    sampledSBSups = np.zeros(np.shape(sbSups))
+    sampledSBSups[:] = np.nan
+
+    weights = np.ones(np.shape(sbSups))
+    print 'weightShape', np.shape(weights)
+    normWeights = weights/np.sum(weights)
+    flatInds = np.arange(len(weights.flatten()))
+    curSup = 0
+    counter = 0
+
+    #sample initial points
+    for i in range(4):
+        flatInd = np.random.choice(flatInds, p=normWeights.flatten())
+        sbSupInd = np.unravel_index(flatInd, np.shape(sbSups))
+        sampledSBSups[sbSupInd] = sbSups[sbSupInd]
+        curSup = sbSups[sbSupInd]
+        weights[sbSupInd] = 0
+        normWeights = weights/np.sum(weights)
+
+    while curSup<threshold:
+        flatInd = np.random.choice(flatInds, p=normWeights.flatten())
+        sbSupInd = np.unravel_index(flatInd, np.shape(sbSups))
+        sampledSBSups[sbSupInd] = sbSups[sbSupInd]
+        curSup = sbSups[sbSupInd]
+        weights[sbSupInd] = 0
+
+        #calculate addition to weights
+
+        validSBLocs = np.where(np.isnan(sampledSBSups)==0)
+        rowVals = np.nanmean(sampledSBSups, axis=1)
+        colVals = np.nanmean(sampledSBSups, axis=0)
+
+        validRowLocs = np.where(np.isnan(rowVals)==0)[0]
+        validColLocs = np.where(np.isnan(colVals)==0)[0]
+        rowVals = rowVals[validRowLocs]
+        colVals = colVals[validColLocs]
+        
+        rowGrads = np.divide(np.diff(rowVals), np.diff(validRowLocs))
+        colGrads = np.divide(np.diff(colVals), np.diff(validColLocs))
+        validRowGradLocs = validRowLocs[:-1]
+        validColGradLocs = validColLocs[:-1]
+
+        for r in range(np.shape(weights)[0]):
+            for c in range(np.shape(weights)[1]):
+                if weights[r,c] != 0:
+                    posRowGradInds = np.where(validRowLocs<r)[0]
+                    posColGradInds = np.where(validColLocs<c)[0]
+                    negRowGradInds = np.where(validRowLocs>=r)[0]
+                    negColGradInds = np.where(validColLocs>=c)[0]
+                    print 'posRowGrads', posRowGradInds
+                    print 'negRowGrads', negRowGradInds
+                    print 'rowGrads', rowGrads
+
+                    rowGradSum = np.sum(rowGrads[posRowGradInds])-np.sum(rowGrads[negRowGradInds])
+                    colGradSum = np.sum(colGrads[posColGradInds])-np.sum(colGrads[negColGradInds])
+                    weights[r,c] = np.exp(gradScale*(rowGradSum+colGradSum))
+
+        normWeights = weights/np.sum(weights)
+        
+        counter += 1
+
+        print counter, 'iterations'
+        print 'sampledSBSups'
+        print 'curSup', curSup
+        print 'position', sbSupInd
+        #plt.imshow(normWeights)
+        #plt.colorbar()
+        #plt.show()
+    
+    plt.imshow(normWeights)
+    plt.colorbar()
+    plt.show()
+
+    plt.imshow(sampledSBSups)
+    plt.colorbar()
+    plt.show()
         
         
 if __name__=='__main__':
-    sbo = SBOptimizer(globalDacAtten=20, toneAtten=40, adcAtten=31.75)
-    sbo.initRoach()
+    # sbo = SBOptimizer(globalDacAtten=0, toneAtten=45, adcAtten=31.75)
+    # sbo.initRoach()
+    # sbo.loadLUT(np.asarray([5.5e9]), phaseList=np.asarray([0]), iqRatioList=np.asarray([1]))
+    # sbo.loadLUT(np.arange(5.05e9,6.e9,1.e7)+5.e6*np.random.rand(95), phaseList=np.zeros(95), iqRatioList=np.ones(95))
+    # sbo.loadLUT(freqList=np.arange(5.05e9, 5.5e9, 1.e7)+1.e7*np.random.rand(45)-5.e6, phaseList=np.zeros(45), iqRatioList=np.ones(45))
+    # sbo.loadLUT(freqList=np.asarray([5.264e9]), phaseList=np.asarray([0]), iqRatioList=np.asarray([1]))
     # optPhase = sbo.phaseDelOptimizer(frequency=5.2638e9)
     # makePhaseDelLUT(np.arange(5.05e9, 6.e9, 5.e7))
     # sbo.ampScalePlotter(5.65e9, 5, np.arange(1,2.5,0.02))
     # print 'optPhase', optPhase
-    sbo.makeGridPlot(np.arange(5.05e9,5.5e9,5.e7), phases=np.arange(-15,5), iqRatios=np.arange(1.0,1.5,0.02))
-    # sbo.gridSearchOptimizer(np.arange(5.05e9,5.5e9,5.e7), -30, 30, 0.5, 2.0)
-    # sbo.gridSearchOptimizer(np.asarray([5.2638e9]), -30, 30, 0.5, 2.0)
+    # sbo.makeGridPlot(np.arange(5.05e9,5.5e9,1.e7), phases=np.arange(-15,5), iqRatios=np.arange(1.0,1.5,0.02))
+    # sbo.gridSearchOptimizer(np.asarray([5.5e9]), -30, 30, 0.5, 2.0)
+    # sbo.makeGridPlot(np.arange(5.05e9, 5.5e9, 1.e7)+1.e7*np.random.rand(45)-5.e6, phases=np.arange(-15,5), iqRatios=np.arange(0.85,1.25,0.02))
     # plotOffsVSDacAtten(5.2638e9)
-        
+    # loadGridTable('grid_search_data_45freqs20170213-163003.npz')
+    optRawGridDataGrad('grid_search_data_45freqs20170213-163003.npz')
+      
 
         
 
