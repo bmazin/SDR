@@ -4,6 +4,7 @@ import numpy as np
 import time, struct, sys, os
 import matplotlib.pyplot as plt
 import random
+import scipy.optimize as spo
 
 class SBOptimizer:
     def __init__(self, ip='10.0.0.112', params='/mnt/data0/neelay/MkidDigitalReadout/DataReadout/ChannelizerControls/DarknessFpga_V2.param', loFreq=5.e9, 
@@ -216,6 +217,145 @@ class SBOptimizer:
                 globalDacAtten=self.globalDacAtten, adcAtten=self.adcAtten)
         
         return optPhases, optIQRatios, maxSBSuppressions
+        
+    def gridSearchOptimizerFit(self, freqList, phases=np.arange(-25, 10), iqRatios=np.arange(0.65, 1.35, 0.02), threshold=45, weightDecayDist=1):
+        sampledSBSups = np.zeros((len(freqList), len(phases), len(iqRatios)))
+        sampledSBSups[:] = np.nan
+        
+        nSamples = 4096.
+        sampleRate = 2000. #MHz
+        quantFreqsMHz = np.array(freqList/1.e6-self.loFreq/1.e6)
+        quantFreqsMHz = np.round(quantFreqsMHz*nSamples/sampleRate)*sampleRate/nSamples
+        snapDict = self.takeAdcSnap()
+        specDict = adcSnap.streamSpectrum(snapDict['iVals'], snapDict['qVals'])        
+        findFreq = lambda freq: np.where(specDict['freqsMHz']==freq)[0][0]
+        print 'quantFreqsMHz', quantFreqsMHz
+        print 'spectDictFreqs', specDict['freqsMHz']
+        print 'nSamples', specDict['nSamples']
+        freqLocs = np.asarray(map(findFreq, quantFreqsMHz))
+        sbLocs = -1*freqLocs + len(specDict['freqsMHz'])
+
+        weights = np.ones((len(freqList), len(phases), len(iqRatios)))
+        print 'weightShape', np.shape(weights)
+        normWeights = np.transpose(np.transpose(np.reshape(weights,(len(freqList),-1)))/np.sum(weights, axis=(1,2)))
+        normWeights = np.reshape(normWeights, np.shape(weights))
+        
+        sbSupIndList = np.zeros((len(freqList), 2))
+        flatInds = np.arange(len(phases)*len(iqRatios))
+        curSupList = np.zeros(len(freqList))
+        phaseList = np.zeros(len(freqList))
+        iqRatioList = np.ones(len(freqList))
+        finalPhaseList = np.zeros(len(freqList))
+        finalIQRatioList = np.ones(len(freqList))
+        finalSBSupList = np.zeros(len(freqList))
+        foundMaxList = np.zeros(len(freqList))
+        counter = 0
+
+        def gaussian(x, x0r, x0c, scale, width):
+            return scale*np.exp(-((x[0]-x0r)**2+(x[1]-x0c)**2)/width**2)
+
+        def expDecay(x, x0r, x0c, scale, width):
+            return scale*np.exp(-np.sqrt((x[0]-x0r)**2+(x[1]-x0c)**2)/width)
+
+        #sample initial points
+        for i in range(4):
+            for j in range(len(freqList)):
+                flatInd = np.random.choice(flatInds, p=normWeights[j,:].flatten())
+                sbSupInd = np.unravel_index(flatInd, np.shape(sampledSBSups[j]))
+                phaseList[j] = phases[sbSupInd[0]]
+                iqRatioList[j] = iqRatios[sbSupInd[1]]
+                sbSupIndList[j] = np.asarray(sbSupInd)
+                
+            self.loadLUT(freqList, phaseList, iqRatioList)
+            snapDict = self.takeAdcSnap()
+            specDict = adcSnap.streamSpectrum(snapDict['iVals'], snapDict['qVals'])
+            curSupList = specDict['spectrumDb'][freqLocs]-specDict['spectrumDb'][sbLocs]
+            
+            for j in range(len(freqList)):
+                sampledSBSups[j, sbSupIndList[j,0], sbSupIndList[j,1]] = curSupList[j]
+                weights[j, sbSupIndList[j,0], sbSupIndList[j,1]] = 0
+                    
+            normWeights = np.transpose(np.transpose(np.reshape(weights,(len(freqList),-1)))/np.sum(weights, axis=(1,2)))
+            normWeights = np.reshape(normWeights, np.shape(weights))
+            
+
+
+        fitParams = [10, 10, 40, 15]
+        rowCoords = np.tile(np.arange(np.shape(sampledSBSups[0])[0]),(np.shape(sampledSBSups[0])[1],1))
+        rowCoords = np.transpose(rowCoords)
+        colCoords = np.tile(np.arange(np.shape(sampledSBSups[0])[1]),(np.shape(sampledSBSups[0])[0],1))
+
+        while np.any(foundMaxList==0):
+            nFailedFits = 0
+            for j in range(len(freqList)):
+                flatInd = np.random.choice(flatInds, p=normWeights[j,:].flatten())
+                sbSupInd = np.unravel_index(flatInd, np.shape(sampledSBSups[j]))
+                phaseList[j] = phases[sbSupInd[0]]
+                iqRatioList[j] = iqRatios[sbSupInd[1]]
+                sbSupIndList[j] = np.asarray(sbSupInd)
+
+                
+            self.loadLUT(freqList, phaseList, iqRatioList)
+            snapDict = self.takeAdcSnap()
+            specDict = adcSnap.streamSpectrum(snapDict['iVals'], snapDict['qVals'])
+            curSupList = specDict['spectrumDb'][freqLocs]-specDict['spectrumDb'][sbLocs]
+            
+            for j in range(len(freqList)):
+                sampledSBSups[j, sbSupIndList[j,0], sbSupIndList[j,1]] = curSupList[j]
+                
+                if(np.any(sampledSBSups[j]>=threshold)):
+                    foundMaxList[j]=1
+                    optSBSupIndFlat = np.nanargmax(sampledSBSups[j])
+                    optSBSupInd = np.unravel_index(optSBSupIndFlat, np.shape(sampledSBSups[j]))
+                    finalPhaseList[j] = phases[optSBSupInd[0]]
+                    finalIQRatioList[j] = iqRatios[optSBSupInd[1]]
+                    finalSBSupList[j] = sampledSBSups[j, optSBSupInd[0], optSBSupInd[1]]
+                
+                #calculate new weights
+
+                validSBLocs = np.where(np.isnan(sampledSBSups[j])==0) #coordinates of sampled points
+                xdata = np.array([validSBLocs[0],validSBLocs[1]])
+                ydata = np.array(sampledSBSups[j,validSBLocs[0],validSBLocs[1]])
+                print 'xdata', xdata
+                print 'ydata', ydata
+                
+                try:
+                    fitParams, pcov = spo.curve_fit(expDecay, xdata, ydata, fitParams, 
+                        bounds=([0, 0, 30, 2], [np.shape(sampledSBSups[0])[0], np.shape(sampledSBSups[0])[1], 50, 20]), method='trf')
+                
+                    print 'fitParams', fitParams
+                    print 'fitting errors', np.sqrt(np.diag(pcov))
+
+                    rowDist = rowCoords - fitParams[0]
+                    colDist = colCoords - fitParams[1]
+                    weightDecay = np.random.choice([25,weightDecayDist])
+                    weights[j] = np.exp(-(rowDist**2+colDist**2)/weightDecay**2)
+
+                except RuntimeError:
+                    nFailedFits += 1
+                    pass
+                
+                weights[j, validSBLocs]=0
+            
+            normWeights = np.transpose(np.transpose(np.reshape(weights,(len(freqList),-1)))/np.sum(weights, axis=(1,2)))
+            normWeights = np.reshape(normWeights, np.shape(weights))
+            
+            counter += 1
+            
+            threshold -= 1
+
+            print 'Number of Failed Fits', nFailedFits
+            print 'Number past threshold', sum(foundMaxList)
+            print 'threshold', threshold
+            print counter, 'iterations'
+            print 'curSupList', curSupList
+            #plt.imshow(normWeights)
+            #plt.colorbar()
+            #plt.show()
+
+        np.savez('grid_search_opt_vals_'+str(len(freqList))+'_freqs_'+time.strftime("%Y%m%d-%H%M%S",time.localtime()), freqs=freqList,
+                        optPhases=finalPhaseList, optIQRatios=finalIQRatioList, maxSBSuppressions=finalSBSupList, toneAtten=self.toneAtten,
+                                        globalDacAtten=self.globalDacAtten, adcAtten=self.adcAtten)
 
         
         
@@ -283,6 +423,27 @@ class SBOptimizer:
         self.globalDacAtten=globalDacAtten 
         self.roach.changeAtten(1,np.floor(self.globalDacAtten/31.75)*31.75)
         self.roach.changeAtten(2,self.globalDacAtten%31.75)
+
+    def checkLinearity(self, freqList): 
+        iValList = np.zeros((len(freqList), 4096))
+        qValList = np.zeros((len(freqList), 4096))
+        for i,freq in enumerate(freqList):
+            self.loadLUT(np.asarray([freq]), np.asarray([0]), np.asarray([1]))
+            snapDict = self.takeAdcSnap()
+            iValList[i,:] = snapDict['iVals']
+            qValList[i,:] = snapDict['qVals']
+
+        np.savez('linearity_data_'+str(len(freqList))+'freqs'+time.strftime("%Y%m%d-%H%M%S",time.localtime()), freqs=freqList, iValList=iValList, qValList=qValList, toneAtten=self.toneAtten,
+            globalDacAtten=self.globalDacAtten, adcAtten=self.adcAtten)
+        
+        self.loadLUT(freqList, np.zeros(len(freqList)), np.ones(len(freqList)))
+        snapDict = self.takeAdcSnap()
+        totIVals = np.sum(iValList, axis=0)
+        totQVals = np.sum(qValList, axis=0)
+        residIVals = snapDict['iVals']-totIVals
+        residQVals = snapDict['qVals']-totQVals
+        residSpecDict = adcSnap.streamSpectrum(snapDict['iVals'], snapDict['qVals'])
+        adcSnap.plotSpec(residSpecDict, 'Residual IQ Spectrum')
                 
 
 def makePhaseDelLUT(freqs, loFreq=5.e9):
@@ -414,7 +575,7 @@ def optRawGridData(filename, freqInd=10, corrLen=20, threshold=40, sbSupScale=5,
     plt.colorbar()
     plt.show()
       
-def optRawGridDataGrad(filename, freqInd=10, corrLen=20, threshold=40, gradScale=1):
+def optRawGridDataGrad(filename, freqInd=10, threshold=40, gradScale=5):
     data = np.load(filename)
     sbSups = data['sbSuppressions'][freqInd] #exhaustive grid search array of SB suppressions
     sampledSBSups = np.zeros(np.shape(sbSups))
@@ -462,16 +623,16 @@ def optRawGridDataGrad(filename, freqInd=10, corrLen=20, threshold=40, gradScale
         for r in range(np.shape(weights)[0]):
             for c in range(np.shape(weights)[1]):
                 if weights[r,c] != 0:
-                    posRowGradInds = np.where(validRowLocs<r)[0]
-                    posColGradInds = np.where(validColLocs<c)[0]
-                    negRowGradInds = np.where(validRowLocs>=r)[0]
-                    negColGradInds = np.where(validColLocs>=c)[0]
-                    print 'posRowGrads', posRowGradInds
-                    print 'negRowGrads', negRowGradInds
-                    print 'rowGrads', rowGrads
+                    posRowGradInds = np.where(validRowGradLocs<r)[0]
+                    posColGradInds = np.where(validColGradLocs<c)[0]
+                    negRowGradInds = np.where(validRowGradLocs>=r)[0]
+                    negColGradInds = np.where(validColGradLocs>=c)[0]
+                    #print 'posRowGrads', posRowGradInds
+                    #print 'negRowGrads', negRowGradInds
+                    #print 'rowGrads', rowGrads
 
-                    rowGradSum = np.sum(rowGrads[posRowGradInds])-np.sum(rowGrads[negRowGradInds])
-                    colGradSum = np.sum(colGrads[posColGradInds])-np.sum(colGrads[negColGradInds])
+                    rowGradSum = (np.sum(rowGrads[posRowGradInds])-np.sum(rowGrads[negRowGradInds]))/len(rowGrads)
+                    colGradSum = (np.sum(colGrads[posColGradInds])-np.sum(colGrads[negColGradInds]))/len(colGrads)
                     weights[r,c] = np.exp(gradScale*(rowGradSum+colGradSum))
 
         normWeights = weights/np.sum(weights)
@@ -493,12 +654,99 @@ def optRawGridDataGrad(filename, freqInd=10, corrLen=20, threshold=40, gradScale
     plt.imshow(sampledSBSups)
     plt.colorbar()
     plt.show()
+
+def loadOptimizedLUT(filename):
+    data = np.load(filename)
+    sbo = SBOptimizer(ip='10.0.0.112', toneAtten=data['toneAtten'], globalDacAtten=data['globalDacAtten'], adcAtten=data['adcAtten'])
+    sbo.initRoach()
+    sbo.loadLUT(data['freqs'], phaseList=data['optPhases'], iqRatioList=data['optIQRatios'])
         
         
+def optRawGridDataFit(filename, freqInd=40, threshold=32, weightDecayDist=1):
+    data = np.load(filename)
+    sbSups = data['sbSuppressions'][freqInd] #exhaustive grid search array of SB suppressions
+    sampledSBSups = np.zeros(np.shape(sbSups))
+    sampledSBSups[:] = np.nan
+
+    weights = np.ones(np.shape(sbSups))
+    print 'weightShape', np.shape(weights)
+    normWeights = weights/np.sum(weights)
+    flatInds = np.arange(len(weights.flatten()))
+    curSup = 0
+    counter = 0
+
+    def gaussian(x, x0r, x0c, scale, width):
+        return scale*np.exp(-((x[0]-x0r)**2+(x[1]-x0c)**2)/width**2)
+
+    def expDecay(x, x0r, x0c, scale, width):
+        return scale*np.exp(-np.sqrt((x[0]-x0r)**2+(x[1]-x0c)**2)/width)
+
+    #sample initial points
+    for i in range(5):
+        flatInd = np.random.choice(flatInds, p=normWeights.flatten())
+        sbSupInd = np.unravel_index(flatInd, np.shape(sbSups))
+        sampledSBSups[sbSupInd] = sbSups[sbSupInd]
+        curSup = sbSups[sbSupInd]
+        weights[sbSupInd] = 0
+        normWeights = weights/np.sum(weights)
+
+    fitParams = [10, 10, 40, 15]
+    rowCoords = np.tile(np.arange(np.shape(sbSups)[0]),(np.shape(sbSups)[1],1))
+    rowCoords = np.transpose(rowCoords)
+    colCoords = np.tile(np.arange(np.shape(sbSups)[1]),(np.shape(sbSups)[0],1))
+
+    while curSup<threshold:
+        flatInd = np.random.choice(flatInds, p=normWeights.flatten())
+        sbSupInd = np.unravel_index(flatInd, np.shape(sbSups))
+        sampledSBSups[sbSupInd] = sbSups[sbSupInd]
+        curSup = sbSups[sbSupInd]
+        weights[sbSupInd] = 0
+
+        #calculate new weights
+
+        validSBLocs = np.where(np.isnan(sampledSBSups)==0)
+        xdata = np.array([validSBLocs[0],validSBLocs[1]])
+        ydata = np.array(sampledSBSups[validSBLocs])
+        #print 'xdata', xdata
+        #print 'ydata', ydata
+
+        fitParams, pcov = spo.curve_fit(expDecay, xdata, ydata, fitParams, 
+            bounds=([0, 0, 30, 2], [np.shape(sampledSBSups)[0], np.shape(sampledSBSups)[1], 50, 20]), method='trf')
+        
+        print 'fitParams', fitParams
+
+        rowDist = rowCoords - fitParams[0]
+        colDist = colCoords - fitParams[1]
+        weights = np.exp(-(rowDist**2+colDist**2)/weightDecayDist**2)
+        
+        weights[validSBLocs]=0
+
+        normWeights = weights/np.sum(weights)
+        
+        counter += 1
+
+        print counter, 'iterations'
+        print 'sampledSBSups'
+        print 'curSup', curSup
+        print 'position', sbSupInd
+        #plt.imshow(normWeights)
+        #plt.colorbar()
+        #plt.show()
+    
+    plt.imshow(normWeights)
+    plt.colorbar()
+    plt.show()
+
+    plt.imshow(sampledSBSups)
+    plt.colorbar()
+    plt.show()
+
+
 if __name__=='__main__':
-    # sbo = SBOptimizer(globalDacAtten=0, toneAtten=45, adcAtten=31.75)
-    # sbo.initRoach()
-    # sbo.loadLUT(np.asarray([5.5e9]), phaseList=np.asarray([0]), iqRatioList=np.asarray([1]))
+    sbo = SBOptimizer(ip='10.0.0.112', globalDacAtten=0, toneAtten=45, adcAtten=31.75)
+    sbo.initRoach()
+    # sbo.checkLinearity(np.arange(5.05e9,6.e9,1.e7)+5.e6*np.random.rand(95))
+    # sbo.loadLUT(np.asarray([5.55e9]), phaseList=np.asarray([0]), iqRatioList=np.asarray([1]))
     # sbo.loadLUT(np.arange(5.05e9,6.e9,1.e7)+5.e6*np.random.rand(95), phaseList=np.zeros(95), iqRatioList=np.ones(95))
     # sbo.loadLUT(freqList=np.arange(5.05e9, 5.5e9, 1.e7)+1.e7*np.random.rand(45)-5.e6, phaseList=np.zeros(45), iqRatioList=np.ones(45))
     # sbo.loadLUT(freqList=np.asarray([5.264e9]), phaseList=np.asarray([0]), iqRatioList=np.asarray([1]))
@@ -511,8 +759,10 @@ if __name__=='__main__':
     # sbo.makeGridPlot(np.arange(5.05e9, 5.5e9, 1.e7)+1.e7*np.random.rand(45)-5.e6, phases=np.arange(-15,5), iqRatios=np.arange(0.85,1.25,0.02))
     # plotOffsVSDacAtten(5.2638e9)
     # loadGridTable('grid_search_data_45freqs20170213-163003.npz')
-    optRawGridDataGrad('grid_search_data_45freqs20170213-163003.npz')
-      
+    # optRawGridDataFit('grid_search_data_45freqs20170213-163003.npz')
+    # sbo.gridSearchOptimizerFit(np.arange(5.05e9, 6.e9, 1.e7)+1.e7*np.random.rand(95)-5.e6)
+    # sbo.gridSearchOptimizerFit(np.asarray([5.55e9]))
+    loadOptimizedLUT('grid_search_opt_vals_95_freqs_20170222-124402.npz')
 
         
 
