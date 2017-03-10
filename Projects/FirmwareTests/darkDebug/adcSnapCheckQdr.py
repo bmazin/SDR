@@ -16,23 +16,53 @@ def readQdrSnap(fpga):
     nQdrSamples = 2**20
     nBytesPerQdrSample = 8
     nBitsPerQdrSample = nBytesPerQdrSample*8
-    qdr0Vals = np.array(readMemory(fpga,'qdr0_memory',nQdrSamples,nBytesPerQdrSample,bQdrFlip=True,dtype=np.object),dtype=object)
-    qdr1Vals = np.array(readMemory(fpga,'qdr1_memory',nQdrSamples,nBytesPerQdrSample,bQdrFlip=True,dtype=np.object),dtype=object)
-    qdr2Vals = np.array(readMemory(fpga,'qdr2_memory',nQdrSamples,nBytesPerQdrSample,bQdrFlip=True,dtype=np.object),dtype=object)
+    qdr0Vals = np.array(readMemory(fpga,'qdr0_memory',nQdrSamples,nBytesPerQdrSample,bQdrFlip=True),dtype=np.uint64)
+    qdr1Vals = np.array(readMemory(fpga,'qdr1_memory',nQdrSamples,nBytesPerQdrSample,bQdrFlip=True),dtype=np.uint64)
+    qdr2Vals = np.array(readMemory(fpga,'qdr2_memory',nQdrSamples,nBytesPerQdrSample,bQdrFlip=True),dtype=np.uint64)
     #qdr0 has the most significant 64 bits, followed by qdr1, and last qdr2
     #smush them all toghether into 192 bit words
     wholeQdrWords = (qdr0Vals<<(nBitsPerQdrSample*2))+(qdr1Vals<<(nBitsPerQdrSample))+qdr2Vals
+    print 'qdrdtype', wholeQdrWords.dtype
 
     nBitsPerSample = 12 #I or Q sample
     nSamplesPerWholeWord = 16 # 8 IQ pairs per clock cycle
     bitmask = int('1'*nBitsPerSample,2)
-    bitshifts = nBitsPerSample*np.arange(nSamplesPerWholeWord)[::-1]
-    samples = (wholeQdrWords[:,np.newaxis]) >> bitshifts
-    samples = samples & bitmask
-    samples = reinterpretBin(samples,nBits=nBitsPerSample,binaryPoint=0)
+    # bitshifts = nBitsPerSample*np.arange(nSamplesPerWholeWord)[::-1]
+    # bitshifts = np.array(bitshifts, dtype=np.uint64)
+    qdr0Bitshifts = np.arange(nBitsPerQdrSample%nBitsPerSample, nBitsPerQdrSample, nBitsPerSample)[::-1]
+    qdr1Bitshifts = qdr0Bitshifts + nBitsPerQdrSample%nBitsPerSample
+    qdr2Bitshifts = qdr1Bitshifts + nBitsPerQdrSample%nBitsPerSample
+    qdr0Bitshifts = np.append(qdr0Bitshifts, 0)
+    qdr1Bitshifts = np.append(qdr1Bitshifts, 0)
+    qdr2Bitshifts = np.append(qdr2Bitshifts, 0)
+    
+    qdr0Bitshifts = np.array(qdr0Bitshifts, dtype=np.uint64)
+    qdr1Bitshifts = np.array(qdr1Bitshifts, dtype=np.uint64)
+    qdr2Bitshifts = np.array(qdr2Bitshifts, dtype=np.uint64)
+    
+    # print 'qdr0Bitshifts', qdr0Bitshifts
+    # print 'qdr1Bitshifts', qdr1Bitshifts
+    # print 'qdr2Bitshifts', qdr2Bitshifts
+
+    qdr0Samples = ((qdr0Vals[:,np.newaxis]) >> qdr0Bitshifts)&bitmask
+    qdr1Samples = ((qdr1Vals[:,np.newaxis]) >> qdr1Bitshifts)&bitmask
+    qdr2Samples = ((qdr2Vals[:,np.newaxis]) >> qdr2Bitshifts)&bitmask
+    
+    qdr0Samples[:,-1] = (((qdr0Samples[:,-1]&(2**(nBitsPerQdrSample%nBitsPerSample)-1)))<<8) + (qdr1Samples[:,0]&(2**(nBitsPerSample-nBitsPerQdrSample%nBitsPerSample)-1))
+    qdr1Samples = np.delete(qdr1Samples, 0, axis=1)
+    qdr1Samples[:,-1] = (((qdr1Samples[:,-1]&(2**(2*nBitsPerQdrSample%nBitsPerSample)-1)))<<4) + (qdr2Samples[:,0]&(2**(nBitsPerSample-2*nBitsPerQdrSample%nBitsPerSample)-1))
+    qdr2Samples = np.delete(qdr2Samples, 0, axis=1)
+    samples = np.concatenate((qdr0Samples, qdr1Samples, qdr2Samples), axis=1)
     samples = samples.flatten(order='C')
     iVals = samples[::2]
     qVals = samples[1::2]
+
+    # samples = (wholeQdrWords[:,np.newaxis]) >> bitshifts
+    # samples = samples & bitmask
+    # samples = reinterpretBin(samples,nBits=nBitsPerSample,binaryPoint=0)
+    # samples = samples.flatten(order='C')
+    # iVals = samples[::2]
+    # qVals = samples[1::2]
 
 
     return {'iVals':iVals,'qVals':qVals}
@@ -200,7 +230,7 @@ if __name__=='__main__':
 #    ax.step(x,snapDict['qVals'],label='Q')
 #    ax.legend(loc='best')
 #    ax.set_title('IQ')
-    path = '/mnt/data0/plots/iqsnaps/'
+    path = '/mnt/data0/neelay/plots/iqsnaps/'
     timeLabel = time.strftime("%Y%m%d-%H%M%S",time.localtime())
 
     fig2,ax2 = plt.subplots(1,1)
