@@ -54,6 +54,7 @@ def readQdrSnap(fpga):
     qdr2Samples = np.delete(qdr2Samples, 0, axis=1)
     samples = np.concatenate((qdr0Samples, qdr1Samples, qdr2Samples), axis=1)
     samples = samples.flatten(order='C')
+    samples = reinterpretBin(samples,nBits=nBitsPerSample,binaryPoint=0)
     iVals = samples[::2]
     qVals = samples[1::2]
 
