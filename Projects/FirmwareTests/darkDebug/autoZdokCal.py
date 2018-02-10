@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import casperfpga
 import sys
 import scipy.ndimage
+from Roach2Controls import Roach2Controls
 
 def incrementMmcmPhase(fpga,stepSize=2):
 
@@ -142,16 +143,21 @@ if __name__=='__main__':
     else:
         print 'Usage:',sys.argv[0],'roachNum'
     print ip
-    fpga = casperfpga.KatcpFpga(ip,timeout=5)
-    fpga._timeout=50
+
+    roach = Roach2Controls(ip, '/mnt/data0/MkidDigitalReadout/DataReadout/ChannelizerControls/DarknessFpga_V2.param', True, False)
+    roach.connect()
+    roach.initializeV7UART()
+    roach.sendUARTCommand(0x4)
+    time.sleep(15)
 
     time.sleep(.01)
-    if not fpga.is_running():
+    if not roach.fpga.is_running():
         print 'Firmware is not running. Start firmware, and calibrate qdr first!'
         exit(0)
-    fpga.get_system_information()
-    print 'Fpga Clock Rate:',fpga.estimate_fpga_clock()
-    fpga.write_int('run',1)
+    roach.fpga.get_system_information()
+    print 'Fpga Clock Rate:',roach.fpga.estimate_fpga_clock()
+    roach.fpga.write_int('run',1)
+
 
     busDelays = [14,18,14,13]
     busStarts = [0,14,28,42]
@@ -159,10 +165,12 @@ if __name__=='__main__':
     for iBus in xrange(len(busDelays)):
         delayLut = zip(np.arange(busStarts[iBus],busStarts[iBus]+busBitLength), 
             busDelays[iBus] * np.ones(busBitLength))
-        loadDelayCal(fpga,delayLut)
+        loadDelayCal(roach.fpga,delayLut)
 
-    calDict = findCal(fpga,True)
+    calDict = findCal(roach.fpga,True)
     print calDict
+
+    roach.sendUARTCommand(0x5)
 
 
     print 'DONE!'
