@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import casperfpga
 import sys
 import os
+from Roach2Controls import Roach2Controls
 
 def snapZdok(fpga,nRolls=0):
     snapshotNames = fpga.snapshots.names()
@@ -125,6 +126,51 @@ def streamSpectrum(iVals,qVals):
     print 'peak at',peakFreq,'MHz',peakFreqPower,'dB'
     return {'spectrumDb':spectrumDb,'freqsMHz':freqsMHz,'spectrum':spectrum,'peakFreq':peakFreq,'times':times,'signal':signal,'nSamples':nSamples}
 
+def checkErrorsAndSetAtten(roach, startAtten=40, iqBalRange=[0.7, 1.3], rmsRange=[0.6,0.8]):
+    adcFullScale = 2.**11
+    curAtten=startAtten
+    rmsTarget = np.mean(rmsRange)
+
+    delayLut0 = zip(np.arange(0,12),np.ones(12)*14)
+    delayLut1 = zip(np.arange(14,26),np.ones(12)*18)
+    delayLut2 = zip(np.arange(28,40),np.ones(12)*14)
+    delayLut3 = zip(np.arange(42,54),np.ones(12)*13)
+    loadDelayCal(roach.fpga,delayLut0)
+    loadDelayCal(roach.fpga,delayLut1)
+    loadDelayCal(roach.fpga,delayLut2)
+    loadDelayCal(roach.fpga,delayLut3)
+
+    while True:
+        atten3 = np.floor(curAtten*2)/4.
+        atten4 = np.ceil(curAtten*2)/4.
+        print 'atten3', atten3
+        print 'atten4', atten4
+        roach.changeAtten(3, atten3)
+        roach.changeAtten(4, atten4)
+        snapDict = snapZdok(roach.fpga,nRolls=0)
+        
+        iVals = snapDict['iVals']/adcFullScale
+        qVals = snapDict['qVals']/adcFullScale
+        iRms = np.sqrt(np.mean(iVals**2))
+        qRms = np.sqrt(np.mean(qVals**2))
+        print 'iRms', iRms
+        print 'qRms', qRms
+        iqRatio = iRms/qRms
+        if iqRatio<iqBalRange[0] or iqRatio>iqBalRange[1]:
+            raise Exception('IQ balance out of range!')
+
+        if rmsRange[0]<iRms<rmsRange[1] and rmsRange[0]<qRms<rmsRange[1]:
+            break
+
+        else:
+            iDBOffs = 20*np.log10(rmsTarget/iRms)
+            qDBOffs = 20*np.log10(rmsTarget/qRms)
+            dbOffs = (iDBOffs + qDBOffs)/2
+            curAtten -= dbOffs
+
+    return curAtten 
+        
+
 
 
 if __name__=='__main__':
@@ -133,8 +179,8 @@ if __name__=='__main__':
     else:
         ip='10.0.0.112'
     
-    lowBound = 0.6#raw_input("Lowest RMS value: ")
-    highBound = 0.9#raw_input("Highest RMS value: ")
+    lowBound = 0.25#raw_input("Lowest RMS value: ")
+    highBound = 0.35#raw_input("Highest RMS value: ")
     IQflag = 0
     errmsg="No error on IQ values"
 
@@ -243,9 +289,9 @@ if __name__=='__main__':
     ax2.set_xlabel('time (us)')
     ax2.legend()
 
-    np.savez(os.path.join(path,'adcData_{}_{}.npz'.format(freqLabel,timeLabel)),**snapDict)
-    fig.savefig(os.path.join(path,'iqSpec_{}_{}.png'.format(timeLabel,freqLabel)))
-    fig2.savefig(os.path.join(path,'iq_{}_{}.png'.format(timeLabel,freqLabel)))
+    # np.savez(os.path.join(path,'adcData_{}_{}.npz'.format(freqLabel,timeLabel)),**snapDict)
+    # fig.savefig(os.path.join(path,'iqSpec_{}_{}.png'.format(timeLabel,freqLabel)))
+    # fig2.savefig(os.path.join(path,'iq_{}_{}.png'.format(timeLabel,freqLabel)))
     #if IQflag>0 or spectrumFlag>0:
     plt.show()
 
