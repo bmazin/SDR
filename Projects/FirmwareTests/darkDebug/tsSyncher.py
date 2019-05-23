@@ -1,15 +1,14 @@
-from Roach2Controls import Roach2Controls
+from mkidreadout.channelizer.Roach2Controls import Roach2Controls
 import sys, time, os, datetime, calendar
 import numpy as np
 
 if __name__=='__main__':
-    paramFile='/mnt/data0/neelay/MkidDigitalReadout/DataReadout/ChannelizerControls/DarknessFpga_V2.param'
     timeInterval = float(sys.argv[1])
     timeReg = 'timekeeper_sec_now'
 
     roachList = []
     for ip in sys.argv[2:]:
-        roachList.append(Roach2Controls('10.0.0.'+str(ip), paramFile, True, False))
+        roachList.append(Roach2Controls('10.0.0.'+str(ip))) 
 
     for roach in roachList: 
         roach.connect()

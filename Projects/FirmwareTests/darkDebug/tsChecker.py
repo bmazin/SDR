@@ -1,4 +1,4 @@
-from Roach2Controls import Roach2Controls
+from mkidreadout.channelizer.Roach2Controls import Roach2Controls
 import sys, time, os, datetime, calendar
 import numpy as np
 

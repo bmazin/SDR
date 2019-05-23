@@ -1,4 +1,4 @@
-from Roach2Controls import Roach2Controls
+from mkidreadout.channelizer.Roach2Controls import Roach2Controls
 import numpy as np
 import time
 import sys
@@ -7,7 +7,7 @@ if __name__=='__main__':
     roachList = []
     for roachNum in sys.argv[1:]:
         ip = '10.0.0.'+roachNum
-        roach = Roach2Controls(ip, '/mnt/data0/neelay/MkidDigitalReadout/DataReadout/ChannelizerControls/DarknessFpga_V2.param',True)
+        roach = Roach2Controls(ip)
         roach.connect()
         roachList.append(roach)
     

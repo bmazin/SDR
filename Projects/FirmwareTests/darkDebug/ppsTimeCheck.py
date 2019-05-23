@@ -1,14 +1,14 @@
-from Roach2Controls import Roach2Controls
+from mkidreadout.channelizer.Roach2Controls import Roach2Controls
 import numpy as np
 import time
 import sys
 import matplotlib.pyplot as plt
-import Utils.binTools as bt
+import mkidreadout.channelizer.binTools as bt
 
 if __name__=='__main__':
     roachNum = str(sys.argv[1])
     ip = '10.0.0.'+roachNum
-    roach = Roach2Controls(ip, '/mnt/data0/neelay/MkidDigitalReadout/DataReadout/ChannelizerControls/DarknessFpga_V2.param',True)
+    roach = Roach2Controls(ip)
     roach.connect()
 
     nIters = 500
@@ -16,12 +16,15 @@ if __name__=='__main__':
 
     tsFig = plt.figure()
     tsPlt = tsFig.add_subplot(111)
+    tsPlt.set_title('Timestamps')
 
     rawPPSFig = plt.figure()
     rawPPSPlt = rawPPSFig.add_subplot(111)
+    rawPPSPlt.set_title('Raw PPS')
     
     nMissPPSFig = plt.figure()
     nMissPPSPlt = nMissPPSFig.add_subplot(111)
+    nMissPPSPlt.set_title('N Miss PPS')
 
     shortGapFig = plt.figure()
     shortGapPlt = shortGapFig.add_subplot(111)
